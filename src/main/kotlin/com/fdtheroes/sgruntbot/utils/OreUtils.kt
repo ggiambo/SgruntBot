@@ -1,10 +1,12 @@
 package com.fdtheroes.sgruntbot.utils
 
-import java.text.DateFormat
-import java.text.spi.DateFormatProvider
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class OreUtils {
+
+    val formatter = DateTimeFormatter.ofPattern("HH:mm")
+
     private val ore = listOf(
         "mezzanotte",
         "l'una",
@@ -46,7 +48,7 @@ class OreUtils {
             h -= 12
         }
 
-        return ore[h] + " " + minuti[m] + " (precisamente ${t.hour}:${t.minute}) ok?)"
+        return ore[h] + " " + minuti[m] + " (precisamente ${formatter.format(t)}) ok?)"
     }
 
 }
