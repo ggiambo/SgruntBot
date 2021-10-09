@@ -166,7 +166,7 @@ class Bot(private val botToken: String, private val botUsername: String) : Teleg
         } else if (botRegex.bullshitMatch(message) != null) {
             val value = botRegex.bullshitMatch(message)
             val eur = bullshitInEuro(value)
-            if (eur != 0L) {
+            if (eur != 0.0) {
                 rispondi(this, message, "${value} bullshit corrispondono a #{eur} pregiati euro.")
             } else {
                 rispondi(this, message, "Non ci riesco.")

@@ -1,5 +1,5 @@
 import com.fdtheroes.sgruntbot.BotRegex
-import org.junit.jupiter.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
@@ -12,86 +12,77 @@ class BotRegexTest {
     @ParameterizedTest
     @ValueSource(strings = ["cazzone", "culona", " fica ", "stronzi", "merdah!"])
     fun testParolacceMatch(string: String) {
-        Assertions.assertTrue(botRegex.parolacceMatch(message(string)))
+        assertThat(botRegex.parolacceMatch(message(string))).isTrue
     }
 
     @Test
     fun testParlaMatch() {
-        Assertions.assertEquals("blah banf", botRegex.parlaMatch(message("!parla blah banf")))
-        Assertions.assertEquals("blah banf", botRegex.parlaMatch(message("!PARLA blah banf")))
-        Assertions.assertEquals(
-            "la vispa teresa\nsotto i sette nani",
-            botRegex.parlaMatch(message("!parla la vispa teresa\nsotto i sette nani"))
-        )
-        Assertions.assertNull(botRegex.parlaMatch(message(" !parla blan banf")))
-        Assertions.assertNull(botRegex.parlaMatch(message("!parlasuper blan banf")))
+        assertThat(botRegex.parlaMatch(message("!parla blah banf"))).isEqualTo("blah banf")
+        assertThat(botRegex.parlaMatch(message("!PARLA blah banf"))).isEqualTo("blah banf")
+        assertThat(botRegex.parlaMatch(message("!parla la vispa teresa\nsotto i sette nani")))
+            .isEqualTo("la vispa teresa\nsotto i sette nani")
+        assertThat(botRegex.parlaMatch(message(" !parla blan banf"))).isNull()
+        assertThat(botRegex.parlaMatch(message("!parlasuper blan banf"))).isNull()
     }
 
     @Test
     fun testParlaSuper() {
-        Assertions.assertEquals("blah banf", botRegex.parlaSuper(message("!parlasuper blah banf")))
-        Assertions.assertEquals("blah banf", botRegex.parlaSuper(message("!PARLASUPER blah banf")))
-        Assertions.assertEquals(
-            "la vispa teresa\nsotto i sette nani",
-            botRegex.parlaSuper(message("!parlasuper la vispa teresa\nsotto i sette nani"))
-        )
-        Assertions.assertNull(botRegex.parlaSuper(message(" !parlasuper blan banf")))
-        Assertions.assertNull(botRegex.parlaSuper(message("!parla blan banf")))
+        assertThat(botRegex.parlaSuper(message("!parlasuper blah banf"))).isEqualTo("blah banf")
+        assertThat(botRegex.parlaSuper(message("!PARLASUPER blah banf"))).isEqualTo("blah banf")
+        assertThat(botRegex.parlaSuper(message("!parlasuper la vispa teresa\nsotto i sette nani")))
+            .isEqualTo("la vispa teresa\nsotto i sette nani")
+        assertThat(botRegex.parlaSuper(message(" !parlasuper blan banf"))).isNull()
+        assertThat(botRegex.parlaSuper(message("!parla blan banf"))).isNull()
     }
 
     @Test
     fun testChiEra() {
-        Assertions.assertTrue(botRegex.chiEra(message("!chiera")))
-        Assertions.assertTrue(botRegex.chiEra(message("!CHIERA")))
-        Assertions.assertFalse(botRegex.chiEra(message("!chiera blah banf")))
+        assertThat(botRegex.chiEra(message("!chiera"))).isTrue
+        assertThat(botRegex.chiEra(message("!CHIERA"))).isTrue
+        assertThat(botRegex.chiEra(message("!chiera blah banf"))).isFalse
     }
 
     @Test
     fun testAesMatch() {
-        Assertions.assertEquals("", botRegex.aesMatch(message("!aes one two")))
-        Assertions.assertEquals("d", botRegex.aesMatch(message("!aesd one two")))
-        Assertions.assertEquals("d", botRegex.aesMatch(message("!aesd one two"), 1))
-        Assertions.assertEquals("one", botRegex.aesMatch(message("!aesd one two"), 2))
-        Assertions.assertEquals("two", botRegex.aesMatch(message("!aesd one two"), 3))
-        Assertions.assertEquals(null, botRegex.aesMatch(message("!aesd one"), 3))
+        assertThat(botRegex.aesMatch(message("!aes one two"))).isEmpty()
+        assertThat(botRegex.aesMatch(message("!aesd one two"))).isEqualTo("d")
+        assertThat(botRegex.aesMatch(message("!aesd one two"), 1)).isEqualTo("d")
+        assertThat(botRegex.aesMatch(message("!aesd one two"), 2)).isEqualTo("one")
+        assertThat(botRegex.aesMatch(message("!aesd one two"), 3)).isEqualTo("two")
+        assertThat(botRegex.aesMatch(message("!aesd one"), 3)).isNull()
     }
 
     @Test
     fun testCanzoMatch() {
-        Assertions.assertEquals("la ballata dei troll", botRegex.canzoMatch(message("!canzone la ballata dei troll")))
-        Assertions.assertEquals("la ballata dei troll", botRegex.canzoMatch(message("!CANZONE la ballata dei troll")))
-        Assertions.assertEquals(null, botRegex.canzoMatch(message("!canzone")))
-        Assertions.assertEquals("", botRegex.canzoMatch(message("!canzone ")))
+        assertThat(botRegex.canzoMatch(message("!canzone la ballata dei troll"))).isEqualTo("la ballata dei troll")
+        assertThat(botRegex.canzoMatch(message("!CANZONE la ballata dei troll"))).isEqualTo("la ballata dei troll")
+        assertThat(botRegex.canzoMatch(message("!canzone"))).isNull()
+        assertThat(botRegex.canzoMatch(message("!canzone "))).isEmpty()
     }
 
     @Test
     fun testBullshitMatch() {
-        Assertions.assertEquals("42", botRegex.bullshitMatch(message("42 bs")))
-        Assertions.assertEquals("42", botRegex.bullshitMatch(message("42bs")))
-        Assertions.assertEquals("42", botRegex.bullshitMatch(message("42BS")))
-        Assertions.assertEquals("42", botRegex.bullshitMatch(message("42 bUlLsHiT")))
-        Assertions.assertEquals(null, botRegex.bullshitMatch(message("42   bs")))
+        assertThat(botRegex.bullshitMatch(message("42 bs"))).isEqualTo("42")
+        assertThat(botRegex.bullshitMatch(message("42bs"))).isEqualTo("42")
+        assertThat(botRegex.bullshitMatch(message("42BS"))).isEqualTo("42")
+        assertThat(botRegex.bullshitMatch(message("42 bUlLsHiT"))).isEqualTo("42")
+        assertThat(botRegex.bullshitMatch(message("42   bs"))).isNull()
     }
 
     @Test
     fun testWikiMatch() {
-        Assertions.assertEquals("denti d'oro", botRegex.wikiMatch(message("!wiki denti d'oro")))
-        Assertions.assertEquals("denti d'oro", botRegex.wikiMatch(message("!WIKI denti d'oro")))
-        Assertions.assertEquals(null, botRegex.wikiMatch(message("!wiki")))
-        Assertions.assertEquals("", botRegex.wikiMatch(message("!wiki ")))
+        assertThat(botRegex.wikiMatch(message("!wiki denti d'oro"))).isEqualTo("denti d'oro")
+        assertThat(botRegex.wikiMatch(message("!WIKI denti d'oro"))).isEqualTo("denti d'oro")
+        assertThat(botRegex.wikiMatch(message("!wiki"))).isNull()
+        assertThat(botRegex.wikiMatch(message("!wiki "))).isEmpty()
     }
 
     @Test
     fun testGoogleMatch() {
-        Assertions.assertEquals("inutile bidet", botRegex.googleMatch(message("!google inutile bidet")))
-        Assertions.assertEquals("inutile bidet", botRegex.googleMatch(message("!GOOGLE inutile bidet")))
-        Assertions.assertEquals(null, botRegex.googleMatch(message("!google")))
-        Assertions.assertEquals("", botRegex.googleMatch(message("!google ")))
-    }
-
-    @Test
-    fun testLast() {
-
+        assertThat(botRegex.googleMatch(message("!google inutile bidet"))).isEqualTo("inutile bidet")
+        assertThat(botRegex.googleMatch(message("!GOOGLE inutile bidet"))).isEqualTo("inutile bidet")
+        assertThat(botRegex.googleMatch(message("!google"))).isNull()
+        assertThat(botRegex.googleMatch(message("!google "))).isEmpty()
     }
 
     private fun message(text: String): Message {
