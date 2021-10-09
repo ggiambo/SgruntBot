@@ -10,8 +10,7 @@ import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
 import kotlin.random.Random
 
-
-class Bot(private val botToken: String, private val botUsername: String) : TelegramLongPollingBot() {
+open class Bot(private val botToken: String, private val botUsername: String) : TelegramLongPollingBot() {
 
     private var pausedTime: LocalDateTime? = null
     private var lastAuthor: String? = null

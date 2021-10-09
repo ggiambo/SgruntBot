@@ -23,7 +23,7 @@ class RispondiUtils {
         val sendChatAction = SendChatAction()
         sendChatAction.chatId = message.chatId.toString()
         sendChatAction.setAction(ActionType.TYPING)
-        bot.execute(sendChatAction)
+        bot.executeAsync(sendChatAction)
         sleep(3..5)
         val reply = SendMessage()
         reply.chatId = message.chat.id.toString()
