@@ -54,9 +54,6 @@ open class Bot(private val botToken: String, private val botUsername: String) : 
             return
         }
 
-        println("Messaggio da: ${getUserLink(message)}")
-        println(message.text)
-
         if (!botRegex.last(message)) {
             storeLastAuthor(message)
         }

@@ -8,8 +8,6 @@ class SloganUtils {
         if (name == null) {
             return ""
         }
-        println("slogan")
-        println(name)
 
         val res = URL("http://www.sloganizer.net/en/outbound.php?slogan=${name}")
             .openConnection()
@@ -22,7 +20,6 @@ class SloganUtils {
             .firstOrNull()
             .orEmpty()
 
-        println("response = $out")
         return out
     }
 }
