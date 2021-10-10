@@ -27,6 +27,7 @@ open class Bot(private val botToken: String, private val botUsername: String) : 
     private val bitcoinvalue = MoneyUtils()::bitcoinvalue
     private val canzo = CanzoUtils()::canzo
     private val bullshitInEuro = MoneyUtils()::bullshitInEuro
+    private val wikiSearch = WikiUtils()::wikiSearch
 
     init {
         execute(SendMessage("32657811", "Sono partito"))
@@ -167,6 +168,8 @@ open class Bot(private val botToken: String, private val botUsername: String) : 
             } else {
                 rispondi(this, message, "Non ci riesco.")
             }
+        } else if (botRegex.wikiMatch(message) != null) {
+            wikiSearch(botRegex.wikiMatch(message)) { risposta: String -> rispondi(this, message, risposta) }
         }
     }
 
