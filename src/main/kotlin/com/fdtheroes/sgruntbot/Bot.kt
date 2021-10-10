@@ -153,11 +153,11 @@ open class Bot(private val botToken: String, private val botUsername: String) : 
                 rispondi(this, message, aesEncrypt(botRegex.aesMatch(message, 3), botRegex.aesMatch(message, 2)))
             }
         } else if (Regex("^!last\$", RegexOption.IGNORE_CASE).matches(message.text) && lastAuthor != null) {
-            val message = SendMessage()
-            message.chatId = "-1001103213994"
-            message.parseMode = ParseMode.MARKDOWN
-            message.text = slogan(lastAuthor)
-            executeAsync(message)
+            val sendMessage = SendMessage()
+            sendMessage.chatId = "-1001103213994"
+            sendMessage.parseMode = ParseMode.MARKDOWN
+            sendMessage.text = slogan(lastAuthor)
+            executeAsync(sendMessage)
         } else if (botRegex.canzoMatch(message) != null) {
             canzo(this, message, botRegex.canzoMatch(message))
         } else if (botRegex.bullshitMatch(message) != null) {
@@ -170,6 +170,9 @@ open class Bot(private val botToken: String, private val botUsername: String) : 
             }
         } else if (botRegex.wikiMatch(message) != null) {
             wikiSearch(botRegex.wikiMatch(message)) { risposta: String -> rispondi(this, message, risposta) }
+        } else if (botRegex.googleMatch(message) != null) {
+            val query = botRegex.googleMatch(message)
+            rispondi(this, message, "Cercatelo con [google](https://www.google.com/search?q=$query) ritardato!™")
         }
     }
 
