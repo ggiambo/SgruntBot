@@ -9,7 +9,7 @@ class UserUtils {
             return ""
         }
         val id = message.from.id
-        var name: String? = null
+        var name: String
         if (message.from?.userName != null) {
             name = message.from.userName
         } else {
