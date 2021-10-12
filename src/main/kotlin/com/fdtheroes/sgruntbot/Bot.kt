@@ -148,9 +148,9 @@ open class Bot(private val botToken: String, private val botUsername: String) : 
             executeAsync(SendMessage("-1001103213994", "Mi dicono di dire: ${botRegex.parlaMatch(message)}"))
         } else if (botRegex.aesMatch(message) != null) {
             if (botRegex.aesMatch(message) == "d") {
-                rispondi(this, message, aesDecrypt(botRegex.aesMatch(message, 3), botRegex.aesMatch(message, 2)))
+                rispondi(this, message, aesDecrypt(botRegex.aesMatch(message, 2), botRegex.aesMatch(message, 3)))
             } else {
-                rispondi(this, message, aesEncrypt(botRegex.aesMatch(message, 3), botRegex.aesMatch(message, 2)))
+                rispondi(this, message, aesEncrypt(botRegex.aesMatch(message, 2), botRegex.aesMatch(message, 3)))
             }
         } else if (Regex("^!last\$", RegexOption.IGNORE_CASE).matches(message.text) && lastAuthor != null) {
             val sendMessage = SendMessage()
