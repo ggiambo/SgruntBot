@@ -63,10 +63,10 @@ open class Bot(private val botToken: String, private val botUsername: String) : 
         if (message.text == "!test") {
             rispondi(this, message, "${getUserLink(message)}: toast `test`")
         } else if (botRegex.parlaSuper(message) != null && setOf<Long>(
-                32657811,
-                353708759,
-                252800958,
-                250965179,
+                32657811, // Daniele
+                353708759, // Giambo
+                252800958, // Dada
+                250965179, // Campy
                 68714652,
                 259607683,
                 104278889
