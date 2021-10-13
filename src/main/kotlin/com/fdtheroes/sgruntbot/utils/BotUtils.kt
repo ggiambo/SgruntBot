@@ -8,7 +8,26 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import org.telegram.telegrambots.meta.api.objects.Message
 import kotlin.random.Random
 
-class BotUtils(private val bot: Bot) {
+class BotUtils {
+
+    private lateinit var bot: Bot
+
+    fun init(bot: Bot) {
+        instance = BotUtils()
+        instance.bot = bot
+    }
+
+    val userIds = setOf<Long>(
+        32657811,
+        353708759,
+        252800958,
+        250965179,
+        68714652,
+        259607683,
+        104278889
+    )
+
+    val chatId = "-1001103213994"
 
     fun getUserLink(message: Message?): String {
         if (message == null) {
@@ -54,4 +73,9 @@ class BotUtils(private val bot: Bot) {
     private fun sleep(seconds: IntRange) {
         Thread.sleep(Random.nextLong(seconds.first.toLong() * 1000, seconds.last.toLong() * 1000))
     }
+
+    companion object {
+        lateinit var instance: BotUtils
+    }
+
 }

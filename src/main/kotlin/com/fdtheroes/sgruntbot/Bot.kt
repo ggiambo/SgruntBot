@@ -30,7 +30,7 @@ open class Bot(private val botToken: String, private val botUsername: String) : 
     private val wikiSearch = WikiUtils()::wikiSearch
 
     init {
-        execute(SendMessage("32657811", "Sono partito"))
+        //execute(SendMessage("32657811", "Sono partito"))
     }
 
     override fun getBotToken(): String {
