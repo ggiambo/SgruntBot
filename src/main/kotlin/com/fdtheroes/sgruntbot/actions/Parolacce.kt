@@ -7,7 +7,8 @@ import org.telegram.telegrambots.meta.api.objects.Message
 class Parolacce : Action {
 
     private val regex = Regex(
-        "[ck]a[tz]z[io]|[ck]ulo|\\bfica\\b|vaffanculo|stronz[aoie]|coglion[aei]|merda"
+        "[ck]a[tz]z[io]|[ck]ulo|\\bfica\\b|vaffanculo|stronz[aoie]|coglion[aei]|merda",
+        RegexOption.IGNORE_CASE
     )
 
     override fun doAction(message: Message, context: Context) {

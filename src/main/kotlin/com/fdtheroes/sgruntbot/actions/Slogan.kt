@@ -7,7 +7,7 @@ import java.net.URL
 
 class Slogan : Action {
 
-    private val regex = Regex("^!slogan (.*)\$", setOf(RegexOption.IGNORE_CASE))
+    private val regex = Regex("^!slogan (.*)\$", RegexOption.IGNORE_CASE)
 
     override fun doAction(message: Message, context: Context) {
         val testo = regex.findAll(message.text)

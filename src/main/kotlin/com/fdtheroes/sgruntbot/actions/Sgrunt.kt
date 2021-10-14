@@ -1,0 +1,29 @@
+package com.fdtheroes.sgruntbot.actions
+
+import com.fdtheroes.sgruntbot.utils.BotUtils
+import com.fdtheroes.sgruntbot.utils.Context
+import org.telegram.telegrambots.meta.api.objects.Message
+import java.time.LocalDateTime
+
+class Sgrunt : Action {
+
+    private val regex = Regex("^sgrunt(bot|y|olino|olomeo)", RegexOption.IGNORE_CASE)
+    private val reply = listOf(
+        "Cazzo vuoi!?!",
+        "Chi mi chiama?",
+        "E io che c'entro adesso?",
+        "Farò finta di non aver sentito",
+        "Sgru' che... smuà!"
+    )
+
+    override fun doAction(message: Message, context: Context) {
+        if (regex.containsMatchIn(message.text)) {
+            val user = BotUtils.instance.userIds[message.from.id]
+            if (user == BotUtils.Users.SUORA) {
+                BotUtils.instance.rispondi(message, "Col cazzo!")
+            } else {
+                BotUtils.instance.rispondi(message, reply.random())
+            }
+        }
+    }
+}

@@ -17,15 +17,7 @@ class BotUtils {
         instance.bot = bot
     }
 
-    val userIds = setOf<Long>(
-        32657811,
-        353708759,
-        252800958,
-        250965179,
-        68714652,
-        259607683,
-        104278889
-    )
+    val userIds = Users.values().associateBy { it.id }
 
     val chatId = "-1001103213994"
 
@@ -72,6 +64,15 @@ class BotUtils {
 
     private fun sleep(seconds: IntRange) {
         Thread.sleep(Random.nextLong(seconds.first.toLong() * 1000, seconds.last.toLong() * 1000))
+    }
+
+    enum class Users(val id: Long) {
+        SUORA(32657811L),
+        GIAMBO(353708759L),
+        DADA(252800958L),
+        SEU(68714652L),
+        GENGY(259607683L),
+        AVVE(10427888L)
     }
 
     companion object {

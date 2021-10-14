@@ -4,14 +4,13 @@ import com.fdtheroes.sgruntbot.utils.BotUtils
 import com.fdtheroes.sgruntbot.utils.Context
 import org.telegram.telegrambots.meta.api.objects.Message
 
-class Source : Action {
+class BitcoinEUR : Bitcoin(), Action {
 
-    private val regex = Regex("^!source\$", RegexOption.IGNORE_CASE)
+    private val regex = Regex("^!btce\$", RegexOption.IGNORE_CASE)
 
     override fun doAction(message: Message, context: Context) {
         if (regex.containsMatchIn(message.text)) {
-            return BotUtils.instance.rispondiAsText(message, "http://github.com/ggiambo/SgruntBot")
+            BotUtils.instance.rispondi(message, bitcoinvalue("EUR"))
         }
     }
-
 }

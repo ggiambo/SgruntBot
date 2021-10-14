@@ -6,12 +6,14 @@ import org.telegram.telegrambots.meta.api.methods.ParseMode
 import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import org.telegram.telegrambots.meta.api.objects.Message
+import java.time.LocalDateTime
 import kotlin.random.Random
 
 class Context {
 
     var lastSuper: Message? = null
-    var pignolo: Boolean = false
+    var pignolo = false
+    var pausedTime: LocalDateTime? = null
 
     fun rispondiAsText(bot: Bot, message: Message, text: String) {
         sleep(0..5)

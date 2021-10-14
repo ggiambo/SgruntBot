@@ -6,7 +6,7 @@ import org.telegram.telegrambots.meta.api.objects.Message
 
 class Fortune : Action {
 
-    private val regex = Regex("^!(fortune|quote)", setOf(RegexOption.IGNORE_CASE))
+    private val regex = Regex("^!(fortune|quote)", RegexOption.IGNORE_CASE)
 
     override fun doAction(message: Message, context: Context) {
         if (regex.containsMatchIn(message.text)) {
