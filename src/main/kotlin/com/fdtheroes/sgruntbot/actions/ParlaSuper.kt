@@ -7,13 +7,13 @@ import org.telegram.telegrambots.meta.api.objects.Message
 
 class ParlaSuper : Action {
 
-    private val regex = Regex(
+    private val parlasuper = Regex(
         "^!parlasuper (.*)$",
         setOf(RegexOption.IGNORE_CASE, RegexOption.MULTILINE, RegexOption.DOT_MATCHES_ALL)
     )
 
     override fun doAction(message: Message, context: Context) {
-        val testo = regex.findAll(message.text)
+        val testo = parlasuper.findAll(message.text)
             .map { it.groupValues[1] }
             .firstOrNull()
         if (testo != null && BotUtils.instance.userIds.contains(message.from.id)) {

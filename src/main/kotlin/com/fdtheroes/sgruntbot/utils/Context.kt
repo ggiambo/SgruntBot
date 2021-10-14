@@ -11,6 +11,7 @@ import kotlin.random.Random
 class Context {
 
     var lastSuper: Message? = null
+    var pignolo: Boolean = false
 
     fun rispondiAsText(bot: Bot, message: Message, text: String) {
         sleep(0..5)
