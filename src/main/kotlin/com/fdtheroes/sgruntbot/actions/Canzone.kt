@@ -1,7 +1,7 @@
 package com.fdtheroes.sgruntbot.actions
 
-import com.fdtheroes.sgruntbot.utils.BotUtils
-import com.fdtheroes.sgruntbot.utils.Context
+import com.fdtheroes.sgruntbot.BotUtils
+import com.fdtheroes.sgruntbot.Context
 import org.telegram.telegrambots.meta.api.methods.ActionType
 import org.telegram.telegrambots.meta.api.methods.send.SendAudio
 import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
@@ -28,9 +28,7 @@ class Canzone : Action {
 
     override fun doAction(message: Message, context: Context) {
         val canzone = regex.find(message.text)?.groupValues?.get(1)
-        if (canzone.isNullOrEmpty()) {
-            BotUtils.instance.rispondi(message, "Non ci riesco.")
-        } else {
+        if (canzone != null) {
             BotUtils.instance.rispondi(SendChatAction(message.chat.id.toString(), ActionType.UPLOADDOCUMENT.toString()))
 
             val fileName = fetch(canzone)

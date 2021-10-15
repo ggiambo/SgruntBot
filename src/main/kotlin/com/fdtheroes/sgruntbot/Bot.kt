@@ -1,11 +1,8 @@
 package com.fdtheroes.sgruntbot
 
 import com.fdtheroes.sgruntbot.actions.Action
-import com.fdtheroes.sgruntbot.utils.BotUtils
-import com.fdtheroes.sgruntbot.utils.Context
 import org.reflections.Reflections
 import org.telegram.telegrambots.bots.TelegramLongPollingBot
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import org.telegram.telegrambots.meta.api.objects.Update
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
@@ -19,7 +16,7 @@ open class Bot(private val botToken: String, private val botUsername: String) : 
 
     init {
         BotUtils.init(this)
-        execute(SendMessage(BotUtils.instance.chatId, "Sono partito"))
+        //execute(SendMessage(BotUtils.instance.chatId, "Sono partito"))
         actions = Reflections("com.fdtheroes.sgruntbot")
             .getSubTypesOf(Action::class.java)
             .map { it.getDeclaredConstructor().newInstance() }
