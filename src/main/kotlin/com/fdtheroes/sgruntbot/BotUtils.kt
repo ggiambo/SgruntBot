@@ -1,21 +1,19 @@
-package com.fdtheroes.sgruntbot.utils
+package com.fdtheroes.sgruntbot
 
 import com.fdtheroes.sgruntbot.Bot
 import org.telegram.telegrambots.meta.api.methods.ActionType
+import org.telegram.telegrambots.meta.api.methods.BotApiMethod
 import org.telegram.telegrambots.meta.api.methods.ParseMode
+import org.telegram.telegrambots.meta.api.methods.send.SendAudio
 import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import org.telegram.telegrambots.meta.api.objects.Message
+import java.io.Serializable
 import kotlin.random.Random
 
 class BotUtils {
 
     private lateinit var bot: Bot
-
-    fun init(bot: Bot) {
-        instance = BotUtils()
-        instance.bot = bot
-    }
 
     val userIds = Users.values().associateBy { it.id }
 
@@ -58,8 +56,12 @@ class BotUtils {
         rispondi(reply)
     }
 
-    fun rispondi(sendMessage: SendMessage) {
-        bot.executeAsync(sendMessage)
+    fun <T : Serializable, M : BotApiMethod<T>> rispondi(sendChatAction: M) {
+        bot.executeAsync(sendChatAction)
+    }
+
+    fun rispondi(sendAudio: SendAudio) {
+        bot.executeAsync(sendAudio)
     }
 
     private fun sleep(seconds: IntRange) {
@@ -77,6 +79,11 @@ class BotUtils {
 
     companion object {
         lateinit var instance: BotUtils
+
+        fun init(bot: Bot) {
+            instance = BotUtils()
+            instance.bot = bot
+        }
     }
 
 }

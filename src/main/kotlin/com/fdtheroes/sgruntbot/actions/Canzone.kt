@@ -1,6 +1,7 @@
-package com.fdtheroes.sgruntbot.utils
+package com.fdtheroes.sgruntbot.actions
 
-import com.fdtheroes.sgruntbot.Bot
+import com.fdtheroes.sgruntbot.utils.BotUtils
+import com.fdtheroes.sgruntbot.utils.Context
 import org.telegram.telegrambots.meta.api.methods.ActionType
 import org.telegram.telegrambots.meta.api.methods.send.SendAudio
 import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
@@ -12,36 +13,39 @@ import kotlin.io.path.createDirectory
 import kotlin.io.path.exists
 import kotlin.io.path.pathString
 
-class CanzoUtils {
+class Canzone : Action {
 
+    val regex = Regex("!canzone (.*)$", RegexOption.IGNORE_CASE)
     private val destPath: Path
 
     init {
-        val tmpDir = System.getProperty("java.io.tmpdir");
+        val tmpDir = System.getProperty("java.io.tmpdir")
         destPath = Path(tmpDir, "songs")
         if (!destPath.exists()) {
             destPath.createDirectory()
         }
     }
 
-    fun canzo(bot: Bot, message: Message, query: String?) {
-        bot.executeAsync(SendChatAction(message.chat.id.toString(), ActionType.UPLOADDOCUMENT.toString()))
-        if (query == null) {
-            RispondiUtils().rispondi(bot, message, "Non ci riesco.")
+    override fun doAction(message: Message, context: Context) {
+        val canzone = regex.find(message.text)?.groupValues?.get(1)
+        if (canzone.isNullOrEmpty()) {
+            BotUtils.instance.rispondi(message, "Non ci riesco.")
+        } else {
+            BotUtils.instance.rispondi(SendChatAction(message.chat.id.toString(), ActionType.UPLOADDOCUMENT.toString()))
+
+            val fileName = fetch(canzone)
+            if (fileName == null) {
+                BotUtils.instance.rispondi(message, "Non ci riesco.")
+            }
+            val file = destPath.resolve(fileName!!).toFile()
+
+            val sendAudio = SendAudio()
+            sendAudio.chatId = message.chat.id.toString()
+            sendAudio.replyToMessageId = message.messageId
+            sendAudio.audio = InputFile(file, fileName)
+
+            BotUtils.instance.rispondi(sendAudio)
         }
-
-        val fileName = fetch(query!!)
-        if (fileName == null) {
-            RispondiUtils().rispondi(bot, message, "Non ci riesco.")
-        }
-        val file = destPath.resolve(fileName!!).toFile()
-
-        val sendAudio = SendAudio()
-        sendAudio.chatId = message.chat.id.toString()
-        sendAudio.replyToMessageId = message.messageId
-        sendAudio.audio = InputFile(file, fileName)
-
-        bot.executeAsync(sendAudio)
     }
 
     private fun fetch(query: String): String? {

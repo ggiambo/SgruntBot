@@ -5,18 +5,18 @@ import com.fdtheroes.sgruntbot.utils.Context
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import org.telegram.telegrambots.meta.api.objects.Message
 
-class ParlaSuper : Action {
+class Parla : Action {
 
-    private val parlasuper = Regex(
-        "^!parlasuper (.*)$",
+    private val regex = Regex(
+        "^!parla (.*)$",
         setOf(RegexOption.IGNORE_CASE, RegexOption.MULTILINE, RegexOption.DOT_MATCHES_ALL)
     )
 
     override fun doAction(message: Message, context: Context) {
-        val testo = parlasuper.find(message.text)?.groupValues?.get(1)
-        if (testo != null && BotUtils.instance.userIds.contains(message.from.id)) {
-            BotUtils.instance.rispondi(SendMessage(BotUtils.instance.chatId, testo))
-            context.lastSuper = message
+        val msg = regex.find(message.text)?.groupValues?.get(1)
+        if (msg != null) {
+            val sendMessage = SendMessage(BotUtils.instance.chatId, "Mi dicono di dire: $msg")
+            BotUtils.instance.rispondi(sendMessage)
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.fdtheroes.sgruntbot.utils
+package com.fdtheroes.sgruntbot
 
 import com.fdtheroes.sgruntbot.Bot
 import org.telegram.telegrambots.meta.api.methods.ActionType
@@ -12,6 +12,7 @@ import kotlin.random.Random
 class Context {
 
     var lastSuper: Message? = null
+    var lastAuthor : String? = null
     var pignolo = false
     var pausedTime: LocalDateTime? = null
 

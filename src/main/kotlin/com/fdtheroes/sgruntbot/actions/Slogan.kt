@@ -10,26 +10,22 @@ class Slogan : Action {
     private val regex = Regex("^!slogan (.*)\$", RegexOption.IGNORE_CASE)
 
     override fun doAction(message: Message, context: Context) {
-        val testo = regex.findAll(message.text)
-            .map { it.groupValues[1] }
-            .firstOrNull()
+        val testo = regex.find(message.text)?.groupValues?.get(1)
         if (testo != null) {
             val slogan = fetchSlogan(testo)
             BotUtils.instance.rispondiAsText(message, slogan)
         }
     }
 
-    private fun fetchSlogan(testo: String): String {
-        val res = URL("http://www.sloganizer.net/en/outbound.php?slogan=${testo}")
-            .openConnection()
-            .getInputStream()
-            .readAllBytes()
-            .decodeToString()
-        return Regex("<a.*?>(.*)</a>")
-            .findAll(res)
-            .map { it.groupValues[1] }
-            .firstOrNull()
-            .orEmpty()
+    companion object {
+        fun fetchSlogan(testo: String): String {
+            val res = URL("http://www.sloganizer.net/en/outbound.php?slogan=${testo}")
+                .openConnection()
+                .getInputStream()
+                .readAllBytes()
+                .decodeToString()
+            return Regex("<a.*?>(.*)</a>").find(res)?.groupValues?.get(0).orEmpty()
+        }
     }
 
 }
