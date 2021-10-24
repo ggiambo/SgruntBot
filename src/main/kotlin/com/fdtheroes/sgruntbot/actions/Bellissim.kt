@@ -5,7 +5,7 @@ import com.fdtheroes.sgruntbot.Context
 import org.telegram.telegrambots.meta.api.objects.Message
 import kotlin.random.Random
 
-class Bellisim : Action {
+class Bellissim : Action {
 
     private val regex = Regex("bellissim", RegexOption.IGNORE_CASE)
 
