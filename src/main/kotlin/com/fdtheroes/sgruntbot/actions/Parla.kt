@@ -15,7 +15,7 @@ class Parla : Action {
     override fun doAction(message: Message, context: Context) {
         val msg = regex.find(message.text)?.groupValues?.get(1)
         if (msg != null) {
-            val sendMessage = SendMessage(BotUtils.instance.chatId, "Mi dicono di dire: $msg")
+            val sendMessage = SendMessage(BotUtils.chatId, "Mi dicono di dire: $msg")
             BotUtils.instance.rispondi(sendMessage)
         }
     }

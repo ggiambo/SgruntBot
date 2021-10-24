@@ -27,7 +27,7 @@ class Aes : Action {
         }
     }
 
-    private fun encrypt(text: String, key: String): String {
+    private fun encrypt(key: String, text: String): String {
         if (text.isEmpty() || key.isEmpty()) {
             return "non ci riesco :("
         }
@@ -37,7 +37,7 @@ class Aes : Action {
         return Base64.getEncoder().encodeToString(enctext)
     }
 
-    private fun decrypt(enctext: String, key: String): String {
+    private fun decrypt(key: String, enctext: String): String {
         if (enctext.isEmpty() || key.isEmpty()) {
             return "non ci riesco :("
         }

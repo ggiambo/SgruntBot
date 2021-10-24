@@ -16,7 +16,7 @@ open class Bot(private val botToken: String, private val botUsername: String) : 
 
     init {
         BotUtils.init(this)
-        //execute(SendMessage(BotUtils.instance.chatId, "Sono partito"))
+        //execute(SendMessage(BotUtils.chatId, "Sono partito"))
         actions = Reflections("com.fdtheroes.sgruntbot")
             .getSubTypesOf(Action::class.java)
             .map { it.getDeclaredConstructor().newInstance() }

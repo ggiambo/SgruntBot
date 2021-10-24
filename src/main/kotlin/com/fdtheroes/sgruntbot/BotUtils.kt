@@ -1,6 +1,5 @@
 package com.fdtheroes.sgruntbot
 
-import com.fdtheroes.sgruntbot.Bot
 import org.telegram.telegrambots.meta.api.methods.ActionType
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod
 import org.telegram.telegrambots.meta.api.methods.ParseMode
@@ -16,8 +15,6 @@ class BotUtils {
     private lateinit var bot: Bot
 
     val userIds = Users.values().associateBy { it.id }
-
-    val chatId = "-1001103213994"
 
     fun getUserLink(message: Message?): String {
         if (message == null) {
@@ -46,7 +43,7 @@ class BotUtils {
         val sendChatAction = SendChatAction()
         sendChatAction.chatId = message.chatId.toString()
         sendChatAction.setAction(ActionType.TYPING)
-        bot.executeAsync(sendChatAction)
+        rispondi(sendChatAction)
         sleep(3..5)
         val reply = SendMessage()
         reply.chatId = message.chat.id.toString()
@@ -56,8 +53,8 @@ class BotUtils {
         rispondi(reply)
     }
 
-    fun <T : Serializable, M : BotApiMethod<T>> rispondi(sendChatAction: M) {
-        bot.executeAsync(sendChatAction)
+    fun <T : Serializable, M : BotApiMethod<T>> rispondi(message: M) {
+        bot.executeAsync(message)
     }
 
     fun rispondi(sendAudio: SendAudio) {
@@ -78,6 +75,9 @@ class BotUtils {
     }
 
     companion object {
+
+        val chatId = "-1001103213994"
+
         lateinit var instance: BotUtils
 
         fun init(bot: Bot) {

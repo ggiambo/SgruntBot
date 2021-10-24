@@ -15,7 +15,7 @@ class ParlaSuper : Action {
     override fun doAction(message: Message, context: Context) {
         val testo = parlasuper.find(message.text)?.groupValues?.get(1)
         if (testo != null && BotUtils.instance.userIds.contains(message.from.id)) {
-            BotUtils.instance.rispondi(SendMessage(BotUtils.instance.chatId, testo))
+            BotUtils.instance.rispondi(SendMessage(BotUtils.chatId, testo))
             context.lastSuper = message
         }
     }

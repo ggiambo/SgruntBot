@@ -13,7 +13,7 @@ class Last : Action {
     override fun doAction(message: Message, context: Context) {
         if (regex.matches(message.text) && context.lastAuthor != null) {
             val sendMessage = SendMessage()
-            sendMessage.chatId = BotUtils.instance.chatId
+            sendMessage.chatId = BotUtils.chatId
             sendMessage.parseMode = ParseMode.MARKDOWN
             sendMessage.text = Slogan.fetchSlogan(context.lastAuthor!!)
             BotUtils.instance.rispondi(sendMessage)
