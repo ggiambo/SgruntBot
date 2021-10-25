@@ -22,7 +22,7 @@ class BotUtils {
         }
         val id = message.from.id
         val name: String
-        if (message.from?.userName != null) {
+        if (!message.from?.userName.isNullOrEmpty()) {
             name = message.from.userName
         } else {
             name = message.from.firstName
