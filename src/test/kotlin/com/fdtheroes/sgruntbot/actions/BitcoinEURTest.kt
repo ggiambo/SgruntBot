@@ -7,24 +7,24 @@ import org.telegram.telegrambots.meta.api.methods.ActionType
 import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
-class BellissimTest : ActionTest() {
+class BitcoinEURTest : ActionTest() {
 
-    private val bellissim = Bellissim()
+    private val bitcoinEUR = BitcoinEUR()
 
     @Test
     fun testPositive() {
-        bellissim.doAction(message(("XYZ_bEllISSimo_123")), Context())
+        bitcoinEUR.doAction(message(("!btce")), Context())
 
         Assertions.assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
         val sendMessage = botArguments[1] as SendMessage
         Assertions.assertThat(sendChatAction.actionType).isEqualTo(ActionType.TYPING)
-        Assertions.assertThat(sendMessage.text).startsWith("IO sono bellissimo! ....")
+        Assertions.assertThat(sendMessage.text).startsWith("Il buttcoin vale ").endsWith(" EUR")
     }
 
     @Test
     fun testNegative() {
-        bellissim.doAction(message(("XYZ_quack_123")), Context())
+        bitcoinEUR.doAction(message(("!btce__")), Context())
 
         Assertions.assertThat(botArguments).hasSize(0)
     }
