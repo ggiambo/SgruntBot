@@ -15,7 +15,7 @@ class Bullshit : Action {
         if (value != null) {
             val eur = bullshitInEuro(value)
             if (eur != 0.0) {
-                BotUtils.instance.rispondi(message, "$value bullshit corrispondono a #{eur} pregiati euro.")
+                BotUtils.instance.rispondi(message, "$value bullshit corrispondono a $eur pregiati euro.")
             } else {
                 BotUtils.instance.rispondi(message, "Non ci riesco.")
             }
