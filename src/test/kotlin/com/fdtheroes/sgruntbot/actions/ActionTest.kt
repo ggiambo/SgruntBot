@@ -5,6 +5,7 @@ import com.fdtheroes.sgruntbot.BotUtils
 import org.mockito.kotlin.doAnswer
 import org.mockito.kotlin.isA
 import org.mockito.kotlin.mock
+import org.telegram.telegrambots.bots.DefaultBotOptions
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod
 import org.telegram.telegrambots.meta.api.methods.send.SendAudio
 import org.telegram.telegrambots.meta.api.objects.Chat
@@ -27,7 +28,15 @@ open class ActionTest {
                 null
             }
         }
-        BotUtils.init(bot)
+
+        BotUtils.init(
+            bot, DefaultBotOptions()
+                .apply {
+                    this.proxyType = DefaultBotOptions.ProxyType.HTTP
+                    this.proxyHost = "127.0.0.1"
+                    this.proxyPort = 8888
+                }
+        )
     }
 
     fun message(text: String, chatId: Long = BotUtils.chatId.toLong(), from: User = user()): Message {

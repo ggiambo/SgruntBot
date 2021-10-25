@@ -26,11 +26,7 @@ class Bullshit : Action {
         if (value == null) {
             return 0.0
         }
-        val url = URL("https://free.currconv.com/api/v7/convert?q=BOB_EUR&compact=ultra&apiKey=60932c152410148d78dc")
-            .openConnection()
-            .getInputStream()
-            .readAllBytes()
-            .decodeToString()
+        val url = BotUtils.instance.textFromURL("https://free.currconv.com/api/v7/convert?q=BOB_EUR&compact=ultra&apiKey=60932c152410148d78dc")
 
         return JSONObject(url)
             .getDouble("BOB_EUR") * value.toDouble()

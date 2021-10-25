@@ -19,11 +19,7 @@ class Slogan : Action {
 
     companion object {
         fun fetchSlogan(testo: String): String {
-            val res = URL("http://www.sloganizer.net/en/outbound.php?slogan=${testo}")
-                .openConnection()
-                .getInputStream()
-                .readAllBytes()
-                .decodeToString()
+            val res = BotUtils.instance.textFromURL("http://www.sloganizer.net/en/outbound.php?slogan=${testo}")
             return Regex("<a.*?>(.*)</a>").find(res)?.groupValues?.get(0).orEmpty()
         }
     }

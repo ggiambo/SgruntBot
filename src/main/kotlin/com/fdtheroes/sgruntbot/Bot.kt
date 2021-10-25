@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
 import kotlin.random.Random
 
-open class Bot(private val botToken: String, private val botUsername: String) : TelegramLongPollingBot() {
+open class Bot(private val botConfig: BotConfig) : TelegramLongPollingBot(botConfig.defaultBotOptions) {
 
     private val actions: List<Action>
     private val context = Context()
@@ -23,11 +23,11 @@ open class Bot(private val botToken: String, private val botUsername: String) : 
     }
 
     override fun getBotToken(): String {
-        return botToken
+        return botConfig.token
     }
 
     override fun getBotUsername(): String {
-        return botUsername
+        return botConfig.botName
     }
 
     override fun onUpdateReceived(update: Update?) {

@@ -5,7 +5,6 @@ import com.fdtheroes.sgruntbot.Context
 import org.json.JSONArray
 import org.json.JSONObject
 import org.telegram.telegrambots.meta.api.objects.Message
-import java.net.URL
 
 class Wiki : Action {
 
@@ -29,22 +28,13 @@ class Wiki : Action {
     }
 
     private fun getSearchResponse(query: String): String {
-        val url = URL("https://it.wikipedia.org/w/api.php?action=opensearch&profile=fuzzy&search=$query")
-            .openConnection()
-            .getInputStream()
-            .readAllBytes()
-            .decodeToString()
-
+        val url = BotUtils.instance.textFromURL("https://it.wikipedia.org/w/api.php?action=opensearch&profile=fuzzy&search=$query")
         return JSONArray(url).getJSONArray(1).optString(0)
     }
 
     private fun getResponsePages(titles: String): Sequence<JSONObject> {
         val url =
-            URL("https://it.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=$titles")
-                .openConnection()
-                .getInputStream()
-                .readAllBytes()
-                .decodeToString()
+            BotUtils.instance.textFromURL("https://it.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=$titles")
 
         val pages = JSONObject(url)
             .getJSONObject("query")

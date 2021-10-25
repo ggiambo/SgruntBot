@@ -1,5 +1,6 @@
 package com.fdtheroes.sgruntbot
 
+import org.telegram.telegrambots.bots.DefaultBotOptions
 import org.telegram.telegrambots.meta.api.methods.ActionType
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod
 import org.telegram.telegrambots.meta.api.methods.ParseMode
@@ -8,11 +9,15 @@ import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import org.telegram.telegrambots.meta.api.objects.Message
 import java.io.Serializable
+import java.net.InetSocketAddress
+import java.net.Proxy
+import java.net.URL
 import kotlin.random.Random
 
 class BotUtils {
 
     private lateinit var bot: Bot
+    private lateinit var proxy: Proxy
 
     val userIds = Users.values().associateBy { it.id }
 
@@ -61,6 +66,14 @@ class BotUtils {
         bot.executeAsync(sendAudio)
     }
 
+    fun textFromURL(url: String): String {
+        return URL(url)
+            .openConnection(proxy)
+            .getInputStream()
+            .readAllBytes()
+            .decodeToString()
+    }
+
     private fun sleep(seconds: IntRange) {
         Thread.sleep(Random.nextLong(seconds.first.toLong() * 1000, seconds.last.toLong() * 1000))
     }
@@ -81,8 +94,20 @@ class BotUtils {
         lateinit var instance: BotUtils
 
         fun init(bot: Bot) {
+            init(bot, bot.options)
+        }
+
+        fun init(bot: Bot, options: DefaultBotOptions) {
             instance = BotUtils()
             instance.bot = bot
+            instance.proxy = getProxy(options)
+        }
+
+        private fun getProxy(options: DefaultBotOptions): Proxy {
+            if (options.proxyType == DefaultBotOptions.ProxyType.NO_PROXY) {
+                return Proxy.NO_PROXY
+            }
+            return Proxy(Proxy.Type.HTTP, InetSocketAddress(options.proxyHost, options.proxyPort))
         }
     }
 
