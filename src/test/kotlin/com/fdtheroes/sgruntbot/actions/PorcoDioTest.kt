@@ -7,19 +7,26 @@ import org.telegram.telegrambots.meta.api.methods.ActionType
 import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
-class GoogleTest : ActionTest() {
+class PorcoDioTest : ActionTest() {
 
-    private val google = Google()
+    private val porcoDio = PorcoDio()
 
     @Test
     fun testPositive() {
-        google.doAction(message("!google Sgrunt bot"), Context())
+        porcoDio.doAction(message(("\tporco dio")), Context().apply { pignolo = true })
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
         val sendMessage = botArguments[1] as SendMessage
         assertThat(sendChatAction.actionType).isEqualTo(ActionType.TYPING)
-        assertThat(sendMessage.text).isEqualTo("Cercatelo con [google](https://www.google.com/search?q=Sgrunt bot) ritardato!™")
+        assertThat(sendMessage.text).isEqualTo("E la madooonna!")
+    }
+
+    @Test
+    fun testNegative() {
+        porcoDio.doAction(message(("porco dioh! ")), Context())
+
+        assertThat(botArguments).isEmpty()
     }
 
 }

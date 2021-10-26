@@ -7,19 +7,19 @@ import org.telegram.telegrambots.meta.api.methods.ActionType
 import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
-class GoogleTest : ActionTest() {
+class RoganTest : ActionTest() {
 
-    private val google = Google()
+    private val rogan = Rogan()
 
     @Test
     fun testPositive() {
-        google.doAction(message("!google Sgrunt bot"), Context())
+        rogan.doAction(message("a me rogan sta sulle balle"), Context())
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
         val sendMessage = botArguments[1] as SendMessage
         assertThat(sendChatAction.actionType).isEqualTo(ActionType.TYPING)
-        assertThat(sendMessage.text).isEqualTo("Cercatelo con [google](https://www.google.com/search?q=Sgrunt bot) ritardato!™")
+        assertThat(sendMessage.text).isEqualTo("Cheppalle! Yawn!")
     }
 
 }

@@ -1,5 +1,6 @@
 package com.fdtheroes.sgruntbot.actions
 
+import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.Context
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -7,37 +8,30 @@ import org.telegram.telegrambots.meta.api.methods.ActionType
 import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
-class LaminTest : ActionTest() {
+class SgruntTest : ActionTest() {
 
-    private val lamin = Lamin()
+    private val sgrunt = Sgrunt()
 
     @Test
     fun testPositive() {
-        lamin.doAction(message("negraccio"), Context())
+        sgrunt.doAction(message("sgrunty"), Context())
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
         val sendMessage = botArguments[1] as SendMessage
         assertThat(sendChatAction.actionType).isEqualTo(ActionType.TYPING)
-        assertThat(sendMessage.text).isEqualTo("Lamin mi manchi.")
+        assertThat(sendMessage.text).isNotEmpty
     }
 
     @Test
-    fun testPositive_2() {
-        lamin.doAction(message("__negher++"), Context())
+    fun testPositive_1() {
+        sgrunt.doAction(message(text = "sgruntbot", from = user(id = BotUtils.Users.SUORA.id)), Context())
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
         val sendMessage = botArguments[1] as SendMessage
         assertThat(sendChatAction.actionType).isEqualTo(ActionType.TYPING)
-        assertThat(sendMessage.text).isEqualTo("Lamin mi manchi.")
-    }
-
-    @Test
-    fun testNegative() {
-        lamin.doAction(message("**negrini!!"), Context())
-
-        assertThat(botArguments).isEmpty()
+        assertThat(sendMessage.text).isEqualTo("Ciao papà!")
     }
 
 }

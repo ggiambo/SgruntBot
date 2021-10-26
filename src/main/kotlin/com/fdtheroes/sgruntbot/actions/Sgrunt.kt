@@ -3,7 +3,6 @@ package com.fdtheroes.sgruntbot.actions
 import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.Context
 import org.telegram.telegrambots.meta.api.objects.Message
-import java.time.LocalDateTime
 
 class Sgrunt : Action {
 
@@ -20,7 +19,7 @@ class Sgrunt : Action {
         if (regex.containsMatchIn(message.text)) {
             val user = BotUtils.instance.userIds[message.from.id]
             if (user == BotUtils.Users.SUORA) {
-                BotUtils.instance.rispondi(message, "Col cazzo!")
+                BotUtils.instance.rispondi(message, "Ciao papà!")
             } else {
                 BotUtils.instance.rispondi(message, reply.random())
             }
