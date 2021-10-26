@@ -38,7 +38,7 @@ class SmettiTest : ActionTest() {
         val sendChatAction = botArguments[0] as SendChatAction
         val sendMessage = botArguments[1] as SendMessage
         assertThat(sendChatAction.actionType).isEqualTo(ActionType.TYPING)
-        assertThat(sendMessage.text).isEqualTo("Col cazzo")
+        assertThat(sendMessage.text).isEqualTo("Col cazzo!")
         assertThat(context.pausedTime).isNull()
     }
 
