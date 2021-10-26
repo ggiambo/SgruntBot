@@ -29,6 +29,8 @@ open class ActionTest {
             }
         }
 
+        BotUtils.init(bot, DefaultBotOptions())
+/*
         BotUtils.init(
             bot, DefaultBotOptions()
                 .apply {
@@ -37,6 +39,7 @@ open class ActionTest {
                     this.proxyPort = 8888
                 }
         )
+ */
     }
 
     fun message(text: String, chatId: Long = BotUtils.chatId.toLong(), from: User = user()): Message {
