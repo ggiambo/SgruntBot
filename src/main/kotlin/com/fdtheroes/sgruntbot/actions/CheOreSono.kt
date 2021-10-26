@@ -43,7 +43,7 @@ class CheOreSono : Action {
     )
 
     override fun doAction(message: Message, context: Context) {
-        if (context.pignolo && regex.containsMatchIn(message.text)) {
+        if (regex.containsMatchIn(message.text)) {
             BotUtils.instance.rispondi(message, oreInLettere())
         }
     }
