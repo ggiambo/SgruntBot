@@ -34,8 +34,9 @@ class Canzone : Action {
             val fileName = fetch(canzone)
             if (fileName == null) {
                 BotUtils.instance.rispondi(message, "Non ci riesco.")
+                return
             }
-            val file = destPath.resolve(fileName!!).toFile()
+            val file = destPath.resolve(fileName).toFile()
 
             val sendAudio = SendAudio()
             sendAudio.chatId = message.chat.id.toString()
