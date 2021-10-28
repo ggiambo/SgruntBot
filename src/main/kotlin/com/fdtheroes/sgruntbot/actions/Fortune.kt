@@ -10,11 +10,16 @@ class Fortune : Action {
 
     override fun doAction(message: Message, context: Context) {
         if (regex.containsMatchIn(message.text)) {
-            val fortune = Runtime.getRuntime().exec("fortune -sa it")
+            BotUtils.instance.rispondi(message, getFortune())
+        }
+    }
+
+    companion object {
+        fun getFortune(): String {
+            return Runtime.getRuntime().exec("fortune -sa it")
                 .inputStream
                 .reader()
                 .readText()
-            BotUtils.instance.rispondi(message, fortune)
         }
     }
 
