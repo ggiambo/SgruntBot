@@ -40,7 +40,7 @@ open class Bot(private val botConfig: BotConfig) : TelegramLongPollingBot(botCon
         }
 
         val message = update?.message
-        if (message == null) {
+        if (message?.text == null) {
             return
         }
 
