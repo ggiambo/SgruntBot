@@ -2,11 +2,13 @@ package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.Context
+import org.slf4j.LoggerFactory
 import org.telegram.telegrambots.meta.api.methods.ActionType
 import org.telegram.telegrambots.meta.api.methods.send.SendAudio
 import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
 import org.telegram.telegrambots.meta.api.objects.InputFile
 import org.telegram.telegrambots.meta.api.objects.Message
+import java.io.File
 import java.nio.file.Path
 import kotlin.io.path.Path
 import kotlin.io.path.createDirectory
@@ -15,6 +17,7 @@ import kotlin.io.path.pathString
 
 class Canzone : Action {
 
+    private val log = LoggerFactory.getLogger(this.javaClass)
     private val regex = Regex("!canzone (.*)$", RegexOption.IGNORE_CASE)
     private val destPath: Path
 
@@ -37,6 +40,9 @@ class Canzone : Action {
                 return
             }
             val file = destPath.resolve(fileName).toFile()
+            if (file.exists()) {
+                log.info("canzone da ${getSize(file)}")
+            }
 
             val sendAudio = SendAudio()
             sendAudio.chatId = message.chat.id.toString()
@@ -76,6 +82,27 @@ class Canzone : Action {
         }
 
         return fileName
+    }
+
+    private fun getSize(file: File): String {
+        val sizeInBytes = file.length()
+        if (sizeInBytes < 1024) {
+            return "$sizeInBytes bytes"
+        }
+        val sizeInKilo = sizeInBytes / 1024
+        if (sizeInKilo < 1024) {
+            return "$sizeInKilo K"
+        }
+        val sizeInMega = sizeInKilo / 1024
+        if (sizeInMega < 1024) {
+            return "$sizeInMega M"
+        }
+        val sizeInGiga = sizeInMega / 1024
+        if (sizeInGiga < 1024) {
+            return "$sizeInGiga G"
+        }
+
+        return "no, aspè, oltre 1 tera ?!?!"
     }
 
 }
