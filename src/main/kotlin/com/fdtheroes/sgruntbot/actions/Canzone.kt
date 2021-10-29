@@ -15,7 +15,7 @@ import kotlin.io.path.pathString
 
 class Canzone : Action {
 
-    val regex = Regex("!canzone (.*)$", RegexOption.IGNORE_CASE)
+    private val regex = Regex("!canzone (.*)$", RegexOption.IGNORE_CASE)
     private val destPath: Path
 
     init {
