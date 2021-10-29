@@ -1,6 +1,5 @@
 package com.fdtheroes.sgruntbot.actions
 
-import com.fdtheroes.sgruntbot.Context
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.telegram.telegrambots.meta.api.methods.ActionType
@@ -13,7 +12,7 @@ class CanzoneTest : ActionTest() {
 
     @Test
     fun testPositive() {
-        canzone.doAction(message("!canzone 2 Seconds Video"), Context())
+        canzone.doAction(message("!canzone 2 Seconds Video"))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction

@@ -1,7 +1,6 @@
 package com.fdtheroes.sgruntbot.actions
 
-import com.fdtheroes.sgruntbot.BotUtils
-import com.fdtheroes.sgruntbot.Context
+import com.fdtheroes.sgruntbot.Users
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.telegram.telegrambots.meta.api.methods.ActionType
@@ -14,7 +13,7 @@ class CoccolinoTest : ActionTest() {
 
     @Test
     fun testPositive_1() {
-        coccolino.doAction(message("coccolo", from = user(id = BotUtils.Users.SUORA.id)), Context())
+        coccolino.doAction(message("coccolo", from = user(id = Users.SUORA.id)))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -25,7 +24,7 @@ class CoccolinoTest : ActionTest() {
 
     @Test
     fun testPositive_2() {
-        coccolino.doAction(message("coccolino", from = user(id = BotUtils.Users.SUORA.id)), Context())
+        coccolino.doAction(message("coccolino", from = user(id = Users.SUORA.id)))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -36,7 +35,7 @@ class CoccolinoTest : ActionTest() {
 
     @Test
     fun testNegative() {
-        coccolino.doAction(message("coccolino", from = user(id = BotUtils.Users.GENGY.id)), Context())
+        coccolino.doAction(message("coccolino", from = user(id = Users.GENGY.id)))
 
         assertThat(botArguments).isEmpty()
     }

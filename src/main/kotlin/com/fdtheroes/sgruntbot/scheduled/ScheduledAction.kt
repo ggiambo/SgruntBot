@@ -1,7 +1,6 @@
 package com.fdtheroes.sgruntbot.scheduled
 
 import com.fdtheroes.sgruntbot.BotUtils
-import com.fdtheroes.sgruntbot.Context
 import org.slf4j.LoggerFactory
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import java.time.Duration
@@ -12,7 +11,6 @@ import java.util.*
 import kotlin.random.Random
 
 abstract class ScheduledAction(
-    val context: Context,
     private val sendMessage: (SendMessage) -> Unit
 ) {
 

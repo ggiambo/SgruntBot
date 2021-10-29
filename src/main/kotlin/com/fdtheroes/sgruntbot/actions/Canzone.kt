@@ -1,7 +1,6 @@
 package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BotUtils
-import com.fdtheroes.sgruntbot.Context
 import org.slf4j.LoggerFactory
 import org.telegram.telegrambots.meta.api.methods.ActionType
 import org.telegram.telegrambots.meta.api.methods.send.SendAudio
@@ -29,14 +28,14 @@ class Canzone : Action {
         }
     }
 
-    override fun doAction(message: Message, context: Context) {
+    override fun doAction(message: Message) {
         val canzone = regex.find(message.text)?.groupValues?.get(1)
         if (canzone != null) {
-            BotUtils.instance.rispondi(SendChatAction(message.chat.id.toString(), ActionType.UPLOADDOCUMENT.toString()))
+            BotUtils.rispondi(SendChatAction(message.chat.id.toString(), ActionType.UPLOADDOCUMENT.toString()))
 
             val fileName = fetch(canzone)
             if (fileName == null) {
-                BotUtils.instance.rispondi(message, "Non ci riesco.")
+                BotUtils.rispondi(message, "Non ci riesco.")
                 return
             }
             val file = destPath.resolve(fileName).toFile()
@@ -49,7 +48,7 @@ class Canzone : Action {
             sendAudio.replyToMessageId = message.messageId
             sendAudio.audio = InputFile(file, fileName)
 
-            BotUtils.instance.rispondi(sendAudio)
+            BotUtils.rispondi(sendAudio)
         }
     }
 

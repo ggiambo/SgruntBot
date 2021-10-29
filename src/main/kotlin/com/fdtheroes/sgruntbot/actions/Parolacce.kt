@@ -11,10 +11,10 @@ class Parolacce : Action {
         RegexOption.IGNORE_CASE
     )
 
-    override fun doAction(message: Message, context: Context) {
-        if (context.pignolo && regex.containsMatchIn(message.text)) {
-            val userLink = BotUtils.instance.getUserLink(message)
-            BotUtils.instance.rispondi(message, getTesto(userLink))
+    override fun doAction(message: Message) {
+        if (Context.pignolo && regex.containsMatchIn(message.text)) {
+            val userLink = BotUtils.getUserLink(message)
+            BotUtils.rispondi(message, getTesto(userLink))
         }
     }
 

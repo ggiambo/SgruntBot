@@ -1,7 +1,7 @@
 package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BotUtils
-import com.fdtheroes.sgruntbot.Context
+import com.fdtheroes.sgruntbot.Users
 import org.telegram.telegrambots.meta.api.objects.Message
 
 class Sgrunt : Action {
@@ -15,13 +15,13 @@ class Sgrunt : Action {
         "Sgru' che... smuà!"
     )
 
-    override fun doAction(message: Message, context: Context) {
+    override fun doAction(message: Message) {
         if (regex.containsMatchIn(message.text)) {
-            val user = BotUtils.instance.userIds[message.from.id]
-            if (user == BotUtils.Users.SUORA) {
-                BotUtils.instance.rispondi(message, "Ciao papà!")
+            val user = BotUtils.userIds[message.from.id]
+            if (user == Users.SUORA) {
+                BotUtils.rispondi(message, "Ciao papà!")
             } else {
-                BotUtils.instance.rispondi(message, reply.random())
+                BotUtils.rispondi(message, reply.random())
             }
         }
     }

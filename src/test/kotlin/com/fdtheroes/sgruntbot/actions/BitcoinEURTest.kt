@@ -1,6 +1,5 @@
 package com.fdtheroes.sgruntbot.actions
 
-import com.fdtheroes.sgruntbot.Context
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.telegram.telegrambots.meta.api.methods.ActionType
@@ -13,7 +12,7 @@ class BitcoinEURTest : ActionTest() {
 
     @Test
     fun testPositive() {
-        bitcoinEUR.doAction(message(("!btce")), Context())
+        bitcoinEUR.doAction(message(("!btce")))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -24,7 +23,7 @@ class BitcoinEURTest : ActionTest() {
 
     @Test
     fun testNegative() {
-        bitcoinEUR.doAction(message(("!btce__")), Context())
+        bitcoinEUR.doAction(message(("!btce__")))
 
         assertThat(botArguments).hasSize(0)
     }

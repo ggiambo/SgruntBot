@@ -1,6 +1,5 @@
 package com.fdtheroes.sgruntbot.actions
 
-import com.fdtheroes.sgruntbot.Context
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.telegram.telegrambots.meta.api.methods.ActionType
@@ -13,7 +12,7 @@ class CheOreSonoTest : ActionTest() {
 
     @Test
     fun testPositive() {
-        cheOreSono.doAction(message("non so che ore sono a dire il vero"), Context())
+        cheOreSono.doAction(message("non so che ore sono a dire il vero"))
 
         Assertions.assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction

@@ -11,9 +11,9 @@ class ChiEra : Action {
         setOf(RegexOption.IGNORE_CASE, RegexOption.MULTILINE, RegexOption.DOT_MATCHES_ALL)
     )
 
-    override fun doAction(message: Message, context: Context) {
+    override fun doAction(message: Message) {
         if (regex.containsMatchIn(message.text)) {
-            BotUtils.instance.rispondi(message, BotUtils.instance.getUserLink(context.lastSuper))
+            BotUtils.rispondi(message, BotUtils.getUserLink(Context.lastSuper))
         }
     }
 }

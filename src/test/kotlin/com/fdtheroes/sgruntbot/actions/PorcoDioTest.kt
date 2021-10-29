@@ -13,7 +13,8 @@ class PorcoDioTest : ActionTest() {
 
     @Test
     fun testPositive() {
-        porcoDio.doAction(message(("\tporco dio")), Context().apply { pignolo = true })
+        Context.pignolo = true
+        porcoDio.doAction(message(("\tporco dio")))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -24,7 +25,7 @@ class PorcoDioTest : ActionTest() {
 
     @Test
     fun testNegative() {
-        porcoDio.doAction(message(("porco dioh! ")), Context())
+        porcoDio.doAction(message(("porco dioh! ")))
 
         assertThat(botArguments).isEmpty()
     }

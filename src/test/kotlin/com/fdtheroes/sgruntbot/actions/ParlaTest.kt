@@ -1,6 +1,5 @@
 package com.fdtheroes.sgruntbot.actions
 
-import com.fdtheroes.sgruntbot.Context
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
@@ -11,7 +10,7 @@ class ParlaTest : ActionTest() {
 
     @Test
     fun testPositive() {
-        parla.doAction(message("!parla questo bot è stupendo!"), Context())
+        parla.doAction(message("!parla questo bot è stupendo!"))
 
         assertThat(botArguments).hasSize(1)
         val sendMessage = botArguments[0] as SendMessage

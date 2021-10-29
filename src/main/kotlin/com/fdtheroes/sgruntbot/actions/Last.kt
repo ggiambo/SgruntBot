@@ -10,13 +10,13 @@ class Last : Action {
 
     private val regex = Regex("^!last\$", RegexOption.IGNORE_CASE)
 
-    override fun doAction(message: Message, context: Context) {
-        if (regex.matches(message.text) && context.lastAuthor != null) {
+    override fun doAction(message: Message) {
+        if (regex.matches(message.text) && Context.lastAuthor != null) {
             val sendMessage = SendMessage()
             sendMessage.chatId = BotUtils.chatId
             sendMessage.parseMode = ParseMode.MARKDOWN
-            sendMessage.text = Slogan.fetchSlogan(context.lastAuthor!!)
-            BotUtils.instance.rispondi(sendMessage)
+            sendMessage.text = Slogan.fetchSlogan(Context.lastAuthor!!)
+            BotUtils.rispondi(sendMessage)
         }
     }
 

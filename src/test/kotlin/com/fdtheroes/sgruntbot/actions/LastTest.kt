@@ -1,7 +1,7 @@
 package com.fdtheroes.sgruntbot.actions
 
-import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.Context
+import com.fdtheroes.sgruntbot.Users
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
@@ -12,7 +12,8 @@ class LastTest : ActionTest() {
 
     @Test
     fun testPositive() {
-        last.doAction(message("!last"), Context().apply { lastAuthor = BotUtils.Users.GENGY.name })
+        Context.lastAuthor = Users.GENGY.name
+        last.doAction(message("!last"))
 
         assertThat(botArguments).hasSize(1)
         val sendMessage = botArguments[0] as SendMessage

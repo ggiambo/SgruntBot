@@ -1,4 +1,4 @@
 /target/
 .idea
 *.iml
-token.txt
+token*.txt

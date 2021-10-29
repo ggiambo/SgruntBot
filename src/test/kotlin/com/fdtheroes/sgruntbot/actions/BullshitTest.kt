@@ -1,6 +1,5 @@
 package com.fdtheroes.sgruntbot.actions
 
-import com.fdtheroes.sgruntbot.Context
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.telegram.telegrambots.meta.api.methods.ActionType
@@ -13,7 +12,7 @@ class BullshitTest : ActionTest() {
 
     @Test
     fun testPositive() {
-        bullshit.doAction(message(("Ho rubato 12.5 bs alla Campy")), Context())
+        bullshit.doAction(message(("Ho rubato 12.5 bs alla Campy")))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -24,7 +23,7 @@ class BullshitTest : ActionTest() {
 
     @Test
     fun testPositive_2() {
-        bullshit.doAction(message(("Ho rubato 12.5bullshit alla Campy")), Context())
+        bullshit.doAction(message(("Ho rubato 12.5bullshit alla Campy")))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction

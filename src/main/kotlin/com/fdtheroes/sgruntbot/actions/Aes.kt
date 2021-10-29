@@ -1,7 +1,6 @@
 package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BotUtils
-import com.fdtheroes.sgruntbot.Context
 import org.telegram.telegrambots.meta.api.objects.Message
 import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
@@ -13,16 +12,16 @@ class Aes : Action {
 
     private val regex = Regex("^!aes(d?) ([^ ]+) (.*)$")
 
-    override fun doAction(message: Message, context: Context) {
+    override fun doAction(message: Message) {
         val groupValues = regex.find(message.text)?.groupValues
         if (groupValues?.size == 4) {
             val decrypt = groupValues[1]
             val key = groupValues[2]
             val body = groupValues[3]
             if (decrypt.isEmpty()) {
-                BotUtils.instance.rispondi(message, encrypt(key, body))
+                BotUtils.rispondi(message, encrypt(key, body))
             } else {
-                BotUtils.instance.rispondi(message, decrypt(key, body))
+                BotUtils.rispondi(message, decrypt(key, body))
             }
         }
     }

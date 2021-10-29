@@ -13,7 +13,8 @@ class PorcaMadonnaTest : ActionTest() {
 
     @Test
     fun testPositive() {
-        porcaMadonna.doAction(message(("\tporca madonna")), Context().apply { pignolo = true })
+        Context.pignolo = true
+        porcaMadonna.doAction(message(("\tporca madonna")))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -24,7 +25,7 @@ class PorcaMadonnaTest : ActionTest() {
 
     @Test
     fun testNegative() {
-        porcaMadonna.doAction(message(("copporca madonna ")), Context())
+        porcaMadonna.doAction(message(("copporca madonna ")))
 
         assertThat(botArguments).isEmpty()
     }

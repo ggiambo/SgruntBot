@@ -13,7 +13,8 @@ class ChiEraTest : ActionTest() {
 
     @Test
     fun testPositive() {
-        chiEra.doAction(message("!chiera"), Context().apply { this.lastSuper = message("blah blah") })
+        Context.lastSuper = message("blah blah")
+        chiEra.doAction(message("!chiera"))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -24,11 +25,10 @@ class ChiEraTest : ActionTest() {
 
     @Test
     fun testPositive_2() {
+        Context.lastSuper = message("blah blah", from = user(42, userName = "", firstName = "Topopippo"))
         chiEra.doAction(
-            message("!chiera"),
-            Context().apply {
-                this.lastSuper = message("blah blah", from = user(42, userName = "", firstName = "Topopippo"))
-            })
+            message("!chiera")
+        )
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -39,7 +39,8 @@ class ChiEraTest : ActionTest() {
 
     @Test
     fun testNegative() {
-        chiEra.doAction(message("!chiera"), Context())
+        Context.lastSuper = null
+        chiEra.doAction(message("!chiera"))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction

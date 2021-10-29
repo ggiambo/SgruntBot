@@ -15,7 +15,8 @@ class ParolacceTest : ActionTest() {
     @ParameterizedTest
     @ValueSource(strings = ["cazzone", "culona", " fica ", "stronzi", "merdah!"])
     fun testPositive(parolaccia: String) {
-        parolacce.doAction(message("blah banf $parolaccia yadda yadda"), Context().apply { pignolo = true })
+        Context.pignolo = true
+        parolacce.doAction(message("blah banf $parolaccia yadda yadda"))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction

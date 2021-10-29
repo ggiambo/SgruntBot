@@ -13,7 +13,8 @@ class DioPorcoTest : ActionTest() {
 
     @Test
     fun testPositive() {
-        dioPorco.doAction(message(("\tdio porco")), Context().apply { pignolo = true })
+        Context.pignolo = true
+        dioPorco.doAction(message(("\tdio porco")))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -24,7 +25,8 @@ class DioPorcoTest : ActionTest() {
 
     @Test
     fun testPositive_2() {
-        dioPorco.doAction(message(("dio cane\n")), Context().apply { pignolo = true })
+        Context.pignolo = true
+        dioPorco.doAction(message(("dio cane\n")))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -36,7 +38,7 @@ class DioPorcoTest : ActionTest() {
 
     @Test
     fun testNegative() {
-        dioPorco.doAction(message(("condio cane ")), Context())
+        dioPorco.doAction(message(("condio cane ")))
 
         assertThat(botArguments).isEmpty()
     }

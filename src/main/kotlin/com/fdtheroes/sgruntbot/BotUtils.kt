@@ -14,10 +14,22 @@ import java.net.Proxy
 import java.net.URL
 import kotlin.random.Random
 
-class BotUtils {
+object BotUtils {
 
     private lateinit var bot: Bot
     private lateinit var proxy: Proxy
+
+    const val chatId = "-1001103213994"
+
+    fun init(bot: Bot) {
+        init(bot, bot.options)
+    }
+
+    // used for testing
+    fun init(bot: Bot, options: DefaultBotOptions) {
+        this.bot = bot
+        this.proxy = getProxy(options)
+    }
 
     val userIds = Users.values().associateBy { it.id }
 
@@ -78,37 +90,10 @@ class BotUtils {
         Thread.sleep(Random.nextLong(seconds.first.toLong() * 1000, seconds.last.toLong() * 1000))
     }
 
-    enum class Users(val id: Long) {
-        SUORA(32657811L),
-        GIAMBO(353708759L),
-        DADA(252800958L),
-        SEU(68714652L),
-        GENGY(259607683L),
-        AVVE(10427888L)
+    private fun getProxy(options: DefaultBotOptions): Proxy {
+        if (options.proxyType == DefaultBotOptions.ProxyType.NO_PROXY) {
+            return Proxy.NO_PROXY
+        }
+        return Proxy(Proxy.Type.HTTP, InetSocketAddress(options.proxyHost, options.proxyPort))
     }
-
-    companion object {
-
-        val chatId = "-1001103213994"
-
-        lateinit var instance: BotUtils
-
-        fun init(bot: Bot) {
-            init(bot, bot.options)
-        }
-
-        fun init(bot: Bot, options: DefaultBotOptions) {
-            instance = BotUtils()
-            instance.bot = bot
-            instance.proxy = getProxy(options)
-        }
-
-        private fun getProxy(options: DefaultBotOptions): Proxy {
-            if (options.proxyType == DefaultBotOptions.ProxyType.NO_PROXY) {
-                return Proxy.NO_PROXY
-            }
-            return Proxy(Proxy.Type.HTTP, InetSocketAddress(options.proxyHost, options.proxyPort))
-        }
-    }
-
 }

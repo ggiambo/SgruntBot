@@ -17,7 +17,6 @@ open class Bot(private val botConfig: BotConfig) : TelegramLongPollingBot(botCon
 
     private val log = LoggerFactory.getLogger(this.javaClass)
     private val actions: List<Action>
-    private val context = Context()
     private val lastAuthorRegex = Regex("^!last\$", RegexOption.IGNORE_CASE)
 
     init {
@@ -35,12 +34,10 @@ open class Bot(private val botConfig: BotConfig) : TelegramLongPollingBot(botCon
 
     private fun initScheduled() {
         RandomFortune(
-            context = context,
             sendMessage = this::executeAsync,
             getFortuneText = Fortune::getFortune
         ).start()
         RandomSlogan(
-            context = context,
             sendMessage = this::executeAsync,
             getSloganText = Slogan::fetchSlogan
         ).start()
@@ -55,9 +52,9 @@ open class Bot(private val botConfig: BotConfig) : TelegramLongPollingBot(botCon
     }
 
     override fun onUpdateReceived(update: Update?) {
-        if (context.pausedTime != null) {
-            if (ChronoUnit.MINUTES.between(context.pausedTime, LocalDateTime.now()) > 5) {
-                context.pausedTime = null
+        if (Context.pausedTime != null) {
+            if (ChronoUnit.MINUTES.between(Context.pausedTime, LocalDateTime.now()) > 5) {
+                Context.pausedTime = null
                 log.info("Posso parlare di nuovo!")
             } else {
                 return
@@ -71,16 +68,16 @@ open class Bot(private val botConfig: BotConfig) : TelegramLongPollingBot(botCon
 
         if (!lastAuthorRegex.containsMatchIn(message.text)) {
             if (message.from.userName != null) {
-                context.lastAuthor = message.from.userName
+                Context.lastAuthor = message.from.userName
             } else {
-                context.lastAuthor = message.from.firstName
+                Context.lastAuthor = message.from.firstName
             }
         }
 
-        context.pignolo = Random.nextInt(100) > 90
+        Context.pignolo = Random.nextInt(100) > 90
 
         actions.forEach {
-            it.doActionAsync(message, context)
+            it.doActionAsync(message)
         }
     }
 

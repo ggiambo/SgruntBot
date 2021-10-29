@@ -12,11 +12,11 @@ class ParlaSuper : Action {
         setOf(RegexOption.IGNORE_CASE, RegexOption.MULTILINE, RegexOption.DOT_MATCHES_ALL)
     )
 
-    override fun doAction(message: Message, context: Context) {
+    override fun doAction(message: Message) {
         val testo = regex.find(message.text)?.groupValues?.get(1)
-        if (testo != null && BotUtils.instance.userIds.contains(message.from.id)) {
-            BotUtils.instance.rispondi(SendMessage(BotUtils.chatId, testo))
-            context.lastSuper = message
+        if (testo != null && BotUtils.userIds.contains(message.from.id)) {
+            BotUtils.rispondi(SendMessage(BotUtils.chatId, testo))
+            Context.lastSuper = message
         }
     }
 }

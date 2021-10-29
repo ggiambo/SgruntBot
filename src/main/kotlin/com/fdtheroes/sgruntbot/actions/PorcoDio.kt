@@ -8,9 +8,9 @@ class PorcoDio : Action {
 
     private val regex = Regex("\\bporco dio\\b", setOf(RegexOption.IGNORE_CASE, RegexOption.MULTILINE))
 
-    override fun doAction(message: Message, context: Context) {
-        if (context.pignolo && regex.containsMatchIn(message.text)) {
-            BotUtils.instance.rispondi(message, "E la madooonna!")
+    override fun doAction(message: Message) {
+        if (Context.pignolo && regex.containsMatchIn(message.text)) {
+            BotUtils.rispondi(message, "E la madooonna!")
         }
     }
 
