@@ -80,7 +80,7 @@ open class Bot(private val botConfig: BotConfig) : TelegramLongPollingBot(botCon
         context.pignolo = Random.nextInt(100) > 90
 
         actions.forEach {
-            it.doAction(message, context)
+            it.doActionAsync(message, context)
         }
     }
 
