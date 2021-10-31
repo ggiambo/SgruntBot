@@ -2,6 +2,8 @@ package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.Bot
 import com.fdtheroes.sgruntbot.BotUtils
+import com.fdtheroes.sgruntbot.Context
+import org.junit.jupiter.api.BeforeEach
 import org.mockito.kotlin.doAnswer
 import org.mockito.kotlin.isA
 import org.mockito.kotlin.mock
@@ -16,6 +18,9 @@ import java.io.Serializable
 open class ActionTest {
 
     val botArguments = mutableListOf<Any>()
+
+    @BeforeEach
+    fun resetContext() = Context.reset()
 
     init {
         val bot: Bot = mock {

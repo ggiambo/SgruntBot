@@ -30,6 +30,7 @@ class Aes : Action {
         if (text.isEmpty() || key.isEmpty()) {
             return "non ci riesco :("
         }
+        @SuppressWarnings("kotlin:S5542")
         val cipher = Cipher.getInstance("AES/ECB/PKCS5Padding")
         cipher.init(Cipher.ENCRYPT_MODE, getSecretKey(key))
         val enctext = cipher.doFinal(text.toByteArray(StandardCharsets.UTF_8))
@@ -40,6 +41,7 @@ class Aes : Action {
         if (enctext.isEmpty() || key.isEmpty()) {
             return "non ci riesco :("
         }
+        @SuppressWarnings("kotlin:S5542")
         val cipher = Cipher.getInstance("AES/ECB/PKCS5Padding")
         cipher.init(Cipher.DECRYPT_MODE, getSecretKey(key))
         val text = cipher.doFinal(Base64.getDecoder().decode(enctext))

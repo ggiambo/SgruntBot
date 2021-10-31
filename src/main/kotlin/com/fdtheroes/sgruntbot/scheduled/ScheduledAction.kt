@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 import java.util.*
-import kotlin.random.Random
+import kotlin.random.Random.Default.nextLong
 
 abstract class ScheduledAction(
     private val sendMessage: (SendMessage) -> Unit
@@ -28,7 +28,7 @@ abstract class ScheduledAction(
     }
 
     private fun scheduleNext() {
-        val delay = Random.nextLong(delayRangeInMillis.first, delayRangeInMillis.second)
+        val delay = nextLong(delayRangeInMillis.first, delayRangeInMillis.second)
         val delayHr = Duration.of(delay, ChronoUnit.MILLIS)
         log.info(getLogMessage(delayHr))
         timer.schedule(SendAndReschedule(), delay)

@@ -11,7 +11,7 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot
 import org.telegram.telegrambots.meta.api.objects.Update
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
-import kotlin.random.Random
+import kotlin.random.Random.Default.nextInt
 
 open class Bot(private val botConfig: BotConfig) : TelegramLongPollingBot(botConfig.defaultBotOptions) {
 
@@ -74,7 +74,7 @@ open class Bot(private val botConfig: BotConfig) : TelegramLongPollingBot(botCon
             }
         }
 
-        Context.pignolo = Random.nextInt(100) > 90
+        Context.pignolo = nextInt(100) > 90
 
         actions.forEach {
             it.doActionAsync(message)

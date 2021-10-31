@@ -12,7 +12,7 @@ import java.io.Serializable
 import java.net.InetSocketAddress
 import java.net.Proxy
 import java.net.URL
-import kotlin.random.Random
+import kotlin.random.Random.Default.nextLong
 
 object BotUtils {
 
@@ -87,7 +87,7 @@ object BotUtils {
     }
 
     private fun sleep(seconds: IntRange) {
-        Thread.sleep(Random.nextLong(seconds.first.toLong() * 1000, seconds.last.toLong() * 1000))
+        Thread.sleep(nextLong(seconds.first.toLong() * 1000, seconds.last.toLong() * 1000))
     }
 
     private fun getProxy(options: DefaultBotOptions): Proxy {

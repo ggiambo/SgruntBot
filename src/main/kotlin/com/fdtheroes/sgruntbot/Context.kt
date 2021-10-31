@@ -8,4 +8,11 @@ object Context {
     var lastAuthor: String? = null
     var pignolo: Boolean = false
     var pausedTime: LocalDateTime? = null
+
+    fun reset() {
+        lastSuper = null
+        lastAuthor = null
+        pignolo = false
+        pausedTime = null
+    }
 }
