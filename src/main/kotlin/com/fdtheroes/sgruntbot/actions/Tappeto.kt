@@ -23,7 +23,7 @@ class Tappeto : Action {
             val sendPhoto = SendPhoto()
             sendPhoto.chatId = message.chat.id.toString()
             sendPhoto.replyToMessageId = message.messageId
-            sendPhoto.parseMode = ParseMode.MARKDOWN
+            sendPhoto.parseMode = ParseMode.HTML
             sendPhoto.photo = tappeto
             sendPhoto.caption = "$chi manda $cosa al tappeto!"
             BotUtils.rispondi(sendPhoto)
