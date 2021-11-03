@@ -7,6 +7,7 @@ import org.telegram.telegrambots.meta.api.methods.ParseMode
 import org.telegram.telegrambots.meta.api.methods.send.SendAudio
 import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
+import org.telegram.telegrambots.meta.api.methods.send.SendPhoto
 import org.telegram.telegrambots.meta.api.objects.Message
 import java.io.Serializable
 import java.net.InetSocketAddress
@@ -76,6 +77,10 @@ object BotUtils {
 
     fun rispondi(sendAudio: SendAudio) {
         bot.executeAsync(sendAudio)
+    }
+
+    fun rispondi(sendPhoto: SendPhoto) {
+        bot.executeAsync(sendPhoto)
     }
 
     fun textFromURL(url: String): String {
