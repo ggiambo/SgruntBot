@@ -1,17 +1,15 @@
 package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BotUtils
+import org.telegram.telegrambots.meta.api.methods.ParseMode
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto
 import org.telegram.telegrambots.meta.api.objects.InputFile
 import org.telegram.telegrambots.meta.api.objects.Message
 import java.awt.Color
 import java.awt.Font
-import java.awt.image.BufferedImage
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
-import java.io.InputStream
 import javax.imageio.ImageIO
-
 
 class Tappeto : Action {
 
@@ -23,29 +21,32 @@ class Tappeto : Action {
             val chi = if (message.from.userName != null) message.from.userName else message.from.firstName
             val tappeto = alTappeto(chi, cosa)
             val sendPhoto = SendPhoto()
-            sendPhoto.chatId = BotUtils.chatId
+            sendPhoto.chatId = message.chat.id.toString()
             sendPhoto.replyToMessageId = message.messageId
+            sendPhoto.parseMode = ParseMode.MARKDOWN
             sendPhoto.photo = tappeto
+            sendPhoto.caption = "$chi manda $cosa al tappeto!"
             BotUtils.rispondi(sendPhoto)
         }
     }
 
-
     fun alTappeto(chi: String, cosa: String): InputFile {
-        val image: BufferedImage = ImageIO.read(this.javaClass.getResourceAsStream("tappeto.png"))
-        val font = Font("Arial", Font.BOLD, 18)
 
-        val g = image.graphics
-        g.font = font
-        g.color = Color.GREEN
-        g.drawString(chi, 0, 20)
-        g.drawString(cosa, 10, 0)
+        val image = ImageIO.read(this::class.java.getResourceAsStream("/tappeto.jpg"))
+
+        val graphics = image.graphics
+        graphics.font = Font("Arial", Font.BOLD, 22)
+
+        graphics.color = Color.LIGHT_GRAY
+        graphics.drawString(chi, 200, 130)
+
+        graphics.color = Color.RED
+        graphics.drawString(cosa, 300, 530)
 
         val os = ByteArrayOutputStream()
         ImageIO.write(image, "png", os)
-        val fis = ByteArrayInputStream(os.toByteArray())
 
-        return InputFile(fis, "$chi mette $cosa al tappeto!")
+        return InputFile(ByteArrayInputStream(os.toByteArray()), "tappeto.jpg")
     }
 
 }

@@ -10,6 +10,7 @@ import org.mockito.kotlin.mock
 import org.telegram.telegrambots.bots.DefaultBotOptions
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod
 import org.telegram.telegrambots.meta.api.methods.send.SendAudio
+import org.telegram.telegrambots.meta.api.methods.send.SendPhoto
 import org.telegram.telegrambots.meta.api.objects.Chat
 import org.telegram.telegrambots.meta.api.objects.Message
 import org.telegram.telegrambots.meta.api.objects.User
@@ -25,6 +26,10 @@ open class ActionTest {
     init {
         val bot: Bot = mock {
             on { executeAsync(isA<SendAudio>()) } doAnswer {
+                botArguments.add(it.arguments.first())
+                null
+            }
+            on { executeAsync(isA<SendPhoto>()) } doAnswer {
                 botArguments.add(it.arguments.first())
                 null
             }
