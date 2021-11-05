@@ -13,7 +13,7 @@ class Parolacce : Action {
 
     override fun doAction(message: Message) {
         if (Context.pignolo && regex.containsMatchIn(message.text)) {
-            val userLink = BotUtils.getUserLink(message)
+            val userLink = BotUtils.getUserLink(message.from)
             BotUtils.rispondi(message, getTesto(userLink))
         }
     }

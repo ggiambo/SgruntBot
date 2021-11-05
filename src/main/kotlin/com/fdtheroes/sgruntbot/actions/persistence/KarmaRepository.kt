@@ -56,6 +56,14 @@ class KarmaRepository {
         }
     }
 
+    fun getKarmas(): List<Pair<Long, Int>> {
+        return transaction {
+            Karma.selectAll().map {
+                Pair(it[Karma.userId], it[Karma.karma])
+            }
+        }
+    }
+
     private fun initKarmaData(forUserId: Long) {
         transaction {
             Karma.insert {

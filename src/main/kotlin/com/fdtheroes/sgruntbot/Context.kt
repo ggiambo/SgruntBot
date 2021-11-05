@@ -1,10 +1,10 @@
 package com.fdtheroes.sgruntbot
 
-import org.telegram.telegrambots.meta.api.objects.Message
+import org.telegram.telegrambots.meta.api.objects.User
 import java.time.LocalDateTime
 
 object Context {
-    var lastSuper: Message? = null
+    var lastSuper: User? = null
     var lastAuthor: String? = null
     var pignolo: Boolean = false
     var pausedTime: LocalDateTime? = null

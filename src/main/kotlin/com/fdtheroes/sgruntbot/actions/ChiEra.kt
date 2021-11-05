@@ -12,7 +12,7 @@ class ChiEra : Action {
     )
 
     override fun doAction(message: Message) {
-        if (regex.containsMatchIn(message.text)) {
+        if (regex.containsMatchIn(message.text) && Context.lastSuper != null) {
             BotUtils.rispondi(message, BotUtils.getUserLink(Context.lastSuper))
         }
     }

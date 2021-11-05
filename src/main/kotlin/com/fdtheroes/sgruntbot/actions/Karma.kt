@@ -17,7 +17,7 @@ class Karma : Action {
             takeKarma(message, ricevente)
         }
         if (message.text == "!karma") {
-            showKarma(message)
+            BotUtils.rispondi(message, testoKarma())
         }
     }
 
@@ -46,19 +46,17 @@ class Karma : Action {
 
         takeGive(donatore, ricevente)
 
-        val riceventeLink = BotUtils.getUserLink(message.replyToMessage)
+        val riceventeLink = BotUtils.getUserLink(message.replyToMessage?.from)
         val karma = karmaRepository.getKarma(ricevente)
         BotUtils.rispondi(message, "Karma totale di $riceventeLink: $karma")
     }
 
-    private fun showKarma(message: Message) {
-        val userId = message.from.id
-        karmaRepository.precheck(userId)
-
-        val userLink = BotUtils.getUserLink(message)
-        val karma = karmaRepository.getKarma(userId)
-
-        BotUtils.rispondi(message, "$userLink ha $karma punti karma")
+    companion object {
+        fun testoKarma(): String {
+            return KarmaRepository().getKarmas()
+                .sortedBy { it.second }
+                .map { "${BotUtils.getUserLink(it.first)} ${it.second}" }
+                .joinToString("\n")
+        }
     }
-
 }

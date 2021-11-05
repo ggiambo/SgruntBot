@@ -13,7 +13,7 @@ class ChiEraTest : ActionTest() {
 
     @Test
     fun testPositive() {
-        Context.lastSuper = message("blah blah")
+        Context.lastSuper = user()
         chiEra.doAction(message("!chiera"))
 
         assertThat(botArguments).hasSize(2)
@@ -25,7 +25,7 @@ class ChiEraTest : ActionTest() {
 
     @Test
     fun testPositive_2() {
-        Context.lastSuper = message("blah blah", from = user(42, userName = "", firstName = "Topopippo"))
+        Context.lastSuper = user(42, userName = "", firstName = "Topopippo")
         chiEra.doAction(
             message("!chiera")
         )

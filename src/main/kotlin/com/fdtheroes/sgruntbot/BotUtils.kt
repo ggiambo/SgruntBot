@@ -4,11 +4,14 @@ import org.telegram.telegrambots.bots.DefaultBotOptions
 import org.telegram.telegrambots.meta.api.methods.ActionType
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod
 import org.telegram.telegrambots.meta.api.methods.ParseMode
+import org.telegram.telegrambots.meta.api.methods.groupadministration.GetChatMember
 import org.telegram.telegrambots.meta.api.methods.send.SendAudio
 import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto
 import org.telegram.telegrambots.meta.api.objects.Message
+import org.telegram.telegrambots.meta.api.objects.User
+import org.telegram.telegrambots.meta.api.objects.chatmember.*
 import java.io.Serializable
 import java.net.InetSocketAddress
 import java.net.Proxy
@@ -32,20 +35,19 @@ object BotUtils {
         this.proxy = getProxy(options)
     }
 
-    val userIds = Users.values().associateBy { it.id }
+    fun getUserLink(userId: Long) = getUserLink(getChatMember(userId))
 
-    fun getUserLink(message: Message?): String {
-        if (message == null) {
+    fun getUserLink(user: User?): String {
+        if (user == null) {
             return ""
         }
-        val id = message.from.id
         val name: String
-        if (!message.from?.userName.isNullOrEmpty()) {
-            name = message.from.userName
+        if (!user.userName.isNullOrEmpty()) {
+            name = user.userName
         } else {
-            name = message.from.firstName
+            name = user.firstName
         }
-        return "[${name}](tg://user?id=${id})"
+        return "[${name}](tg://user?id=${user.id})"
     }
 
     fun rispondiAsText(message: Message, text: String) {
@@ -89,6 +91,23 @@ object BotUtils {
             .getInputStream()
             .readAllBytes()
             .decodeToString()
+    }
+
+    private fun getChatMember(userId: Long): User? {
+        val getChatMember = GetChatMember().apply {
+            this.chatId = BotUtils.chatId
+            this.userId = userId
+        }
+        val chatMember = bot.execute(getChatMember)
+        return when (chatMember) {
+            is ChatMemberAdministrator -> chatMember.user
+            is ChatMemberBanned -> chatMember.user
+            is ChatMemberLeft -> chatMember.user
+            is ChatMemberMember -> chatMember.user
+            is ChatMemberOwner -> chatMember.user
+            is ChatMemberRestricted -> chatMember.user
+            else -> null
+        }
     }
 
     private fun sleep(seconds: IntRange) {
