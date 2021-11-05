@@ -42,10 +42,6 @@ class ChiEraTest : ActionTest() {
         Context.lastSuper = null
         chiEra.doAction(message("!chiera"))
 
-        assertThat(botArguments).hasSize(2)
-        val sendChatAction = botArguments[0] as SendChatAction
-        val sendMessage = botArguments[1] as SendMessage
-        assertThat(sendChatAction.actionType).isEqualTo(ActionType.TYPING)
-        assertThat(sendMessage.text).isEmpty()
+        assertThat(botArguments).hasSize(0)
     }
 }
