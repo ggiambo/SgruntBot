@@ -6,5 +6,11 @@ enum class Users(val id: Long) {
     DADA(252800958L),
     SEU(68714652L),
     GENGY(259607683L),
-    AVVE(10427888L)
+    AVVE(10427888L);
+
+    companion object {
+        private val userIds = values().associateBy { it.id }
+        fun byId(id: Long) = userIds[id]
+    }
+
 }

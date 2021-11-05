@@ -5,6 +5,7 @@ import com.fdtheroes.sgruntbot.actions.Fortune
 import com.fdtheroes.sgruntbot.actions.Slogan
 import com.fdtheroes.sgruntbot.scheduled.RandomFortune
 import com.fdtheroes.sgruntbot.scheduled.RandomSlogan
+import com.fdtheroes.sgruntbot.scheduled.ScheduledKarma
 import org.reflections.Reflections
 import org.slf4j.LoggerFactory
 import org.telegram.telegrambots.bots.TelegramLongPollingBot
@@ -41,6 +42,7 @@ open class Bot(private val botConfig: BotConfig) : TelegramLongPollingBot(botCon
             sendMessage = this::executeAsync,
             getSloganText = Slogan::fetchSlogan
         ).start()
+        ScheduledKarma().start()
     }
 
     override fun getBotToken(): String {

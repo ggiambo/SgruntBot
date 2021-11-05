@@ -17,7 +17,7 @@ class Sgrunt : Action {
 
     override fun doAction(message: Message) {
         if (regex.containsMatchIn(message.text)) {
-            val user = BotUtils.userIds[message.from.id]
+            val user = Users.byId(message.from.id)
             if (user == Users.SUORA) {
                 BotUtils.rispondi(message, "Ciao papà!")
             } else {
