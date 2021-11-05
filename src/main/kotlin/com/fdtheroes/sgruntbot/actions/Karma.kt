@@ -32,7 +32,7 @@ class Karma : Action {
     private fun giveTakeKarma(message: Message, ricevente: Long, takeGive: (donatore: Long, ricevente: Long) -> Unit) {
         val donatore = message.from.id
         if (donatore == ricevente) {
-            BotUtils.rispondi(message, "Hai il potere di dare o togliere a altri, non a te stesso (Taddeo, 12.7:4)")
+            BotUtils.rispondi(message, "Ti è stato dato il potere di dare o togliere ad altri, ma non a te stesso")
             return
         }
 
