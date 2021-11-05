@@ -1,39 +1,54 @@
 package com.fdtheroes.sgruntbot.actions.persistence
 
-import org.jetbrains.exposed.sql.*
-import org.jetbrains.exposed.sql.transactions.transaction
+import java.sql.DriverManager
+import java.sql.Timestamp
 import java.time.LocalDate
 
 class KarmaRepository {
 
-    private val dailyKarmaCredit = 5
+    private val connection = DriverManager.getConnection(
+        "jdbc:mariadb://127.0.0.1:3306/sgrunt",
+        "sgrunt",
+        "sgrunt"
+    ).apply { autoCommit = true }
 
-    init {
-        Database.connect(
-            url = "jdbc:mariadb://127.0.0.1:3306/sgrunt",
-            user = "sgrunt",
-            password = "sgrunt",
-        )
-    }
-
-    fun precheck(forUserId: Long) {
-        transaction {
-            val result = Karma.select { Karma.userId eq forUserId }.singleOrNull()
-            if (result == null) {
-                initKarmaData(forUserId)
-                return@transaction
-            }
-
-            if (result[Karma.creditUpdated].isBefore(LocalDate.now())) {
-                resetCreditForToday(forUserId)
-                return@transaction
+    fun precheck(userId: Long) {
+        with(connection.prepareStatement(select)) {
+            setLong(1, userId)
+            with(executeQuery()) {
+                if (!next()) {
+                    initKarmaData(userId)
+                } else {
+                    val creditUpdated = getTimestamp(2).toLocalDateTime()
+                    if (creditUpdated.isBefore(LocalDate.now().atStartOfDay())) {
+                        resetCreditForToday(userId)
+                    }
+                }
             }
         }
     }
 
-    fun getKarma(userId: Long) = getColumn(userId, Karma.karma)
+    fun getKarma(userId: Long): Int {
+        with(connection.prepareStatement(getKarma)) {
+            setLong(1, userId)
 
-    fun getKarmaCredit(forUserId: Long) = getColumn(forUserId, Karma.karmaCredit)
+            with(executeQuery()) {
+                next()
+                return getInt(1)
+            }
+        }
+    }
+
+    fun getKarmaCredit(userId: Long): Int {
+        with(connection.prepareStatement(getKarmaCredit)) {
+            setLong(1, userId)
+
+            with(executeQuery()) {
+                next()
+                return getInt(1)
+            }
+        }
+    }
 
     fun giveKarma(donatore: Long, ricevente: Long) {
         takeGiveKarma(donatore, ricevente, Int::inc)
@@ -46,38 +61,86 @@ class KarmaRepository {
     fun takeGiveKarma(donatore: Long, ricevente: Long, newKarma: (oldKarma: Int) -> Int) {
         val updatedCredit = getKarmaCredit(donatore) - 1
         val updatedKarma = newKarma(getKarma(ricevente))
-        transaction {
-            Karma.update({ Karma.userId eq donatore }) {
-                it[karmaCredit] = updatedCredit
-            }
-            Karma.update({ Karma.userId eq ricevente }) {
-                it[karma] = updatedKarma
-            }
+
+        with(connection.prepareStatement(updateKarmaCredit)) {
+            setInt(1, updatedCredit)
+            setLong(2, donatore)
+
+            executeUpdate()
+        }
+
+
+        with(connection.prepareStatement(updateKarma)) {
+            setInt(1, updatedKarma)
+            setLong(2, ricevente)
+
+            executeUpdate()
         }
     }
 
-    private fun initKarmaData(forUserId: Long) {
-        transaction {
-            Karma.insert {
-                it[userId] = forUserId
-                it[karma] = 0
-                it[karmaCredit] = dailyKarmaCredit
-                it[creditUpdated] = LocalDate.now()
-            }
+    private fun initKarmaData(userId: Long) {
+        with(connection.prepareStatement(init)) {
+            setLong(1, userId)
+            setInt(2, 0)
+            setInt(3, dailyKarmaCredit)
+            setTimestamp(4, Timestamp.valueOf(LocalDate.now().atStartOfDay()))
+
+            executeUpdate()
         }
     }
 
-    private fun <T> getColumn(forUserId: Long, column: Column<T>): T {
-        return transaction {
-            val result = Karma.select { Karma.userId eq forUserId }.single()
-            return@transaction result[column]
+    private fun resetCreditForToday(userId: Long) {
+        with(connection.prepareStatement(resetCredit)) {
+            setLong(1, userId)
+            setTimestamp(2, Timestamp.valueOf(LocalDate.now().atStartOfDay()))
+
+            executeUpdate()
         }
     }
 
-    private fun resetCreditForToday(forUserId: Long) {
-        Karma.update({ Karma.userId eq forUserId }) {
-            it[karmaCredit] = dailyKarmaCredit
-            it[creditUpdated] = LocalDate.now()
-        }
+    companion object {
+
+        private val dailyKarmaCredit = 5
+
+        private val init = """
+            INSERT INTO karma(user_id, karma, karma_credit, credit_updated) 
+            VALUES (?, ?, ?, ?)
+        """.trimIndent()
+
+        private val select = """
+            SELECT user_id, credit_updated 
+            FROM karma 
+            WHERE user_id = ?
+        """.trimIndent()
+
+        private val resetCredit = """
+            UPDATE karma 
+            SET karma_credit = ?, credit_updated = ?
+        """.trimIndent()
+
+        private val updateKarmaCredit = """
+            UPDATE karma 
+            SET karma_credit = ? 
+            WHERE user_id = ?
+        """.trimIndent()
+
+        private val updateKarma = """
+            UPDATE karma 
+            SET karma = ? 
+            WHERE user_id = ?
+        """.trimIndent()
+
+        private val getKarma = """
+            SELECT karma
+            FROM karma 
+            WHERE user_id = ?
+        """.trimIndent()
+
+        private val getKarmaCredit = """
+            SELECT karma_credit
+            FROM karma 
+            WHERE user_id = ?
+        """.trimIndent()
     }
+
 }
