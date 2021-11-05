@@ -36,8 +36,16 @@ class KarmaRepository {
     fun getKarmaCredit(forUserId: Long) = getColumn(forUserId, Karma.karmaCredit)
 
     fun giveKarma(donatore: Long, ricevente: Long) {
+        takeGiveKarma(donatore, ricevente, Int::inc)
+    }
+
+    fun takeKarma(donatore: Long, ricevente: Long) {
+        takeGiveKarma(donatore, ricevente, Int::dec)
+    }
+
+    fun takeGiveKarma(donatore: Long, ricevente: Long, newKarma: (oldKarma: Int) -> Int) {
         val updatedCredit = getKarmaCredit(donatore) - 1
-        val updatedKarma = getKarma(ricevente) + 1
+        val updatedKarma = newKarma(getKarma(ricevente))
         transaction {
             Karma.update({ Karma.userId eq donatore }) {
                 it[karmaCredit] = updatedCredit

@@ -13,15 +13,26 @@ class Karma : Action {
         if (message.text == "+" && ricevente != null) {
             giveKarma(message, ricevente)
         }
+        if (message.text == "-" && ricevente != null) {
+            takeKarma(message, ricevente)
+        }
         if (message.text == "!karma") {
             showKarma(message)
         }
     }
 
     private fun giveKarma(message: Message, ricevente: Long) {
+        giveTakeKarma(message, ricevente, karmaRepository::giveKarma)
+    }
+
+    private fun takeKarma(message: Message, ricevente: Long) {
+        giveTakeKarma(message, ricevente, karmaRepository::takeKarma)
+    }
+
+    private fun giveTakeKarma(message: Message, ricevente: Long, takeGive: (donatore: Long, ricevente: Long) -> Unit) {
         val donatore = message.from.id
         if (donatore == ricevente) {
-            BotUtils.rispondi(message, "Autokarma è meschino!")
+            BotUtils.rispondi(message, "Ti è stato dato il potere di dare o togliere ad altri, ma non a te stesso")
             return
         }
 
@@ -33,7 +44,7 @@ class Karma : Action {
             return
         }
 
-        karmaRepository.giveKarma(donatore, ricevente)
+        takeGive(donatore, ricevente)
 
         val riceventeLink = BotUtils.getUserLink(message.replyToMessage)
         val karma = karmaRepository.getKarma(ricevente)
@@ -41,13 +52,13 @@ class Karma : Action {
     }
 
     private fun showKarma(message: Message) {
-        val donatore = message.from.id
-        karmaRepository.precheck(donatore)
+        val userId = message.from.id
+        karmaRepository.precheck(userId)
 
-        val donatoreLink = BotUtils.getUserLink(message)
-        val karma = karmaRepository.getKarma(donatore)
+        val userLink = BotUtils.getUserLink(message)
+        val karma = karmaRepository.getKarma(userId)
 
-        BotUtils.rispondi(message, "$donatoreLink ha $karma punti karma")
+        BotUtils.rispondi(message, "$userLink ha $karma punti karma")
     }
 
 }
