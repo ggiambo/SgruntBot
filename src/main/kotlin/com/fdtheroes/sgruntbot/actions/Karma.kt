@@ -2,6 +2,7 @@ package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.actions.persistence.KarmaRepository
+import org.telegram.telegrambots.meta.api.methods.ParseMode
 import org.telegram.telegrambots.meta.api.objects.Message
 
 class Karma : Action {
@@ -17,7 +18,7 @@ class Karma : Action {
             takeKarma(message, ricevente)
         }
         if (message.text == "!karma") {
-            BotUtils.rispondi(message, testoKarma())
+            BotUtils.rispondi(message, testoKarma(), ParseMode.HTML)
         }
     }
 
@@ -56,9 +57,9 @@ class Karma : Action {
         fun testoKarma(): String {
             val karmas = KarmaRepository().getKarmas()
                 .sortedByDescending { it.second }
-                .map { "${getUserName(it.first)} ${it.second}" }
+                .map { "${getUserName(it.first).padEnd(20)} ${it.second}" }
                 .joinToString("\n")
-            return "__*Karma Report*__\n\n${karmas}"
+            return "<b><u>Karma Report</u></b>\n\n<pre>${karmas}</pre>"
         }
 
         private fun getUserName(userId : Long) = BotUtils.getUserName(BotUtils.getChatMember(userId))

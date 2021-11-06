@@ -26,7 +26,7 @@ class ScheduledKarma : Timer() {
             val message = SendMessage().apply {
                 this.text = Karma.testoKarma()
                 this.chatId = BotUtils.chatId
-                this.parseMode = ParseMode.MARKDOWNV2
+                this.parseMode = ParseMode.HTML
             }
 
             BotUtils.rispondi(message)

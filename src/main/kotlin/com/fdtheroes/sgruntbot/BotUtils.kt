@@ -1,6 +1,5 @@
 package com.fdtheroes.sgruntbot
 
-import org.slf4j.LoggerFactory
 import org.telegram.telegrambots.bots.DefaultBotOptions
 import org.telegram.telegrambots.meta.api.methods.ActionType
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod
@@ -24,8 +23,6 @@ object BotUtils {
     private lateinit var bot: Bot
     private lateinit var proxy: Proxy
 
-    private val log = LoggerFactory.getLogger(this.javaClass)
-
     const val chatId = "-1001103213994"
 
     fun init(bot: Bot) {
@@ -39,7 +36,6 @@ object BotUtils {
     }
 
     fun getUserName(user: User?): String {
-        log.info("user: $user")
         if (user == null) {
             return ""
         }
@@ -69,7 +65,7 @@ object BotUtils {
         rispondi(reply)
     }
 
-    fun rispondi(message: Message, textmd: String) {
+    fun rispondi(message: Message, textmd: String, parseMode: String = ParseMode.MARKDOWNV2) {
         val sendChatAction = SendChatAction()
         sendChatAction.chatId = message.chatId.toString()
         sendChatAction.setAction(ActionType.TYPING)
@@ -78,7 +74,7 @@ object BotUtils {
         val reply = SendMessage()
         reply.chatId = message.chat.id.toString()
         reply.replyToMessageId = message.messageId
-        reply.parseMode = ParseMode.MARKDOWNV2
+        reply.parseMode = parseMode
         reply.text = textmd
         rispondi(reply)
     }
@@ -109,7 +105,6 @@ object BotUtils {
             this.userId = userId
         }
         val chatMember = bot.execute(getChatMember)
-        log.info("chatmember: $chatMember")
         return when (chatMember) {
             is ChatMemberAdministrator -> chatMember.user
             is ChatMemberBanned -> chatMember.user
