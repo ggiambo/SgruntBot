@@ -7,13 +7,13 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-
-class ScheduledKarma {
+class ScheduledKarma : Timer() {
 
     val mezzanotte = Calendar.getInstance().apply {
-        this.set(Calendar.HOUR_OF_DAY, 0)
-        this.set(Calendar.MINUTE, 0)
-        this.set(Calendar.SECOND, 0)
+        set(Calendar.DAY_OF_MONTH, get(Calendar.DAY_OF_MONTH) + 1)
+        set(Calendar.HOUR_OF_DAY, 0)
+        set(Calendar.MINUTE, 0)
+        set(Calendar.SECOND, 0)
     }.time
 
     fun start() {
@@ -23,11 +23,10 @@ class ScheduledKarma {
 
     inner class PublishKarma : TimerTask() {
         override fun run() {
-            val testo = "*Karma Report*\n${Karma.testoKarma()}"
             val message = SendMessage().apply {
-                this.text = testo
+                this.text = Karma.testoKarma()
                 this.chatId = BotUtils.chatId
-                this.parseMode = ParseMode.MARKDOWN
+                this.parseMode = ParseMode.MARKDOWNV2
             }
 
             BotUtils.rispondi(message)

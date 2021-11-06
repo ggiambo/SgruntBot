@@ -52,11 +52,15 @@ class Karma : Action {
     }
 
     companion object {
+
         fun testoKarma(): String {
-            return KarmaRepository().getKarmas()
-                .sortedBy { it.second }
-                .map { "${BotUtils.getUserLink(it.first)} ${it.second}" }
+            val karmas = KarmaRepository().getKarmas()
+                .sortedByDescending { it.second }
+                .map { "${getUserName(it.first)} ${it.second}" }
                 .joinToString("\n")
+            return "__*Karma Report*__\n\n${karmas}"
         }
+
+        private fun getUserName(userId : Long) = BotUtils.getUserName(BotUtils.getChatMember(userId))
     }
 }

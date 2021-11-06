@@ -35,9 +35,7 @@ object BotUtils {
         this.proxy = getProxy(options)
     }
 
-    fun getUserLink(userId: Long) = getUserLink(getChatMember(userId))
-
-    fun getUserLink(user: User?): String {
+    fun getUserName(user: User?): String {
         if (user == null) {
             return ""
         }
@@ -47,6 +45,14 @@ object BotUtils {
         } else {
             name = user.firstName
         }
+        return name
+    }
+
+    fun getUserLink(user: User?): String {
+        if (user == null) {
+            return ""
+        }
+        val name = getUserName(user)
         return "[${name}](tg://user?id=${user.id})"
     }
 
@@ -93,7 +99,7 @@ object BotUtils {
             .decodeToString()
     }
 
-    private fun getChatMember(userId: Long): User? {
+    fun getChatMember(userId: Long): User? {
         val getChatMember = GetChatMember().apply {
             this.chatId = BotUtils.chatId
             this.userId = userId
