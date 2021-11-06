@@ -5,7 +5,9 @@ import org.telegram.telegrambots.meta.api.objects.Message
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class CheOreSono : Action {
+class CheOreSono(
+    private val nowSupplier: () -> LocalDateTime = { LocalDateTime.now() } // used for testing
+) : Action {
 
     private val regex = Regex("che ore sono|che ora è", setOf(RegexOption.IGNORE_CASE, RegexOption.MULTILINE))
     private val formatter = DateTimeFormatter.ofPattern("HH:mm")
@@ -48,17 +50,20 @@ class CheOreSono : Action {
     }
 
     private fun oreInLettere(): String {
-        val now = LocalDateTime.now()
+        val now = nowSupplier()
         var h = now.hour
         val m = now.minute / 5
         if (m >= 8) {
             h += 1
         }
-        if (h > 12) {
+
+        if (h == 24) {
+            h = 0
+        } else if (h > 12) {
             h -= 12
         }
 
-        return ore[h] + " " + minuti[m] + " (precisamente ${formatter.format(now)}) ok?)"
+        return ore[h] + " " + minuti[m] + " (precisamente ${formatter.format(now)} ok?)"
     }
 
 }
