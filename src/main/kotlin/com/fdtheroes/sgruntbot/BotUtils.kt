@@ -53,7 +53,7 @@ object BotUtils {
             return ""
         }
         val name = getUserName(user)
-        return "[${name}](tg://user?id=${user.id})"
+        return """<a href="tg://user?id=${user.id}">${name}</a>"""
     }
 
     fun rispondiAsText(message: Message, text: String) {

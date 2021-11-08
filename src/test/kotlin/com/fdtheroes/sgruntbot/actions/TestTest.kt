@@ -18,7 +18,7 @@ class TestTest : ActionTest() {
         val sendChatAction = botArguments[0] as SendChatAction
         val sendMessage = botArguments[1] as SendMessage
         assertThat(sendChatAction.actionType).isEqualTo(ActionType.TYPING)
-        assertThat(sendMessage.text).isEqualTo("[Pippo](tg://user?id=42): toast `test`")
+        assertThat(sendMessage.text).isEqualTo("""<a href="tg://user?id=42">Pippo</a>: toast <pre>test</pre>""")
     }
 
 }
