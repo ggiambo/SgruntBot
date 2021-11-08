@@ -20,7 +20,7 @@ class ChiEraTest : ActionTest() {
         val sendChatAction = botArguments[0] as SendChatAction
         val sendMessage = botArguments[1] as SendMessage
         assertThat(sendChatAction.actionType).isEqualTo(ActionType.TYPING)
-        assertThat(sendMessage.text).isEqualTo("[Pippo](tg://user?id=42)")
+        assertThat(sendMessage.text).isEqualTo("""<a href="tg://user?id=42">Pippo</a>""")
     }
 
     @Test
@@ -34,7 +34,7 @@ class ChiEraTest : ActionTest() {
         val sendChatAction = botArguments[0] as SendChatAction
         val sendMessage = botArguments[1] as SendMessage
         assertThat(sendChatAction.actionType).isEqualTo(ActionType.TYPING)
-        assertThat(sendMessage.text).isEqualTo("[Topopippo](tg://user?id=42)")
+        assertThat(sendMessage.text).isEqualTo("""<a href="tg://user?id=42">Topopippo</a>""")
     }
 
     @Test

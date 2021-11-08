@@ -7,7 +7,7 @@ class Test : Action {
 
     override fun doAction(message: Message) {
         if (message.text == "!test") {
-            BotUtils.rispondi(message, "${BotUtils.getUserLink(message.from)}: toast `test`")
+            BotUtils.rispondi(message, "${BotUtils.getUserLink(message.from)}: toast <pre>test</pre>")
         }
     }
 }
