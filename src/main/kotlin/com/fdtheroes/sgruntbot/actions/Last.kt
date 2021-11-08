@@ -14,7 +14,7 @@ class Last : Action {
         if (regex.matches(message.text) && Context.lastAuthor != null) {
             val sendMessage = SendMessage()
             sendMessage.chatId = BotUtils.chatId
-            sendMessage.parseMode = ParseMode.MARKDOWN
+            sendMessage.parseMode = ParseMode.HTML
             sendMessage.text = Slogan.fetchSlogan(Context.lastAuthor!!)
             BotUtils.rispondi(sendMessage)
         }

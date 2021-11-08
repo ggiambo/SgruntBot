@@ -65,7 +65,7 @@ object BotUtils {
         rispondi(reply)
     }
 
-    fun rispondi(message: Message, textmd: String, parseMode: String = ParseMode.MARKDOWNV2) {
+    fun rispondi(message: Message, textmd: String) {
         val sendChatAction = SendChatAction()
         sendChatAction.chatId = message.chatId.toString()
         sendChatAction.setAction(ActionType.TYPING)
@@ -74,7 +74,7 @@ object BotUtils {
         val reply = SendMessage()
         reply.chatId = message.chat.id.toString()
         reply.replyToMessageId = message.messageId
-        reply.parseMode = parseMode
+        reply.parseMode = ParseMode.HTML
         reply.text = textmd
         rispondi(reply)
     }

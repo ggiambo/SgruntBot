@@ -2,7 +2,6 @@ package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.actions.persistence.KarmaRepository
-import org.telegram.telegrambots.meta.api.methods.ParseMode
 import org.telegram.telegrambots.meta.api.objects.Message
 
 class Karma : Action {
@@ -18,7 +17,7 @@ class Karma : Action {
             takeKarma(message, ricevente)
         }
         if (message.text == "!karma") {
-            BotUtils.rispondi(message, testoKarma(), ParseMode.HTML)
+            BotUtils.rispondi(message, testoKarma())
         }
     }
 
