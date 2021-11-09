@@ -8,7 +8,7 @@ class Respect  : Action {
     override fun doAction(message: Message) {
         val don = message.replyToMessage?.from
         if (message.text == "F" && don != null) {
-           BotUtils.rispondi(message, "Baciamo le mani Don ${BotUtils.getUserLink(don)}")
+           BotUtils.rispondi(message.replyToMessage, "Baciamo le mani Don ${BotUtils.getUserLink(don)}")
         }
     }
 }
