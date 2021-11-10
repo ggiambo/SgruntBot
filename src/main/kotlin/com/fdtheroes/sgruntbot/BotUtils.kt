@@ -16,6 +16,7 @@ import java.io.Serializable
 import java.net.InetSocketAddress
 import java.net.Proxy
 import java.net.URL
+import java.util.concurrent.CompletableFuture
 import kotlin.random.Random.Default.nextLong
 
 object BotUtils {
@@ -79,16 +80,16 @@ object BotUtils {
         rispondi(reply)
     }
 
-    fun <T : Serializable, M : BotApiMethod<T>> rispondi(message: M) {
-        bot.executeAsync(message)
+    fun <T : Serializable, M : BotApiMethod<T>> rispondi(message: M): CompletableFuture<T>? {
+        return bot.executeAsync(message)
     }
 
-    fun rispondi(sendAudio: SendAudio) {
-        bot.executeAsync(sendAudio)
+    fun rispondi(sendAudio: SendAudio): CompletableFuture<Message> {
+        return bot.executeAsync(sendAudio)
     }
 
-    fun rispondi(sendPhoto: SendPhoto) {
-        bot.executeAsync(sendPhoto)
+    fun rispondi(sendPhoto: SendPhoto): CompletableFuture<Message> {
+        return bot.executeAsync(sendPhoto)
     }
 
     fun textFromURL(url: String): String {

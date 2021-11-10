@@ -48,7 +48,7 @@ class Canzone : Action {
             sendAudio.replyToMessageId = message.messageId
             sendAudio.audio = InputFile(file, fileName)
 
-            BotUtils.rispondi(sendAudio)
+            BotUtils.rispondi(sendAudio).thenApply { file.delete() }
         }
     }
 

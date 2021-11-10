@@ -15,6 +15,7 @@ import org.telegram.telegrambots.meta.api.objects.Chat
 import org.telegram.telegrambots.meta.api.objects.Message
 import org.telegram.telegrambots.meta.api.objects.User
 import java.io.Serializable
+import java.util.concurrent.CompletableFuture
 
 open class ActionTest {
 
@@ -27,15 +28,15 @@ open class ActionTest {
         val bot: Bot = mock {
             on { executeAsync(isA<SendAudio>()) } doAnswer {
                 botArguments.add(it.arguments.first())
-                null
+                CompletableFuture.completedFuture(message("done"))
             }
             on { executeAsync(isA<SendPhoto>()) } doAnswer {
                 botArguments.add(it.arguments.first())
-                null
+                CompletableFuture.completedFuture(message("done"))
             }
             on { executeAsync(isA<BotApiMethod<Serializable>>()) } doAnswer {
                 botArguments.add(it.arguments.first())
-                null
+                CompletableFuture.completedFuture(message("done"))
             }
         }
 
