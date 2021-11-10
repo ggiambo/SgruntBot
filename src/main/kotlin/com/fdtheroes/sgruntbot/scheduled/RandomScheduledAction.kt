@@ -10,7 +10,7 @@ import java.time.temporal.ChronoUnit
 import java.util.*
 import kotlin.random.Random.Default.nextLong
 
-abstract class ScheduledAction(
+abstract class RandomScheduledAction(
     private val sendMessage: (SendMessage) -> Unit
 ) {
 

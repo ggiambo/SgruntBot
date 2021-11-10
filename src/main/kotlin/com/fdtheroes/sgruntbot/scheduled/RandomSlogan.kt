@@ -6,7 +6,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 class RandomSlogan(
     sendMessage: (SendMessage) -> Unit,
     private val getSloganText: (String) -> String,
-) : ScheduledAction(sendMessage) {
+) : RandomScheduledAction(sendMessage) {
 
     override fun getMessageText(): String {
         val lastAuthor = Context.lastAuthor
