@@ -4,7 +4,7 @@ import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.LocalDate
 
-class KarmaRepository {
+object KarmaRepository {
 
     private val dailyKarmaCredit = 5
 
