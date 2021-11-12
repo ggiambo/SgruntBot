@@ -12,7 +12,7 @@ class Google : Action {
         if (query != null) {
             BotUtils.rispondi(
                 message,
-                "Cercatelo con [google](https://www.google.com/search?q=$query) ritardato!™"
+                """Cercatelo con <a href="https://www.google.com/search?q=$query">google</a> ritardato!™"""
             )
 
         }

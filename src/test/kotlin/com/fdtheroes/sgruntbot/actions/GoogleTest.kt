@@ -18,7 +18,7 @@ class GoogleTest : ActionTest() {
         val sendChatAction = botArguments[0] as SendChatAction
         val sendMessage = botArguments[1] as SendMessage
         assertThat(sendChatAction.actionType).isEqualTo(ActionType.TYPING)
-        assertThat(sendMessage.text).isEqualTo("Cercatelo con [google](https://www.google.com/search?q=Sgrunt bot) ritardato!™")
+        assertThat(sendMessage.text).isEqualTo("""Cercatelo con <a href="https://www.google.com/search?q=Sgrunt bot">google</a> ritardato!™""")
     }
 
 }
