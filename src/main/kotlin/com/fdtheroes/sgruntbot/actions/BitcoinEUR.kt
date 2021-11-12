@@ -9,7 +9,9 @@ class BitcoinEUR : Bitcoin(), Action {
 
     override fun doAction(message: Message) {
         if (regex.containsMatchIn(message.text)) {
-            BotUtils.rispondi(message, bitcoinvalue("EUR"))
+            val value = bitcoinvalue("EUR")
+            val testo = "Il buttcoin vale $value EUR"
+            BotUtils.rispondi(message, testo)
         }
     }
 }

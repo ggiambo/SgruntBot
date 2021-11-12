@@ -5,16 +5,12 @@ import org.json.JSONObject
 
 abstract class Bitcoin {
 
-    fun bitcoinvalue(currency: String): String {
+    fun bitcoinvalue(currency: String): Double {
         val api = BotUtils.textFromURL("https://blockchain.info/ticker")
 
-        val value = JSONObject(api)
+        return JSONObject(api)
             .getJSONObject(currency)
             .getDouble("last")
-        if (currency == "USD") {
-            return "Il buttcoin vale $value dolla uno. Io faccio amole lungo lungo. Io tanta volia."
-        }
-        return "Il buttcoin vale $value $currency"
     }
 
 }

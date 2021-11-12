@@ -3,14 +3,14 @@ package com.fdtheroes.sgruntbot.actions
 import com.fdtheroes.sgruntbot.BotUtils
 import org.telegram.telegrambots.meta.api.objects.Message
 
-class BitcoinUSD : Bitcoin(), Action {
+class BitcoinCHF : Bitcoin(), Action {
 
-    private val regex = Regex("(^!btc\$|quanto vale un bitcoin)", RegexOption.IGNORE_CASE)
+    private val regex = Regex("^!btcc\$", RegexOption.IGNORE_CASE)
 
     override fun doAction(message: Message) {
         if (regex.containsMatchIn(message.text)) {
-            val value = bitcoinvalue("USD")
-            val testo = "Il buttcoin vale $value dolla uno. Io faccio amole lungo lungo. Io tanta volia."
+            val value = bitcoinvalue("CHF")
+            val testo = "Il buttcoin vale $value denti d'oro"
             BotUtils.rispondi(message, testo)
         }
     }
