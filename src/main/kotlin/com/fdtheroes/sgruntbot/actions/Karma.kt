@@ -6,8 +6,6 @@ import org.telegram.telegrambots.meta.api.objects.Message
 
 class Karma : Action {
 
-    val karmaRepository = KarmaRepository()
-
     override fun doAction(message: Message) {
         val ricevente = message.replyToMessage?.from?.id
         if (message.text == "+" && ricevente != null) {
@@ -22,11 +20,11 @@ class Karma : Action {
     }
 
     private fun giveKarma(message: Message, ricevente: Long) {
-        giveTakeKarma(message, ricevente, karmaRepository::giveKarma)
+        giveTakeKarma(message, ricevente, KarmaRepository::giveKarma)
     }
 
     private fun takeKarma(message: Message, ricevente: Long) {
-        giveTakeKarma(message, ricevente, karmaRepository::takeKarma)
+        giveTakeKarma(message, ricevente, KarmaRepository::takeKarma)
     }
 
     private fun giveTakeKarma(message: Message, ricevente: Long, takeGive: (donatore: Long, ricevente: Long) -> Unit) {
@@ -36,31 +34,33 @@ class Karma : Action {
             return
         }
 
-        karmaRepository.precheck(donatore)
-        karmaRepository.precheck(ricevente)
+        KarmaRepository.precheck(donatore)
+        KarmaRepository.precheck(ricevente)
 
-        if (karmaRepository.getKarmaCredit(donatore) < 1) {
+        if (KarmaRepository.getKarmaCredit(donatore) < 1) {
             BotUtils.rispondi(message, "Hai terminato i crediti per oggi")
             return
         }
 
         takeGive(donatore, ricevente)
 
-        val riceventeLink = BotUtils.getUserLink(message.replyToMessage?.from)
-        val karma = karmaRepository.getKarma(ricevente)
-        BotUtils.rispondi(message, "Karma totale di $riceventeLink: $karma")
+        val riceventeLink = BotUtils.getUserLink(BotUtils.getChatMember(ricevente))
+        val donatoreLink = BotUtils.getUserLink(message.replyToMessage?.from)
+        val karma = KarmaRepository.getKarma(ricevente)
+        val crediti = KarmaRepository.getKarmaCredit(donatore)
+        BotUtils.rispondi(message, "Karma totale di $riceventeLink: $karma<br/>Crediti di $donatoreLink: $crediti")
     }
 
     companion object {
 
         fun testoKarma(): String {
-            val karmas = KarmaRepository().getKarmas()
+            val karmas = KarmaRepository.getKarmas()
                 .sortedByDescending { it.second }
                 .map { "${getUserName(it.first).padEnd(20)} ${it.second}" }
                 .joinToString("\n")
             return "<b><u>Karma Report</u></b>\n\n<pre>${karmas}</pre>"
         }
 
-        private fun getUserName(userId : Long) = BotUtils.getUserName(BotUtils.getChatMember(userId))
+        private fun getUserName(userId: Long) = BotUtils.getUserName(BotUtils.getChatMember(userId))
     }
 }
