@@ -44,11 +44,11 @@ class Karma : Action {
 
         takeGive(donatore, ricevente)
 
-        val riceventeLink = BotUtils.getUserLink(BotUtils.getChatMember(ricevente))
-        val donatoreLink = BotUtils.getUserLink(message.replyToMessage?.from)
+        val riceventeLink = BotUtils.getUserLink(message.replyToMessage.from)
+        val donatoreLink = BotUtils.getUserLink(message.from)
         val karma = KarmaRepository.getKarma(ricevente)
         val crediti = KarmaRepository.getKarmaCredit(donatore)
-        BotUtils.rispondi(message, "Karma totale di $riceventeLink: $karma<br/>Crediti di $donatoreLink: $crediti")
+        BotUtils.rispondi(message, "Karma totale di $riceventeLink: $karma\nCrediti di $donatoreLink: $crediti")
     }
 
     companion object {
