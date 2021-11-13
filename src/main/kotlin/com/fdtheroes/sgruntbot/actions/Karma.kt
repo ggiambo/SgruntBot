@@ -3,6 +3,7 @@ package com.fdtheroes.sgruntbot.actions
 import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.actions.persistence.KarmaRepository
 import org.telegram.telegrambots.meta.api.objects.Message
+import kotlin.random.Random.Default.nextInt
 
 class Karma : Action {
 
@@ -20,18 +21,28 @@ class Karma : Action {
     }
 
     private fun giveKarma(message: Message, ricevente: Long) {
-        giveTakeKarma(message, ricevente, KarmaRepository::giveKarma)
+        val done = giveTakeKarma(message, ricevente, KarmaRepository::giveKarma)
+        if (done && nextInt(3) > 1) { // 33%
+            karmaRoulette(message, Int::inc)
+        }
     }
 
     private fun takeKarma(message: Message, ricevente: Long) {
-        giveTakeKarma(message, ricevente, KarmaRepository::takeKarma)
+        val done = giveTakeKarma(message, ricevente, KarmaRepository::takeKarma)
+        if (done && nextInt(3) > 0) { // 66%
+            karmaRoulette(message, Int::dec)
+        }
     }
 
-    private fun giveTakeKarma(message: Message, ricevente: Long, takeGive: (donatore: Long, ricevente: Long) -> Unit) {
+    private fun giveTakeKarma(
+        message: Message,
+        ricevente: Long,
+        takeGive: (donatore: Long, ricevente: Long) -> Unit
+    ): Boolean {
         val donatore = message.from.id
         if (donatore == ricevente) {
             BotUtils.rispondi(message, "Ti è stato dato il potere di dare o togliere ad altri, ma non a te stesso")
-            return
+            return false
         }
 
         KarmaRepository.precheck(donatore)
@@ -39,7 +50,7 @@ class Karma : Action {
 
         if (KarmaRepository.getKarmaCredit(donatore) < 1) {
             BotUtils.rispondi(message, "Hai terminato i crediti per oggi")
-            return
+            return false
         }
 
         takeGive(donatore, ricevente)
@@ -49,6 +60,15 @@ class Karma : Action {
         val karma = KarmaRepository.getKarma(ricevente)
         val crediti = KarmaRepository.getKarmaCredit(donatore)
         BotUtils.rispondi(message, "Karma totale di $riceventeLink: $karma\nCrediti di $donatoreLink: $crediti")
+
+        return true
+    }
+
+    private fun karmaRoulette(message: Message, takeGive: (Int) -> Int) {
+        val donatore = message.from.id
+        KarmaRepository.takeGiveKarma(donatore, takeGive)
+        val karma = KarmaRepository.getKarma(donatore)
+        BotUtils.rispondi(message, "<b>Karmaroulette</b> ! Il tuo Karma è ora di $karma")
     }
 
     companion object {
