@@ -22,14 +22,14 @@ class Karma : Action {
 
     private fun giveKarma(message: Message, ricevente: Long) {
         val done = giveTakeKarma(message, ricevente, KarmaRepository::giveKarma)
-        if (done && nextInt(3) > 1) { // 33%
+        if (done && nextInt(5) == 0) { // 20%
             karmaRoulette(message, Int::inc)
         }
     }
 
     private fun takeKarma(message: Message, ricevente: Long) {
         val done = giveTakeKarma(message, ricevente, KarmaRepository::takeKarma)
-        if (done && nextInt(3) > 0) { // 66%
+        if (done && nextInt(5) == 0) { // 20%
             karmaRoulette(message, Int::dec)
         }
     }
