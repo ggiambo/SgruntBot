@@ -1,6 +1,7 @@
 package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BotUtils
+import com.fdtheroes.sgruntbot.BotUtils.urlEncode
 import org.json.JSONArray
 import org.json.JSONObject
 import org.telegram.telegrambots.meta.api.objects.Message
@@ -12,15 +13,15 @@ class Wiki : Action {
     override fun doAction(message: Message) {
         val query = regex.find(message.text)?.groupValues?.get(1)
         if (query != null) {
-            val first = getSearchResponse(query)
+            val first = getSearchResponse(query.urlEncode())
             if (first.isEmpty()) {
                 return BotUtils.rispondi(message, "Non c'è.")
             }
 
-            getResponsePages(first).forEach {
+            getResponsePages(first.urlEncode()).forEach {
                 val testo = it.getString("extract")
                 val title = it.getString("title")
-                val risposta = "$testo\nhttps://it.wikipedia.org/wiki/$title"
+                val risposta = "$testo\nhttps://it.wikipedia.org/wiki/${title.urlEncode()}"
                 BotUtils.rispondi(message, risposta)
             }
         }

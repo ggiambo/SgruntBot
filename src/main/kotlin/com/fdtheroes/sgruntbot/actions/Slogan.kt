@@ -1,6 +1,7 @@
 package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BotUtils
+import com.fdtheroes.sgruntbot.BotUtils.urlEncode
 import org.telegram.telegrambots.meta.api.objects.Message
 
 class Slogan : Action {
@@ -17,7 +18,7 @@ class Slogan : Action {
 
     companion object {
         fun fetchSlogan(testo: String): String {
-            val res = BotUtils.textFromURL("http://www.sloganizer.net/en/outbound.php?slogan=${testo}")
+            val res = BotUtils.textFromURL("http://www.sloganizer.net/en/outbound.php?slogan=${testo.urlEncode()}")
             return Regex("<a.*?>(.*)</a>").find(res)?.groupValues?.get(1).orEmpty()
         }
     }

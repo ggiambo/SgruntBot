@@ -12,15 +12,15 @@ class WikiTest : ActionTest() {
 
     @Test
     fun testPositive() {
-        wiki.doAction(message("!wiki giambo"))
+        wiki.doAction(message("!wiki poesia giambica"))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
         val sendMessage = botArguments[1] as SendMessage
         assertThat(sendChatAction.actionType).isEqualTo(ActionType.TYPING)
         assertThat(sendMessage.text)
-            .startsWith("Il giambo (in greco antico: ")
-            .endsWith("https://it.wikipedia.org/wiki/Giambo")
+            .startsWith("La poesia giambica era un tipo di poesia ")
+            .endsWith("https://it.wikipedia.org/wiki/Poesia+giambica")
     }
 
 }

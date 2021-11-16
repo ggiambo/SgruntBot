@@ -16,6 +16,8 @@ import java.io.Serializable
 import java.net.InetSocketAddress
 import java.net.Proxy
 import java.net.URL
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 import java.util.concurrent.CompletableFuture
 import kotlin.random.Random.Default.nextLong
 
@@ -126,5 +128,9 @@ object BotUtils {
             return Proxy.NO_PROXY
         }
         return Proxy(Proxy.Type.HTTP, InetSocketAddress(options.proxyHost, options.proxyPort))
+    }
+
+    fun String.urlEncode(): String {
+        return URLEncoder.encode(this, StandardCharsets.UTF_8)
     }
 }
