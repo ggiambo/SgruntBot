@@ -107,16 +107,7 @@ object BotUtils {
             this.chatId = BotUtils.chatId
             this.userId = userId
         }
-        val chatMember = bot.execute(getChatMember)
-        return when (chatMember) {
-            is ChatMemberAdministrator -> chatMember.user
-            is ChatMemberBanned -> chatMember.user
-            is ChatMemberLeft -> chatMember.user
-            is ChatMemberMember -> chatMember.user
-            is ChatMemberOwner -> chatMember.user
-            is ChatMemberRestricted -> chatMember.user
-            else -> null
-        }
+        return bot.execute(getChatMember)?.user
     }
 
     private fun sleep(seconds: IntRange) {
