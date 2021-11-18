@@ -76,7 +76,7 @@ class Karma : Action {
         fun testoKarma(): String {
             val karmas = KarmaRepository.getKarmas()
                 .sortedByDescending { it.second }
-                .map { "${getUserName(it.first)} %20d".format(it.second) }
+                .map { "${getUserName(it.first).padEnd(20)}%3d".format(it.second) }
                 .joinToString("\n")
             return "<b><u>Karma Report</u></b>\n\n<pre>${karmas}</pre>"
         }
