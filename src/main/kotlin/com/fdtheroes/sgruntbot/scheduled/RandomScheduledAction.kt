@@ -51,7 +51,7 @@ abstract class RandomScheduledAction(
     private fun getLogMessage(delayHr: Duration): String {
         val duration = "${delayHr.toHours()} ore, ${delayHr.toMinutesPart()} minuti e ${delayHr.toSecondsPart()} secondi"
         val actionWhen = DateTimeFormatter.ofPattern("dd.MM.yyyy@HH:mm:ss").format(LocalDateTime.now().plus(delayHr))
-        return "Prossimo $this.javaClass.simpleName fra $duration, ovvero il $actionWhen"
+        return "Prossimo ${this.javaClass.simpleName} fra $duration, ovvero il $actionWhen"
     }
 
     inner class SendAndReschedule : TimerTask() {

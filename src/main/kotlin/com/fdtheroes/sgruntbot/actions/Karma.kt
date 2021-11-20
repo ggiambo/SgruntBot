@@ -10,39 +10,21 @@ class Karma : Action {
     override fun doAction(message: Message) {
         val ricevente = message.replyToMessage?.from?.id
         if (message.text == "+" && ricevente != null) {
-            giveKarma(message, ricevente)
+            giveTakeKarma(message, ricevente, Int::inc)
         }
         if (message.text == "-" && ricevente != null) {
-            takeKarma(message, ricevente)
+            giveTakeKarma(message, ricevente, Int::dec)
         }
         if (message.text == "!karma") {
-            BotUtils.rispondi(message, testoKarma())
+            BotUtils.rispondi(message, testoKarmaReport())
         }
     }
 
-    private fun giveKarma(message: Message, ricevente: Long) {
-        val done = giveTakeKarma(message, ricevente, KarmaRepository::giveKarma)
-        if (done && nextInt(5) == 0) { // 20%
-            karmaRoulette(message, Int::inc)
-        }
-    }
-
-    private fun takeKarma(message: Message, ricevente: Long) {
-        val done = giveTakeKarma(message, ricevente, KarmaRepository::takeKarma)
-        if (done && nextInt(5) == 0) { // 20%
-            karmaRoulette(message, Int::dec)
-        }
-    }
-
-    private fun giveTakeKarma(
-        message: Message,
-        ricevente: Long,
-        takeGive: (donatore: Long, ricevente: Long) -> Unit
-    ): Boolean {
+    private fun giveTakeKarma(message: Message, ricevente: Long, newKarma: (oldKarma: Int) -> Int) {
         val donatore = message.from.id
         if (donatore == ricevente) {
             BotUtils.rispondi(message, "Ti è stato dato il potere di dare o togliere ad altri, ma non a te stesso")
-            return false
+            return
         }
 
         KarmaRepository.precheck(donatore)
@@ -50,30 +32,35 @@ class Karma : Action {
 
         if (KarmaRepository.getKarmaCredit(donatore) < 1) {
             BotUtils.rispondi(message, "Hai terminato i crediti per oggi")
-            return false
+            return
         }
 
-        takeGive(donatore, ricevente)
+        KarmaRepository.takeGiveKarma(donatore, ricevente, newKarma)
 
         val riceventeLink = BotUtils.getUserLink(message.replyToMessage.from)
         val donatoreLink = BotUtils.getUserLink(message.from)
         val karma = KarmaRepository.getKarma(ricevente)
         val crediti = KarmaRepository.getKarmaCredit(donatore)
-        BotUtils.rispondi(message, "Karma totale di $riceventeLink: $karma\nCrediti di $donatoreLink: $crediti")
+        var karmaMessage = "Karma totale di $riceventeLink: $karma\nCrediti di $donatoreLink: $crediti"
 
-        return true
+        if (nextInt(5) == 0) { // 20%
+            val karmaRoulette = karmaRoulette(message, newKarma)
+            karmaMessage = karmaMessage.plus("\n\n$karmaRoulette")
+        }
+
+        BotUtils.rispondi(message, karmaMessage)
     }
 
-    private fun karmaRoulette(message: Message, takeGive: (Int) -> Int) {
-        val donatore = message.from.id
-        KarmaRepository.takeGiveKarma(donatore, takeGive)
-        val karma = KarmaRepository.getKarma(donatore)
-        BotUtils.rispondi(message, "<b>Karmaroulette</b> ! Il tuo Karma è ora di $karma")
+    private fun karmaRoulette(message: Message, newKarma: (oldKarma: Int) -> Int): String {
+        val ricevente = message.from.id
+        KarmaRepository.takeGiveKarma(ricevente, newKarma)
+        val karma = KarmaRepository.getKarma(ricevente)
+        return "<b>Karmaroulette</b> ! Il tuo Karma è ora di $karma"
     }
 
     companion object {
 
-        fun testoKarma(): String {
+        fun testoKarmaReport(): String {
             val karmas = KarmaRepository.getKarmas()
                 .sortedByDescending { it.second }
                 .map { "${getUserName(it.first).padEnd(20)}%3d".format(it.second) }

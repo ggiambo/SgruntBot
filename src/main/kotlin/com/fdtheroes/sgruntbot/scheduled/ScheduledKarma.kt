@@ -24,7 +24,7 @@ class ScheduledKarma : Timer() {
     inner class PublishKarma : TimerTask() {
         override fun run() {
             val message = SendMessage().apply {
-                this.text = Karma.testoKarma()
+                this.text = Karma.testoKarmaReport()
                 this.chatId = BotUtils.chatId
                 this.parseMode = ParseMode.HTML
             }

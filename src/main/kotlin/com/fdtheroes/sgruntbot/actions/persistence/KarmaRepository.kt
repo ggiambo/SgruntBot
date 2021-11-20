@@ -35,30 +35,23 @@ object KarmaRepository {
 
     fun getKarmaCredit(forUserId: Long) = getColumn(forUserId, Karma.karmaCredit)
 
-    fun giveKarma(donatore: Long, ricevente: Long) {
-        takeGiveKarma(ricevente, Int::inc)
-        decCredit(donatore)
+    // donatore da del karma a ricevente, credito di donatore diminiuisce
+    fun takeGiveKarma(donatore: Long, ricevente: Long, newKarma: (oldKarma: Int) -> Int) {
+        takeGiveKarma(ricevente, newKarma)
+        transaction {
+            val updatedCredit = getKarmaCredit(donatore) - 1
+            Karma.update({ Karma.userId eq donatore }) {
+                it[karmaCredit] = updatedCredit
+            }
+        }
     }
 
-    fun takeKarma(donatore: Long, ricevente: Long) {
-        takeGiveKarma(ricevente, Int::dec)
-        decCredit(donatore)
-    }
-
+    // ricevente riceve del karma
     fun takeGiveKarma(ricevente: Long, newKarma: (oldKarma: Int) -> Int) {
         val updatedKarma = newKarma(getKarma(ricevente))
         transaction {
             Karma.update({ Karma.userId eq ricevente }) {
                 it[karma] = updatedKarma
-            }
-        }
-    }
-
-    fun decCredit(donatore: Long) {
-        val updatedCredit = getKarmaCredit(donatore) - 1
-        transaction {
-            Karma.update({ Karma.userId eq donatore }) {
-                it[karmaCredit] = updatedCredit
             }
         }
     }
