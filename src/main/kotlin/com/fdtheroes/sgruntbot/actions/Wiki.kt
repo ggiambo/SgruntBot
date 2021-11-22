@@ -6,7 +6,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import org.telegram.telegrambots.meta.api.objects.Message
 
-class Wiki : Action {
+class Wiki : Action, HasHalp {
 
     private val regex = Regex("^!wiki (.*)$", RegexOption.IGNORE_CASE)
 
@@ -26,6 +26,8 @@ class Wiki : Action {
             }
         }
     }
+
+    override fun halp() = "<b>!wiki</b> <i>termine da cercare</i>"
 
     private fun getSearchResponse(query: String): String {
         val url = BotUtils.textFromURL("https://it.wikipedia.org/w/api.php?action=opensearch&profile=fuzzy&search=$query")

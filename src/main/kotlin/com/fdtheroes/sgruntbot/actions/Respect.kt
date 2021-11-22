@@ -3,7 +3,7 @@ package com.fdtheroes.sgruntbot.actions
 import com.fdtheroes.sgruntbot.BotUtils
 import org.telegram.telegrambots.meta.api.objects.Message
 
-class Respect  : Action {
+class Respect  : Action, HasHalp {
 
     override fun doAction(message: Message) {
         val don = message.replyToMessage?.from
@@ -11,4 +11,6 @@ class Respect  : Action {
            BotUtils.rispondi(message.replyToMessage, "Baciamo le mani Don ${BotUtils.getUserLink(don)}")
         }
     }
+
+    override fun halp() = "<b>F</b> baciamo le mani dell'autore!"
 }

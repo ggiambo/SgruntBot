@@ -11,7 +11,7 @@ import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import javax.imageio.ImageIO
 
-class Tappeto : Action {
+class Tappeto : Action, HasHalp {
 
     private val regex = Regex("^!tappeto (.*)\$", RegexOption.IGNORE_CASE)
 
@@ -29,6 +29,8 @@ class Tappeto : Action {
             BotUtils.rispondi(sendPhoto)
         }
     }
+
+    override fun halp() = "<b>!tappeto</b> <i>chi o cosa</i> chi o cosa vuoi mandare al tappeto oggi?"
 
     fun alTappeto(chi: String, cosa: String): InputFile {
 

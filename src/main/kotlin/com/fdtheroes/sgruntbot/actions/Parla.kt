@@ -4,7 +4,7 @@ import com.fdtheroes.sgruntbot.BotUtils
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import org.telegram.telegrambots.meta.api.objects.Message
 
-class Parla : Action {
+class Parla : Action, HasHalp {
 
     private val regex = Regex(
         "^!parla (.*)$",
@@ -18,4 +18,6 @@ class Parla : Action {
             BotUtils.rispondi(sendMessage)
         }
     }
+
+    override fun halp() = "<b>!parla</b> <i>testo</i> fai dire qualcosa a Sgrunty"
 }

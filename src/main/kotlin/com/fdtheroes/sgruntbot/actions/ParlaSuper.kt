@@ -6,7 +6,7 @@ import com.fdtheroes.sgruntbot.Users
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import org.telegram.telegrambots.meta.api.objects.Message
 
-class ParlaSuper : Action {
+class ParlaSuper : Action, HasHalp {
 
     private val regex = Regex(
         "^!parlasuper (.*)$",
@@ -20,4 +20,6 @@ class ParlaSuper : Action {
             Context.lastSuper = message.from
         }
     }
+
+    override fun halp() = "<b>!parlasuper</b> <i>testo</i> fai dire qualcosa a Sgrunty. Da usare in una chat privata con lui."
 }

@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter
 
 class CheOreSono(
     private val nowSupplier: () -> LocalDateTime = { LocalDateTime.now() } // used for testing
-) : Action {
+) : Action, HasHalp {
 
     private val regex = Regex("che ore sono|che ora è", setOf(RegexOption.IGNORE_CASE, RegexOption.MULTILINE))
     private val formatter = DateTimeFormatter.ofPattern("HH:mm")
@@ -48,6 +48,8 @@ class CheOreSono(
             BotUtils.rispondi(message, oreInLettere())
         }
     }
+
+    override fun halp() = "<b>che ore sono / che ora è</b> te lo dice Sgrunty"
 
     private fun oreInLettere(): String {
         val now = nowSupplier()

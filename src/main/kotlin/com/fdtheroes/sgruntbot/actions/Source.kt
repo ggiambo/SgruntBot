@@ -3,7 +3,7 @@ package com.fdtheroes.sgruntbot.actions
 import com.fdtheroes.sgruntbot.BotUtils
 import org.telegram.telegrambots.meta.api.objects.Message
 
-class Source : Action {
+class Source : Action, HasHalp {
 
     private val regex = Regex("^!source\$", RegexOption.IGNORE_CASE)
 
@@ -12,5 +12,7 @@ class Source : Action {
             return BotUtils.rispondiAsText(message, "http://github.com/ggiambo/SgruntBot")
         }
     }
+
+    override fun halp() = "<b>!source</b> mostra il sorgente di Sgrunty"
 
 }

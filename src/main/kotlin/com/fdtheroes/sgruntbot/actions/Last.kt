@@ -6,7 +6,7 @@ import org.telegram.telegrambots.meta.api.methods.ParseMode
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import org.telegram.telegrambots.meta.api.objects.Message
 
-class Last : Action {
+class Last : Action, HasHalp {
 
     private val regex = Regex("^!last\$", RegexOption.IGNORE_CASE)
 
@@ -19,5 +19,7 @@ class Last : Action {
             BotUtils.rispondi(sendMessage)
         }
     }
+
+    override fun halp() = "<b>!last</b> uno slogan per l'ultimo autore"
 
 }

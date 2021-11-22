@@ -4,7 +4,7 @@ import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.BotUtils.urlEncode
 import org.telegram.telegrambots.meta.api.objects.Message
 
-class Slogan : Action {
+class Slogan : Action, HasHalp {
 
     private val regex = Regex("^!slogan (.*)\$", RegexOption.IGNORE_CASE)
 
@@ -15,6 +15,8 @@ class Slogan : Action {
             BotUtils.rispondiAsText(message, slogan)
         }
     }
+
+    override fun halp() = "<b>!slogan</b> <i>testo</i> uno slogan per il testo!"
 
     companion object {
         fun fetchSlogan(testo: String): String {

@@ -4,7 +4,7 @@ import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.Context
 import org.telegram.telegrambots.meta.api.objects.Message
 
-class ChiEra : Action {
+class ChiEra : Action, HasHalp {
 
     private val regex = Regex(
         "^!chiera$",
@@ -16,4 +16,6 @@ class ChiEra : Action {
             BotUtils.rispondi(message, BotUtils.getUserLink(Context.lastSuper))
         }
     }
+
+    override fun halp() = "<b>!chiera</b> ti dice chi ha usato per ultimo il comando !super"
 }

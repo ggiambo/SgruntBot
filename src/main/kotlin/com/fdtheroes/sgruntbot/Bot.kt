@@ -2,6 +2,7 @@ package com.fdtheroes.sgruntbot
 
 import com.fdtheroes.sgruntbot.actions.Action
 import com.fdtheroes.sgruntbot.actions.Fortune
+import com.fdtheroes.sgruntbot.actions.HasHalp
 import com.fdtheroes.sgruntbot.actions.Slogan
 import com.fdtheroes.sgruntbot.scheduled.RandomFortune
 import com.fdtheroes.sgruntbot.scheduled.RandomSlogan
@@ -77,6 +78,14 @@ open class Bot(private val botConfig: BotConfig) : TelegramLongPollingBot(botCon
         }
 
         Context.pignolo = nextInt(100) > 90
+
+        if (message.text == "!help") {
+            val help = actions.filterIsInstance<HasHalp>()
+                .sortedBy { it.javaClass.simpleName }
+                .joinToString("\n") { it.halp() }
+            BotUtils.rispondi(message, help)
+            return
+        }
 
         actions.forEach {
             it.doActionAsync(message)

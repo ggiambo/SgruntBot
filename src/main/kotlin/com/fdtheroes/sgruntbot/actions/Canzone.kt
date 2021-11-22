@@ -14,7 +14,7 @@ import kotlin.io.path.createDirectory
 import kotlin.io.path.exists
 import kotlin.io.path.pathString
 
-class Canzone : Action {
+class Canzone : Action, HasHalp {
 
     private val log = LoggerFactory.getLogger(this.javaClass)
     private val regex = Regex("!canzone (.*)$", RegexOption.IGNORE_CASE)
@@ -51,6 +51,8 @@ class Canzone : Action {
             BotUtils.rispondi(sendAudio).thenApply { file.delete() }
         }
     }
+
+    override fun halp() = "<b>!canzone</b> <i>la tua canzone</i> cerca e scarica la tua canzone"
 
     private fun fetch(query: String): String? {
         val destDir = destPath.pathString

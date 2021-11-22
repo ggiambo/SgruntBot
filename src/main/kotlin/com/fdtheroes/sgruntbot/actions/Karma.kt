@@ -5,7 +5,7 @@ import com.fdtheroes.sgruntbot.actions.persistence.KarmaRepository
 import org.telegram.telegrambots.meta.api.objects.Message
 import kotlin.random.Random.Default.nextInt
 
-class Karma : Action {
+class Karma : Action, HasHalp {
 
     override fun doAction(message: Message) {
         val ricevente = message.replyToMessage?.from?.id
@@ -19,6 +19,12 @@ class Karma : Action {
             BotUtils.rispondi(message, testoKarmaReport())
         }
     }
+
+    override fun halp() = """
+        <b>!karma</b> mostra la situazione del Karma
+        <b>+</b> da un punto karma all'autore del messaggio
+        <b>-</b> togle punto karma all'autore del messaggio
+        """.trimIndent()
 
     private fun giveTakeKarma(message: Message, ricevente: Long, newKarma: (oldKarma: Int) -> Int) {
         val donatore = message.from.id

@@ -14,4 +14,6 @@ class BitcoinCHF : Bitcoin(), Action {
             BotUtils.rispondi(message, testo)
         }
     }
+
+    override fun halp() = "<b>!btcc</b> per Bitcoin in CHF"
 }

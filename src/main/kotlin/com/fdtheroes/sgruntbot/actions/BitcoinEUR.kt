@@ -14,4 +14,6 @@ class BitcoinEUR : Bitcoin(), Action {
             BotUtils.rispondi(message, testo)
         }
     }
+
+    override fun halp() = "<b>!btce</b> per Bitcoin in EUR"
 }

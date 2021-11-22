@@ -8,7 +8,7 @@ import java.util.*
 import javax.crypto.Cipher
 import javax.crypto.spec.SecretKeySpec
 
-class Aes : Action {
+class Aes : Action, HasHalp {
 
     private val regex = Regex("^!aes(d?) ([^ ]+) (.*)$")
 
@@ -25,6 +25,8 @@ class Aes : Action {
             }
         }
     }
+
+    override fun halp() = "<b>!aes</b> <i>chiave</i> <i>testo</i> per codificare\n!<b>aesd</b> <i>chiave</i> <i>testo</i> per decodificare"
 
     private fun encrypt(key: String, text: String): String {
         if (text.isEmpty() || key.isEmpty()) {
