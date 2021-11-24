@@ -1,5 +1,6 @@
 package com.fdtheroes.sgruntbot
 
+import org.slf4j.LoggerFactory
 import org.telegram.telegrambots.bots.DefaultBotOptions
 import org.telegram.telegrambots.meta.api.methods.ActionType
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod
@@ -11,7 +12,6 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto
 import org.telegram.telegrambots.meta.api.objects.Message
 import org.telegram.telegrambots.meta.api.objects.User
-import org.telegram.telegrambots.meta.api.objects.chatmember.*
 import java.io.Serializable
 import java.net.InetSocketAddress
 import java.net.Proxy
@@ -23,6 +23,7 @@ import kotlin.random.Random.Default.nextLong
 
 object BotUtils {
 
+    private val log = LoggerFactory.getLogger(this.javaClass)
     private lateinit var bot: Bot
     private lateinit var proxy: Proxy
 
@@ -107,7 +108,12 @@ object BotUtils {
             this.chatId = BotUtils.chatId
             this.userId = userId
         }
-        return bot.execute(getChatMember)?.user
+        return try {
+            bot.execute(getChatMember)?.user
+        } catch (e: Exception) {
+            log.error("Problema con l'utente $userId", e)
+            null
+        }
     }
 
     private fun sleep(seconds: IntRange) {
