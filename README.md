@@ -1,4 +1,4 @@
-# SgruntBot
+# SgruntBot [![Java CI with Gradle](https://github.com/ggiambo/SgruntBot/actions/workflows/gradle.yml/badge.svg)](https://github.com/ggiambo/SgruntBot/actions/workflows/gradle.yml)
 Tentativo di riscrittura di Sgrunty usando un linguaggio moderno, giovane e dinamico, proprio come te!
 ## Come lo faccio partire?
 Prima di tutto devi avere un file `token.txt` contenente il token per il bot, altrimenti ciccia.\
