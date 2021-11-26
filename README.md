@@ -1,11 +1,10 @@
 # SgruntBot
 Tentativo di riscrittura di Sgrunty usando un linguaggio moderno, giovane e dinamico, proprio come te!
 ## Come lo faccio partire?
-Prima di tutto devi avere maven. Niente gradle, non siamo amici io e gradle ☹️ \
-Poi devi avere un file `token.txt` contenente il token per il bot, altrimenti ciccia.\
+Prima di tutto devi avere un file `token.txt` contenente il token per il bot, altrimenti ciccia.\
 Il comando magico per far partire il tutto è:
 ```
-mvn exec:java
+./gradlew run
 ```
 
 Se vuoi usare un proxy HTTP, usa qualcosa del tipo `-proxy http://localhost:8080`\
