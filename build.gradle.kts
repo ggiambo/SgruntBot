@@ -38,6 +38,7 @@ application {
 
 tasks.test {
     useJUnitPlatform()
+    maxParallelForks = Runtime.getRuntime().availableProcessors()
     testLogging {
         events("passed", "skipped", "failed")
     }
