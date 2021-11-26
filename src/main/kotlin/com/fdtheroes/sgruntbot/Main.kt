@@ -1,5 +1,5 @@
-import com.fdtheroes.sgruntbot.Bot
-import com.fdtheroes.sgruntbot.BotConfig
+package com.fdtheroes.sgruntbot
+
 import org.telegram.telegrambots.meta.TelegramBotsApi
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession
 

@@ -1,4 +1,6 @@
 /target/
+/build/
 .idea
 *.iml
 token*.txt
+.gradle
