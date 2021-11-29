@@ -11,7 +11,7 @@ class Cazzate : Action {
     override fun doAction(message: Message) {
         if (nextInt(100) == 0) {
             val cosa = cazzate.random()
-            BotUtils.rispondi(message, "Ma la smetti di dire ${cosa}?");
+            BotUtils.rispondi(message, "Ma la smetti di dire ${cosa}?")
         }
     }
 }
