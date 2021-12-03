@@ -9,7 +9,7 @@ class Cazzate : Action {
     private val cazzate = listOf("cazzate", "stronzate", "stupidate", "boiate figliolo")
 
     override fun doAction(message: Message) {
-        if (nextInt(100) == 0) {
+        if (nextInt(200) == 0) {
             val cosa = cazzate.random()
             BotUtils.rispondi(message, "Ma la smetti di dire ${cosa}?")
         }
