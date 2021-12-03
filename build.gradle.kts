@@ -6,13 +6,12 @@ java.sourceCompatibility = JavaVersion.VERSION_11
 plugins {
     kotlin("jvm") version "1.6.0"
     application
+
 }
 
 repositories {
     mavenLocal()
-    maven {
-        url = uri("https://repo.maven.apache.org/maven2/")
-    }
+    mavenCentral()
 }
 
 dependencies {
@@ -38,6 +37,7 @@ application {
 
 tasks.test {
     useJUnitPlatform()
+    maxParallelForks = Runtime.getRuntime().availableProcessors()
     testLogging {
         events("passed", "skipped", "failed")
     }
