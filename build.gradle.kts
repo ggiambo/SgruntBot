@@ -4,7 +4,7 @@ description = "SgruntBot"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 plugins {
-    kotlin("jvm") version "1.6.0"
+    kotlin("jvm") version "1.6.10"
     application
 
 }
@@ -15,9 +15,9 @@ repositories {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin", "kotlin-stdlib-jdk8", "1.6.0")
+    implementation("org.jetbrains.kotlin", "kotlin-stdlib-jdk8", "1.6.10")
     implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core", "1.5.2")
-    implementation("org.telegram", "telegrambots", "5.4.0.1")
+    implementation("org.telegram", "telegrambots", "5.5.0")
     implementation("org.reflections", "reflections", "0.10.2")
     implementation("ch.qos.logback", "logback-classic", "1.2.7")
     implementation("org.mariadb.jdbc", "mariadb-java-client", "2.7.4")

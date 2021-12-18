@@ -13,6 +13,7 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot
 import org.telegram.telegrambots.meta.api.objects.Update
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
+import kotlin.concurrent.thread
 import kotlin.random.Random.Default.nextInt
 
 open class Bot(private val botConfig: BotConfig) : TelegramLongPollingBot(botConfig.defaultBotOptions) {
@@ -88,7 +89,9 @@ open class Bot(private val botConfig: BotConfig) : TelegramLongPollingBot(botCon
         }
 
         actions.forEach {
-            it.doActionAsync(message)
+            thread(start = true, name = it.javaClass.simpleName) {
+                it.doAction(message)
+            }
         }
     }
 
