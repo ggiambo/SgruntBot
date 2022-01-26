@@ -18,6 +18,6 @@ class CanzoneTest : ActionTest() {
         val sendChatAction = botArguments[0] as SendChatAction
         val sendAudio = botArguments[1] as SendAudio
         assertThat(sendChatAction.actionType).isEqualTo(ActionType.UPLOADDOCUMENT)
-        assertThat(sendAudio.audio.mediaName).isEqualTo("A_Few_Moments_Later_HD_2_Seconds_Video.mp3")
+        assertThat(sendAudio.audio.mediaName).isEqualTo("2_Second_Video.mp3")
     }
 }
