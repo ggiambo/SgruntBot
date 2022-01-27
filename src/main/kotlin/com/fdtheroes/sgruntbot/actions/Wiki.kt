@@ -2,8 +2,8 @@ package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.BotUtils.urlEncode
-import org.json.JSONArray
-import org.json.JSONObject
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import org.telegram.telegrambots.meta.api.objects.Message
 
 class Wiki : Action, HasHalp {
@@ -19,8 +19,8 @@ class Wiki : Action, HasHalp {
             }
 
             getResponsePages(first.urlEncode()).forEach {
-                val testo = it.getString("extract")
-                val title = it.getString("title")
+                val testo = it.get("extract").asString
+                val title = it.get("title").asString
                 val risposta = "$testo\nhttps://it.wikipedia.org/wiki/${title.urlEncode()}"
                 BotUtils.rispondi(message, risposta)
             }
@@ -31,19 +31,21 @@ class Wiki : Action, HasHalp {
 
     private fun getSearchResponse(query: String): String {
         val url = BotUtils.textFromURL("https://it.wikipedia.org/w/api.php?action=opensearch&profile=fuzzy&search=$query")
-        return JSONArray(url).getJSONArray(1).optString(0)
+        return JsonParser.parseString(url).asJsonArray
+            .get(1).asJsonArray
+            .get(0).asString
     }
 
-    private fun getResponsePages(titles: String): Sequence<JSONObject> {
+    private fun getResponsePages(titles: String): Sequence<JsonObject> {
         val url =
             BotUtils.textFromURL("https://it.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=$titles")
 
-        val pages = JSONObject(url)
-            .getJSONObject("query")
-            .getJSONObject("pages")
+        val pages = JsonParser.parseString(url).asJsonObject
+            .get("query").asJsonObject
+            .get("pages").asJsonObject
 
-        return pages.keys().asSequence().map {
-            pages.getJSONObject(it)
+        return pages.keySet().asSequence().map {
+            pages.get(it).asJsonObject
         }
     }
 
