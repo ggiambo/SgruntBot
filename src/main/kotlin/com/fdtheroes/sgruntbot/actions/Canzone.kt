@@ -59,7 +59,7 @@ class Canzone : Action, HasHalp {
         val processOutput = ProcessBuilder()
             .command(
                 "sh", "-c",
-                """youtube-dl --restrict-filenames --extract-audio --audio-format mp3 --output "$destDir/%(title)s.mp3" "ytsearch1:$query" --geo-bypass-country IT 2>&1"""
+                """yt-dlp --restrict-filenames --extract-audio --audio-format mp3 --output "$destDir/%(title)s.mp3" "ytsearch1:$query" --geo-bypass-country IT 2>&1"""
             )
             .start()
             .inputStream
