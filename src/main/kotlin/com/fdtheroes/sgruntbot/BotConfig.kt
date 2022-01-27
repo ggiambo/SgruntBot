@@ -8,6 +8,7 @@ class BotConfig(args: Array<String>) {
 
     val botName = "SgruntBot"
     val token: String = File("token.txt").readText().trim()
+    val imgurClientId = File("imgurClientId.txt").readText().trim()
     val defaultBotOptions = getDefaultBotOptions(args)
 
     private fun getDefaultBotOptions(args: Array<String>): DefaultBotOptions {

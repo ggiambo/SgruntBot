@@ -95,9 +95,13 @@ object BotUtils {
         return bot.executeAsync(sendPhoto)
     }
 
-    fun textFromURL(url: String): String {
+    fun textFromURL(url: String, properties: Map<String, String> = emptyMap()): String {
         return URL(url)
-            .openConnection(proxy)
+            .openConnection(proxy).apply {
+                properties.forEach {
+                    setRequestProperty(it.key, it.value)
+                }
+            }
             .getInputStream()
             .readAllBytes()
             .decodeToString()
