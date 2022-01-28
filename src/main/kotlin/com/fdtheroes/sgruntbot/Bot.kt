@@ -5,6 +5,7 @@ import com.fdtheroes.sgruntbot.actions.Fortune
 import com.fdtheroes.sgruntbot.actions.HasHalp
 import com.fdtheroes.sgruntbot.actions.Slogan
 import com.fdtheroes.sgruntbot.scheduled.RandomFortune
+import com.fdtheroes.sgruntbot.scheduled.RandomImgur
 import com.fdtheroes.sgruntbot.scheduled.RandomSlogan
 import com.fdtheroes.sgruntbot.scheduled.ScheduledKarma
 import org.reflections.Reflections
@@ -43,6 +44,10 @@ open class Bot(private val botConfig: BotConfig) : TelegramLongPollingBot(botCon
         RandomSlogan(
             sendMessage = this::executeAsync,
             getSloganText = Slogan::fetchSlogan
+        ).start()
+        RandomImgur(
+            sendMessage = this::executeAsync,
+            imgurClientId = botConfig.imgurClientId
         ).start()
         ScheduledKarma().start()
     }
