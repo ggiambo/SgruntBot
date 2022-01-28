@@ -30,7 +30,7 @@ class RandomImgur(
             .first().asJsonObject
             .get("link").asString
 
-        return "$title $link"
+        return "${title}\n${link}"
     }
 
 }
