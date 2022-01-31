@@ -25,6 +25,7 @@ dependencies {
     implementation("org.jetbrains.exposed", "exposed-jdbc", "0.37.3")
     implementation("org.jetbrains.exposed", "exposed-java-time", "0.37.3")
     implementation("com.google.code.gson", "gson", "2.8.9")
+    implementation("org.jsoup", "jsoup", "1.14.3")
     testImplementation("org.junit.platform", "junit-platform-launcher", "1.8.2")
     testImplementation(platform("org.junit:junit-bom:5.8.2"))
     testImplementation("org.junit.jupiter", "junit-jupiter")
