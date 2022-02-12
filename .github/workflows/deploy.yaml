@@ -18,6 +18,6 @@ jobs:
           git pull
           ./gradlew build -x test
           ./gradlew --stop
-          nohup ./gradlew run &
+          nohup ./gradlew run 2> /dev/null &
           
           
