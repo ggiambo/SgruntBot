@@ -1,0 +1,23 @@
+name: Deploy SgruntBot
+on: 
+  workflow_dispatch
+jobs:
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Pull, build and restart SgruntBot
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        script: |
+          cd ~/SgruntBot
+          git pull
+          ./gradlew build -x test
+          ./gradlew --stop
+          nohup ./gradlew run &
+          
+          
