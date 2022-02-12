@@ -24,10 +24,7 @@ class RandomCuloDiPapa(sendMessage: (SendMessage) -> Unit) : RandomScheduledActi
             .select("a.vc")
             .text()
 
-        println(testo)
-        println(autore)
-
-        return "${banfata}\n${autore}"
+        return "${testo}\n${autore}"
     }
 
 }
