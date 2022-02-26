@@ -10,7 +10,7 @@ class CanzoneTest : ActionTest() {
 
     private val canzone = Canzone()
 
-    @Test
+    //@Test
     fun testPositive() {
         canzone.doAction(message("!canzone 2 Seconds Video"))
 
