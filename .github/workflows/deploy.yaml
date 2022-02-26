@@ -1,5 +1,5 @@
 name: Deploy SgruntBot
-on: 
+on:
   workflow_dispatch
 jobs:
 
@@ -7,17 +7,15 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-    - name: Pull, build and restart SgruntBot
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USERNAME }}
-        key: ${{ secrets.SSH_KEY }}
-        script: |
-          cd ~/SgruntBot
-          git pull
-          ./gradlew build -x test
-          ./gradlew --stop
-          nohup ./gradlew run 2> /dev/null &
-          
-          
+      - name: Pull, build and restart SgruntBot
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd ~/SgruntBot
+            git pull
+            ./gradlew shadowJar
+            kill `cat run.pid`
+            nohup "java -jar build/libs/sgruntbot-1.0-SNAPSHOT-all.jar" > /dev/null 2>&1 & echo $! > run.pid
