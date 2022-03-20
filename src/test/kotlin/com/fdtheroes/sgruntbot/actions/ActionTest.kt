@@ -3,6 +3,7 @@ package com.fdtheroes.sgruntbot.actions
 import com.fdtheroes.sgruntbot.Bot
 import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.Context
+import com.fdtheroes.sgruntbot.Users
 import org.junit.jupiter.api.BeforeEach
 import org.mockito.kotlin.doAnswer
 import org.mockito.kotlin.isA
@@ -72,6 +73,14 @@ open class ActionTest {
             this.id = id
             this.userName = userName
             this.firstName = firstName
+        }
+    }
+
+    fun user(user: Users): User {
+        return User().apply {
+            this.id = user.id
+            this.userName = user.name
+            this.firstName = user.name.lowercase()
         }
     }
 

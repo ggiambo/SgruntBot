@@ -1,8 +1,10 @@
 package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BotUtils
+import com.fdtheroes.sgruntbot.BotUtils.getUserLink
 import com.fdtheroes.sgruntbot.BotUtils.urlEncode
 import org.telegram.telegrambots.meta.api.objects.Message
+import org.telegram.telegrambots.meta.api.objects.User
 
 class Slogan : Action, HasHalp {
 
@@ -22,6 +24,12 @@ class Slogan : Action, HasHalp {
         fun fetchSlogan(testo: String): String {
             val res = BotUtils.textFromURL("http://www.sloganizer.net/en/outbound.php?slogan=${testo.urlEncode()}")
             return Regex("<a.*?>(.*)</a>").find(res)?.groupValues?.get(1).orEmpty()
+        }
+        fun fetchSlogan(utente: User): String {
+            val name = utente.userName ?: utente.firstName
+            val nameEscaped = "***${name}***"
+            val res = fetchSlogan(nameEscaped)
+            return res.replace(nameEscaped, getUserLink(utente))
         }
     }
 
