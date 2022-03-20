@@ -18,4 +18,4 @@ jobs:
             git pull
             ./gradlew shadowJar
             kill `cat run.pid`
-            nohup java -jar build/libs/sgruntbot-1.0-SNAPSHOT-all.jar > /dev/null 2>&1 & echo $! > run.pid
+            nohup java -jar build/libs/sgruntbot-1.0-SNAPSHOT-all.jar > out.log 2>error.log & echo $! > run.pid
