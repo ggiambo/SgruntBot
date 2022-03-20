@@ -76,11 +76,7 @@ open class Bot(private val botConfig: BotConfig) : TelegramLongPollingBot(botCon
         }
 
         if (!lastAuthorRegex.containsMatchIn(message.text)) {
-            if (message.from.userName != null) {
-                Context.lastAuthor = message.from.userName
-            } else {
-                Context.lastAuthor = message.from.firstName
-            }
+            Context.lastAuthor = message.from
         }
 
         Context.pignolo = nextInt(100) > 90

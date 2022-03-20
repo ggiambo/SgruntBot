@@ -5,7 +5,7 @@ import java.time.LocalDateTime
 
 object Context {
     var lastSuper: User? = null
-    var lastAuthor: String? = null
+    var lastAuthor: User? = null
     var pignolo: Boolean = false
     var pausedTime: LocalDateTime? = null
 

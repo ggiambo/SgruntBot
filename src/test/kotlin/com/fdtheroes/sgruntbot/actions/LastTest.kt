@@ -12,7 +12,7 @@ class LastTest : ActionTest() {
 
     @Test
     fun testPositive() {
-        Context.lastAuthor = Users.GENGY.name
+        Context.lastAuthor = user(Users.GENGY)
         last.doAction(message("!last"))
 
         assertThat(botArguments).hasSize(1)
