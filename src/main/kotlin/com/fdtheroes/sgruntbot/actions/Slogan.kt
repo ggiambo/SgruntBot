@@ -21,15 +21,14 @@ class Slogan : Action, HasHalp {
     override fun halp() = "<b>!slogan</b> <i>testo</i> uno slogan per il testo!"
 
     companion object {
+        private val sloganPlaceholder = "XXX-XXX-XXX"
         fun fetchSlogan(testo: String): String {
             val res = BotUtils.textFromURL("http://www.sloganizer.net/en/outbound.php?slogan=${testo.urlEncode()}")
             return Regex("<a.*?>(.*)</a>").find(res)?.groupValues?.get(1).orEmpty()
         }
         fun fetchSlogan(utente: User): String {
-            val name = utente.userName ?: utente.firstName
-            val nameEscaped = "***${name}***"
-            val res = fetchSlogan(nameEscaped)
-            return res.replace(nameEscaped, getUserLink(utente))
+            val res = fetchSlogan(sloganPlaceholder)
+            return res.replace(sloganPlaceholder, getUserLink(utente))
         }
     }
 

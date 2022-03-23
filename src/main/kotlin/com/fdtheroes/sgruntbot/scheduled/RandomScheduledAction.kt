@@ -2,6 +2,7 @@ package com.fdtheroes.sgruntbot.scheduled
 
 import com.fdtheroes.sgruntbot.BotUtils
 import org.slf4j.LoggerFactory
+import org.telegram.telegrambots.meta.api.methods.ParseMode
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import java.time.Duration
 import java.time.LocalDateTime
@@ -43,6 +44,7 @@ abstract class RandomScheduledAction(
         val message = SendMessage().apply {
             this.text = text
             this.chatId = BotUtils.chatId
+            this.parseMode = ParseMode.HTML
         }
 
         sendMessage(message)
