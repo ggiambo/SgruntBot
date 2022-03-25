@@ -7,6 +7,7 @@ import com.fdtheroes.sgruntbot.actions.Slogan
 import com.fdtheroes.sgruntbot.scheduled.*
 import org.reflections.Reflections
 import org.slf4j.LoggerFactory
+import org.springframework.stereotype.Service
 import org.telegram.telegrambots.bots.TelegramLongPollingBot
 import org.telegram.telegrambots.meta.api.objects.Update
 import java.time.LocalDateTime
@@ -14,7 +15,8 @@ import java.time.temporal.ChronoUnit
 import kotlin.concurrent.thread
 import kotlin.random.Random.Default.nextInt
 
-open class Bot(private val botConfig: BotConfig) : TelegramLongPollingBot(botConfig.defaultBotOptions) {
+@Service
+class Bot(private val botConfig: BotConfig) : TelegramLongPollingBot(botConfig.defaultBotOptions) {
 
     private val log = LoggerFactory.getLogger(this.javaClass)
     private val actions: List<Action>

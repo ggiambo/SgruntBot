@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://127.0.0.1:3306/sgrunt
+    username: sgrunt
+    password: sgrunt
+
+sgruntbot:
+  config:
+    telegram-token-file: token.txt
+    imgur-client-id-file: imgurClientId.txt

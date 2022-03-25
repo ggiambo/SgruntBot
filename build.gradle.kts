@@ -8,6 +8,12 @@ plugins {
     application
     id("com.github.ben-manes.versions") version "0.40.0"
     id("com.github.johnrengelman.shadow") version "7.0.0"
+
+    // begin springify
+    id("org.springframework.boot") version "2.6.5"
+    id("io.spring.dependency-management") version "1.0.11.RELEASE"
+    kotlin("plugin.spring") version "1.6.10"
+    // end springify
 }
 
 repositories {
@@ -15,7 +21,25 @@ repositories {
     mavenCentral()
 }
 
+configurations {
+    compileOnly {
+        extendsFrom(configurations.annotationProcessor.get())
+    }
+}
+
 dependencies {
+    // begin springify
+    implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
+    runtimeOnly("com.h2database:h2")
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    // end springify
+
     implementation("org.jetbrains.kotlin", "kotlin-stdlib-jdk8", "1.6.10")
     implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core", "1.6.0")
     implementation("org.telegram", "telegrambots", "5.7.1")

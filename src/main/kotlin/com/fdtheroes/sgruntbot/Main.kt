@@ -1,10 +1,11 @@
 package com.fdtheroes.sgruntbot
 
-import org.telegram.telegrambots.meta.TelegramBotsApi
-import org.telegram.telegrambots.updatesreceivers.DefaultBotSession
+import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.runApplication
+
+@SpringBootApplication
+class Main
 
 fun main(args: Array<String>) {
-    val config = BotConfig(args)
-    val botsApi = TelegramBotsApi(DefaultBotSession::class.java)
-    botsApi.registerBot(Bot(config))
+    runApplication<Main>(*args)
 }

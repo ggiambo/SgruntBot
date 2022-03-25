@@ -1,0 +1,14 @@
+{
+  "properties": [
+    {
+      "name": "sgruntbot.config.telegram-token-file",
+      "type": "java.lang.String",
+      "description": "File holding the Telegram BOT API Token"
+    },
+    {
+      "name": "sgruntbot.config.imgur-client-id-file",
+      "type": "java.lang.String",
+      "description": "File holding the ImgUr Client Id"
+    }
+  ]
+}
