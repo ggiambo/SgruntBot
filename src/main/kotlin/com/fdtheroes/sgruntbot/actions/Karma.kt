@@ -2,10 +2,12 @@ package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.actions.persistence.KarmaRepository
+import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.Message
 import kotlin.random.Random.Default.nextInt
 
-class Karma : Action, HasHalp {
+@Service
+class Karma(private val karmaRepository: KarmaRepository) : Action, HasHalp {
 
     override fun doAction(message: Message) {
         val ricevente = message.replyToMessage?.from?.id
@@ -33,20 +35,20 @@ class Karma : Action, HasHalp {
             return
         }
 
-        KarmaRepository.precheck(donatore)
-        KarmaRepository.precheck(ricevente)
+        karmaRepository.precheck(donatore)
+        karmaRepository.precheck(ricevente)
 
-        if (KarmaRepository.getKarmaCredit(donatore) < 1) {
+        if (karmaRepository.getKarmaCredit(donatore) < 1) {
             BotUtils.rispondi(message, "Hai terminato i crediti per oggi")
             return
         }
 
-        KarmaRepository.takeGiveKarma(donatore, ricevente, newKarma)
+        karmaRepository.takeGiveKarma(donatore, ricevente, newKarma)
 
         val riceventeLink = BotUtils.getUserLink(message.replyToMessage.from)
         val donatoreLink = BotUtils.getUserLink(message.from)
-        val karma = KarmaRepository.getKarma(ricevente)
-        val crediti = KarmaRepository.getKarmaCredit(donatore)
+        val karma = karmaRepository.getKarma(ricevente)
+        val crediti = karmaRepository.getKarmaCredit(donatore)
         var karmaMessage = "Karma totale di $riceventeLink: $karma\nCrediti di $donatoreLink: $crediti"
 
         if (nextInt(5) == 0) { // 20%
@@ -59,21 +61,18 @@ class Karma : Action, HasHalp {
 
     private fun karmaRoulette(message: Message, newKarma: (oldKarma: Int) -> Int): String {
         val ricevente = message.from.id
-        KarmaRepository.takeGiveKarma(ricevente, newKarma)
-        val karma = KarmaRepository.getKarma(ricevente)
+        karmaRepository.takeGiveKarma(ricevente, newKarma)
+        val karma = karmaRepository.getKarma(ricevente)
         return "<b>Karmaroulette</b> ! Il tuo Karma è ora di $karma"
     }
 
-    companion object {
-
-        fun testoKarmaReport(): String {
-            val karmas = KarmaRepository.getKarmas()
-                .sortedByDescending { it.second }
-                .map { "${getUserName(it.first).padEnd(20)}%3d".format(it.second) }
-                .joinToString("\n")
-            return "<b><u>Karma Report</u></b>\n\n<pre>${karmas}</pre>"
-        }
-
-        private fun getUserName(userId: Long) = BotUtils.getUserName(BotUtils.getChatMember(userId))
+    fun testoKarmaReport(): String {
+        val karmas = karmaRepository.getKarmas()
+            .sortedByDescending { it.second }
+            .map { "${getUserName(it.first).padEnd(20)}%3d".format(it.second) }
+            .joinToString("\n")
+        return "<b><u>Karma Report</u></b>\n\n<pre>${karmas}</pre>"
     }
+
+    private fun getUserName(userId: Long) = BotUtils.getUserName(BotUtils.getChatMember(userId))
 }

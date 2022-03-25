@@ -2,8 +2,10 @@ package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.Users
+import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.Message
 
+@Service
 class Sgrunt : Action {
 
     private val regex = Regex("^sgrunt(bot|y|olino|olomeo)", RegexOption.IGNORE_CASE)

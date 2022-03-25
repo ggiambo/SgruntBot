@@ -1,8 +1,10 @@
 package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BotUtils
+import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.Message
 
+@Service
 class Lamin : Action {
 
     private val regex1 = Regex("(negr|negher)", RegexOption.IGNORE_CASE)

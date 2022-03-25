@@ -1,6 +1,7 @@
 package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BotUtils
+import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.Message
 import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
@@ -8,6 +9,7 @@ import java.util.*
 import javax.crypto.Cipher
 import javax.crypto.spec.SecretKeySpec
 
+@Service
 class Aes : Action, HasHalp {
 
     private val regex = Regex("^!aes(d?) ([^ ]+) (.*)$")

@@ -1,91 +1,100 @@
 package com.fdtheroes.sgruntbot.actions.persistence
 
-import org.jetbrains.exposed.sql.*
-import org.jetbrains.exposed.sql.transactions.transaction
+import com.fdtheroes.sgruntbot.BotUtils
+import org.springframework.data.jdbc.repository.query.Modifying
+import org.springframework.data.jdbc.repository.query.Query
+import org.springframework.data.repository.CrudRepository
+import org.springframework.data.repository.findByIdOrNull
+import org.springframework.stereotype.Repository
+import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
 
-object KarmaRepository {
+@Repository
+interface KarmaRepository : CrudRepository<Karma, Long> {
 
-    private val dailyKarmaCredit = 5
-
-    init {
-        Database.connect(
-            url = "jdbc:mariadb://127.0.0.1:3306/sgrunt",
-            user = "sgrunt",
-            password = "sgrunt",
-        )
-    }
-
+    @Transactional
     fun precheck(forUserId: Long) {
-        transaction {
-            val result = Karma.select { Karma.userId eq forUserId }.singleOrNull()
-            if (result == null) {
-                initKarmaData(forUserId)
-                return@transaction
-            }
+        val result = findByIdOrNull(forUserId)
+        if (result == null) {
+            initKarmaData(forUserId)
+            return
+        }
 
-            if (result[Karma.creditUpdated].isBefore(LocalDate.now())) {
-                resetCreditForToday(forUserId)
-                return@transaction
-            }
+        if (result.creditUpdated.isBefore(LocalDate.now())) {
+            resetCreditForToday(forUserId = forUserId)
         }
     }
 
-    fun getKarma(userId: Long) = getColumn(userId, Karma.karma)
+    fun getKarma(forUserId: Long) = findById(forUserId).get().karmaCredit
 
-    fun getKarmaCredit(forUserId: Long) = getColumn(forUserId, Karma.karmaCredit)
+    fun getKarmaCredit(forUserId: Long) = findById(forUserId).get().karmaCredit
 
-    // donatore da del karma a ricevente, credito di donatore diminiuisce
+    // donatore da' del karma a ricevente, credito di donatore diminiuisce
+    @Transactional
     fun takeGiveKarma(donatore: Long, ricevente: Long, newKarma: (oldKarma: Int) -> Int) {
         takeGiveKarma(ricevente, newKarma)
-        transaction {
-            val updatedCredit = getKarmaCredit(donatore) - 1
-            Karma.update({ Karma.userId eq donatore }) {
-                it[karmaCredit] = updatedCredit
-            }
-        }
+        val updatedCredit = getKarmaCredit(donatore) - 1
+        updateCredit(updatedCredit, donatore)
     }
 
     // ricevente riceve del karma
+    @Transactional
     fun takeGiveKarma(ricevente: Long, newKarma: (oldKarma: Int) -> Int) {
-        val updatedKarma = newKarma(getKarma(ricevente))
-        transaction {
-            Karma.update({ Karma.userId eq ricevente }) {
-                it[karma] = updatedKarma
-            }
-        }
+        val updatedKarma = newKarma(findById(ricevente).get().karma)
+        updateKarma(updatedKarma, ricevente)
+    }
+
+    @Modifying
+    fun updateKarma(updatedKarma: Int, userId: Long) {
+        val karma = findById(userId).get()
+        karma.karma = updatedKarma
+        save(karma)
+    }
+
+    @Modifying
+    fun updateCredit(updatedCredit: Int, userId: Long) {
+        val karma = findById(userId).get()
+        karma.karmaCredit = updatedCredit
+        save(karma)
     }
 
     fun getKarmas(): List<Pair<Long, Int>> {
-        return transaction {
-            Karma.selectAll().map {
-                Pair(it[Karma.userId], it[Karma.karma])
-            }
+        return findAll().map {
+            Pair(it.userId, it.karma)
         }
     }
 
+    @Modifying
     private fun initKarmaData(forUserId: Long) {
-        transaction {
-            Karma.insert {
-                it[userId] = forUserId
-                it[karma] = 0
-                it[karmaCredit] = dailyKarmaCredit
-                it[creditUpdated] = LocalDate.now()
-            }
-        }
+        val karma = Karma(
+            userId = forUserId,
+            karma = 0,
+            karmaCredit = dailyKarmaCredit,
+            creditUpdated = LocalDate.now(),
+        )
+        save(karma)
     }
 
-    private fun <T> getColumn(forUserId: Long, column: Column<T>): T {
-        return transaction {
-            val result = Karma.select { Karma.userId eq forUserId }.single()
-            return@transaction result[column]
-        }
+    @Modifying
+    @Query("update Karma k set k.karma_credit = :updatedCredit, k.credit_updated = :creditUpdated where k.user_id :userId")
+    fun resetCreditForToday(
+        updatedCredit : Int = dailyKarmaCredit,
+        creditUpdated : LocalDate = LocalDate.now(),
+        forUserId: Long
+    )
+
+    fun testoKarmaReport(): String {
+        val karmas = getKarmas()
+            .sortedByDescending { it.second }
+            .map { "${getUserName(it.first).padEnd(20)}%3d".format(it.second) }
+            .joinToString("\n")
+        return "<b><u>Karma Report</u></b>\n\n<pre>${karmas}</pre>"
     }
 
-    private fun resetCreditForToday(forUserId: Long) {
-        Karma.update({ Karma.userId eq forUserId }) {
-            it[karmaCredit] = dailyKarmaCredit
-            it[creditUpdated] = LocalDate.now()
-        }
+    private fun getUserName(userId: Long) = BotUtils.getUserName(BotUtils.getChatMember(userId))
+
+    companion object {
+        const val dailyKarmaCredit = 5
     }
+
 }

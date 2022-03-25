@@ -4,8 +4,8 @@ import com.fdtheroes.sgruntbot.actions.Action
 import com.fdtheroes.sgruntbot.actions.Fortune
 import com.fdtheroes.sgruntbot.actions.HasHalp
 import com.fdtheroes.sgruntbot.actions.Slogan
+import com.fdtheroes.sgruntbot.actions.persistence.KarmaRepository
 import com.fdtheroes.sgruntbot.scheduled.*
-import org.reflections.Reflections
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.bots.TelegramLongPollingBot
@@ -16,23 +16,19 @@ import kotlin.concurrent.thread
 import kotlin.random.Random.Default.nextInt
 
 @Service
-class Bot(private val botConfig: BotConfig) : TelegramLongPollingBot(botConfig.defaultBotOptions) {
+class Bot(
+    private val botConfig: BotConfig,
+    private val karmaRepository: KarmaRepository, // eliminare, sbagliata qui
+private val actions: List<Action>
+    ) : TelegramLongPollingBot(botConfig.defaultBotOptions) {
 
     private val log = LoggerFactory.getLogger(this.javaClass)
-    private val actions: List<Action>
     private val lastAuthorRegex = Regex("^!last\$", RegexOption.IGNORE_CASE)
 
     init {
         BotUtils.init(this)
-        actions = initActions()
         initScheduled()
         log.info("Sono partito!")
-    }
-
-    private fun initActions(): List<Action> {
-        return Reflections(this.javaClass.packageName)
-            .getSubTypesOf(Action::class.java)
-            .map { it.getDeclaredConstructor().newInstance() }
     }
 
     private fun initScheduled() {
@@ -51,7 +47,7 @@ class Bot(private val botConfig: BotConfig) : TelegramLongPollingBot(botConfig.d
         RandomCuloDiPapa(
             sendMessage = this::executeAsync,
         ).start()
-        ScheduledKarma().start()
+        ScheduledKarma(karmaRepository).start()
     }
 
     override fun getBotToken(): String {

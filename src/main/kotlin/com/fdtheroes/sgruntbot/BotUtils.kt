@@ -1,6 +1,7 @@
 package com.fdtheroes.sgruntbot
 
 import org.slf4j.LoggerFactory
+import org.springframework.stereotype.Component
 import org.telegram.telegrambots.bots.DefaultBotOptions
 import org.telegram.telegrambots.meta.api.methods.ActionType
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod
@@ -21,23 +22,12 @@ import java.nio.charset.StandardCharsets
 import java.util.concurrent.CompletableFuture
 import kotlin.random.Random.Default.nextLong
 
-object BotUtils {
+@Component
+class BotUtils(private val bot: Bot) {
 
+    val chatId = "-1001103213994"
     private val log = LoggerFactory.getLogger(this.javaClass)
-    private lateinit var bot: Bot
-    private lateinit var proxy: Proxy
-
-    const val chatId = "-1001103213994"
-
-    fun init(bot: Bot) {
-        init(bot, bot.options)
-    }
-
-    // used for testing
-    fun init(bot: Bot, options: DefaultBotOptions) {
-        this.bot = bot
-        this.proxy = getProxy(options)
-    }
+    private val proxy = getProxy(bot.options)
 
     fun getUserName(user: User?): String {
         if (user == null) {
@@ -109,7 +99,7 @@ object BotUtils {
 
     fun getChatMember(userId: Long): User? {
         val getChatMember = GetChatMember().apply {
-            this.chatId = BotUtils.chatId
+            this.chatId = chatId
             this.userId = userId
         }
         return try {

@@ -1,10 +1,12 @@
 package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BotUtils
+import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.Message
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
+@Service
 class CheOreSono(
     private val nowSupplier: () -> LocalDateTime = { LocalDateTime.now() } // used for testing
 ) : Action, HasHalp {

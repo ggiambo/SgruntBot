@@ -1,8 +1,10 @@
 package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BotUtils
+import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.Message
 
+@Service
 class Google : Action, HasHalp {
 
     private val regex = Regex("^!google (.*)$", RegexOption.IGNORE_CASE)

@@ -4,8 +4,10 @@ import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.BotUtils.urlEncode
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
+import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.Message
 
+@Service
 class Wiki : Action, HasHalp {
 
     private val regex = Regex("^!wiki (.*)$", RegexOption.IGNORE_CASE)

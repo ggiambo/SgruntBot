@@ -1,13 +1,14 @@
 package com.fdtheroes.sgruntbot.scheduled
 
 import com.fdtheroes.sgruntbot.BotUtils
-import com.fdtheroes.sgruntbot.actions.Karma
+import com.fdtheroes.sgruntbot.actions.persistence.KarmaRepository
+import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.methods.ParseMode
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class ScheduledKarma : Timer() {
+class ScheduledKarma(private val karmaRepository: KarmaRepository) : Timer() {
 
     val mezzanotte = Calendar.getInstance().apply {
         set(Calendar.DAY_OF_MONTH, get(Calendar.DAY_OF_MONTH) + 1)
@@ -24,7 +25,7 @@ class ScheduledKarma : Timer() {
     inner class PublishKarma : TimerTask() {
         override fun run() {
             val message = SendMessage().apply {
-                this.text = Karma.testoKarmaReport()
+                this.text = karmaRepository.testoKarmaReport()
                 this.chatId = BotUtils.chatId
                 this.parseMode = ParseMode.HTML
             }
