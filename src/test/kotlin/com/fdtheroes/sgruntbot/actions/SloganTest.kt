@@ -7,7 +7,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 class SloganTest : ActionTest() {
 
-    private val slogan = Slogan()
+    private val slogan = Slogan(sgruntBot, botUtils)
 
     @Test
     fun testPositive() {
@@ -21,7 +21,7 @@ class SloganTest : ActionTest() {
     @Test
     fun testFetchSloganUser() {
         val user = user(Users.SEU)
-        val slogan = Slogan.fetchSlogan(user)
+        val slogan = slogan.fetchSlogan(user)
 
         assertThat(slogan).contains("""<a href="tg://user?id=68714652">SEU</a>""")
     }

@@ -1,13 +1,11 @@
 package com.fdtheroes.sgruntbot.actions
 
-import com.fdtheroes.sgruntbot.Bot
-import com.fdtheroes.sgruntbot.BotUtils
-import com.fdtheroes.sgruntbot.Context
-import com.fdtheroes.sgruntbot.Users
+import com.fdtheroes.sgruntbot.*
 import org.junit.jupiter.api.BeforeEach
 import org.mockito.kotlin.doAnswer
 import org.mockito.kotlin.isA
 import org.mockito.kotlin.mock
+import org.mockito.kotlin.spy
 import org.telegram.telegrambots.bots.DefaultBotOptions
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod
 import org.telegram.telegrambots.meta.api.methods.send.SendAudio
@@ -25,38 +23,37 @@ open class ActionTest {
     @BeforeEach
     fun resetContext() = Context.reset()
 
-    init {
-        val bot: Bot = mock {
-            on { executeAsync(isA<SendAudio>()) } doAnswer {
-                botArguments.add(it.arguments.first())
-                CompletableFuture.completedFuture(message("done"))
-            }
-            on { executeAsync(isA<SendPhoto>()) } doAnswer {
-                botArguments.add(it.arguments.first())
-                CompletableFuture.completedFuture(message("done"))
-            }
-            on { executeAsync(isA<BotApiMethod<Serializable>>()) } doAnswer {
-                botArguments.add(it.arguments.first())
-                CompletableFuture.completedFuture(message("done"))
-            }
-        }
-
-        BotUtils.init(bot, DefaultBotOptions())
-/*
-        BotUtils.init(
-            bot, DefaultBotOptions()
+    val botConfig: BotConfig = mock {
+        on { defaultBotOptions } doAnswer {
+            DefaultBotOptions()
                 .apply {
                     this.proxyType = DefaultBotOptions.ProxyType.HTTP
                     this.proxyHost = "127.0.0.1"
                     this.proxyPort = 8888
                 }
-        )
-*/
+        }
+    }
+    val botUtils = BotUtils(botConfig)
+
+    val sgruntBot: Bot = spy(Bot(botConfig, emptyList())) {
+        onGeneric { rispondi(isA<BotApiMethod<Serializable>>()) } doAnswer {
+            botArguments.add(it.arguments.first())
+            CompletableFuture.completedFuture(message("done"))
+        }
+        onGeneric { rispondi(isA<SendAudio>()) } doAnswer {
+            botArguments.add(it.arguments.first())
+            CompletableFuture.completedFuture(message("done"))
+        }
+        onGeneric { rispondi(isA<SendPhoto>()) } doAnswer {
+            botArguments.add(it.arguments.first())
+            CompletableFuture.completedFuture(message("done"))
+        }
+        onGeneric { sleep(isA()) } doAnswer { }
     }
 
     fun message(
         text: String,
-        chatId: Long = BotUtils.chatId.toLong(),
+        chatId: Long = botUtils.chatId.toLong(),
         from: User = user(),
         replyToMessage: Message? = null
     ): Message {

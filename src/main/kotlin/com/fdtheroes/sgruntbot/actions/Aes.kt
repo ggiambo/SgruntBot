@@ -1,6 +1,6 @@
 package com.fdtheroes.sgruntbot.actions
 
-import com.fdtheroes.sgruntbot.BotUtils
+import com.fdtheroes.sgruntbot.SgruntBot
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.Message
 import java.nio.charset.StandardCharsets
@@ -10,7 +10,7 @@ import javax.crypto.Cipher
 import javax.crypto.spec.SecretKeySpec
 
 @Service
-class Aes : Action, HasHalp {
+class Aes(private val sgruntBot: SgruntBot) : Action, HasHalp {
 
     private val regex = Regex("^!aes(d?) ([^ ]+) (.*)$")
 
@@ -21,14 +21,15 @@ class Aes : Action, HasHalp {
             val key = groupValues[2]
             val body = groupValues[3]
             if (decrypt.isEmpty()) {
-                BotUtils.rispondi(message, encrypt(key, body))
+                sgruntBot.rispondi(message, encrypt(key, body))
             } else {
-                BotUtils.rispondi(message, decrypt(key, body))
+                sgruntBot.rispondi(message, decrypt(key, body))
             }
         }
     }
 
-    override fun halp() = "<b>!aes</b> <i>chiave</i> <i>testo</i> per codificare\n!<b>aesd</b> <i>chiave</i> <i>testo</i> per decodificare"
+    override fun halp() =
+        "<b>!aes</b> <i>chiave</i> <i>testo</i> per codificare\n!<b>aesd</b> <i>chiave</i> <i>testo</i> per decodificare"
 
     private fun encrypt(key: String, text: String): String {
         if (text.isEmpty() || key.isEmpty()) {

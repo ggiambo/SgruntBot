@@ -1,13 +1,17 @@
 package com.fdtheroes.sgruntbot.scheduled
 
+import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.Context
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage
-import org.telegram.telegrambots.meta.api.objects.User
+import com.fdtheroes.sgruntbot.SgruntBot
+import com.fdtheroes.sgruntbot.actions.Slogan
+import org.springframework.stereotype.Service
 
+@Service
 class RandomSlogan(
-    sendMessage: (SendMessage) -> Unit,
-    private val getSloganText: (User) -> String,
-) : RandomScheduledAction(sendMessage) {
+    private val slogan: Slogan,
+    sgruntBot: SgruntBot,
+    botUtils: BotUtils,
+) : RandomScheduledAction(sgruntBot, botUtils) {
 
     override fun getMessageText(): String {
         val lastAuthor = Context.lastAuthor
@@ -15,7 +19,7 @@ class RandomSlogan(
             return ""
         }
 
-        return getSloganText(lastAuthor)
+        return slogan.fetchSlogan(lastAuthor)
     }
 
 }

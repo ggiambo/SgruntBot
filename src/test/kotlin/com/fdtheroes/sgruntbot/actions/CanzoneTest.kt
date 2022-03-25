@@ -1,14 +1,13 @@
 package com.fdtheroes.sgruntbot.actions
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
 import org.telegram.telegrambots.meta.api.methods.ActionType
 import org.telegram.telegrambots.meta.api.methods.send.SendAudio
 import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
 
 class CanzoneTest : ActionTest() {
 
-    private val canzone = Canzone()
+    private val canzone = Canzone(sgruntBot)
 
     //@Test
     fun testPositive() {

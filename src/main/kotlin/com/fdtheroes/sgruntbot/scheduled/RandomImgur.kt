@@ -1,16 +1,22 @@
 package com.fdtheroes.sgruntbot.scheduled
 
+import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.BotUtils
+import com.fdtheroes.sgruntbot.SgruntBot
 import com.google.gson.JsonParser
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage
+import org.springframework.stereotype.Service
 
+@Service
 class RandomImgur(
-    sendMessage: (SendMessage) -> Unit,
-    private val imgurClientId: String,
-) : RandomScheduledAction(sendMessage) {
+    private val botConfig: BotConfig,
+    sgruntBot: SgruntBot,
+    botUtils: BotUtils,
+) : RandomScheduledAction(sgruntBot, botUtils) {
+
+    val imgurClientId = botConfig.imgurClientId
 
     override fun getMessageText(): String {
-        val viral = BotUtils.textFromURL(
+        val viral = botUtils.textFromURL(
             url = "https://api.imgur.com/3/gallery/hot/viral/0.json",
             properties = mapOf("Authorization" to "Client-ID $imgurClientId")
         )

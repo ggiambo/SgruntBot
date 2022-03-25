@@ -2,11 +2,15 @@ package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.Context
+import com.fdtheroes.sgruntbot.SgruntBot
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.Message
 
 @Service
-class Parolacce : Action {
+class Parolacce(
+    private val sgruntBot: SgruntBot,
+    private val botUtils: BotUtils,
+) : Action {
 
     private val regex = Regex(
         "[ck]a[tz]z[io]|[ck]ulo|\\bfica\\b|vaffanculo|stronz[aoie]|coglion[aei]|merda",
@@ -15,8 +19,8 @@ class Parolacce : Action {
 
     override fun doAction(message: Message) {
         if (Context.pignolo && regex.containsMatchIn(message.text)) {
-            val userLink = BotUtils.getUserLink(message.from)
-            BotUtils.rispondi(message, getTesto(userLink))
+            val userLink = botUtils.getUserLink(message.from)
+            sgruntBot.rispondi(message, getTesto(userLink))
         }
     }
 

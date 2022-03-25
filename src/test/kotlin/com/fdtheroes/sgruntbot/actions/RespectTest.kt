@@ -9,7 +9,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 class RespectTest : ActionTest() {
 
-    private val respect = Respect()
+    private val respect = Respect(sgruntBot, botUtils)
 
     @Test
     fun testPositive() {
@@ -24,7 +24,8 @@ class RespectTest : ActionTest() {
         val sendChatAction = botArguments[0] as SendChatAction
         val sendMessage = botArguments[1] as SendMessage
         Assertions.assertThat(sendChatAction.actionType).isEqualTo(ActionType.TYPING)
-        Assertions.assertThat(sendMessage.text).isEqualTo("""Baciamo le mani Don <a href="tg://user?id=10427888">AvveFaTutti</a>""")
+        Assertions.assertThat(sendMessage.text)
+            .isEqualTo("""Baciamo le mani Don <a href="tg://user?id=10427888">AvveFaTutti</a>""")
     }
 
     @Test

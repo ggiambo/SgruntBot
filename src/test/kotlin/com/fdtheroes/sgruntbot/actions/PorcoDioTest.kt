@@ -9,7 +9,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 class PorcoDioTest : ActionTest() {
 
-    private val porcoDio = PorcoDio()
+    private val porcoDio = PorcoDio(sgruntBot)
 
     @Test
     fun testPositive() {

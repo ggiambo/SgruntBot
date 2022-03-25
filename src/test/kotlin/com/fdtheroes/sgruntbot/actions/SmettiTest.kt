@@ -13,7 +13,7 @@ import java.time.LocalDateTime
 
 class SmettiTest : ActionTest() {
 
-    private val smetti = Smetti()
+    private val smetti = Smetti(sgruntBot)
 
     @ParameterizedTest
     @ValueSource(strings = ["sgrunty ora smetti", "sgruntbot smettila", "@sgrunty smetti!"])

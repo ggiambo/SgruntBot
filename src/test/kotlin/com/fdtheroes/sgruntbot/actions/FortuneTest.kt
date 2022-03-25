@@ -8,7 +8,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 class FortuneTest : ActionTest() {
 
-    private val fortune = Fortune()
+    private val fortune = Fortune(sgruntBot)
 
     @Test
     fun testPositive() {

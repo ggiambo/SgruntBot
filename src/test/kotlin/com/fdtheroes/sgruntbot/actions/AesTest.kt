@@ -8,7 +8,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 internal class AesTest : ActionTest() {
 
-    val aes = Aes()
+    val aes = Aes(sgruntBot)
 
     @Test
     fun testEncrypt() {

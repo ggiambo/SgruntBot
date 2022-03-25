@@ -9,7 +9,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 class SgruntTest : ActionTest() {
 
-    private val sgrunt = Sgrunt()
+    private val sgrunt = Sgrunt(sgruntBot)
 
     @Test
     fun testPositive() {

@@ -9,7 +9,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 class ChiEraTest : ActionTest() {
 
-    private val chiEra = ChiEra()
+    private val chiEra = ChiEra(sgruntBot, botUtils)
 
     @Test
     fun testPositive() {

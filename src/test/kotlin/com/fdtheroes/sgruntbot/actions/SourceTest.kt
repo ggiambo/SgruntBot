@@ -6,7 +6,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 class SourceTest : ActionTest() {
 
-    private val source = Source()
+    private val source = Source(sgruntBot)
 
     @Test
     fun testPositive() {

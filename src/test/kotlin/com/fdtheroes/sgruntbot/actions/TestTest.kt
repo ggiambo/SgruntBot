@@ -8,7 +8,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 class TestTest : ActionTest() {
 
-    private val test = com.fdtheroes.sgruntbot.actions.Test()
+    private val test = Test(sgruntBot, botUtils)
 
     @Test
     fun testPositive() {

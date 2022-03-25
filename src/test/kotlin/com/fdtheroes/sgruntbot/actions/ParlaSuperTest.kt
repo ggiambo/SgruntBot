@@ -7,7 +7,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 class ParlaSuperTest : ActionTest() {
 
-    private val parlaSuper = ParlaSuper()
+    private val parlaSuper = ParlaSuper(sgruntBot, botUtils)
 
     @Test
     fun testPositive() {

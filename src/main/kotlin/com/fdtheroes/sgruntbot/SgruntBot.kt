@@ -1,15 +1,25 @@
 package com.fdtheroes.sgruntbot
 
-import org.springframework.stereotype.Service
-import org.telegram.telegrambots.meta.TelegramBotsApi
-import org.telegram.telegrambots.updatesreceivers.DefaultBotSession
-import javax.annotation.PostConstruct
+import org.telegram.telegrambots.meta.api.methods.BotApiMethod
+import org.telegram.telegrambots.meta.api.methods.send.SendAudio
+import org.telegram.telegrambots.meta.api.methods.send.SendPhoto
+import org.telegram.telegrambots.meta.api.objects.Message
+import org.telegram.telegrambots.meta.api.objects.User
+import java.io.Serializable
+import java.util.concurrent.CompletableFuture
 
-@Service
-class SgruntBot(private val bot: Bot) : TelegramBotsApi(DefaultBotSession::class.java) {
+interface SgruntBot {
 
-    @PostConstruct
-    fun init() {
-        registerBot(bot)
-    }
+    fun rispondiAsText(message: Message, text: String)
+
+    fun rispondi(message: Message, textmd: String)
+
+    fun <T : Serializable, M : BotApiMethod<T>> rispondi(message: M): CompletableFuture<T>?
+
+    fun rispondi(sendAudio: SendAudio): CompletableFuture<Message>
+
+    fun rispondi(sendPhoto: SendPhoto): CompletableFuture<Message>
+
+    fun getChatMember(userId: Long): User?
+
 }

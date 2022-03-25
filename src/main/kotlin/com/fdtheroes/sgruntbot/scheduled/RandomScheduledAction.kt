@@ -1,6 +1,7 @@
 package com.fdtheroes.sgruntbot.scheduled
 
 import com.fdtheroes.sgruntbot.BotUtils
+import com.fdtheroes.sgruntbot.SgruntBot
 import org.slf4j.LoggerFactory
 import org.telegram.telegrambots.meta.api.methods.ParseMode
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
@@ -9,10 +10,12 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 import java.util.*
+import javax.annotation.PostConstruct
 import kotlin.random.Random.Default.nextLong
 
 abstract class RandomScheduledAction(
-    private val sendMessage: (SendMessage) -> Unit
+    val sgruntBot: SgruntBot,
+    val botUtils: BotUtils,
 ) {
 
     private val log = LoggerFactory.getLogger(this.javaClass)
@@ -24,6 +27,7 @@ abstract class RandomScheduledAction(
 
     abstract fun getMessageText(): String
 
+    @PostConstruct
     fun start() {
         scheduleNext()
     }
@@ -43,11 +47,11 @@ abstract class RandomScheduledAction(
 
         val message = SendMessage().apply {
             this.text = text
-            this.chatId = BotUtils.chatId
+            this.chatId = botUtils.chatId
             this.parseMode = ParseMode.HTML
         }
 
-        sendMessage(message)
+        sgruntBot.rispondi(message)
     }
 
     private fun getLogMessage(delayHr: Duration): String {

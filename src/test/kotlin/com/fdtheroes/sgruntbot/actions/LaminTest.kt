@@ -8,7 +8,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 class LaminTest : ActionTest() {
 
-    private val lamin = Lamin()
+    private val lamin = Lamin(sgruntBot)
 
     @Test
     fun testPositive() {

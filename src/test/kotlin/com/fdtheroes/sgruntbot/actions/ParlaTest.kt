@@ -6,7 +6,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 class ParlaTest : ActionTest() {
 
-    private val parla = Parla()
+    private val parla = Parla(sgruntBot, botUtils)
 
     @Test
     fun testPositive() {

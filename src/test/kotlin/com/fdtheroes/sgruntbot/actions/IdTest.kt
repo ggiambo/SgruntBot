@@ -8,7 +8,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 class IdTest : ActionTest() {
 
-    private val id = Id()
+    private val id = Id(sgruntBot)
 
     @Test
     fun testPositive() {

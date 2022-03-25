@@ -8,7 +8,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 class GoogleTest : ActionTest() {
 
-    private val google = Google()
+    private val google = Google(sgruntBot)
 
     @Test
     fun testPositive() {

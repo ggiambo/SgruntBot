@@ -10,7 +10,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 class ParolacceTest : ActionTest() {
 
-    private val parolacce = Parolacce()
+    private val parolacce = Parolacce(sgruntBot, botUtils)
 
     @ParameterizedTest
     @ValueSource(strings = ["cazzone", "culona", " fica ", "stronzi", "merdah!"])

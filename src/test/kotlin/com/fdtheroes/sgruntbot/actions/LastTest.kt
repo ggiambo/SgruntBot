@@ -8,7 +8,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 class LastTest : ActionTest() {
 
-    private val last = Last()
+    private val last = Last(sgruntBot, botUtils, Slogan(sgruntBot, botUtils))
 
     @Test
     fun testPositive() {

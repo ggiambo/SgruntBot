@@ -1,11 +1,15 @@
 package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BotUtils
+import com.fdtheroes.sgruntbot.SgruntBot
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.Message
 
 @Service
-class BitcoinEUR : Bitcoin(), Action {
+class BitcoinEUR(
+    botUtils: BotUtils,
+    private val sgruntBot: SgruntBot
+) : Bitcoin(botUtils), Action {
 
     private val regex = Regex("^!btce\$", RegexOption.IGNORE_CASE)
 
@@ -13,7 +17,7 @@ class BitcoinEUR : Bitcoin(), Action {
         if (regex.containsMatchIn(message.text)) {
             val value = bitcoinvalue("EUR")
             val testo = "Il buttcoin vale $value EUR"
-            BotUtils.rispondi(message, testo)
+            sgruntBot.rispondi(message, testo)
         }
     }
 

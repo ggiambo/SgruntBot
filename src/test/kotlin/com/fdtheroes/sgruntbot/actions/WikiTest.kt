@@ -8,7 +8,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 class WikiTest : ActionTest() {
 
-    private val wiki = Wiki()
+    private val wiki = Wiki(sgruntBot, botUtils)
 
     @Test
     fun testPositive() {

@@ -1,13 +1,19 @@
 package com.fdtheroes.sgruntbot.scheduled
 
 import com.fdtheroes.sgruntbot.BotUtils
+import com.fdtheroes.sgruntbot.SgruntBot
 import org.jsoup.Jsoup
+import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
-class RandomCuloDiPapa(sendMessage: (SendMessage) -> Unit) : RandomScheduledAction(sendMessage) {
+@Service
+class RandomCuloDiPapa(
+    sgruntBot: SgruntBot,
+    botUtils: BotUtils,
+) : RandomScheduledAction(sgruntBot, botUtils) {
 
     override fun getMessageText(): String {
-        val html = BotUtils.textFromURL("https://dailyverses.net/it/versetto-casuale-bibbia")
+        val html = botUtils.textFromURL("https://dailyverses.net/it/versetto-casuale-bibbia")
 
         val banfata = Jsoup.parse(html)
         val contenitore = banfata.body()

@@ -8,7 +8,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 class BellissimTest : ActionTest() {
 
-    private val bellissim = Bellissim()
+    private val bellissim = Bellissim(sgruntBot)
 
     @Test
     fun testPositive() {

@@ -9,7 +9,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 class CoccolinoTest : ActionTest() {
 
-    private val coccolino = Coccolino()
+    private val coccolino = Coccolino(sgruntBot)
 
     @Test
     fun testPositive_1() {

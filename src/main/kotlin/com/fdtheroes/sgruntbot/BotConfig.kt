@@ -10,7 +10,7 @@ import java.net.URI
 class BotConfig(
     @Value("\${sgruntbot.config.telegram-token-file}") telegramTokenFile: String,
     @Value("\${sgruntbot.config.imgur-client-id-file}") imgurClientIdFile: String,
-    @Value("\${sgruntbot.config.proxy}") proxy: String?,
+    @Value("\${sgruntbot.config.proxy:}") proxy: String,
 ) {
 
     val botName = "SgruntBot"

@@ -1,6 +1,6 @@
 package com.fdtheroes.sgruntbot.actions
 
-import com.fdtheroes.sgruntbot.BotUtils
+import com.fdtheroes.sgruntbot.SgruntBot
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.methods.ParseMode
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto
@@ -13,7 +13,7 @@ import java.io.ByteArrayOutputStream
 import javax.imageio.ImageIO
 
 @Service
-class Tappeto : Action, HasHalp {
+class Tappeto(private val sgruntBot: SgruntBot) : Action, HasHalp {
 
     private val regex = Regex("^!tappeto (.*)\$", RegexOption.IGNORE_CASE)
 
@@ -28,7 +28,7 @@ class Tappeto : Action, HasHalp {
             sendPhoto.parseMode = ParseMode.HTML
             sendPhoto.photo = tappeto
             sendPhoto.caption = "$chi manda $cosa al tappeto!"
-            BotUtils.rispondi(sendPhoto)
+            sgruntBot.rispondi(sendPhoto)
         }
     }
 

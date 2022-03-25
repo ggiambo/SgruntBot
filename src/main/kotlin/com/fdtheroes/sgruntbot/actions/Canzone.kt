@@ -1,6 +1,6 @@
 package com.fdtheroes.sgruntbot.actions
 
-import com.fdtheroes.sgruntbot.BotUtils
+import com.fdtheroes.sgruntbot.SgruntBot
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.methods.ActionType
@@ -16,7 +16,7 @@ import kotlin.io.path.exists
 import kotlin.io.path.pathString
 
 @Service
-class Canzone : Action, HasHalp {
+class Canzone(private val sgruntBot: SgruntBot) : Action, HasHalp {
 
     private val log = LoggerFactory.getLogger(this.javaClass)
     private val regex = Regex("!canzone (.*)$", RegexOption.IGNORE_CASE)
@@ -33,11 +33,11 @@ class Canzone : Action, HasHalp {
     override fun doAction(message: Message) {
         val canzone = regex.find(message.text)?.groupValues?.get(1)
         if (canzone != null) {
-            BotUtils.rispondi(SendChatAction(message.chat.id.toString(), ActionType.UPLOADDOCUMENT.toString()))
+            sgruntBot.rispondi(SendChatAction(message.chat.id.toString(), ActionType.UPLOADDOCUMENT.toString()))
 
             val fileName = fetch(canzone)
             if (fileName == null) {
-                BotUtils.rispondi(message, "Non ci riesco.")
+                sgruntBot.rispondi(message, "Non ci riesco.")
                 return
             }
             val file = destPath.resolve(fileName).toFile()
@@ -50,7 +50,7 @@ class Canzone : Action, HasHalp {
             sendAudio.replyToMessageId = message.messageId
             sendAudio.audio = InputFile(file, fileName)
 
-            BotUtils.rispondi(sendAudio).thenApply { file.delete() }
+            sgruntBot.rispondi(sendAudio).thenApply { file.delete() }
         }
     }
 

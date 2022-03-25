@@ -1,12 +1,12 @@
 package com.fdtheroes.sgruntbot.actions
 
-import com.fdtheroes.sgruntbot.BotUtils
+import com.fdtheroes.sgruntbot.SgruntBot
 import com.fdtheroes.sgruntbot.Users
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.Message
 
 @Service
-class Sgrunt : Action {
+class Sgrunt(private val sgruntBot: SgruntBot) : Action {
 
     private val regex = Regex("^sgrunt(bot|y|olino|olomeo)", RegexOption.IGNORE_CASE)
     private val reply = listOf(
@@ -21,9 +21,9 @@ class Sgrunt : Action {
         if (regex.containsMatchIn(message.text)) {
             val user = Users.byId(message.from.id)
             if (user == Users.SUORA) {
-                BotUtils.rispondi(message, "Ciao papà!")
+                sgruntBot.rispondi(message, "Ciao papà!")
             } else {
-                BotUtils.rispondi(message, reply.random())
+                sgruntBot.rispondi(message, reply.random())
             }
         }
     }

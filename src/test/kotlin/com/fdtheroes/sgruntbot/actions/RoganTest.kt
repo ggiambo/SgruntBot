@@ -8,7 +8,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 class RoganTest : ActionTest() {
 
-    private val rogan = Rogan()
+    private val rogan = Rogan(sgruntBot)
 
     @Test
     fun testPositive() {
