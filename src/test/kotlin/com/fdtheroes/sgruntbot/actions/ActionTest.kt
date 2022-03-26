@@ -26,11 +26,13 @@ open class ActionTest {
     val botConfig: BotConfig = mock {
         on { defaultBotOptions } doAnswer {
             DefaultBotOptions()
+/*
                 .apply {
                     this.proxyType = DefaultBotOptions.ProxyType.HTTP
                     this.proxyHost = "127.0.0.1"
                     this.proxyPort = 8888
                 }
+*/
         }
     }
     val botUtils = BotUtils(botConfig)
