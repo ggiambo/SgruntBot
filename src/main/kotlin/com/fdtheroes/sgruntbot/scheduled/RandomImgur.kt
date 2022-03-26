@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service
 
 @Service
 class RandomImgur(
-    private val botConfig: BotConfig,
+    private val botUtils: BotUtils,
     sgruntBot: SgruntBot,
-    botUtils: BotUtils,
-) : RandomScheduledAction(sgruntBot, botUtils) {
+    botConfig: BotConfig,
+) : RandomScheduledAction(sgruntBot, botConfig) {
 
     val imgurClientId = botConfig.imgurClientId
 

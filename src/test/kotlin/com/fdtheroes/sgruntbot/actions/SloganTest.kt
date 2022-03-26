@@ -7,11 +7,11 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 class SloganTest : ActionTest() {
 
-    private val slogan = Slogan(sgruntBot, botUtils)
+    private val slogan = Slogan(botUtils)
 
     @Test
     fun testPositive() {
-        slogan.doAction(message("!slogan la cacca molle"))
+        slogan.doAction(message("!slogan la cacca molle"), sgruntBot)
 
         assertThat(botArguments).hasSize(1)
         val sendMessage = botArguments[0] as SendMessage

@@ -1,6 +1,6 @@
 package com.fdtheroes.sgruntbot.scheduled
 
-import com.fdtheroes.sgruntbot.BotUtils
+import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.SgruntBot
 import com.fdtheroes.sgruntbot.actions.persistence.KarmaService
 import org.springframework.stereotype.Service
@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit
 @Service
 class ScheduledKarma(
     private val karmaService: KarmaService,
-    private val botUtils: BotUtils,
+    private val botConfig: BotConfig,
     private val sgruntBot: SgruntBot,
 ) : Timer() {
 
@@ -31,8 +31,8 @@ class ScheduledKarma(
     inner class PublishKarma : TimerTask() {
         override fun run() {
             val message = SendMessage().apply {
-                this.text = karmaService.testoKarmaReport()
-                this.chatId = botUtils.chatId
+                this.text = karmaService.testoKarmaReport(sgruntBot)
+                this.chatId = botConfig.chatId
                 this.parseMode = ParseMode.HTML
             }
 

@@ -24,6 +24,7 @@ open class ActionTest {
     fun resetContext() = Context.reset()
 
     val botConfig: BotConfig = mock {
+        on { chatId } doAnswer { "-9999" }
         on { defaultBotOptions } doAnswer {
             DefaultBotOptions()
 /*
@@ -55,13 +56,12 @@ open class ActionTest {
 
     fun message(
         text: String,
-        chatId: Long = botUtils.chatId.toLong(),
         from: User = user(),
         replyToMessage: Message? = null
     ): Message {
         return Message().apply {
             this.text = text
-            this.chat = Chat().apply { this.id = chatId }
+            this.chat = Chat().apply { this.id = botConfig.chatId.toLong() }
             this.from = from
             this.replyToMessage = replyToMessage
         }

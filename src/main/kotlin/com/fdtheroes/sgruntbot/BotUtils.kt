@@ -12,8 +12,7 @@ import java.nio.charset.StandardCharsets
 @Service
 class BotUtils(botConfig: BotConfig) {
 
-    val chatId = "-1001103213994"
-    private val proxy = getProxy(botConfig.defaultBotOptions)
+    private val proxy = initProxy(botConfig.defaultBotOptions)
 
     fun getUserName(user: User?): String {
         if (user == null) {
@@ -48,7 +47,7 @@ class BotUtils(botConfig: BotConfig) {
             .decodeToString()
     }
 
-    private fun getProxy(options: DefaultBotOptions): Proxy {
+    private fun initProxy(options: DefaultBotOptions): Proxy {
         if (options.proxyType == DefaultBotOptions.ProxyType.NO_PROXY) {
             return Proxy.NO_PROXY
         }

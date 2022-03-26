@@ -13,12 +13,12 @@ import java.time.LocalDateTime
 
 class SmettiTest : ActionTest() {
 
-    private val smetti = Smetti(sgruntBot)
+    private val smetti = Smetti()
 
     @ParameterizedTest
     @ValueSource(strings = ["sgrunty ora smetti", "sgruntbot smettila", "@sgrunty smetti!"])
     fun testPositive(message: String) {
-        smetti.doAction(message(message))
+        smetti.doAction(message(message), sgruntBot)
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -30,7 +30,7 @@ class SmettiTest : ActionTest() {
 
     @Test
     fun testPositive_DADA() {
-        smetti.doAction(message(text = "@sgrunty smetti", from = user(id = Users.DADA.id)))
+        smetti.doAction(message(text = "@sgrunty smetti", from = user(id = Users.DADA.id)), sgruntBot)
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction

@@ -8,11 +8,11 @@ import org.telegram.telegrambots.meta.api.objects.Message
 import java.time.LocalDateTime
 
 @Service
-class Smetti(private val sgruntBot: SgruntBot) : Action {
+class Smetti : Action {
 
     private val regex = Regex("^@?sgrunt(y|bot) .*smetti.*", RegexOption.IGNORE_CASE)
 
-    override fun doAction(message: Message) {
+    override fun doAction(message: Message, sgruntBot: SgruntBot) {
         if (regex.containsMatchIn(message.text)) {
             val user = Users.byId(message.from.id)
             if (user == Users.DADA) {

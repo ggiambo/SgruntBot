@@ -11,8 +11,8 @@ class CheOreSonoTest : ActionTest() {
 
     @Test
     fun testPositive_prima_di_mezzogiorno() {
-        val cheOreSono = CheOreSono(sgruntBot) { LocalDateTime.of(2021, 11, 28, 11, 44) }
-        cheOreSono.doAction(message("non so che ore sono a dire il vero"))
+        val cheOreSono = CheOreSono { LocalDateTime.of(2021, 11, 28, 11, 44) }
+        cheOreSono.doAction(message("non so che ore sono a dire il vero"), sgruntBot)
 
         Assertions.assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -23,8 +23,8 @@ class CheOreSonoTest : ActionTest() {
 
     @Test
     fun testPositive_dopo_mezzogiorno() {
-        val cheOreSono = CheOreSono(sgruntBot) { LocalDateTime.of(2021, 11, 28, 12, 17) }
-        cheOreSono.doAction(message("non so che ore sono a dire il vero"))
+        val cheOreSono = CheOreSono { LocalDateTime.of(2021, 11, 28, 12, 17) }
+        cheOreSono.doAction(message("non so che ore sono a dire il vero"), sgruntBot)
 
         Assertions.assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -35,8 +35,8 @@ class CheOreSonoTest : ActionTest() {
 
     @Test
     fun testPositive_prima_di_mezzanotte() {
-        val cheOreSono = CheOreSono(sgruntBot) { LocalDateTime.of(2021, 11, 28, 23, 44) }
-        cheOreSono.doAction(message("non so che ore sono a dire il vero"))
+        val cheOreSono = CheOreSono { LocalDateTime.of(2021, 11, 28, 23, 44) }
+        cheOreSono.doAction(message("non so che ore sono a dire il vero"), sgruntBot)
 
         Assertions.assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -47,8 +47,8 @@ class CheOreSonoTest : ActionTest() {
 
     @Test
     fun testPositive_dopo_mezzanotte() {
-        val cheOreSono = CheOreSono(sgruntBot) { LocalDateTime.of(2021, 11, 28, 0, 17) }
-        cheOreSono.doAction(message("non so che ore sono a dire il vero"))
+        val cheOreSono = CheOreSono { LocalDateTime.of(2021, 11, 28, 0, 17) }
+        cheOreSono.doAction(message("non so che ore sono a dire il vero"), sgruntBot)
 
         Assertions.assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction

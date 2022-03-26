@@ -9,21 +9,20 @@ import kotlin.random.Random.Default.nextInt
 
 @Service
 class Karma(
-    private val sgruntBot: SgruntBot,
     private val botUtils: BotUtils,
     private val karmaService: KarmaService,
 ) : Action, HasHalp {
 
-    override fun doAction(message: Message) {
+    override fun doAction(message: Message, sgruntBot: SgruntBot) {
         val ricevente = message.replyToMessage?.from?.id
         if (message.text == "+" && ricevente != null) {
-            giveTakeKarma(message, ricevente, Int::inc)
+            giveTakeKarma(message, sgruntBot, ricevente, Int::inc)
         }
         if (message.text == "-" && ricevente != null) {
-            giveTakeKarma(message, ricevente, Int::dec)
+            giveTakeKarma(message, sgruntBot, ricevente, Int::dec)
         }
         if (message.text == "!karma") {
-            sgruntBot.rispondi(message, testoKarmaReport())
+            sgruntBot.rispondi(message, testoKarmaReport(sgruntBot))
         }
     }
 
@@ -33,7 +32,12 @@ class Karma(
         <b>-</b> togle punto karma all'autore del messaggio
         """.trimIndent()
 
-    private fun giveTakeKarma(message: Message, ricevente: Long, newKarma: (oldKarma: Int) -> Int) {
+    private fun giveTakeKarma(
+        message: Message,
+        sgruntBot: SgruntBot,
+        ricevente: Long,
+        newKarma: (oldKarma: Int) -> Int
+    ) {
         val donatore = message.from.id
         if (donatore == ricevente) {
             sgruntBot.rispondi(message, "Ti è stato dato il potere di dare o togliere ad altri, ma non a te stesso")
@@ -71,13 +75,13 @@ class Karma(
         return "<b>Karmaroulette</b> ! Il tuo Karma è ora di $karma"
     }
 
-    fun testoKarmaReport(): String {
+    fun testoKarmaReport(sgruntBot: SgruntBot): String {
         val karmas = karmaService.getKarmas()
             .sortedByDescending { it.second }
-            .map { "${getUserName(it.first).padEnd(20)}%3d".format(it.second) }
+            .map { "${getUserName(it.first, sgruntBot).padEnd(20)}%3d".format(it.second) }
             .joinToString("\n")
         return "<b><u>Karma Report</u></b>\n\n<pre>${karmas}</pre>"
     }
 
-    private fun getUserName(userId: Long) = botUtils.getUserName(sgruntBot.getChatMember(userId))
+    private fun getUserName(userId: Long, sgruntBot: SgruntBot) = botUtils.getUserName(sgruntBot.getChatMember(userId))
 }

@@ -10,11 +10,11 @@ import javax.crypto.Cipher
 import javax.crypto.spec.SecretKeySpec
 
 @Service
-class Aes(private val sgruntBot: SgruntBot) : Action, HasHalp {
+class Aes : Action, HasHalp {
 
     private val regex = Regex("^!aes(d?) ([^ ]+) (.*)$")
 
-    override fun doAction(message: Message) {
+    override fun doAction(message: Message, sgruntBot: SgruntBot) {
         val groupValues = regex.find(message.text)?.groupValues
         if (groupValues?.size == 4) {
             val decrypt = groupValues[1]

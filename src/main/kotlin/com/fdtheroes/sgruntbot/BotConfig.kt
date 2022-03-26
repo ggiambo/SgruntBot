@@ -8,6 +8,7 @@ import java.net.URI
 
 @Service
 class BotConfig(
+    @Value("\${sgruntbot.config.chat-id}") val chatId: String,
     @Value("\${sgruntbot.config.telegram-token-file}") telegramTokenFile: String,
     @Value("\${sgruntbot.config.imgur-client-id-file}") imgurClientIdFile: String,
     @Value("\${sgruntbot.config.proxy:}") proxy: String,

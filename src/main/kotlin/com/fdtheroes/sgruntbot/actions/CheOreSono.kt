@@ -8,8 +8,7 @@ import java.time.format.DateTimeFormatter
 
 @Service
 class CheOreSono(
-    private val sgruntBot: SgruntBot,
-    private val nowSupplier: () -> LocalDateTime = { LocalDateTime.now() } // used for testing
+    private val nowSupplier: () -> LocalDateTime = { LocalDateTime.now() } // used for testing){}
 ) : Action, HasHalp {
 
     private val regex = Regex("che ore sono|che ora è", setOf(RegexOption.IGNORE_CASE, RegexOption.MULTILINE))
@@ -46,7 +45,7 @@ class CheOreSono(
         "meno cinque"
     )
 
-    override fun doAction(message: Message) {
+    override fun doAction(message: Message, sgruntBot: SgruntBot) {
         if (regex.containsMatchIn(message.text)) {
             sgruntBot.rispondi(message, oreInLettere())
         }

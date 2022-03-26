@@ -1,6 +1,3 @@
-spring:
-  datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:sgrunt
-    username: "sgrunt"
-    password: "sgrunt"
+sgruntbot:
+  config:
+    chat-id: -676046724

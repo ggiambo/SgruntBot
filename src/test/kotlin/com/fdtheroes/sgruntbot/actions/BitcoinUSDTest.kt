@@ -8,11 +8,11 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 class BitcoinUSDTest : ActionTest() {
 
-    private val bitcoinUSD = BitcoinUSD(botUtils, sgruntBot)
+    private val bitcoinUSD = BitcoinUSD(botUtils)
 
     @Test
     fun testPositive() {
-        bitcoinUSD.doAction(message(("!btc")))
+        bitcoinUSD.doAction(message(("!btc")), sgruntBot)
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -24,7 +24,7 @@ class BitcoinUSDTest : ActionTest() {
 
     @Test
     fun testPositive2() {
-        bitcoinUSD.doAction(message(("blah banf quanto vale un bitcoin? yadda yadda")))
+        bitcoinUSD.doAction(message(("blah banf quanto vale un bitcoin? yadda yadda")), sgruntBot)
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -36,7 +36,7 @@ class BitcoinUSDTest : ActionTest() {
 
     @Test
     fun testNegative() {
-        bitcoinUSD.doAction(message(("!btce__")))
+        bitcoinUSD.doAction(message(("!btce__")), sgruntBot)
 
         assertThat(botArguments).hasSize(0)
     }

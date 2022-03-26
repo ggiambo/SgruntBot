@@ -8,11 +8,11 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 class WikiTest : ActionTest() {
 
-    private val wiki = Wiki(sgruntBot, botUtils)
+    private val wiki = Wiki(botUtils)
 
     @Test
     fun testPositive() {
-        wiki.doAction(message("!wiki poesia giambica"))
+        wiki.doAction(message("!wiki poesia giambica"), sgruntBot)
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction

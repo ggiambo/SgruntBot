@@ -8,11 +8,11 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 class RoganTest : ActionTest() {
 
-    private val rogan = Rogan(sgruntBot)
+    private val rogan = Rogan()
 
     @Test
     fun testPositive() {
-        rogan.doAction(message("a me rogan sta sulle balle"))
+        rogan.doAction(message("a me rogan sta sulle balle"), sgruntBot)
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction

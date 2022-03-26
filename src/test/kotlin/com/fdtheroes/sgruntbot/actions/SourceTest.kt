@@ -6,11 +6,11 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 class SourceTest : ActionTest() {
 
-    private val source = Source(sgruntBot)
+    private val source = Source()
 
     @Test
     fun testPositive() {
-        source.doAction(message("!source"))
+        source.doAction(message("!source"), sgruntBot)
 
         assertThat(botArguments).hasSize(1)
         val sendMessage = botArguments[0] as SendMessage

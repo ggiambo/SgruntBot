@@ -1,6 +1,6 @@
 package com.fdtheroes.sgruntbot.scheduled
 
-import com.fdtheroes.sgruntbot.BotUtils
+import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.SgruntBot
 import org.slf4j.LoggerFactory
 import org.telegram.telegrambots.meta.api.methods.ParseMode
@@ -13,10 +13,7 @@ import java.util.*
 import javax.annotation.PostConstruct
 import kotlin.random.Random.Default.nextLong
 
-abstract class RandomScheduledAction(
-    val sgruntBot: SgruntBot,
-    val botUtils: BotUtils,
-) {
+abstract class RandomScheduledAction(val sgruntBot: SgruntBot, val botConfig: BotConfig) {
 
     private val log = LoggerFactory.getLogger(this.javaClass)
     private val timer = Timer()
@@ -47,7 +44,7 @@ abstract class RandomScheduledAction(
 
         val message = SendMessage().apply {
             this.text = text
-            this.chatId = botUtils.chatId
+            this.chatId = botConfig.chatId.toString()
             this.parseMode = ParseMode.HTML
         }
 
@@ -55,7 +52,8 @@ abstract class RandomScheduledAction(
     }
 
     private fun getLogMessage(delayHr: Duration): String {
-        val duration = "${delayHr.toHours()} ore, ${delayHr.toMinutesPart()} minuti e ${delayHr.toSecondsPart()} secondi"
+        val duration =
+            "${delayHr.toHours()} ore, ${delayHr.toMinutesPart()} minuti e ${delayHr.toSecondsPart()} secondi"
         val actionWhen = DateTimeFormatter.ofPattern("dd.MM.yyyy@HH:mm:ss").format(LocalDateTime.now().plus(delayHr))
         return "Prossimo ${this.javaClass.simpleName} fra $duration, ovvero il $actionWhen"
     }

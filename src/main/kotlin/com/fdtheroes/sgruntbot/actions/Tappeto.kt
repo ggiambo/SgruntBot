@@ -13,11 +13,11 @@ import java.io.ByteArrayOutputStream
 import javax.imageio.ImageIO
 
 @Service
-class Tappeto(private val sgruntBot: SgruntBot) : Action, HasHalp {
+class Tappeto : Action, HasHalp {
 
     private val regex = Regex("^!tappeto (.*)\$", RegexOption.IGNORE_CASE)
 
-    override fun doAction(message: Message) {
+    override fun doAction(message: Message, sgruntBot: SgruntBot) {
         val cosa = regex.find(message.text)?.groupValues?.get(1)
         if (cosa != null) {
             val chi = if (message.from.userName != null) message.from.userName else message.from.firstName

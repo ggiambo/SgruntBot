@@ -9,12 +9,12 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 class DioPorcoTest : ActionTest() {
 
-    private val dioPorco = DioPorco(sgruntBot)
+    private val dioPorco = DioPorco()
 
     @Test
     fun testPositive() {
         Context.pignolo = true
-        dioPorco.doAction(message(("\tdio porco")))
+        dioPorco.doAction(message(("\tdio porco")), sgruntBot)
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -26,7 +26,7 @@ class DioPorcoTest : ActionTest() {
     @Test
     fun testPositive_2() {
         Context.pignolo = true
-        dioPorco.doAction(message(("dio cane\n")))
+        dioPorco.doAction(message(("dio cane\n")), sgruntBot)
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -38,7 +38,7 @@ class DioPorcoTest : ActionTest() {
 
     @Test
     fun testNegative() {
-        dioPorco.doAction(message(("condio cane ")))
+        dioPorco.doAction(message(("condio cane ")), sgruntBot)
 
         assertThat(botArguments).isEmpty()
     }

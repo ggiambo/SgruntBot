@@ -9,14 +9,11 @@ import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.Message
 
 @Service
-class Wiki(
-    private val sgruntBot: SgruntBot,
-    private val botUtils: BotUtils,
-) : Action, HasHalp {
+class Wiki(private val botUtils: BotUtils) : Action, HasHalp {
 
     private val regex = Regex("^!wiki (.*)$", RegexOption.IGNORE_CASE)
 
-    override fun doAction(message: Message) {
+    override fun doAction(message: Message, sgruntBot: SgruntBot) {
         val query = regex.find(message.text)?.groupValues?.get(1)
         if (query != null) {
             val first = getSearchResponse(query.urlEncode())

@@ -7,11 +7,11 @@ import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
 
 class CanzoneTest : ActionTest() {
 
-    private val canzone = Canzone(sgruntBot)
+    private val canzone = Canzone()
 
     //@Test
     fun testPositive() {
-        canzone.doAction(message("!canzone 2 Seconds Video"))
+        canzone.doAction(message("!canzone 2 Seconds Video"), sgruntBot)
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction

@@ -7,4 +7,5 @@ spring:
 
 sgruntbot:
   config:
+    chat-id: -676046724
     proxy: "http://localhost:8888"

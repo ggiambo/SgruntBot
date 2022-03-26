@@ -1,6 +1,6 @@
 package com.fdtheroes.sgruntbot.scheduled
 
-import com.fdtheroes.sgruntbot.BotUtils
+import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.SgruntBot
 import com.fdtheroes.sgruntbot.actions.Fortune
 import org.springframework.stereotype.Service
@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service
 class RandomFortune(
     private val fortune: Fortune,
     sgruntBot: SgruntBot,
-    botUtils: BotUtils,
-) : RandomScheduledAction(sgruntBot, botUtils) {
+    botConfig: BotConfig,
+) : RandomScheduledAction(sgruntBot, botConfig) {
 
     override fun getMessageText() = fortune.getFortune()
 

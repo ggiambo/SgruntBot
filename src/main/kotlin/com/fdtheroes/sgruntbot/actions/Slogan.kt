@@ -8,15 +8,12 @@ import org.telegram.telegrambots.meta.api.objects.Message
 import org.telegram.telegrambots.meta.api.objects.User
 
 @Service
-class Slogan(
-    private val sgruntBot: SgruntBot,
-    private val botUtils: BotUtils,
-) : Action, HasHalp {
+class Slogan(private val botUtils: BotUtils) : Action, HasHalp {
 
     private val regex = Regex("^!slogan (.*)\$", RegexOption.IGNORE_CASE)
     private val sloganPlaceholder = "XXX-XXX-XXX"
 
-    override fun doAction(message: Message) {
+    override fun doAction(message: Message, sgruntBot: SgruntBot) {
         val testo = regex.find(message.text)?.groupValues?.get(1)
         if (testo != null) {
             val slogan = fetchSlogan(testo)

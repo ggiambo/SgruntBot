@@ -1,6 +1,6 @@
 package com.fdtheroes.sgruntbot.actions
 
-import com.fdtheroes.sgruntbot.BotUtils
+import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.Context
 import com.fdtheroes.sgruntbot.SgruntBot
 import com.fdtheroes.sgruntbot.Users
@@ -9,20 +9,17 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import org.telegram.telegrambots.meta.api.objects.Message
 
 @Service
-class ParlaSuper(
-    private val sgruntBot: SgruntBot,
-    private val botUtils: BotUtils,
-) : Action, HasHalp {
+class ParlaSuper(private val botConfig: BotConfig) : Action, HasHalp {
 
     private val regex = Regex(
         "^!parlasuper (.*)$",
         setOf(RegexOption.IGNORE_CASE, RegexOption.MULTILINE, RegexOption.DOT_MATCHES_ALL)
     )
 
-    override fun doAction(message: Message) {
+    override fun doAction(message: Message, sgruntBot: SgruntBot) {
         val testo = regex.find(message.text)?.groupValues?.get(1)
         if (testo != null && Users.byId(message.from.id) != null) {
-            sgruntBot.rispondi(SendMessage(botUtils.chatId, testo))
+            sgruntBot.rispondi(SendMessage(botConfig.chatId.toString(), testo))
             Context.lastSuper = message.from
         }
     }

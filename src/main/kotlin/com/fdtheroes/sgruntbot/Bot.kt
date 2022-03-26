@@ -81,7 +81,7 @@ class Bot(
 
         actions.forEach {
             thread(start = true, name = it.javaClass.simpleName) {
-                it.doAction(message)
+                it.doAction(message, this)
             }
         }
     }
@@ -123,7 +123,7 @@ class Bot(
 
     override fun getChatMember(userId: Long): User? {
         val getChatMember = GetChatMember().apply {
-            this.chatId = chatId
+            this.chatId = botConfig.chatId
             this.userId = userId
         }
         return try {

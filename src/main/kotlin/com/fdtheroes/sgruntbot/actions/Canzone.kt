@@ -16,7 +16,7 @@ import kotlin.io.path.exists
 import kotlin.io.path.pathString
 
 @Service
-class Canzone(private val sgruntBot: SgruntBot) : Action, HasHalp {
+class Canzone : Action, HasHalp {
 
     private val log = LoggerFactory.getLogger(this.javaClass)
     private val regex = Regex("!canzone (.*)$", RegexOption.IGNORE_CASE)
@@ -30,7 +30,7 @@ class Canzone(private val sgruntBot: SgruntBot) : Action, HasHalp {
         }
     }
 
-    override fun doAction(message: Message) {
+    override fun doAction(message: Message, sgruntBot: SgruntBot) {
         val canzone = regex.find(message.text)?.groupValues?.get(1)
         if (canzone != null) {
             sgruntBot.rispondi(SendChatAction(message.chat.id.toString(), ActionType.UPLOADDOCUMENT.toString()))

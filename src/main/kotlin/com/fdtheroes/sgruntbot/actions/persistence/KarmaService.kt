@@ -10,7 +10,6 @@ import java.time.LocalDate
 
 @Service
 class KarmaService(
-    private val sgruntBot: SgruntBot,
     private val botUtils: BotUtils,
     private val karmaRepository: KarmaRepository,
 ) {
@@ -81,25 +80,23 @@ class KarmaService(
     }
 
     @Modifying
-    fun resetCreditForToday(
-        forUserId: Long,
-        updatedCredit: Int = dailyKarmaCredit,
-        creditUpdated: LocalDate = LocalDate.now()
-    ) {
+    fun resetCreditForToday(forUserId: Long) {
         val karma = karmaRepository.findById(forUserId).get()
-        karma.karmaCredit = updatedCredit
+        karma.karmaCredit = dailyKarmaCredit
         karma.creditUpdated = LocalDate.now()
         karmaRepository.save(karma)
     }
 
-    fun testoKarmaReport(): String {
+    fun testoKarmaReport(sgruntBot: SgruntBot): String {
         val karmas = getKarmas()
             .sortedByDescending { it.second }
-            .map { "${getUserName(it.first).padEnd(20)}%3d".format(it.second) }
+            .map { "${getUserName(it.first, sgruntBot).padEnd(20)}%3d".format(it.second) }
             .joinToString("\n")
         return "<b><u>Karma Report</u></b>\n\n<pre>${karmas}</pre>"
     }
 
-    private fun getUserName(userId: Long) = botUtils.getUserName(sgruntBot.getChatMember(userId))
+    private fun getUserName(userId: Long, sgruntBot: SgruntBot): String {
+        return botUtils.getUserName(sgruntBot.getChatMember(userId))
+    }
 
 }

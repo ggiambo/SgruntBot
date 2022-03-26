@@ -8,11 +8,11 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 class BitcoinEURTest : ActionTest() {
 
-    private val bitcoinEUR = BitcoinEUR(botUtils, sgruntBot)
+    private val bitcoinEUR = BitcoinEUR(botUtils)
 
     @Test
     fun testPositive() {
-        bitcoinEUR.doAction(message(("!btce")))
+        bitcoinEUR.doAction(message(("!btce")), sgruntBot)
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -23,7 +23,7 @@ class BitcoinEURTest : ActionTest() {
 
     @Test
     fun testNegative() {
-        bitcoinEUR.doAction(message(("!btce__")))
+        bitcoinEUR.doAction(message(("!btce__")), sgruntBot)
 
         assertThat(botArguments).hasSize(0)
     }

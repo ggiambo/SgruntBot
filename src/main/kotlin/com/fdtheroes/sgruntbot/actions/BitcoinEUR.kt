@@ -6,14 +6,11 @@ import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.Message
 
 @Service
-class BitcoinEUR(
-    botUtils: BotUtils,
-    private val sgruntBot: SgruntBot
-) : Bitcoin(botUtils), Action {
+class BitcoinEUR(botUtils: BotUtils) : Bitcoin(botUtils), Action {
 
     private val regex = Regex("^!btce\$", RegexOption.IGNORE_CASE)
 
-    override fun doAction(message: Message) {
+    override fun doAction(message: Message, sgruntBot: SgruntBot) {
         if (regex.containsMatchIn(message.text)) {
             val value = bitcoinvalue("EUR")
             val testo = "Il buttcoin vale $value EUR"

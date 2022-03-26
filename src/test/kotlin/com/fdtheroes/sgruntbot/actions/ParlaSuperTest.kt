@@ -7,7 +7,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 class ParlaSuperTest : ActionTest() {
 
-    private val parlaSuper = ParlaSuper(sgruntBot, botUtils)
+    private val parlaSuper = ParlaSuper(botConfig)
 
     @Test
     fun testPositive() {
@@ -15,7 +15,8 @@ class ParlaSuperTest : ActionTest() {
             message(
                 text = "!parlaSuper questo bot è stupendo!",
                 from = user(id = Users.AVVE.id)
-            )
+            ),
+            sgruntBot
         )
 
         assertThat(botArguments).hasSize(1)
@@ -25,7 +26,7 @@ class ParlaSuperTest : ActionTest() {
 
     @Test
     fun testNegative() {
-        parlaSuper.doAction(message("!parlaSuper questo bot è stupendo!"))
+        parlaSuper.doAction(message("!parlaSuper questo bot è stupendo!"), sgruntBot)
 
         assertThat(botArguments).isEmpty()
     }

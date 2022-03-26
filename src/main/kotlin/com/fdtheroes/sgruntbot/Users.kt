@@ -1,4 +1,4 @@
-package com.fdtheroes.sgruntbot;
+package com.fdtheroes.sgruntbot
 
 enum class Users(val id: Long) {
     SUORA(32657811L),

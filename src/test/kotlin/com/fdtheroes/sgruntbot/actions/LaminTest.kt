@@ -8,11 +8,11 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 class LaminTest : ActionTest() {
 
-    private val lamin = Lamin(sgruntBot)
+    private val lamin = Lamin()
 
     @Test
     fun testPositive() {
-        lamin.doAction(message("negraccio"))
+        lamin.doAction(message("negraccio"), sgruntBot)
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -23,7 +23,7 @@ class LaminTest : ActionTest() {
 
     @Test
     fun testPositive_2() {
-        lamin.doAction(message("__negher++"))
+        lamin.doAction(message("__negher++"), sgruntBot)
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -34,7 +34,7 @@ class LaminTest : ActionTest() {
 
     @Test
     fun testNegative() {
-        lamin.doAction(message("**negrini!!"))
+        lamin.doAction(message("**negrini!!"), sgruntBot)
 
         assertThat(botArguments).isEmpty()
     }

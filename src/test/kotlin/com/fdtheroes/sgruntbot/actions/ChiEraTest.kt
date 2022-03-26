@@ -9,12 +9,12 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 class ChiEraTest : ActionTest() {
 
-    private val chiEra = ChiEra(sgruntBot, botUtils)
+    private val chiEra = ChiEra(botUtils)
 
     @Test
     fun testPositive() {
         Context.lastSuper = user()
-        chiEra.doAction(message("!chiera"))
+        chiEra.doAction(message("!chiera"), sgruntBot)
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -26,9 +26,7 @@ class ChiEraTest : ActionTest() {
     @Test
     fun testPositive_2() {
         Context.lastSuper = user(42, userName = "", firstName = "Topopippo")
-        chiEra.doAction(
-            message("!chiera")
-        )
+        chiEra.doAction(message("!chiera"), sgruntBot)
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -40,7 +38,7 @@ class ChiEraTest : ActionTest() {
     @Test
     fun testNegative() {
         Context.lastSuper = null
-        chiEra.doAction(message("!chiera"))
+        chiEra.doAction(message("!chiera"), sgruntBot)
 
         assertThat(botArguments).hasSize(0)
     }
