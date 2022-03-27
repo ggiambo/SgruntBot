@@ -41,11 +41,10 @@ dependencies {
     // end springify
 
     implementation("org.telegram", "telegrambots", "5.7.1")
-    implementation("com.google.code.gson", "gson", "2.9.0")
     implementation("org.jsoup", "jsoup", "1.14.3")
-    testImplementation(platform("org.junit:junit-bom"))
-    testImplementation("org.junit.jupiter", "junit-jupiter")
-    testImplementation("org.assertj", "assertj-core" )
+    //testImplementation(platform("org.junit:junit-bom"))
+    //testImplementation("org.junit.jupiter", "junit-jupiter")
+    //testImplementation("org.assertj", "assertj-core" )
     testImplementation("org.mockito.kotlin", "mockito-kotlin", "4.0.0")
 }
 

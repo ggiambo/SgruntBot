@@ -8,6 +8,7 @@ import java.net.Proxy
 import java.net.URL
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
+import java.util.stream.StreamSupport
 
 @Service
 class BotUtils(botConfig: BotConfig) {
@@ -57,6 +58,9 @@ class BotUtils(botConfig: BotConfig) {
     companion object {
         fun String.urlEncode(): String {
             return URLEncoder.encode(this, StandardCharsets.UTF_8)
+        }
+        fun Iterable<*>?.length() : Long {
+            return StreamSupport.stream(this?.spliterator(), false).count()
         }
     }
 }

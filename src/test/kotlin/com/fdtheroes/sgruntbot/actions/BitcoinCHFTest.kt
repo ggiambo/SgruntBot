@@ -8,7 +8,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 class BitcoinCHFTest : ActionTest() {
 
-    private val bitcoinCHF = BitcoinCHF(botUtils)
+    private val bitcoinCHF = BitcoinCHF(botUtils, mapper)
 
     @Test
     fun testPositive() {

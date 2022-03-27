@@ -1,5 +1,6 @@
 package com.fdtheroes.sgruntbot.actions
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.fdtheroes.sgruntbot.*
 import org.junit.jupiter.api.BeforeEach
 import org.mockito.kotlin.doAnswer
@@ -37,6 +38,7 @@ open class ActionTest {
         }
     }
     val botUtils = BotUtils(botConfig)
+    val mapper = ObjectMapper()
 
     val sgruntBot: Bot = spy(Bot(botConfig, emptyList())) {
         onGeneric { rispondi(isA<BotApiMethod<Serializable>>()) } doAnswer {

@@ -8,7 +8,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 class BitcoinEURTest : ActionTest() {
 
-    private val bitcoinEUR = BitcoinEUR(botUtils)
+    private val bitcoinEUR = BitcoinEUR(botUtils, mapper)
 
     @Test
     fun testPositive() {
