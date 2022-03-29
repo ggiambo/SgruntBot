@@ -1,7 +1,6 @@
-package com.fdtheroes.sgruntbot.actions
+package com.fdtheroes.sgruntbot
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fdtheroes.sgruntbot.*
 import org.junit.jupiter.api.BeforeEach
 import org.mockito.kotlin.doAnswer
 import org.mockito.kotlin.isA
@@ -17,7 +16,7 @@ import org.telegram.telegrambots.meta.api.objects.User
 import java.io.Serializable
 import java.util.concurrent.CompletableFuture
 
-open class ActionTest {
+open class BaseTest {
 
     val botArguments = mutableListOf<Any>()
 

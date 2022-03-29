@@ -1,11 +1,12 @@
 package com.fdtheroes.sgruntbot.actions
 
+import com.fdtheroes.sgruntbot.BaseTest
 import com.fdtheroes.sgruntbot.Users
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
-class SloganTest : ActionTest() {
+class SloganTest : BaseTest() {
 
     private val slogan = Slogan(botUtils)
 

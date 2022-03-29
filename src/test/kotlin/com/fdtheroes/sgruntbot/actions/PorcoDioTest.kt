@@ -1,5 +1,6 @@
 package com.fdtheroes.sgruntbot.actions
 
+import com.fdtheroes.sgruntbot.BaseTest
 import com.fdtheroes.sgruntbot.Context
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -7,7 +8,7 @@ import org.telegram.telegrambots.meta.api.methods.ActionType
 import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
-class PorcoDioTest : ActionTest() {
+class PorcoDioTest : BaseTest() {
 
     private val porcoDio = PorcoDio()
 

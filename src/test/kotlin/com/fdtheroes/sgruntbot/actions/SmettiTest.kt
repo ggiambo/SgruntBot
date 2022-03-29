@@ -1,5 +1,6 @@
 package com.fdtheroes.sgruntbot.actions
 
+import com.fdtheroes.sgruntbot.BaseTest
 import com.fdtheroes.sgruntbot.Context
 import com.fdtheroes.sgruntbot.Users
 import org.assertj.core.api.Assertions.assertThat
@@ -11,7 +12,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import java.time.LocalDateTime
 
-class SmettiTest : ActionTest() {
+class SmettiTest : BaseTest() {
 
     private val smetti = Smetti()
 

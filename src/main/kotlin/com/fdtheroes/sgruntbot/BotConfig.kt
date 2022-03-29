@@ -10,13 +10,11 @@ import java.net.URI
 class BotConfig(
     @Value("\${sgruntbot.config.chat-id}") val chatId: String,
     @Value("\${sgruntbot.config.telegram-token-file}") telegramTokenFile: String,
-    @Value("\${sgruntbot.config.imgur-client-id-file}") imgurClientIdFile: String,
     @Value("\${sgruntbot.config.proxy:}") proxy: String,
 ) {
 
     val botName = "SgruntBot"
     val token: String = File(telegramTokenFile).readText().trim()
-    val imgurClientId = File(imgurClientIdFile).readText().trim()
     val defaultBotOptions = getDefaultBotOptions(proxy)
 
     private fun getDefaultBotOptions(proxy: String?): DefaultBotOptions {

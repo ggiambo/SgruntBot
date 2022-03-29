@@ -1,5 +1,6 @@
 package com.fdtheroes.sgruntbot.actions
 
+import com.fdtheroes.sgruntbot.BaseTest
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.telegram.telegrambots.meta.api.methods.ActionType
@@ -7,7 +8,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import java.time.LocalDateTime
 
-class CheOreSonoTest : ActionTest() {
+class CheOreSonoTest : BaseTest() {
 
     @Test
     fun testPositive_prima_di_mezzogiorno() {

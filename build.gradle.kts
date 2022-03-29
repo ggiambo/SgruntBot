@@ -28,23 +28,17 @@ configurations {
 }
 
 dependencies {
-    // begin springify
     implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("org.telegram", "telegrambots", "5.7.1")
+    implementation("org.jsoup", "jsoup", "1.14.3")
     runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
     runtimeOnly("com.h2database:h2")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    // end springify
-
-    implementation("org.telegram", "telegrambots", "5.7.1")
-    implementation("org.jsoup", "jsoup", "1.14.3")
-    //testImplementation(platform("org.junit:junit-bom"))
-    //testImplementation("org.junit.jupiter", "junit-jupiter")
-    //testImplementation("org.assertj", "assertj-core" )
     testImplementation("org.mockito.kotlin", "mockito-kotlin", "4.0.0")
 }
 

@@ -6,11 +6,6 @@
       "description": "File holding the Telegram BOT API Token"
     },
     {
-      "name": "sgruntbot.config.imgur-client-id-file",
-      "type": "java.lang.String",
-      "description": "File holding the ImgUr Client Id"
-    },
-    {
       "name": "sgruntbot.config.chat-id",
       "type": "java.lang.String",
       "description": "The Telegram Chat Od"

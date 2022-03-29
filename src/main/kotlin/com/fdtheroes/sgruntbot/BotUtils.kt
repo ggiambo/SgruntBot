@@ -36,13 +36,9 @@ class BotUtils(botConfig: BotConfig) {
         return """<a href="tg://user?id=${user.id}">${name}</a>"""
     }
 
-    fun textFromURL(url: String, properties: Map<String, String> = emptyMap()): String {
+    fun textFromURL(url: String): String {
         return URL(url)
-            .openConnection(proxy).apply {
-                properties.forEach {
-                    setRequestProperty(it.key, it.value)
-                }
-            }
+            .openConnection(proxy)
             .getInputStream()
             .readAllBytes()
             .decodeToString()
