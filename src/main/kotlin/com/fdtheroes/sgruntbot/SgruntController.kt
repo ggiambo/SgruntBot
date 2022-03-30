@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import org.telegram.telegrambots.meta.api.objects.User
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 @RestController
 @RequestMapping("/rest/sgrunt/v1")
@@ -32,17 +31,15 @@ class SgruntController {
     }
 
     @GetMapping("/randomScheduledActions")
-    fun getRandomSchedules(): List<String> {
+    fun getRandomSchedules(): List<Any> {
         return Context.randomScheduled.map {
             val randomScheduledAction = it.key
             val delay = it.value
-            val duration =
-                "${delay.toHours()} ore, ${delay.toMinutesPart()} minuti e ${delay.toSecondsPart()} secondi"
-            val actionWhen =
-                DateTimeFormatter.ofPattern("dd.MM.yyyy@HH:mm:ss").format(LocalDateTime.now().plus(delay))
-            "Prossimo ${randomScheduledAction.simpleName} fra $duration, ovvero il $actionWhen"
+            object {
+                val randomScheduledAction = randomScheduledAction.simpleName
+                val actionWhen = LocalDateTime.now().plus(delay)
+            }
         }
     }
-
 
 }
