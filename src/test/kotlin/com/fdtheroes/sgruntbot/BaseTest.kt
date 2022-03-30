@@ -6,6 +6,7 @@ import org.mockito.kotlin.doAnswer
 import org.mockito.kotlin.isA
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.spy
+import org.springframework.core.env.Environment
 import org.telegram.telegrambots.bots.DefaultBotOptions
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod
 import org.telegram.telegrambots.meta.api.methods.send.SendAudio
@@ -23,17 +24,20 @@ open class BaseTest {
     @BeforeEach
     fun resetContext() = Context.reset()
 
+    val isLocalProxy = System.getenv()["SPRING_ACTIVE_PROFILE"] == "local-proxy"
+
     val botConfig: BotConfig = mock {
         on { chatId } doAnswer { "-9999" }
         on { defaultBotOptions } doAnswer {
             DefaultBotOptions()
-/*
                 .apply {
-                    this.proxyType = DefaultBotOptions.ProxyType.HTTP
-                    this.proxyHost = "127.0.0.1"
-                    this.proxyPort = 8888
+                    if (isLocalProxy) {
+                        this.proxyType = DefaultBotOptions.ProxyType.HTTP
+                        this.proxyHost = "127.0.0.1"
+                        this.proxyPort = 8888
+                    }
                 }
-*/
+
         }
     }
     val botUtils = BotUtils(botConfig)
