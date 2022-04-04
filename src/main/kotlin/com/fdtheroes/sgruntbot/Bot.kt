@@ -51,9 +51,9 @@ class Bot(
     }
 
     override fun onUpdateReceived(update: Update?) {
-        if (Context.pausedTime != null) {
-            if (LocalDateTime.now() < Context.pausedTime) {
-                Context.pausedTime = null
+        if (botConfig.pausedTime != null) {
+            if (LocalDateTime.now() < botConfig.pausedTime) {
+                botConfig.pausedTime = null
                 log.info("Posso parlare di nuovo!")
             } else {
                 return
@@ -66,10 +66,10 @@ class Bot(
         }
 
         if (!lastAuthorRegex.containsMatchIn(message.text)) {
-            Context.lastAuthor = message.from
+            botConfig.lastAuthor = message.from
         }
 
-        Context.pignolo = nextInt(100) > 90
+        botConfig.pignolo = nextInt(100) > 90
 
         if (message.text == "!help") {
             val help = actions.filterIsInstance<HasHalp>()

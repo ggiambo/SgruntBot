@@ -1,9 +1,13 @@
 package com.fdtheroes.sgruntbot
 
+
 import com.fdtheroes.sgruntbot.actions.Action
 import com.fdtheroes.sgruntbot.actions.HasHalp
 import com.fdtheroes.sgruntbot.actions.persistence.KarmaService
 import io.swagger.v3.oas.annotations.Operation
+
+import com.fdtheroes.sgruntbot.scheduled.RandomScheduledAction
+
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -16,6 +20,8 @@ class SgruntController(
     private val botUtils: BotUtils,
     private val actions: List<Action>,
     private val karmaService: KarmaService,
+    private val botConfig: BotConfig,
+    private val randomScheduledActions: List<RandomScheduledAction>,
 ) {
 
     @GetMapping("/actions")
@@ -32,7 +38,7 @@ class SgruntController(
     @GetMapping("/lastAuthor")
     @Operation(summary = "Ultimo autore che ha scritto una boiata")
     fun getLastAuthor(): Any? {
-        val lastAuthorId = Context.lastAuthor?.id
+        val lastAuthorId = botConfig.lastAuthor?.id
         if (lastAuthorId == null) {
             return null
         }
@@ -45,7 +51,7 @@ class SgruntController(
     @GetMapping("/lastSuper")
     @Operation(summary = "Ultimo autore che ha fatto dire a Sgrunty una boiata")
     fun getLastSuper(): Any? {
-        val lastSuperId = Context.lastSuper?.id
+        val lastSuperId = botConfig.lastSuper?.id
         if (lastSuperId == null) {
             return null
         }
@@ -58,24 +64,24 @@ class SgruntController(
     @GetMapping("/pignolo")
     @Operation(summary = "Sgrunty è in modalità pignolo?")
     fun isPignolo(): Boolean {
-        return Context.pignolo
+        return botConfig.pignolo
     }
 
     @GetMapping("/pausedTime")
     @Operation(summary = "Fino a quando Sgrunty sta zitto")
     fun getPausedTime(): LocalDateTime? {
-        return Context.pausedTime
+        return botConfig.pausedTime
     }
 
     @GetMapping("/randomScheduledActions")
     @Operation(summary = "Lista delle azioni schedulate")
     fun getRandomSchedules(): List<Any> {
-        return Context.randomScheduled.map {
-            val randomScheduledAction = it.key
-            val delay = it.value
+        return randomScheduledActions.map {
+            val randomScheduledAction = it::class.simpleName
+            val nextScheduled = it.nextScheduled
             object {
-                val randomScheduledAction = randomScheduledAction.simpleName.orEmpty()
-                val actionWhen = LocalDateTime.now().plus(delay)
+                val randomScheduledAction = randomScheduledAction
+                val actionWhen = nextScheduled
             }
         }
     }

@@ -1,7 +1,6 @@
 package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BotConfig
-import com.fdtheroes.sgruntbot.Context
 import com.fdtheroes.sgruntbot.SgruntBot
 import com.fdtheroes.sgruntbot.Users
 import org.springframework.stereotype.Service
@@ -20,7 +19,7 @@ class ParlaSuper(private val botConfig: BotConfig) : Action, HasHalp {
         val testo = regex.find(message.text)?.groupValues?.get(1)
         if (testo != null && Users.byId(message.from.id) != null) {
             sgruntBot.rispondi(SendMessage(botConfig.chatId.toString(), testo))
-            Context.lastSuper = message.from
+            botConfig.lastSuper = message.from
         }
     }
 

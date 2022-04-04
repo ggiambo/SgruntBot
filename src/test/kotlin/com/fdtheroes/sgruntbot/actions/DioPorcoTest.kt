@@ -1,7 +1,6 @@
 package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BaseTest
-import com.fdtheroes.sgruntbot.Context
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.telegram.telegrambots.meta.api.methods.ActionType
@@ -10,11 +9,11 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 class DioPorcoTest : BaseTest() {
 
-    private val dioPorco = DioPorco()
+    private val dioPorco = DioPorco(botConfig)
 
     @Test
     fun testPositive() {
-        Context.pignolo = true
+        botConfig.pignolo = true
         dioPorco.doAction(message(("\tdio porco")), sgruntBot)
 
         assertThat(botArguments).hasSize(2)
@@ -26,7 +25,7 @@ class DioPorcoTest : BaseTest() {
 
     @Test
     fun testPositive_2() {
-        Context.pignolo = true
+        botConfig.pignolo = true
         dioPorco.doAction(message(("dio cane\n")), sgruntBot)
 
         assertThat(botArguments).hasSize(2)
