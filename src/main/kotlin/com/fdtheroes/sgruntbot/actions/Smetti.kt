@@ -18,7 +18,7 @@ class Smetti : Action {
             if (user == Users.DADA) {
                 sgruntBot.rispondi(message, "Col cazzo!")
             } else {
-                Context.pausedTime = LocalDateTime.now()
+                Context.pausedTime = LocalDateTime.now().plusMinutes(5)
                 sgruntBot.rispondi(message, "Ok, sto zitto 5 minuti. :(")
             }
         }

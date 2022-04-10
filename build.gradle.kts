@@ -33,6 +33,7 @@ dependencies {
     implementation("org.telegram", "telegrambots", "5.7.1")
     implementation("org.jsoup", "jsoup", "1.14.3")
     implementation("org.springdoc", "springdoc-openapi-ui", "1.6.7")
+    implementation("org.springdoc", "springdoc-openapi-kotlin", "1.6.7")
     runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
     runtimeOnly("com.h2database:h2")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")

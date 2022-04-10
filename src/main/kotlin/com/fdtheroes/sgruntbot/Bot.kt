@@ -52,7 +52,7 @@ class Bot(
 
     override fun onUpdateReceived(update: Update?) {
         if (Context.pausedTime != null) {
-            if (ChronoUnit.MINUTES.between(Context.pausedTime, LocalDateTime.now()) > 5) {
+            if (LocalDateTime.now() < Context.pausedTime) {
                 Context.pausedTime = null
                 log.info("Posso parlare di nuovo!")
             } else {

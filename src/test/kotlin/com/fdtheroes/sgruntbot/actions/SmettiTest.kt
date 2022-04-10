@@ -26,7 +26,7 @@ class SmettiTest : BaseTest() {
         val sendMessage = botArguments[1] as SendMessage
         assertThat(sendChatAction.actionType).isEqualTo(ActionType.TYPING)
         assertThat(sendMessage.text).isEqualTo("Ok, sto zitto 5 minuti. :(")
-        assertThat(Context.pausedTime?.isBefore(LocalDateTime.now()))
+        assertThat(Context.pausedTime?.isAfter(LocalDateTime.now()))
     }
 
     @Test
