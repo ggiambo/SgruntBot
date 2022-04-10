@@ -6,14 +6,11 @@ java.sourceCompatibility = JavaVersion.VERSION_11
 plugins {
     kotlin("jvm") version "1.6.10"
     application
-    id("com.github.ben-manes.versions") version "0.40.0"
-    id("com.github.johnrengelman.shadow") version "7.0.0"
+    id("com.github.ben-manes.versions") version "0.42.0"
 
-    // begin springify
-    id("org.springframework.boot") version "2.6.5"
+    id("org.springframework.boot") version "2.6.6"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
-    kotlin("plugin.spring") version "1.6.10"
-    // end springify
+    kotlin("plugin.spring") version "1.6.20"
 }
 
 repositories {
@@ -35,6 +32,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.telegram", "telegrambots", "5.7.1")
     implementation("org.jsoup", "jsoup", "1.14.3")
+    implementation("org.springdoc", "springdoc-openapi-ui", "1.6.7")
     runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
     runtimeOnly("com.h2database:h2")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
@@ -46,6 +44,7 @@ application {
     mainClass.set("com.fdtheroes.sgruntbot.MainKt")
 }
 
+/*
 tasks{
     shadowJar {
         manifest {
@@ -53,7 +52,7 @@ tasks{
         }
     }
 }
-
+ */
 tasks.test {
     useJUnitPlatform()
     maxParallelForks = Runtime.getRuntime().availableProcessors()

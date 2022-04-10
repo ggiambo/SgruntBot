@@ -1,5 +1,7 @@
 package com.fdtheroes.sgruntbot
 
+import com.fdtheroes.sgruntbot.actions.Action
+import com.fdtheroes.sgruntbot.actions.HasHalp
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -8,7 +10,17 @@ import java.time.LocalDateTime
 
 @RestController
 @RequestMapping("/rest/sgrunt/v1")
-class SgruntController {
+class SgruntController(private val actions: List<Action>) {
+
+    @GetMapping("/actions")
+    fun getActions(): List<Any> {
+        return actions.map {
+            object {
+                val name = it::class.simpleName
+                val halp = if (it is HasHalp) it.halp() else ""
+            }
+        }
+    }
 
     @GetMapping("/lastAuthor")
     fun getLastAuthor(): User? {
