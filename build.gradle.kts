@@ -1,16 +1,14 @@
 group = "fdtheroes"
 version = "1.0-SNAPSHOT"
 description = "SgruntBot"
-java.sourceCompatibility = JavaVersion.VERSION_11
 
 plugins {
-    kotlin("jvm") version "1.6.10"
     application
-    id("com.github.ben-manes.versions") version "0.42.0"
-
+    kotlin("jvm") version "1.6.20"
+    kotlin("plugin.spring") version "1.6.20"
     id("org.springframework.boot") version "2.6.6"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
-    kotlin("plugin.spring") version "1.6.20"
+    id("com.github.ben-manes.versions") version "0.42.0"
 }
 
 repositories {
@@ -45,15 +43,6 @@ application {
     mainClass.set("com.fdtheroes.sgruntbot.MainKt")
 }
 
-/*
-tasks{
-    shadowJar {
-        manifest {
-            attributes(Pair("Main-Class", "com.example.ApplicationKt"))
-        }
-    }
-}
- */
 tasks.test {
     useJUnitPlatform()
     maxParallelForks = Runtime.getRuntime().availableProcessors()
