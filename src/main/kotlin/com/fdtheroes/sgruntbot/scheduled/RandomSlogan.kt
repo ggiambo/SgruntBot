@@ -1,7 +1,6 @@
 package com.fdtheroes.sgruntbot.scheduled
 
 import com.fdtheroes.sgruntbot.BotConfig
-import com.fdtheroes.sgruntbot.Context
 import com.fdtheroes.sgruntbot.SgruntBot
 import com.fdtheroes.sgruntbot.actions.Slogan
 import org.springframework.stereotype.Service
@@ -14,7 +13,7 @@ class RandomSlogan(
 ) : RandomScheduledAction(sgruntBot, botConfig) {
 
     override fun getMessageText(): String {
-        val lastAuthor = Context.lastAuthor
+        val lastAuthor = botConfig.lastAuthor
         if (lastAuthor == null) {
             return ""
         }

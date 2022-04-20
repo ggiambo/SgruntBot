@@ -1,13 +1,13 @@
 package com.fdtheroes.sgruntbot.actions
 
+import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.BotUtils
-import com.fdtheroes.sgruntbot.Context
 import com.fdtheroes.sgruntbot.SgruntBot
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.Message
 
 @Service
-class ChiEra(private val botUtils: BotUtils) : Action, HasHalp {
+class ChiEra(private val botUtils: BotUtils, private val botConfig: BotConfig) : Action, HasHalp {
 
     private val regex = Regex(
         "^!chiera$",
@@ -15,8 +15,8 @@ class ChiEra(private val botUtils: BotUtils) : Action, HasHalp {
     )
 
     override fun doAction(message: Message, sgruntBot: SgruntBot) {
-        if (regex.containsMatchIn(message.text) && Context.lastSuper != null) {
-            sgruntBot.rispondi(message, botUtils.getUserLink(Context.lastSuper))
+        if (regex.containsMatchIn(message.text) && botConfig.lastSuper != null) {
+            sgruntBot.rispondi(message, botUtils.getUserLink(botConfig.lastSuper))
         }
     }
 

@@ -1,7 +1,6 @@
 package com.fdtheroes.sgruntbot.scheduled
 
 import com.fdtheroes.sgruntbot.BaseTest
-import com.fdtheroes.sgruntbot.Context
 import com.fdtheroes.sgruntbot.Users
 import com.fdtheroes.sgruntbot.actions.Slogan
 import org.assertj.core.api.Assertions.assertThat
@@ -14,10 +13,10 @@ class RandomSloganTest : BaseTest() {
 
     @Test
     fun testRandomSlogan() {
-        Context.lastAuthor = user(Users.SEU)
+        botConfig.lastAuthor = user(Users.SEU)
         val messageText = randomSlogan.getMessageText()
 
-        val seuLink = botUtils.getUserLink(Context.lastAuthor)
+        val seuLink = botUtils.getUserLink(botConfig.lastAuthor)
         assertThat(messageText).contains(seuLink)
         assertThat(botArguments).isEmpty()
     }

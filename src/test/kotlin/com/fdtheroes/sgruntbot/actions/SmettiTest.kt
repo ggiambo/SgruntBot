@@ -1,7 +1,6 @@
 package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BaseTest
-import com.fdtheroes.sgruntbot.Context
 import com.fdtheroes.sgruntbot.Users
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -14,7 +13,7 @@ import java.time.LocalDateTime
 
 class SmettiTest : BaseTest() {
 
-    private val smetti = Smetti()
+    private val smetti = Smetti(botConfig)
 
     @ParameterizedTest
     @ValueSource(strings = ["sgrunty ora smetti", "sgruntbot smettila", "@sgrunty smetti!"])
@@ -26,7 +25,7 @@ class SmettiTest : BaseTest() {
         val sendMessage = botArguments[1] as SendMessage
         assertThat(sendChatAction.actionType).isEqualTo(ActionType.TYPING)
         assertThat(sendMessage.text).isEqualTo("Ok, sto zitto 5 minuti. :(")
-        assertThat(Context.pausedTime?.isAfter(LocalDateTime.now()))
+        assertThat(botConfig.pausedTime?.isAfter(LocalDateTime.now()))
     }
 
     @Test
@@ -38,7 +37,7 @@ class SmettiTest : BaseTest() {
         val sendMessage = botArguments[1] as SendMessage
         assertThat(sendChatAction.actionType).isEqualTo(ActionType.TYPING)
         assertThat(sendMessage.text).isEqualTo("Col cazzo!")
-        assertThat(Context.pausedTime).isNull()
+        assertThat(botConfig.pausedTime).isNull()
     }
 
 }

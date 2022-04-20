@@ -1,7 +1,6 @@
 package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BaseTest
-import com.fdtheroes.sgruntbot.Context
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.telegram.telegrambots.meta.api.methods.ActionType
@@ -10,11 +9,11 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 class ChiEraTest : BaseTest() {
 
-    private val chiEra = ChiEra(botUtils)
+    private val chiEra = ChiEra(botUtils, botConfig)
 
     @Test
     fun testPositive() {
-        Context.lastSuper = user()
+        botConfig.lastSuper = user()
         chiEra.doAction(message("!chiera"), sgruntBot)
 
         assertThat(botArguments).hasSize(2)
@@ -26,7 +25,7 @@ class ChiEraTest : BaseTest() {
 
     @Test
     fun testPositive_2() {
-        Context.lastSuper = user(42, userName = "", firstName = "Topopippo")
+        botConfig.lastSuper = user(42, userName = "", firstName = "Topopippo")
         chiEra.doAction(message("!chiera"), sgruntBot)
 
         assertThat(botArguments).hasSize(2)
@@ -38,7 +37,7 @@ class ChiEraTest : BaseTest() {
 
     @Test
     fun testNegative() {
-        Context.lastSuper = null
+        botConfig.lastSuper = null
         chiEra.doAction(message("!chiera"), sgruntBot)
 
         assertThat(botArguments).hasSize(0)
