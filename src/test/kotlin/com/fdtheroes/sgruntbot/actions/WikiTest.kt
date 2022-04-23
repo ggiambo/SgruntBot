@@ -1,18 +1,19 @@
 package com.fdtheroes.sgruntbot.actions
 
+import com.fdtheroes.sgruntbot.BaseTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.telegram.telegrambots.meta.api.methods.ActionType
 import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
-class WikiTest : ActionTest() {
+class WikiTest : BaseTest() {
 
-    private val wiki = Wiki()
+    private val wiki = Wiki(botUtils, mapper)
 
     @Test
     fun testPositive() {
-        wiki.doAction(message("!wiki poesia giambica"))
+        wiki.doAction(message("!wiki poesia giambica"), sgruntBot)
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction

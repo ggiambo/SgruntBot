@@ -1,17 +1,18 @@
 package com.fdtheroes.sgruntbot.actions
 
+import com.fdtheroes.sgruntbot.BaseTest
 import com.fdtheroes.sgruntbot.Users
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
-class SloganTest : ActionTest() {
+class SloganTest : BaseTest() {
 
-    private val slogan = Slogan()
+    private val slogan = Slogan(botUtils)
 
     @Test
     fun testPositive() {
-        slogan.doAction(message("!slogan la cacca molle"))
+        slogan.doAction(message("!slogan la cacca molle"), sgruntBot)
 
         assertThat(botArguments).hasSize(1)
         val sendMessage = botArguments[0] as SendMessage
@@ -21,7 +22,7 @@ class SloganTest : ActionTest() {
     @Test
     fun testFetchSloganUser() {
         val user = user(Users.SEU)
-        val slogan = Slogan.fetchSlogan(user)
+        val slogan = slogan.fetchSlogan(user)
 
         assertThat(slogan).contains("""<a href="tg://user?id=68714652">SEU</a>""")
     }

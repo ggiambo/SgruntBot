@@ -1,13 +1,11 @@
-package com.fdtheroes.sgruntbot.actions
+package com.fdtheroes.sgruntbot
 
-import com.fdtheroes.sgruntbot.Bot
-import com.fdtheroes.sgruntbot.BotUtils
-import com.fdtheroes.sgruntbot.Context
-import com.fdtheroes.sgruntbot.Users
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.BeforeEach
 import org.mockito.kotlin.doAnswer
 import org.mockito.kotlin.isA
 import org.mockito.kotlin.mock
+import org.mockito.kotlin.spy
 import org.telegram.telegrambots.bots.DefaultBotOptions
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod
 import org.telegram.telegrambots.meta.api.methods.send.SendAudio
@@ -18,51 +16,48 @@ import org.telegram.telegrambots.meta.api.objects.User
 import java.io.Serializable
 import java.util.concurrent.CompletableFuture
 
-open class ActionTest {
+open class BaseTest {
 
     val botArguments = mutableListOf<Any>()
 
     @BeforeEach
-    fun resetContext() = Context.reset()
+    fun resetContext() = botConfig.reset()
 
-    init {
-        val bot: Bot = mock {
-            on { executeAsync(isA<SendAudio>()) } doAnswer {
-                botArguments.add(it.arguments.first())
-                CompletableFuture.completedFuture(message("done"))
-            }
-            on { executeAsync(isA<SendPhoto>()) } doAnswer {
-                botArguments.add(it.arguments.first())
-                CompletableFuture.completedFuture(message("done"))
-            }
-            on { executeAsync(isA<BotApiMethod<Serializable>>()) } doAnswer {
-                botArguments.add(it.arguments.first())
-                CompletableFuture.completedFuture(message("done"))
-            }
+    val isLocalProxy = System.getenv()["SPRING_ACTIVE_PROFILE"] == "local-proxy"
+
+    val botConfig: BotConfig = BotConfig(
+        chatId =  "-9999",
+        telegramTokenFile = "dummyToken.txt",
+        proxy = if (isLocalProxy) "http://127.0.0.1:8888" else ""
+    )
+
+    val botUtils = BotUtils(botConfig)
+    val mapper = ObjectMapper()
+
+    val sgruntBot: Bot = spy(Bot(botConfig, emptyList())) {
+        onGeneric { rispondi(isA<BotApiMethod<Serializable>>()) } doAnswer {
+            botArguments.add(it.arguments.first())
+            CompletableFuture.completedFuture(message("done"))
         }
-
-        BotUtils.init(bot, DefaultBotOptions())
-/*
-        BotUtils.init(
-            bot, DefaultBotOptions()
-                .apply {
-                    this.proxyType = DefaultBotOptions.ProxyType.HTTP
-                    this.proxyHost = "127.0.0.1"
-                    this.proxyPort = 8888
-                }
-        )
-*/
+        onGeneric { rispondi(isA<SendAudio>()) } doAnswer {
+            botArguments.add(it.arguments.first())
+            CompletableFuture.completedFuture(message("done"))
+        }
+        onGeneric { rispondi(isA<SendPhoto>()) } doAnswer {
+            botArguments.add(it.arguments.first())
+            CompletableFuture.completedFuture(message("done"))
+        }
+        onGeneric { sleep(isA()) } doAnswer { }
     }
 
     fun message(
         text: String,
-        chatId: Long = BotUtils.chatId.toLong(),
         from: User = user(),
         replyToMessage: Message? = null
     ): Message {
         return Message().apply {
             this.text = text
-            this.chat = Chat().apply { this.id = chatId }
+            this.chat = Chat().apply { this.id = botConfig.chatId.toLong() }
             this.from = from
             this.replyToMessage = replyToMessage
         }

@@ -1,20 +1,20 @@
 package com.fdtheroes.sgruntbot.actions
 
-import com.fdtheroes.sgruntbot.Context
+import com.fdtheroes.sgruntbot.BaseTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.telegram.telegrambots.meta.api.methods.ActionType
 import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
-class PorcaMadonnaTest : ActionTest() {
+class PorcaMadonnaTest : BaseTest() {
 
-    private val porcaMadonna = PorcaMadonna()
+    private val porcaMadonna = PorcaMadonna(botConfig)
 
     @Test
     fun testPositive() {
-        Context.pignolo = true
-        porcaMadonna.doAction(message(("\tporca madonna")))
+        botConfig.pignolo = true
+        porcaMadonna.doAction(message(("\tporca madonna")), sgruntBot)
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -25,7 +25,7 @@ class PorcaMadonnaTest : ActionTest() {
 
     @Test
     fun testNegative() {
-        porcaMadonna.doAction(message(("copporca madonna ")))
+        porcaMadonna.doAction(message(("copporca madonna ")), sgruntBot)
 
         assertThat(botArguments).isEmpty()
     }

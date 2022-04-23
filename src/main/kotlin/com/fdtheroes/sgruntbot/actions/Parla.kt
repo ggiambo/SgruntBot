@@ -1,21 +1,24 @@
 package com.fdtheroes.sgruntbot.actions
 
-import com.fdtheroes.sgruntbot.BotUtils
+import com.fdtheroes.sgruntbot.BotConfig
+import com.fdtheroes.sgruntbot.SgruntBot
+import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import org.telegram.telegrambots.meta.api.objects.Message
 
-class Parla : Action, HasHalp {
+@Service
+class Parla(private val botConfig: BotConfig) : Action, HasHalp {
 
     private val regex = Regex(
         "^!parla (.*)$",
         setOf(RegexOption.IGNORE_CASE, RegexOption.MULTILINE, RegexOption.DOT_MATCHES_ALL)
     )
 
-    override fun doAction(message: Message) {
+    override fun doAction(message: Message, sgruntBot: SgruntBot) {
         val msg = regex.find(message.text)?.groupValues?.get(1)
         if (msg != null) {
-            val sendMessage = SendMessage(BotUtils.chatId, "Mi dicono di dire: $msg")
-            BotUtils.rispondi(sendMessage)
+            val sendMessage = SendMessage(botConfig.chatId, "Mi dicono di dire: $msg")
+            sgruntBot.rispondi(sendMessage)
         }
     }
 

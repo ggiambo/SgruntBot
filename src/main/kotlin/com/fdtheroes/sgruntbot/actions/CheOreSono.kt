@@ -1,12 +1,14 @@
 package com.fdtheroes.sgruntbot.actions
 
-import com.fdtheroes.sgruntbot.BotUtils
+import com.fdtheroes.sgruntbot.SgruntBot
+import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.Message
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
+@Service
 class CheOreSono(
-    private val nowSupplier: () -> LocalDateTime = { LocalDateTime.now() } // used for testing
+    private val nowSupplier: () -> LocalDateTime = { LocalDateTime.now() } // used for testing){}
 ) : Action, HasHalp {
 
     private val regex = Regex("che ore sono|che ora è", setOf(RegexOption.IGNORE_CASE, RegexOption.MULTILINE))
@@ -43,9 +45,9 @@ class CheOreSono(
         "meno cinque"
     )
 
-    override fun doAction(message: Message) {
+    override fun doAction(message: Message, sgruntBot: SgruntBot) {
         if (regex.containsMatchIn(message.text)) {
-            BotUtils.rispondi(message, oreInLettere())
+            sgruntBot.rispondi(message, oreInLettere())
         }
     }
 

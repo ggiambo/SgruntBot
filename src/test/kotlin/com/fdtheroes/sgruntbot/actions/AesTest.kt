@@ -1,18 +1,19 @@
 package com.fdtheroes.sgruntbot.actions
 
+import com.fdtheroes.sgruntbot.BaseTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.telegram.telegrambots.meta.api.methods.ActionType
 import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
-internal class AesTest : ActionTest() {
+internal class AesTest : BaseTest() {
 
     val aes = Aes()
 
     @Test
     fun testEncrypt() {
-        aes.doAction(message("!aes mySecretKey testo segretissimo da da codificare"))
+        aes.doAction(message("!aes mySecretKey testo segretissimo da da codificare"), sgruntBot)
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -23,7 +24,10 @@ internal class AesTest : ActionTest() {
 
     @Test
     fun testDencrypt() {
-        aes.doAction(message("!aesd mySecretKey L9dQ8mCVcA3EyHZN+X+Pi2CYZnGnRXE3ol3qSmYnkgjnfYdVGGcLraGEgVXJYsto"))
+        aes.doAction(
+            message("!aesd mySecretKey L9dQ8mCVcA3EyHZN+X+Pi2CYZnGnRXE3ol3qSmYnkgjnfYdVGGcLraGEgVXJYsto"),
+            sgruntBot
+        )
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction

@@ -1,0 +1,14 @@
+server:
+  port : 8081
+
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://127.0.0.1:3306/sgrunt
+    username: sgrunt
+    password: sgrunt
+
+sgruntbot:
+  config:
+    chat-id: -1001103213994
+    telegram-token-file: token.txt

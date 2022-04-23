@@ -1,14 +1,17 @@
 package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BotUtils
+import com.fdtheroes.sgruntbot.SgruntBot
+import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.Message
 
-class Respect  : Action, HasHalp {
+@Service
+class Respect(private val botUtils: BotUtils) : Action, HasHalp {
 
-    override fun doAction(message: Message) {
+    override fun doAction(message: Message, sgruntBot: SgruntBot) {
         val don = message.replyToMessage?.from
         if (message.text == "F" && don != null) {
-           BotUtils.rispondi(message.replyToMessage, "Baciamo le mani Don ${BotUtils.getUserLink(don)}")
+            sgruntBot.rispondi(message.replyToMessage, "Baciamo le mani Don ${botUtils.getUserLink(don)}")
         }
     }
 

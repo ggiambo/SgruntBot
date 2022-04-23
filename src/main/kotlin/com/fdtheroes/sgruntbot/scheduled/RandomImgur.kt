@@ -1,34 +1,35 @@
 package com.fdtheroes.sgruntbot.scheduled
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.BotUtils
-import com.google.gson.JsonParser
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage
+import com.fdtheroes.sgruntbot.SgruntBot
+import org.springframework.stereotype.Service
+import com.fdtheroes.sgruntbot.BotUtils.Companion.length
 
+@Service
 class RandomImgur(
-    sendMessage: (SendMessage) -> Unit,
-    private val imgurClientId: String,
-) : RandomScheduledAction(sendMessage) {
+    private val botUtils: BotUtils,
+    private val mapper: ObjectMapper,
+    sgruntBot: SgruntBot,
+    botConfig: BotConfig,
+) : RandomScheduledAction(sgruntBot, botConfig) {
 
-    override fun getMessageText(): String {
-        val viral = BotUtils.textFromURL(
-            url = "https://api.imgur.com/3/gallery/hot/viral/0.json",
-            properties = mapOf("Authorization" to "Client-ID $imgurClientId")
-        )
-        val randomEntry = JsonParser.parseString(viral).asJsonObject
-            .get("data").asJsonArray
-            .asSequence()
-            .map { it.asJsonObject }
-            .filter { !it.get("title")?.asString.isNullOrEmpty() }
-            .filter { it.get("images")?.asJsonArray?.size() == 1 }
+    override fun getMessageText(): String{
+        val viral = botUtils.textFromURL("https://api.imgur.com/3/gallery/hot/viral/0.json")
+        val randomEntry = mapper.readTree(viral)
+            .get("data").asSequence()
+            .filter { !it.get("title")?.textValue().isNullOrEmpty() }
+            .filter { it.get("images")?.length() == 1L }
             .toList()
             .random()
 
         val title = randomEntry
-            .get("title").asString
+            .get("title").textValue()
         val link = randomEntry
-            .get("images").asJsonArray
-            .first().asJsonObject
-            .get("link").asString
+            .get("images")
+            .first()
+            .get("link").textValue()
 
         return "${title}\n${link}"
     }

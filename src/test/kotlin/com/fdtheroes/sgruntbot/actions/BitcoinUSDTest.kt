@@ -1,18 +1,19 @@
 package com.fdtheroes.sgruntbot.actions
 
+import com.fdtheroes.sgruntbot.BaseTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.telegram.telegrambots.meta.api.methods.ActionType
 import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
-class BitcoinUSDTest : ActionTest() {
+class BitcoinUSDTest : BaseTest() {
 
-    private val bitcoinUSD = BitcoinUSD()
+    private val bitcoinUSD = BitcoinUSD(botUtils, mapper)
 
     @Test
     fun testPositive() {
-        bitcoinUSD.doAction(message(("!btc")))
+        bitcoinUSD.doAction(message(("!btc")), sgruntBot)
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -24,7 +25,7 @@ class BitcoinUSDTest : ActionTest() {
 
     @Test
     fun testPositive2() {
-        bitcoinUSD.doAction(message(("blah banf quanto vale un bitcoin? yadda yadda")))
+        bitcoinUSD.doAction(message(("blah banf quanto vale un bitcoin? yadda yadda")), sgruntBot)
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -36,7 +37,7 @@ class BitcoinUSDTest : ActionTest() {
 
     @Test
     fun testNegative() {
-        bitcoinUSD.doAction(message(("!btce__")))
+        bitcoinUSD.doAction(message(("!btce__")), sgruntBot)
 
         assertThat(botArguments).hasSize(0)
     }

@@ -1,6 +1,6 @@
 package com.fdtheroes.sgruntbot.actions
 
-import com.fdtheroes.sgruntbot.Context
+import com.fdtheroes.sgruntbot.BaseTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
@@ -8,15 +8,15 @@ import org.telegram.telegrambots.meta.api.methods.ActionType
 import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
-class ParolacceTest : ActionTest() {
+class ParolacceTest : BaseTest() {
 
-    private val parolacce = Parolacce()
+    private val parolacce = Parolacce(botUtils, botConfig)
 
     @ParameterizedTest
     @ValueSource(strings = ["cazzone", "culona", " fica ", "stronzi", "merdah!"])
     fun testPositive(parolaccia: String) {
-        Context.pignolo = true
-        parolacce.doAction(message("blah banf $parolaccia yadda yadda"))
+        botConfig.pignolo = true
+        parolacce.doAction(message("blah banf $parolaccia yadda yadda"), sgruntBot)
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction

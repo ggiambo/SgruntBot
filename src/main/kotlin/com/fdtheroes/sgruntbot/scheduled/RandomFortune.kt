@@ -1,12 +1,17 @@
 package com.fdtheroes.sgruntbot.scheduled
 
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage
+import com.fdtheroes.sgruntbot.BotConfig
+import com.fdtheroes.sgruntbot.SgruntBot
+import com.fdtheroes.sgruntbot.actions.Fortune
+import org.springframework.stereotype.Service
 
+@Service
 class RandomFortune(
-    sendMessage: (SendMessage) -> Unit,
-    private val getFortuneText: () -> String,
-) : RandomScheduledAction(sendMessage) {
+    private val fortune: Fortune,
+    sgruntBot: SgruntBot,
+    botConfig: BotConfig,
+) : RandomScheduledAction(sgruntBot, botConfig) {
 
-    override fun getMessageText() = getFortuneText()
+    override fun getMessageText() = fortune.getFortune()
 
 }

@@ -1,13 +1,17 @@
 package com.fdtheroes.sgruntbot.actions.persistence
 
-import org.jetbrains.exposed.sql.Table
-import org.jetbrains.exposed.sql.javatime.date
+import com.fdtheroes.sgruntbot.actions.persistence.KarmaRepository.Companion.dailyKarmaCredit
+import org.springframework.data.annotation.Id
+import org.springframework.data.relational.core.mapping.Column
+import org.springframework.data.relational.core.mapping.Table
+import java.time.LocalDate
 
-object Karma : Table("karma") {
-    val userId = long("user_id")
-    val karma = integer("karma")
-    val karmaCredit = integer("karma_credit")
-    val creditUpdated = date("credit_updated")
-
-    override val primaryKey = PrimaryKey(userId)
-}
+@Table("karma")
+data class Karma(
+    @Id
+    @Column("user_id")
+    var userId: Long,
+    var karma: Int = 0,
+    @Column("karma_credit") var karmaCredit: Int = dailyKarmaCredit,
+    @Column("credit_updated") var creditUpdated : LocalDate = LocalDate.now()
+)

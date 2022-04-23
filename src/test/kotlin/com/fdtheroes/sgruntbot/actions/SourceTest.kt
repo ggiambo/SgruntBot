@@ -1,16 +1,17 @@
 package com.fdtheroes.sgruntbot.actions
 
+import com.fdtheroes.sgruntbot.BaseTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
-class SourceTest : ActionTest() {
+class SourceTest : BaseTest() {
 
     private val source = Source()
 
     @Test
     fun testPositive() {
-        source.doAction(message("!source"))
+        source.doAction(message("!source"), sgruntBot)
 
         assertThat(botArguments).hasSize(1)
         val sendMessage = botArguments[0] as SendMessage

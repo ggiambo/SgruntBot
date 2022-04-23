@@ -1,18 +1,19 @@
 package com.fdtheroes.sgruntbot.actions
 
+import com.fdtheroes.sgruntbot.BaseTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.telegram.telegrambots.meta.api.methods.ActionType
 import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
-class TestTest : ActionTest() {
+class TestTest : BaseTest() {
 
-    private val test = com.fdtheroes.sgruntbot.actions.Test()
+    private val test = Test(botUtils)
 
     @Test
     fun testPositive() {
-        test.doAction(message("!test"))
+        test.doAction(message("!test"), sgruntBot)
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
