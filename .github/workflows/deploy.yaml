@@ -16,6 +16,6 @@ jobs:
           script: |
             cd ~/SgruntBot
             git pull
-            ./gradlew shadowJar
+            ./gradlew bootJar
             kill `cat run.pid`
             nohup java -jar build/libs/sgruntbot-1.0-SNAPSHOT.jar > out.log 2>error.log & echo $! > run.pid
