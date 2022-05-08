@@ -7,7 +7,7 @@ import org.telegram.telegrambots.meta.api.methods.ActionType
 import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
-class RoganTest : BaseTest() {
+internal class RoganTest : BaseTest() {
 
     private val rogan = Rogan()
 

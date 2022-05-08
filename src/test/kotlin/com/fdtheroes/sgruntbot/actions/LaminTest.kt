@@ -7,7 +7,7 @@ import org.telegram.telegrambots.meta.api.methods.ActionType
 import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
-class LaminTest : BaseTest() {
+internal class LaminTest : BaseTest() {
 
     private val lamin = Lamin()
 

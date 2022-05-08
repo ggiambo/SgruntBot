@@ -6,7 +6,7 @@ import org.telegram.telegrambots.meta.api.methods.ActionType
 import org.telegram.telegrambots.meta.api.methods.send.SendAudio
 import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
 
-class CanzoneTest : BaseTest() {
+internal class CanzoneTest : BaseTest() {
 
     private val canzone = Canzone()
 

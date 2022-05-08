@@ -5,7 +5,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
-class ParlaTest : BaseTest() {
+internal class ParlaTest : BaseTest() {
 
     private val parla = Parla(botConfig)
 

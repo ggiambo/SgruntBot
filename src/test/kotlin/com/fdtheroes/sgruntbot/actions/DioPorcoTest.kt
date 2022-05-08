@@ -7,7 +7,7 @@ import org.telegram.telegrambots.meta.api.methods.ActionType
 import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
-class DioPorcoTest : BaseTest() {
+internal class DioPorcoTest : BaseTest() {
 
     private val dioPorco = DioPorco(botConfig)
 

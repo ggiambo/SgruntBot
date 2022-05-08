@@ -8,7 +8,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import java.time.LocalDateTime
 
-class CheOreSonoTest : BaseTest() {
+internal class CheOreSonoTest : BaseTest() {
 
     @Test
     fun testPositive_prima_di_mezzogiorno() {

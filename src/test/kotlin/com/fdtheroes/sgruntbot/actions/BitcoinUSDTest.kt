@@ -7,7 +7,7 @@ import org.telegram.telegrambots.meta.api.methods.ActionType
 import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
-class BitcoinUSDTest : BaseTest() {
+internal class BitcoinUSDTest : BaseTest() {
 
     private val bitcoinUSD = BitcoinUSD(botUtils, mapper)
 

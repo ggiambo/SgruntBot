@@ -6,7 +6,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
-class SloganTest : BaseTest() {
+internal class SloganTest : BaseTest() {
 
     private val slogan = Slogan(botUtils)
 

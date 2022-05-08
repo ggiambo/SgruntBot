@@ -7,7 +7,7 @@ import org.telegram.telegrambots.meta.api.methods.ActionType
 import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
-class IdTest : BaseTest() {
+internal class IdTest : BaseTest() {
 
     private val id = Id()
 

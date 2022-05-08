@@ -1,7 +1,6 @@
 package com.fdtheroes.sgruntbot
 
 import com.fdtheroes.sgruntbot.actions.Action
-import com.fdtheroes.sgruntbot.actions.HasHalp
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.bots.TelegramLongPollingBot
@@ -20,7 +19,6 @@ import org.telegram.telegrambots.meta.api.objects.User
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession
 import java.io.Serializable
 import java.time.LocalDateTime
-import java.time.temporal.ChronoUnit
 import java.util.concurrent.CompletableFuture
 import javax.annotation.PostConstruct
 import kotlin.concurrent.thread
@@ -70,14 +68,6 @@ class Bot(
         }
 
         botConfig.pignolo = nextInt(100) > 90
-
-        if (message.text == "!help") {
-            val help = actions.filterIsInstance<HasHalp>()
-                .sortedBy { it.javaClass.simpleName }
-                .joinToString("\n") { it.halp() }
-            rispondi(message, help)
-            return
-        }
 
         actions.forEach {
             thread(start = true, name = it.javaClass.simpleName) {

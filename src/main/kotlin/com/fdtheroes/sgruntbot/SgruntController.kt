@@ -4,17 +4,15 @@ package com.fdtheroes.sgruntbot
 import com.fdtheroes.sgruntbot.actions.Action
 import com.fdtheroes.sgruntbot.actions.HasHalp
 import com.fdtheroes.sgruntbot.actions.persistence.KarmaService
-import io.swagger.v3.oas.annotations.Operation
-
 import com.fdtheroes.sgruntbot.scheduled.RandomScheduledAction
-
+import io.swagger.v3.oas.annotations.Operation
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDateTime
 
 @RestController
-@RequestMapping("/rest/sgrunt/v1")
+@RequestMapping("/sgrunty/rest")
 class SgruntController(
     private val sgruntBot: SgruntBot,
     private val botUtils: BotUtils,

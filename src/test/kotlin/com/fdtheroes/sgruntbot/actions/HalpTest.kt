@@ -1,33 +1,26 @@
 package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BaseTest
+import com.fdtheroes.sgruntbot.Users
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.telegram.telegrambots.meta.api.methods.ActionType
 import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
-internal class PorcaMadonnaTest : BaseTest() {
+internal class HalpTest : BaseTest() {
 
-    private val porcaMadonna = PorcaMadonna(botConfig)
+    private val halp = Halp(listOf(HasHalp { "Dummy Halp" }))
 
     @Test
     fun testPositive() {
-        botConfig.pignolo = true
-        porcaMadonna.doAction(message(("\tporca madonna")), sgruntBot)
+        halp.doAction(message("!help"), sgruntBot)
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
         val sendMessage = botArguments[1] as SendMessage
         assertThat(sendChatAction.actionType).isEqualTo(ActionType.TYPING)
-        assertThat(sendMessage.text).isEqualTo("...e tutti gli angeli in colonna!")
-    }
-
-    @Test
-    fun testNegative() {
-        porcaMadonna.doAction(message(("copporca madonna ")), sgruntBot)
-
-        assertThat(botArguments).isEmpty()
+        assertThat(sendMessage.text).contains("Dummy Halp")
     }
 
 }

@@ -7,7 +7,7 @@ import org.telegram.telegrambots.meta.api.methods.ActionType
 import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
-class BellissimTest : BaseTest() {
+internal class BellissimTest : BaseTest() {
 
     private val bellissim = Bellissim()
 

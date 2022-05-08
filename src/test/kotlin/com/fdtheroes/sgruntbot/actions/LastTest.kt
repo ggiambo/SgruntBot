@@ -6,7 +6,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
-class LastTest : BaseTest() {
+internal class LastTest : BaseTest() {
 
     private val last = Last(Slogan(botUtils), botConfig)
 

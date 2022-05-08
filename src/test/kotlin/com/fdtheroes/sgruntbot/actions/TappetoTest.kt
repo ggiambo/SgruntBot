@@ -5,7 +5,7 @@ import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto
 
-class TappetoTest : BaseTest() {
+internal class TappetoTest : BaseTest() {
 
     private val tappeto = Tappeto()
 

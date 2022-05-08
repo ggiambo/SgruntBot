@@ -5,7 +5,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
-class SourceTest : BaseTest() {
+internal class SourceTest : BaseTest() {
 
     private val source = Source()
 

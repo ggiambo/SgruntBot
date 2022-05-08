@@ -11,7 +11,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import java.time.LocalDateTime
 
-class SmettiTest : BaseTest() {
+internal class SmettiTest : BaseTest() {
 
     private val smetti = Smetti(botConfig)
 

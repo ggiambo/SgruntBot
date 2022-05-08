@@ -4,6 +4,6 @@ import com.fdtheroes.sgruntbot.SgruntBot
 import org.telegram.telegrambots.meta.api.objects.Message
 
 @FunctionalInterface
-interface Action {
+fun interface Action {
     fun doAction(message: Message, sgruntBot: SgruntBot)
 }

@@ -8,7 +8,7 @@ import org.telegram.telegrambots.meta.api.methods.ActionType
 import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
-class ParolacceTest : BaseTest() {
+internal class ParolacceTest : BaseTest() {
 
     private val parolacce = Parolacce(botUtils, botConfig)
 

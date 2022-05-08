@@ -9,7 +9,12 @@ spring:
     username: sgrunt
     password: sgrunt
 
+springdoc:
+  swagger-ui:
+    path: /sgrunty/swagger-ui.html
+
 sgruntbot:
   config:
     chat-id: -1001103213994
     telegram-token-file: token.txt
+    baseRestUrl: https://giambo.ch/
