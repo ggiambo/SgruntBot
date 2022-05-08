@@ -1,6 +1,7 @@
 server:
   address: 127.0.0.1
   port : 8081
+  forward-headers-strategy: framework
 
 spring:
   datasource:
@@ -17,4 +18,4 @@ sgruntbot:
   config:
     chat-id: -1001103213994
     telegram-token-file: token.txt
-    baseRestUrl: https://giambo.ch/
+    baseRestUrl: https://giambo.ch
