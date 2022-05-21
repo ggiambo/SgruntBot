@@ -4,5 +4,7 @@ sgruntbot:
     baseRestUrl: http://localhost:8081
 
 logging:
+  file:
+    name:
   pattern:
     console: "%d [%thread] %-5level %logger{36} - %msg%n"

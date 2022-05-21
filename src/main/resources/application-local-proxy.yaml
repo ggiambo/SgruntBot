@@ -6,6 +6,8 @@ spring:
     password: "sgrunt"
 
 logging:
+  file:
+    name:
   pattern:
     console: "%d [%thread] %-5level %logger{36} - %msg%n"
 
