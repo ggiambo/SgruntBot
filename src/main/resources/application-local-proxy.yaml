@@ -5,6 +5,10 @@ spring:
     username: "sgrunt"
     password: "sgrunt"
 
+logging:
+  pattern:
+    console: "%d [%thread] %-5level %logger{36} - %msg%n"
+
 sgruntbot:
   config:
     chat-id: -676046724

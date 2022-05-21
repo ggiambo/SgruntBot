@@ -10,6 +10,15 @@ spring:
     username: sgrunt
     password: sgrunt
 
+logging:
+  level:
+    root: info
+    com.fdtheroes.sgruntbot: debug
+  pattern:
+    file: "%d [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: sgruntbot.log
+
 springdoc:
   swagger-ui:
     path: /sgrunty/swagger-ui.html
