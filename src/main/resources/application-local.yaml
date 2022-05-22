@@ -2,3 +2,9 @@ sgruntbot:
   config:
     chat-id: -676046724
     baseRestUrl: http://localhost:8081
+
+logging:
+  file:
+    name:
+  pattern:
+    console: "%d [%thread] %-5level %logger{36} - %msg%n"

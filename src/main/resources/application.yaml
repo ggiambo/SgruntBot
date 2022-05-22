@@ -9,6 +9,19 @@ spring:
     url: jdbc:mariadb://127.0.0.1:3306/sgrunt
     username: sgrunt
     password: sgrunt
+  output:
+    ansi:
+      enabled: DETECT
+
+logging:
+  level:
+    root: info
+    com.fdtheroes.sgruntbot: debug
+  file:
+    name: sgruntbot.log
+  pattern:
+    file: "%d [%thread] %-5level %logger{36} - %msg%n"
+    console:
 
 springdoc:
   swagger-ui:
