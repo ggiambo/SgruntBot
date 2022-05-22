@@ -8,6 +8,7 @@ import org.telegram.telegrambots.meta.api.methods.ParseMode
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import java.util.*
 import java.util.concurrent.TimeUnit
+import javax.annotation.PostConstruct
 
 @Service
 class ScheduledKarma(
@@ -23,6 +24,7 @@ class ScheduledKarma(
         set(Calendar.SECOND, 0)
     }.time
 
+    @PostConstruct
     fun start() {
         val oneDayInMilleseconds = TimeUnit.MILLISECONDS.convert(1, TimeUnit.DAYS)
         Timer().schedule(PublishKarma(), mezzanotte, oneDayInMilleseconds)
