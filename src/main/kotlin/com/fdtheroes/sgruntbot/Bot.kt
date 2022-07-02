@@ -70,7 +70,7 @@ class Bot(
         botConfig.pignolo = nextInt(100) > 90
 
         actions.forEach {
-            thread(start = true, name = it.javaClass.simpleName) {
+            thread(start = true, name = it::class.simpleName) {
                 it.doAction(message, this)
             }
         }
