@@ -7,7 +7,7 @@ import org.telegram.telegrambots.meta.api.objects.Message
 @Service
 class Rogan : Action {
 
-    private val regex = Regex("rogan", RegexOption.IGNORE_CASE)
+    private val regex = Regex("\\brogan\\b", RegexOption.IGNORE_CASE)
 
     override fun doAction(message: Message, sgruntBot: SgruntBot) {
         if (regex.containsMatchIn(message.text)) {

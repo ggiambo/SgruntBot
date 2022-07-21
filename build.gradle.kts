@@ -6,7 +6,7 @@ plugins {
     application
     kotlin("jvm") version "1.6.20"
     kotlin("plugin.spring") version "1.6.20"
-    id("org.springframework.boot") version "2.7.1"
+    id("org.springframework.boot") version "2.7.2"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     id("com.github.ben-manes.versions") version "0.42.0"
 }
@@ -28,7 +28,7 @@ dependencies {
     implementation("com.fasterxml.jackson.module", "jackson-module-kotlin")
     implementation("org.jetbrains.kotlin", "kotlin-stdlib-jdk8")
     implementation("org.telegram", "telegrambots", "6.1.0")
-    implementation("org.jsoup", "jsoup", "1.15.1")
+    implementation("org.jsoup", "jsoup", "1.15.2")
     implementation("org.springdoc", "springdoc-openapi-ui", "1.6.9")
     implementation("org.springdoc", "springdoc-openapi-kotlin", "1.6.9")
     implementation("org.springdoc", "springdoc-openapi-webmvc-core", "1.6.9")

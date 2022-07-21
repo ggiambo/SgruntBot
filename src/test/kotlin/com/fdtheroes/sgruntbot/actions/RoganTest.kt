@@ -22,4 +22,11 @@ internal class RoganTest : BaseTest() {
         assertThat(sendMessage.text).isEqualTo("Cheppalle! Yawn!")
     }
 
+    @Test
+    fun testNegative() {
+        rogan.doAction(message("stanno erogando cazzate"), sgruntBot)
+
+        assertThat(botArguments).isEmpty()
+    }
+
 }
