@@ -2,7 +2,7 @@ package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.SgruntBot
-import org.jvnet.hk2.annotations.Service
+import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.Message
 import kotlin.random.Random
 
@@ -23,8 +23,9 @@ class Logorroico(private val botConfig: BotConfig) : Action {
         } else {
             lastAuthorCount = 0
         }
-        if (lastAuthorCount > 5 && Random.nextInt(10) == 0) {
+        if (lastAuthorCount > 5 && Random.nextInt(5) == 0) {
             sgruntBot.rispondi(message, risposte.random())
+            lastAuthorCount = 0
         }
     }
 
