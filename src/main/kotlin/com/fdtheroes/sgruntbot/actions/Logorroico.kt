@@ -11,10 +11,12 @@ class Logorroico(private val botConfig: BotConfig) : Action {
 
     var lastAuthorCount = 0
     private val risposte = listOf(
-        "Bravo, per oggi ci hai annoiato abbastanza",
+        "Per oggi ci hai annoiato abbastanza",
         "Ma quanto cazzo scrivi?",
         "Sei logorroico come un Wakko logorroico",
-        "Se leggo ancora un tuo messaggio, mi formatto"
+        "Se leggo ancora un tuo messaggio, mi formatto",
+        "Bastahhhh!!",
+        "Blah blah banf ... Yawwwnnn!"
     )
 
     override fun doAction(message: Message, sgruntBot: SgruntBot) {
@@ -23,7 +25,7 @@ class Logorroico(private val botConfig: BotConfig) : Action {
         } else {
             lastAuthorCount = 0
         }
-        if (lastAuthorCount > 5 && Random.nextInt(5) == 0) {
+        if (lastAuthorCount > 5 && Random.nextInt(7) == 0) {
             lastAuthorCount = 0
             sgruntBot.rispondi(message, risposte.random())
         }
