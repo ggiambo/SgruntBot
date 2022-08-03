@@ -24,8 +24,8 @@ class Logorroico(private val botConfig: BotConfig) : Action {
             lastAuthorCount = 0
         }
         if (lastAuthorCount > 5 && Random.nextInt(5) == 0) {
-            sgruntBot.rispondi(message, risposte.random())
             lastAuthorCount = 0
+            sgruntBot.rispondi(message, risposte.random())
         }
     }
 
