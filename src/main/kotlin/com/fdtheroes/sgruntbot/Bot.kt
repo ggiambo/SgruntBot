@@ -64,6 +64,7 @@ class Bot(
         }
 
         if (!lastAuthorRegex.containsMatchIn(message.text)) {
+            log.info("Nuovo authorId = ${message.from.id}")
             botConfig.lastAuthor = message.from
         }
 
