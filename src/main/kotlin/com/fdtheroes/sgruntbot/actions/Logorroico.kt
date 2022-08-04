@@ -1,6 +1,5 @@
 package com.fdtheroes.sgruntbot.actions
 
-import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.SgruntBot
 import org.slf4j.LoggerFactory
@@ -10,13 +9,11 @@ import kotlin.random.Random
 
 @Service
 class Logorroico(
-    private val botConfig: BotConfig,
     private val botUtils: BotUtils,
 ) : Action {
 
     private val log = LoggerFactory.getLogger(this.javaClass)
 
-    var lastAuthorCount = 0
     private val risposte = listOf(
         "Per oggi ci hai annoiato abbastanza",
         "Ma quanto cazzo scrivi?",
@@ -26,23 +23,34 @@ class Logorroico(
         "Blah blah banf ... Yawwwnnn!"
     )
 
+    var lastAuthorId : Long = 0
+    var lastAuthorCount = 0
+
     override fun doAction(message: Message, sgruntBot: SgruntBot) {
         if (!botUtils.isMessageInChat(message)) {
             return
         }
-        if (botConfig.lastAuthor?.id == message.from.id) {
+
+        val authorId = message.from.id
+
+        if (lastAuthorId == authorId) {
             lastAuthorCount++
-            log.info("Dato che ${botConfig.lastAuthor?.id} == ${message.from.id}, incremento lastAuthorCount di uno")
+            log.info("Dato che $lastAuthorId == $authorId, incremento lastAuthorCount di uno")
         } else {
             log.info("lastAuthorCount torna a zero")
             lastAuthorCount = 0
         }
+
         log.info("lastAuthorCount == $lastAuthorCount")
-        if (lastAuthorCount > 5 && Random.nextInt(10) == 0) {
+
+        // dal quinto messaggio di seguito, probabilità 20% di essere logorroico
+        if (lastAuthorCount > 5 && Random.nextInt(5) == 0) {
             log.info("E l'utente si becca una risposta")
             lastAuthorCount = 0
             sgruntBot.rispondi(message, risposte.random())
         }
+
+        lastAuthorId = authorId
     }
 
 }
