@@ -4,9 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.BeforeEach
 import org.mockito.kotlin.doAnswer
 import org.mockito.kotlin.isA
-import org.mockito.kotlin.mock
 import org.mockito.kotlin.spy
-import org.telegram.telegrambots.bots.DefaultBotOptions
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod
 import org.telegram.telegrambots.meta.api.methods.send.SendAudio
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto
@@ -34,7 +32,7 @@ open class BaseTest {
     val botUtils = BotUtils(botConfig)
     val mapper = ObjectMapper()
 
-    val sgruntBot: Bot = spy(Bot(botConfig, emptyList())) {
+    val sgruntBot: Bot = spy(Bot(botConfig, botUtils, emptyList())) {
         onGeneric { rispondi(isA<BotApiMethod<Serializable>>()) } doAnswer {
             botArguments.add(it.arguments.first())
             CompletableFuture.completedFuture(message("done"))
