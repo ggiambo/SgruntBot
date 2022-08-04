@@ -1,6 +1,7 @@
 package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BotConfig
+import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.SgruntBot
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
@@ -8,7 +9,10 @@ import org.telegram.telegrambots.meta.api.objects.Message
 import kotlin.random.Random
 
 @Service
-class Logorroico(private val botConfig: BotConfig) : Action {
+class Logorroico(
+    private val botConfig: BotConfig,
+    private val botUtils: BotUtils,
+) : Action {
 
     private val log = LoggerFactory.getLogger(this.javaClass)
 
@@ -23,6 +27,9 @@ class Logorroico(private val botConfig: BotConfig) : Action {
     )
 
     override fun doAction(message: Message, sgruntBot: SgruntBot) {
+        if (!botUtils.isMessageInChat(message)) {
+            return
+        }
         if (botConfig.lastAuthor?.id == message.from.id) {
             lastAuthorCount++
             log.info("Dato che ${botConfig.lastAuthor?.id} == ${message.from.id}, incremento lastAuthorCount di uno")

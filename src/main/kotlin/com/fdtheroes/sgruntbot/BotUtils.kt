@@ -2,6 +2,7 @@ package com.fdtheroes.sgruntbot
 
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.bots.DefaultBotOptions
+import org.telegram.telegrambots.meta.api.objects.Message
 import org.telegram.telegrambots.meta.api.objects.User
 import java.net.InetSocketAddress
 import java.net.Proxy
@@ -11,9 +12,13 @@ import java.nio.charset.StandardCharsets
 import java.util.stream.StreamSupport
 
 @Service
-class BotUtils(botConfig: BotConfig) {
+class BotUtils(private val botConfig: BotConfig) {
 
     private val proxy = initProxy(botConfig.defaultBotOptions)
+
+    fun isMessageInChat(message: Message) : Boolean {
+        return message.chatId?.toString() == botConfig.chatId
+    }
 
     fun getUserName(user: User?): String {
         if (user == null) {

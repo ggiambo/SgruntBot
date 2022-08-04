@@ -28,6 +28,7 @@ import kotlin.random.Random.Default.nextInt
 @Service
 class Bot(
     private val botConfig: BotConfig,
+    private val botUtils: BotUtils,
     private val actions: List<Action>,
 ) : TelegramLongPollingBot(botConfig.defaultBotOptions), SgruntBot {
 
@@ -63,7 +64,7 @@ class Bot(
             return
         }
 
-        if (!lastAuthorRegex.containsMatchIn(message.text)) {
+        if (!lastAuthorRegex.containsMatchIn(message.text) && botUtils.isMessageInChat(message)) {
             log.info("Nuovo authorId = ${message.from.id}")
             botConfig.lastAuthor = message.from
         }
