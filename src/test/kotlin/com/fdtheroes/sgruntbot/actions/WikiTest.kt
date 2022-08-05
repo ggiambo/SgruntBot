@@ -21,7 +21,31 @@ internal class WikiTest : BaseTest() {
         assertThat(sendChatAction.actionType).isEqualTo(ActionType.TYPING)
         assertThat(sendMessage.text)
             .startsWith("La poesia giambica era un tipo di poesia ")
-            .endsWith("https://it.wikipedia.org/wiki/Poesia+giambica")
+            .endsWith("https://it.wikipedia.org/wiki/Poesia_giambica")
+    }
+
+    @Test
+    fun testPositive_accento() {
+        wiki.doAction(message("!wiki fosse ardenne"), sgruntBot)
+
+        assertThat(botArguments).hasSize(2)
+        val sendChatAction = botArguments[0] as SendChatAction
+        val sendMessage = botArguments[1] as SendMessage
+        assertThat(sendChatAction.actionType).isEqualTo(ActionType.TYPING)
+        assertThat(sendMessage.text)
+            .startsWith("Fossé è un comune francese di 54 abitanti ")
+            .endsWith("https://it.wikipedia.org/wiki/Foss%C3%A9_(Ardenne)")
+    }
+
+    @Test
+    fun testNegative() {
+        wiki.doAction(message("!wiki barzuffo"), sgruntBot)
+
+        assertThat(botArguments).hasSize(2)
+        val sendChatAction = botArguments[0] as SendChatAction
+        val sendMessage = botArguments[1] as SendMessage
+        assertThat(sendChatAction.actionType).isEqualTo(ActionType.TYPING)
+        assertThat(sendMessage.text).isEqualTo("Non c'è.")
     }
 
 }
