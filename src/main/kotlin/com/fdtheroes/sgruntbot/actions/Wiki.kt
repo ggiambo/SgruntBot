@@ -1,16 +1,11 @@
 package com.fdtheroes.sgruntbot.actions
 
-import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.BotUtils.Companion.urlEncode
 import com.fdtheroes.sgruntbot.SgruntBot
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.Message
-import java.net.InetSocketAddress
-import java.net.Proxy
-import java.net.URL
-import java.net.URLEncoder
 
 @Service
 class Wiki(private val botUtils: BotUtils, val mapper: ObjectMapper) : Action, HasHalp {
