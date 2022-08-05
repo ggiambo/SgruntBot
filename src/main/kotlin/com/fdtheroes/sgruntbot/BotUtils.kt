@@ -41,8 +41,8 @@ class BotUtils(private val botConfig: BotConfig) {
         return """<a href="tg://user?id=${user.id}">${name}</a>"""
     }
 
-    fun textFromURL(url: String): String {
-        return URL(url)
+    fun textFromURL(url: String, vararg params: String): String {
+        return URL(String.format(url, *params))
             .openConnection(proxy)
             .getInputStream()
             .readAllBytes()
