@@ -12,6 +12,7 @@ class Slogan(private val botUtils: BotUtils) : Action, HasHalp {
 
     private val regex = Regex("^!slogan (.*)\$", RegexOption.IGNORE_CASE)
     private val sloganPlaceholder = "XXX-XXX-XXX"
+    private val urlSlogan = "http://www.sloganizer.net/en/outbound.php?slogan=%s"
 
     override fun doAction(message: Message, sgruntBot: SgruntBot) {
         val testo = regex.find(message.text)?.groupValues?.get(1)
@@ -24,7 +25,7 @@ class Slogan(private val botUtils: BotUtils) : Action, HasHalp {
     override fun halp() = "<b>!slogan</b> <i>testo</i> uno slogan per il testo!"
 
     fun fetchSlogan(testo: String): String {
-        val res = botUtils.textFromURL("http://www.sloganizer.net/en/outbound.php?slogan=${testo.urlEncode()}")
+        val res = botUtils.textFromURL(urlSlogan, testo.urlEncode())
         return Regex("<a.*?>(.*)</a>").find(res)?.groupValues?.get(1).orEmpty()
     }
 
