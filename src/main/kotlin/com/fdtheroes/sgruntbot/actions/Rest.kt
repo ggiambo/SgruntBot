@@ -2,7 +2,6 @@ package com.fdtheroes.sgruntbot.actions
 
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
-import javax.servlet.ServletContext
 
 @Service
 class Rest(
