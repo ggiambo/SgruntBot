@@ -3,9 +3,18 @@ Tentativo di riscrittura di Sgrunty usando un linguaggio moderno, giovane e dina
 ## Come lo faccio partire?
 Prima di tutto devi avere un file `token.txt` contenente il token per il bot, altrimenti ciccia.\
 Il comando magico per far partire il tutto è:
-```
+```shell
 ./gradlew run
 ```
 
 Se vuoi usare un proxy HTTP, usa qualcosa del tipo `-proxy http://localhost:8080`\
 Per una resa ottimale, assicurati di aver installato `fortune` e l'ultimissima versione di `youtube-dl`.
+
+## Non funzionahhh!
+LOL, ho dimenticato di dire che devi avere un database. MariaDB, per la precisione.\
+E un utente "sgrunt" con password "sgrunt" con accesso a un database che si chiama ... "sgrunt"!
+```mariadb
+create user 'sgrunt'@localhost identified by 'sgrunt';
+grant all privileges on sgrunt.* to 'sgrunt'@localhost identified by 'sgrunt';
+flush privileges;
+```

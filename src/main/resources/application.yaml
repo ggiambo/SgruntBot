@@ -12,6 +12,10 @@ spring:
   output:
     ansi:
       enabled: DETECT
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema.sql
 
 logging:
   level:
