@@ -16,7 +16,7 @@ class BotUtils(private val botConfig: BotConfig) {
 
     private val proxy = initProxy(botConfig.defaultBotOptions)
 
-    fun isMessageInChat(message: Message) : Boolean {
+    fun isMessageInChat(message: Message): Boolean {
         return message.chatId?.toString() == botConfig.chatId
     }
 
@@ -57,10 +57,25 @@ class BotUtils(private val botConfig: BotConfig) {
     }
 
     companion object {
+        infix fun <T> T.elseIfNull(other: T?): T? {
+            if (this != null) {
+                return this
+            }
+            return other
+        }
+
+        infix fun <T> T.elseIfNull(other: () -> T?): T? {
+            if (this != null) {
+                return this
+            }
+            return other()
+        }
+
         fun String.urlEncode(): String {
             return URLEncoder.encode(this, StandardCharsets.UTF_8)
         }
-        fun Iterable<*>?.length() : Long {
+
+        fun Iterable<*>?.length(): Long {
             return StreamSupport.stream(this?.spliterator(), false).count()
         }
     }
