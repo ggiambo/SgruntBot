@@ -18,7 +18,9 @@ class Logorroico(
         "Sei logorroico come un Wakko logorroico",
         "Se leggo ancora un tuo messaggio, mi formatto",
         "Bastahhhh!!",
-        "Blah blah banf ... Yawwwnnn!"
+        "Blah blah banf ... Yawwwnnn!",
+        "Prendi la tastiera e scagliala lontano",
+        "Facciamo il gioco del silenzio, comincia tu"
     )
 
     var lastAuthorId: Long = 0L
@@ -36,8 +38,8 @@ class Logorroico(
             lastAuthorCount = 0
         }
 
-        // dal quinto messaggio di seguito, probabilità 20% di essere logorroico
-        if (lastAuthorCount >= 5 && Random.nextInt(5) == 0) {
+        // dal settimo messaggio di seguito, probabilità 20% di essere logorroico
+        if (lastAuthorCount >= 7 && Random.nextInt(5) == 0) {
             lastAuthorCount = 0
             sgruntBot.rispondi(message, risposte.random())
         }
