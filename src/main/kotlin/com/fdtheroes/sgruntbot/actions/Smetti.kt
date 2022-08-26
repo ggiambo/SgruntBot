@@ -14,13 +14,8 @@ class Smetti(private val botConfig: BotConfig) : Action {
 
     override fun doAction(message: Message, sgruntBot: SgruntBot) {
         if (regex.containsMatchIn(message.text)) {
-            val user = Users.byId(message.from.id)
-            if (user == Users.DADA) {
-                sgruntBot.rispondi(message, "Col cazzo!")
-            } else {
-                botConfig.pausedTime = LocalDateTime.now().plusMinutes(5)
-                sgruntBot.rispondi(message, "Ok, sto zitto 5 minuti. :(")
-            }
+            botConfig.pausedTime = LocalDateTime.now().plusMinutes(5)
+            sgruntBot.rispondi(message, "Ok, sto zitto 5 minuti. :(")
         }
     }
 }
