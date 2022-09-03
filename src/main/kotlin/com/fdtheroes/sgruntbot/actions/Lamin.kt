@@ -10,9 +10,15 @@ class Lamin : Action {
     private val regex1 = Regex("(negr|negher)", RegexOption.IGNORE_CASE)
     private val regex2 = Regex("negrini", RegexOption.IGNORE_CASE)
 
+    private val risposte = listOf(
+        "Lamin mi manchi.",
+        "RaSSista!",
+        "Ordine Reich approves.",
+    )
+
     override fun doAction(message: Message, sgruntBot: SgruntBot) {
         if (regex1.containsMatchIn(message.text) && !regex2.containsMatchIn(message.text)) {
-            sgruntBot.rispondi(message, "Lamin mi manchi.")
+            sgruntBot.rispondi(message, risposte.random())
         }
     }
 }

@@ -19,7 +19,7 @@ internal class LaminTest : BaseTest() {
         val sendChatAction = botArguments[0] as SendChatAction
         val sendMessage = botArguments[1] as SendMessage
         assertThat(sendChatAction.actionType).isEqualTo(ActionType.TYPING)
-        assertThat(sendMessage.text).isEqualTo("Lamin mi manchi.")
+        assertThat(sendMessage.text).isNotEmpty
     }
 
     @Test
@@ -30,7 +30,7 @@ internal class LaminTest : BaseTest() {
         val sendChatAction = botArguments[0] as SendChatAction
         val sendMessage = botArguments[1] as SendMessage
         assertThat(sendChatAction.actionType).isEqualTo(ActionType.TYPING)
-        assertThat(sendMessage.text).isEqualTo("Lamin mi manchi.")
+        assertThat(sendMessage.text).isNotEmpty
     }
 
     @Test
