@@ -24,7 +24,7 @@ open class BaseTest {
     val isLocalProxy = System.getenv()["SPRING_ACTIVE_PROFILE"] == "local-proxy"
 
     val botConfig: BotConfig = BotConfig(
-        chatId =  "-9999",
+        chatId = "-9999",
         telegramTokenFile = "dummyToken.txt",
         proxy = if (isLocalProxy) "http://127.0.0.1:8888" else ""
     )
@@ -46,6 +46,13 @@ open class BaseTest {
             CompletableFuture.completedFuture(message("done"))
         }
         onGeneric { sleep(isA()) } doAnswer { }
+        onGeneric { getChatMember(isA()) } doAnswer {
+            User().apply {
+                val id = it.arguments.first() as Long
+                this.id = id
+                this.userName = "Username_$id"
+            }
+        }
     }
 
     fun message(
@@ -66,6 +73,7 @@ open class BaseTest {
             this.id = id
             this.userName = userName
             this.firstName = firstName
+            this.isBot = false
         }
     }
 
@@ -74,6 +82,7 @@ open class BaseTest {
             this.id = user.id
             this.userName = user.name
             this.firstName = user.name.lowercase()
+            this.isBot = false
         }
     }
 

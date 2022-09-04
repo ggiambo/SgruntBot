@@ -2,6 +2,7 @@ package com.fdtheroes.sgruntbot
 
 import com.fdtheroes.sgruntbot.actions.Action
 import org.slf4j.LoggerFactory
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.bots.TelegramLongPollingBot
 import org.telegram.telegrambots.meta.TelegramBotsApi
@@ -65,7 +66,6 @@ class Bot(
         }
 
         if (!lastAuthorRegex.containsMatchIn(message.text) && botUtils.isMessageInChat(message)) {
-            log.info("Nuovo authorId = ${message.from.id}")
             botConfig.lastAuthor = message.from
         }
 
@@ -113,6 +113,7 @@ class Bot(
         return executeAsync(sendPhoto)
     }
 
+    @Cacheable(cacheNames = ["userName"])
     override fun getChatMember(userId: Long): User? {
         val getChatMember = GetChatMember().apply {
             this.chatId = botConfig.chatId
