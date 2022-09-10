@@ -2,6 +2,7 @@ package com.fdtheroes.sgruntbot.actions.persistence
 
 import com.fdtheroes.sgruntbot.BotUtils.Companion.elseIfNull
 import org.springframework.stereotype.Service
+import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.Month
 
@@ -25,6 +26,11 @@ class StatsService(private val statsRepository: StatsRepository) {
         val beginOfMonth = LocalDate.now().withDayOfMonth(1)
         return statsRepository.findStatsByStatDayBetween(beginOfMonth, LocalDate.now())
             .groupBy { it.statDay.dayOfMonth }
+    }
+
+    fun getStatsThisWeek(): List<Stats> {
+        val beginOfWeek = LocalDate.now().with(DayOfWeek.MONDAY)
+        return aggregate(statsRepository.findStatsByStatDayBetween(beginOfWeek, LocalDate.now()))
     }
 
     fun getStatsThisMonth(): List<Stats> {

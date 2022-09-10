@@ -25,9 +25,9 @@ import javax.imageio.ImageIO
 class Stats(
     private val statsService: StatsService,
     private val botUtils: BotUtils,
-) : Action {
+) : Action, HasHalp {
 
-    private val regex = Regex("^!stats\$", RegexOption.IGNORE_CASE)
+    private val regex = Regex("^!stats(.*)\$", RegexOption.IGNORE_CASE)
     private val seriesColors = arrayOf(
         colorFromString("#a6cee3"),
         colorFromString("#1f78b4"),
@@ -63,8 +63,14 @@ class Stats(
         statsService.increaseStats(message.from.id)
 
         if (regex.matches(message.text)) {
-            val statsToday = statsService.getStatsToday()
-            val inputFile = getStatsInputFile(statsToday, "Logorroici di oggi", sgruntBot)
+            val tipo = StatsType.getByType(regex.find(message.text)?.groupValues?.get(1))
+            val stats = when (tipo) {
+                StatsType.GIORNO -> statsService.getStatsToday()
+                StatsType.SETTIMANA -> statsService.getStatsThisWeek()
+                StatsType.MESE -> statsService.getStatsThisMonth()
+                StatsType.ANNO -> statsService.getStatsThisYear()
+            }
+            val inputFile = getStatsInputFile(stats, "Logorroici di ${tipo.desc}", sgruntBot)
 
             val sendPhoto = SendPhoto()
             sendPhoto.chatId = message.chat.id.toString()
@@ -90,7 +96,7 @@ class Stats(
         val image = BitmapEncoder.getBufferedImage(pieChart)
         val os = ByteArrayOutputStream()
         ImageIO.write(image, "png", os)
-        return InputFile(ByteArrayInputStream(os.toByteArray()), "tappeto.jpg")
+        return InputFile(ByteArrayInputStream(os.toByteArray()), "stats.jpg")
     }
 
     private fun colorFromString(color: String): Color {
@@ -104,4 +110,32 @@ class Stats(
     private fun getPercentage(messages: Int, total: Int): Int {
         return (messages * 100) / total
     }
+
+    enum class StatsType(val type: String, val desc: String) {
+        GIORNO("g", "oggi"),
+        SETTIMANA("s", "questa settimana"),
+        MESE("m", "questo mese"),
+        ANNO("a", "tutto l'anno")
+        ;
+
+        companion object {
+            private val byType = StatsType.values().associateBy { it.type }
+            fun getByType(type: String?): StatsType {
+                val tipo = type.orEmpty().trim().lowercase()
+                if (tipo.isEmpty()) {
+                    return GIORNO
+                }
+                return byType.getValue(tipo)
+            }
+        }
+    }
+
+    override fun halp() = """
+        <b>!stats <i>tipo</i></b> le stats dei logorroici, dove <i>tipo</i>
+        <b>g</b> stats di questa giornata
+        <b>s</b> stats di questa settimana
+        <b>m</b> stats di questo mese
+        <b>a</b> stats di quest'anno
+        """.trimIndent()
+
 }
