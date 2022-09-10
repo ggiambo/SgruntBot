@@ -34,7 +34,6 @@ dependencies {
     implementation("org.springdoc", "springdoc-openapi-kotlin", "1.6.11")
     implementation("org.springdoc", "springdoc-openapi-webmvc-core", "1.6.11")
     implementation("org.knowm.xchart", "xchart", "3.8.1")
-    implementation("org.jfree", "jfreechart", "1.5.3")
     runtimeOnly("org.mariadb.jdbc", "mariadb-java-client")
     runtimeOnly("com.h2database", "h2")
     annotationProcessor("org.springframework.boot", "spring-boot-configuration-processor")
