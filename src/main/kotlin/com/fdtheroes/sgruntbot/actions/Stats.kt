@@ -84,12 +84,15 @@ class Stats(
     fun getStatsInputFile(stats: List<Stats>, chartTitle: String, sgruntBot: SgruntBot): InputFile {
         val totalMessages = stats.sumOf { it.messages }
         pieChart.seriesMap.clear()
-        stats.forEach { stat ->
-            val userName = botUtils.getUserName(sgruntBot.getChatMember(stat.userId))
-            val percentage = getPercentage(stat.messages, totalMessages)
-            val name = "$userName $percentage%"
-            pieChart.addSeries(name, stat.messages)
-        }
+        stats
+            .sortedBy { it.messages }
+            .asReversed()
+            .forEach { stat ->
+                val userName = botUtils.getUserName(sgruntBot.getChatMember(stat.userId))
+                val percentage = getPercentage(stat.messages, totalMessages)
+                val name = "$userName $percentage%"
+                pieChart.addSeries(name, stat.messages)
+            }
 
         pieChart.title = chartTitle
 
