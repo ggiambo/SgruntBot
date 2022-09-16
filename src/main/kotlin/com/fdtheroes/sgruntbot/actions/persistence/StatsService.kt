@@ -38,10 +38,10 @@ class StatsService(private val statsRepository: StatsRepository) {
         return aggregate(statsRepository.findStatsByStatDayBetween(beginOfMonth, LocalDate.now()))
     }
 
-    fun getStatsThisYearByMonth(): Map<Month, List<Stats>> {
-        val beginOfYear = LocalDate.now().withDayOfYear(1)
-        return statsRepository.findStatsByStatDayBetween(beginOfYear, LocalDate.now())
-            .groupBy { it.statDay.month }
+    fun getStatsThisMonthByUserId(): Map<Long, List<Stats>> {
+        val beginOfMonth = LocalDate.now().withDayOfMonth(1)
+        return statsRepository.findStatsByStatDayBetween(beginOfMonth, LocalDate.now())
+            .groupBy { it.userId }
     }
 
     fun getStatsThisYear(): List<Stats> {

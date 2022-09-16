@@ -1,12 +1,19 @@
 package com.fdtheroes.sgruntbot.scheduled
 
 import com.fdtheroes.sgruntbot.BotConfig
+import com.fdtheroes.sgruntbot.BotUtils
+import com.fdtheroes.sgruntbot.BotUtils.Companion.toDate
+import com.fdtheroes.sgruntbot.ChartUtils
+import com.fdtheroes.sgruntbot.ChartUtils.getAsInputFile
 import com.fdtheroes.sgruntbot.SgruntBot
-import com.fdtheroes.sgruntbot.actions.Stats
+import com.fdtheroes.sgruntbot.actions.persistence.Stats
 import com.fdtheroes.sgruntbot.actions.persistence.StatsService
+import org.knowm.xchart.XYChart
+import org.knowm.xchart.style.theme.GGPlot2Theme
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.methods.ParseMode
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto
+import org.telegram.telegrambots.meta.api.objects.InputFile
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.annotation.PostConstruct
@@ -15,28 +22,37 @@ import javax.annotation.PostConstruct
 class ScheduledStats(
     private val botConfig: BotConfig,
     private val sgruntBot: SgruntBot,
+    private val botUtils: BotUtils,
     private val statsService: StatsService,
-    private val statsAction: Stats,
 ) {
 
-    val mezzanotte = Calendar.getInstance().apply {
+    private val mezzanotte = Calendar.getInstance().apply {
         set(Calendar.DAY_OF_MONTH, get(Calendar.DAY_OF_MONTH) + 1)
         set(Calendar.HOUR_OF_DAY, 0)
         set(Calendar.MINUTE, 0)
         set(Calendar.SECOND, 0)
     }.time
 
+    val chart = XYChart(1024, 768)
+
     @PostConstruct
     fun start() {
+        chart.styler.theme = GGPlot2Theme()
+        chart.styler.seriesColors = ChartUtils.seriesColors
+        chart.title = "Logorroici di questo mese"
+        chart.styler.theme = GGPlot2Theme()
+        chart.styler.isToolTipsEnabled = false
+        chart.styler.seriesColors = ChartUtils.seriesColors
+        chart.styler.datePattern = "d"
+
         val oneDayInMilleseconds = TimeUnit.MILLISECONDS.convert(1, TimeUnit.DAYS)
         Timer().schedule(PublishStats(), mezzanotte, oneDayInMilleseconds)
     }
 
     inner class PublishStats : TimerTask() {
         override fun run() {
-            val statsToday = statsService.getStatsThisMonth()
-            val inputFile = statsAction.getStatsInputFile(statsToday, "Logorroici di questo mese", sgruntBot)
-
+            val statsThisMonthByUserId = statsService.getStatsThisMonthByUserId()
+            val inputFile = getStatsInputFile(statsThisMonthByUserId)
 
             val sendPhoto = SendPhoto()
             sendPhoto.chatId = botConfig.chatId
@@ -44,6 +60,27 @@ class ScheduledStats(
             sendPhoto.photo = inputFile
             sgruntBot.rispondi(sendPhoto)
         }
+    }
+
+    private fun getStatsInputFile(statsThisMonthByUserId: Map<Long, List<Stats>>): InputFile {
+        chart.seriesMap.clear()
+        statsThisMonthByUserId.forEach {
+            chart.addSeries(
+                getSerieName(it.key),
+                it.value.map { stats -> stats.statDay.toDate() },
+                it.value.map { stats -> stats.messages },
+            )
+        }
+
+        return getAsInputFile(chart)
+    }
+
+    fun getSerieName(userId: Long): String {
+        val serieName = botUtils.getUserName(sgruntBot.getChatMember(userId))
+        if (serieName.isNotEmpty()) {
+            return serieName
+        }
+        return userId.toString()
     }
 
 }

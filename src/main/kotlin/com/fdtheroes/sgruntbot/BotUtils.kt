@@ -9,6 +9,9 @@ import java.net.Proxy
 import java.net.URL
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
+import java.time.LocalDate
+import java.time.ZoneId
+import java.util.*
 import java.util.stream.StreamSupport
 
 @Service
@@ -77,6 +80,10 @@ class BotUtils(private val botConfig: BotConfig) {
 
         fun Iterable<*>?.length(): Long {
             return StreamSupport.stream(this?.spliterator(), false).count()
+        }
+
+        fun LocalDate.toDate(): Date {
+            return Date.from(this.atStartOfDay(ZoneId.systemDefault()).toInstant())
         }
     }
 }
