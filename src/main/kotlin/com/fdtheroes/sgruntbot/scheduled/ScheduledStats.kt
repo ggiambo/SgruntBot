@@ -33,7 +33,7 @@ class ScheduledStats(
         set(Calendar.SECOND, 0)
     }.time
 
-    val chart = XYChart(1024, 768)
+    val chart = XYChart(1280, 1024)
 
     @PostConstruct
     fun start() {

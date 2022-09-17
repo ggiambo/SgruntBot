@@ -26,7 +26,7 @@ class Stats(
 
     private val regex = Regex("^!stats(.*)\$", RegexOption.IGNORE_CASE)
 
-    private val pieChart = PieChart(1024, 768)
+    private val pieChart = PieChart(1280, 1024)
 
     @PostConstruct
     fun initChart() {
