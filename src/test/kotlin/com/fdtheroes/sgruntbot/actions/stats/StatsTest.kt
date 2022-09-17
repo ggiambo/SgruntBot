@@ -42,7 +42,7 @@ internal class StatsTest : BaseTest() {
         val image = ImageIO.read(sendPhoto.photo.newMediaStream)
 
         assertThat(image.type).isEqualTo(BufferedImage.TYPE_3BYTE_BGR)
-        assertThat(image.width).isEqualTo(1024)
-        assertThat(image.height).isEqualTo(768)
+        assertThat(image.width).isEqualTo(1280)
+        assertThat(image.height).isEqualTo(1024)
     }
 }
