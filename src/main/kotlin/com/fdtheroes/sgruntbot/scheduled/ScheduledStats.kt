@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.methods.ParseMode
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto
 import org.telegram.telegrambots.meta.api.objects.InputFile
+import java.awt.BasicStroke
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.annotation.PostConstruct
@@ -33,7 +34,9 @@ class ScheduledStats(
         set(Calendar.SECOND, 0)
     }.time
 
-    val chart = XYChart(1280, 1024)
+    private val chart = XYChart(1280, 1024)
+    private val seriesStroke = BasicStroke(6F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER)
+
 
     @PostConstruct
     fun start() {
@@ -65,11 +68,13 @@ class ScheduledStats(
     private fun getStatsInputFile(statsThisMonthByUserId: Map<Long, List<Stats>>): InputFile {
         chart.seriesMap.clear()
         statsThisMonthByUserId.forEach {
-            chart.addSeries(
+            val series = chart.addSeries(
                 getSerieName(it.key),
                 it.value.map { stats -> stats.statDay.toDate() },
                 it.value.map { stats -> stats.messages },
             )
+            series.lineStyle = seriesStroke
+            series.isSmooth = true
         }
 
         return getAsInputFile(chart)
