@@ -4,11 +4,15 @@ package com.fdtheroes.sgruntbot
 import com.fdtheroes.sgruntbot.actions.Action
 import com.fdtheroes.sgruntbot.actions.HasHalp
 import com.fdtheroes.sgruntbot.actions.persistence.KarmaService
+import com.fdtheroes.sgruntbot.actions.persistence.StatsService
 import com.fdtheroes.sgruntbot.scheduled.RandomScheduledAction
 import io.swagger.v3.oas.annotations.Operation
+import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 @RestController
@@ -18,6 +22,7 @@ class SgruntController(
     private val botUtils: BotUtils,
     private val actions: List<Action>,
     private val karmaService: KarmaService,
+    private val statsService: StatsService,
     private val botConfig: BotConfig,
     private val randomScheduledActions: List<RandomScheduledAction>,
 ) {
@@ -93,6 +98,20 @@ class SgruntController(
                     val userId = it.first
                     val userName = botUtils.getUserName(sgruntBot.getChatMember(it.first))
                     val karma = it.second
+                }
+            }
+    }
+
+    @GetMapping("/stats/{date}")
+    @Operation(summary = "Statistiche a partire da una certa data (YYYY-MM-DD)")
+    fun getKarma(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)  date: LocalDate = LocalDate.now()): List<Any> {
+        return statsService.getStatsFromDate(date)
+            .map {
+                object {
+                    val userId = it.userId
+                    val userName = botUtils.getUserName(sgruntBot.getChatMember(it.userId))
+                    var day = it.statDay
+                    var messages = it.messages
                 }
             }
     }

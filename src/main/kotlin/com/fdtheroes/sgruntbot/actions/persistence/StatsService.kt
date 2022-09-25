@@ -18,6 +18,10 @@ class StatsService(private val statsRepository: StatsRepository) {
         statsRepository.save(stats)
     }
 
+    fun getStatsFromDate(startDate: LocalDate): List<Stats> {
+        return statsRepository.findStatsByStatDayBetween(startDate, LocalDate.now())
+    }
+
     fun getStatsToday(): List<Stats> {
         return statsRepository.findStatsByStatDayBetween(LocalDate.now(), LocalDate.now())
     }
