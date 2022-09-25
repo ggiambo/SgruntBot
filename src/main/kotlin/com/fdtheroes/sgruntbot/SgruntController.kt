@@ -9,6 +9,7 @@ import com.fdtheroes.sgruntbot.scheduled.RandomScheduledAction
 import io.swagger.v3.oas.annotations.Operation
 import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
@@ -104,7 +105,7 @@ class SgruntController(
 
     @GetMapping("/stats/{date}")
     @Operation(summary = "Statistiche a partire da una certa data (YYYY-MM-DD)")
-    fun getKarma(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)  date: LocalDate = LocalDate.now()): List<Any> {
+    fun getKarma(@PathVariable("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) date: LocalDate = LocalDate.now()): List<Any> {
         return statsService.getStatsFromDate(date)
             .map {
                 object {
