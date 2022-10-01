@@ -6,7 +6,7 @@ plugins {
     application
     kotlin("jvm") version "1.6.20"
     kotlin("plugin.spring") version "1.6.20"
-    id("org.springframework.boot") version "2.7.3"
+    id("org.springframework.boot") version "2.7.4"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     id("com.github.ben-manes.versions") version "0.42.0"
 }
@@ -33,7 +33,7 @@ dependencies {
     implementation("org.springdoc", "springdoc-openapi-ui", "1.6.11")
     implementation("org.springdoc", "springdoc-openapi-kotlin", "1.6.11")
     implementation("org.springdoc", "springdoc-openapi-webmvc-core", "1.6.11")
-    implementation("org.knowm.xchart", "xchart", "3.8.1")
+    implementation("org.knowm.xchart", "xchart", "3.8.2")
     runtimeOnly("org.mariadb.jdbc", "mariadb-java-client")
     runtimeOnly("com.h2database", "h2")
     annotationProcessor("org.springframework.boot", "spring-boot-configuration-processor")
