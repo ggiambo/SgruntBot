@@ -4,7 +4,6 @@ import com.fdtheroes.sgruntbot.BotUtils.Companion.elseIfNull
 import org.springframework.stereotype.Service
 import java.time.DayOfWeek
 import java.time.LocalDate
-import java.time.Month
 
 @Service
 class StatsService(private val statsRepository: StatsRepository) {
@@ -42,10 +41,9 @@ class StatsService(private val statsRepository: StatsRepository) {
         return aggregate(statsRepository.findStatsByStatDayBetween(beginOfMonth, LocalDate.now()))
     }
 
-    fun getStatsThisMonthByUserId(): Map<Long, List<Stats>> {
-        val beginOfMonth = LocalDate.now().withDayOfMonth(1)
-        return statsRepository.findStatsByStatDayBetween(beginOfMonth, LocalDate.now())
-            .groupBy { it.userId }
+    fun getStatsLastDays(days: Long): List<Stats> {
+        val startStatDay = LocalDate.now().minusDays(days)
+        return statsRepository.findStatsByStatDayBetween(startStatDay, LocalDate.now())
     }
 
     fun getStatsThisYear(): List<Stats> {

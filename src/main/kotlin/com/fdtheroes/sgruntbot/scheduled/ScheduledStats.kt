@@ -54,8 +54,9 @@ class ScheduledStats(
 
     inner class PublishStats : TimerTask() {
         override fun run() {
-            val statsThisMonthByUserId = statsService.getStatsThisMonthByUserId()
-            val inputFile = getStatsInputFile(statsThisMonthByUserId)
+            val statsLast15Days = statsService.getStatsLastDays(15)
+                .groupBy { it.userId }
+            val inputFile = getStatsInputFile(statsLast15Days)
 
             val sendPhoto = SendPhoto()
             sendPhoto.chatId = botConfig.chatId
