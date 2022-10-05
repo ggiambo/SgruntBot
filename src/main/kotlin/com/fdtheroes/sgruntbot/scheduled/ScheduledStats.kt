@@ -42,7 +42,7 @@ class ScheduledStats(
     fun start() {
         chart.styler.theme = GGPlot2Theme()
         chart.styler.seriesColors = ChartUtils.seriesColors
-        chart.title = "Logorroici di questo mese"
+        chart.title = "Logorroici degli ultimi 15 giorni"
         chart.styler.theme = GGPlot2Theme()
         chart.styler.isToolTipsEnabled = false
         chart.styler.seriesColors = ChartUtils.seriesColors
