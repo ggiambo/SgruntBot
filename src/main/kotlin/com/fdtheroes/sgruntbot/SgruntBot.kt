@@ -14,6 +14,8 @@ interface SgruntBot {
 
     fun rispondi(message: Message, textmd: String)
 
+    fun cancella(message: Message)
+
     fun <T : Serializable, M : BotApiMethod<T>> rispondi(message: M): CompletableFuture<T>?
 
     fun rispondi(sendAudio: SendAudio): CompletableFuture<Message>

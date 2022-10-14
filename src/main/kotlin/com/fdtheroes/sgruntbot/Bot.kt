@@ -14,6 +14,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendAudio
 import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.DeleteMessage
 import org.telegram.telegrambots.meta.api.objects.Message
 import org.telegram.telegrambots.meta.api.objects.Update
 import org.telegram.telegrambots.meta.api.objects.User
@@ -99,6 +100,13 @@ class Bot(
         reply.parseMode = ParseMode.HTML
         reply.text = textmd
         rispondi(reply)
+    }
+
+    override fun cancella(message: Message) {
+        val deleteMessage = DeleteMessage()
+        deleteMessage.chatId = message.chatId.toString()
+        deleteMessage.messageId = message.messageId
+        rispondi(deleteMessage)
     }
 
     override fun <T : Serializable, M : BotApiMethod<T>> rispondi(message: M): CompletableFuture<T>? {

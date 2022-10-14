@@ -2,6 +2,7 @@ package com.fdtheroes.sgruntbot.actions.persistence
 
 import com.fdtheroes.sgruntbot.BotUtils.Companion.elseIfNull
 import org.springframework.stereotype.Service
+import org.telegram.telegrambots.meta.api.objects.User
 import java.time.DayOfWeek
 import java.time.LocalDate
 
@@ -23,6 +24,14 @@ class StatsService(private val statsRepository: StatsRepository) {
 
     fun getStatsToday(): List<Stats> {
         return statsRepository.findStatsByStatDayBetween(LocalDate.now(), LocalDate.now())
+    }
+
+    fun getMessagesToday(user: User) : Int {
+        val stats = statsRepository.findStatsByStatDayBetweenAndUserId(LocalDate.now(), LocalDate.now(), user.id)
+        if (stats == null) {
+            return 0
+        }
+        return stats.messages
     }
 
     fun getStatsThisMonthByDay(): Map<Int, List<Stats>> {
