@@ -1,19 +1,21 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 group = "fdtheroes"
 version = "1.0-SNAPSHOT"
 description = "SgruntBot"
 
 plugins {
     application
-    kotlin("jvm") version "1.6.20"
-    kotlin("plugin.spring") version "1.6.20"
-    id("org.springframework.boot") version "2.7.4"
-    id("io.spring.dependency-management") version "1.0.11.RELEASE"
-    id("com.github.ben-manes.versions") version "0.42.0"
+    kotlin("jvm") version "1.7.10"
+    kotlin("plugin.spring") version "1.7.10"
+    id("org.springframework.boot") version "3.0.0-M5"
+    id("io.spring.dependency-management") version "1.0.14.RELEASE"
 }
 
 repositories {
     mavenLocal()
     mavenCentral()
+    maven { url = uri("https://repo.spring.io/milestone") }
 }
 
 configurations {
@@ -27,6 +29,7 @@ dependencies {
     implementation("org.springframework.boot", "spring-boot-starter-web")
     implementation("org.springframework.boot", "spring-boot-starter-cache")
     implementation("com.fasterxml.jackson.module", "jackson-module-kotlin")
+    implementation("org.jetbrains.kotlin", "kotlin-reflect")
     implementation("org.jetbrains.kotlin", "kotlin-stdlib-jdk8")
     implementation("org.telegram", "telegrambots", "6.1.0")
     implementation("org.jsoup", "jsoup", "1.15.3")
@@ -41,16 +44,13 @@ dependencies {
     testImplementation("org.mockito.kotlin", "mockito-kotlin", "4.0.0")
 }
 
-application {
-    mainClass.set("com.fdtheroes.sgruntbot.MainKt")
-}
-
-tasks.test {
-    useJUnitPlatform()
-    maxParallelForks = Runtime.getRuntime().availableProcessors()
-    testLogging {
-        events("passed", "skipped", "failed")
+tasks.withType<KotlinCompile> {
+    kotlinOptions {
+        freeCompilerArgs = listOf("-Xjsr305=strict")
+        jvmTarget = "17"
     }
 }
 
-
+tasks.withType<Test> {
+    useJUnitPlatform()
+}

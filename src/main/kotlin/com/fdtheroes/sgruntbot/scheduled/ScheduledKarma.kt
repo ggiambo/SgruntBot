@@ -3,12 +3,12 @@ package com.fdtheroes.sgruntbot.scheduled
 import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.SgruntBot
 import com.fdtheroes.sgruntbot.actions.persistence.KarmaService
+import jakarta.annotation.PostConstruct
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.methods.ParseMode
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import java.util.*
 import java.util.concurrent.TimeUnit
-import javax.annotation.PostConstruct
 
 @Service
 class ScheduledKarma(

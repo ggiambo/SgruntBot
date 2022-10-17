@@ -8,6 +8,7 @@ import com.fdtheroes.sgruntbot.ChartUtils.getAsInputFile
 import com.fdtheroes.sgruntbot.SgruntBot
 import com.fdtheroes.sgruntbot.actions.persistence.Stats
 import com.fdtheroes.sgruntbot.actions.persistence.StatsService
+import jakarta.annotation.PostConstruct
 import org.knowm.xchart.XYChart
 import org.knowm.xchart.style.theme.GGPlot2Theme
 import org.springframework.stereotype.Service
@@ -17,7 +18,6 @@ import org.telegram.telegrambots.meta.api.objects.InputFile
 import java.awt.BasicStroke
 import java.util.*
 import java.util.concurrent.TimeUnit
-import javax.annotation.PostConstruct
 
 @Service
 class ScheduledStats(
