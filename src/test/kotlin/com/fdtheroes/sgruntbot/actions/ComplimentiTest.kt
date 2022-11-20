@@ -39,7 +39,8 @@ class ComplimentiTest : BaseTest() {
 
         assertThat(botArguments).hasSize(1)
         val sendMessage = botArguments[0] as SendMessage
-        assertThat(sendMessage.text).isEqualTo("Ogni tanto ti dirò '' <3")
+        assertThat(sendMessage.text).isEqualTo("Ogni tanto ti dirò 'Complimento 1' <3")
+        assertThat(sendMessage.text).isEqualTo("Ogni tanto ti dirò 'Complimento 1' <3")
 
         verify(complimentoService, times(1)).get(argumentCaptor.capture())
         assertThat(argumentCaptor.firstValue).isEqualTo(1)
