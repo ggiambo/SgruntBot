@@ -19,3 +19,23 @@ create table if not exists stats
     constraint user_id_stat_day_uindex
         unique (user_id, stat_day)
 );
+
+create table if not exists complimenti
+(
+    user_id         int          not null,
+    complimento     varchar(255) not null,
+    primary key (user_id),
+    constraint user_id_uindex
+        unique (user_id)
+);
+
+/*
+create table if not exists complimenti
+(
+    user_id     int           not null,
+    complimento varchar2(255) not null,
+    primary key (user_id),
+    constraint user_id_complimenti_uindex
+        unique (user_id)
+);
+*/
