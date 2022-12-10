@@ -6,6 +6,7 @@ import com.fdtheroes.sgruntbot.ChartUtils.getAsInputFile
 import com.fdtheroes.sgruntbot.SgruntBot
 import com.fdtheroes.sgruntbot.actions.persistence.Stats
 import com.fdtheroes.sgruntbot.actions.persistence.StatsService
+import jakarta.annotation.PostConstruct
 import org.knowm.xchart.PieChart
 import org.knowm.xchart.style.PieStyler
 import org.knowm.xchart.style.theme.GGPlot2Theme
@@ -15,7 +16,6 @@ import org.telegram.telegrambots.meta.api.methods.ParseMode
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto
 import org.telegram.telegrambots.meta.api.objects.InputFile
 import org.telegram.telegrambots.meta.api.objects.Message
-import javax.annotation.PostConstruct
 
 @Lazy
 @Service

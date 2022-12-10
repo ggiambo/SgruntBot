@@ -2,6 +2,7 @@ package com.fdtheroes.sgruntbot.scheduled
 
 import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.SgruntBot
+import jakarta.annotation.PostConstruct
 import org.slf4j.LoggerFactory
 import org.telegram.telegrambots.meta.api.methods.ParseMode
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
@@ -10,7 +11,6 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 import java.util.*
-import javax.annotation.PostConstruct
 import kotlin.random.Random.Default.nextLong
 
 abstract class RandomScheduledAction(val sgruntBot: SgruntBot, val botConfig: BotConfig) {

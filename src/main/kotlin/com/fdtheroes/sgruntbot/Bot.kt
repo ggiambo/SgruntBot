@@ -1,6 +1,7 @@
 package com.fdtheroes.sgruntbot
 
 import com.fdtheroes.sgruntbot.actions.Action
+import jakarta.annotation.PostConstruct
 import org.slf4j.LoggerFactory
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
@@ -21,7 +22,6 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession
 import java.io.Serializable
 import java.time.LocalDateTime
 import java.util.concurrent.CompletableFuture
-import javax.annotation.PostConstruct
 import kotlin.concurrent.thread
 import kotlin.random.Random
 import kotlin.random.Random.Default.nextInt
