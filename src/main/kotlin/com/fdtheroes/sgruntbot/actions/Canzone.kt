@@ -33,8 +33,10 @@ class Canzone : Action, HasHalp {
     override fun doAction(message: Message, sgruntBot: SgruntBot) {
         val canzone = regex.find(message.text)?.groupValues?.get(1)
         if (canzone != null) {
-            sgruntBot.rispondi(SendChatAction(message.chat.id.toString(), ActionType.UPLOADDOCUMENT.toString()))
-
+            val sendChatAction = SendChatAction()
+            sendChatAction.setChatId(message.chatId)
+            sendChatAction.setAction(ActionType.UPLOADDOCUMENT)
+            sgruntBot.rispondi(sendChatAction)
             val fileName = fetch(canzone)
             if (fileName == null) {
                 sgruntBot.rispondi(message, "Non ci riesco.")

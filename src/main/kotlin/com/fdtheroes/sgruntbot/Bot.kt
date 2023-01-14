@@ -89,7 +89,7 @@ class Bot(
 
     override fun rispondi(message: Message, textmd: String) {
         val sendChatAction = SendChatAction()
-        sendChatAction.chatId = message.chatId.toString()
+        sendChatAction.setChatId(message.chatId)
         sendChatAction.setAction(ActionType.TYPING)
         rispondi(sendChatAction)
         sleep(3..5)
