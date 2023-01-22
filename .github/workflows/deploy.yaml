@@ -1,12 +1,20 @@
 name: Deploy SgruntBot
+
 on:
   workflow_dispatch
-jobs:
 
+jobs:
   build:
-    name: Build
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+      - name: Increase Patch version
+        run: ./gradlew incrementVersion --versionIncrementType=PATCH
+      - name: Commit & Push changes
+        uses: actions-js/push@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          message: Update PATCH Version [skip actions]
       - name: Pull, build and restart SgruntBot
         uses: appleboy/ssh-action@master
         with:
