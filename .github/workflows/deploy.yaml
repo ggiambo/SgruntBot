@@ -15,12 +15,15 @@ jobs:
           distribution: 'temurin'
           cache: 'gradle'
       - name: Increase Patch version
-        run: ./gradlew incrementVersion --versionIncrementType=PATCH
+        run: |
+          ./gradlew incrementVersion --versionIncrementType=PATCH
+          echo "SGRUNT_VERSION=$(./gradlew printVersion | grep "Version:" | awk '{print $2}')" >> $GITHUB_ENV
       - name: Commit & Push changes
         uses: actions-js/push@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          message: Update PATCH Version [skip actions]
+          message: Update PATCH Version to ${{ env.SGRUNT_VERSION }} [skip actions]
+          branch: master
       - name: Pull, build and restart SgruntBot
         uses: appleboy/ssh-action@master
         with:
@@ -32,4 +35,4 @@ jobs:
             git pull
             kill "$(cat run.pid)"
             ./gradlew bootJar
-            nohup java -jar build/libs/sgruntbot-1.0-SNAPSHOT.jar > out.log 2>error.log & echo $! > run.pid
+            nohup java -jar build/libs/sgruntbot-${{ env.SGRUNT_VERSION }}.jar > out.log 2>error.log & echo $! > run.pid
