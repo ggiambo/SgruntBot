@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 group = "fdtheroes"
-version = "1.0-SNAPSHOT"
+version = "1.0.0"
 description = "SgruntBot"
 
 plugins {
@@ -11,6 +11,7 @@ plugins {
     id("org.springframework.boot") version "3.0.1"
     id("io.spring.dependency-management") version "1.1.0"
     id("com.github.ben-manes.versions") version "0.44.0"
+    id("com.dipien.semantic-version") version "1.0.0"
 }
 
 repositories {
@@ -42,6 +43,10 @@ dependencies {
     annotationProcessor("org.springframework.boot", "spring-boot-configuration-processor")
     testImplementation("org.springframework.boot", "spring-boot-starter-test")
     testImplementation("org.mockito.kotlin", "mockito-kotlin", "4.1.0")
+}
+
+springBoot {
+    buildInfo()
 }
 
 tasks.withType<KotlinCompile> {
