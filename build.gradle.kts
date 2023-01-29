@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 group = "fdtheroes"
-version = "1.0.1"
+version = "1.0.2"
 description = "SgruntBot"
 
 plugins {
