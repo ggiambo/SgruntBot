@@ -15,7 +15,7 @@ jobs:
           distribution: 'temurin'
           cache: 'gradle'
       - name: Increase Patch version
-        run: ./gradlew incrementVersion --versionIncrementType=PATCH
+        run: ./gradlew incrementSemanticVersion --patch
       - name: Commit & Push changes
         uses: actions-js/push@master
         with:
