@@ -31,7 +31,7 @@ class Bot(
     private val botConfig: BotConfig,
     private val botUtils: BotUtils,
     private val actions: List<Action>,
-) : TelegramLongPollingBot(botConfig.defaultBotOptions), SgruntBot {
+) : TelegramLongPollingBot(botConfig.defaultBotOptions, botConfig.token), SgruntBot {
 
     private val log = LoggerFactory.getLogger(this.javaClass)
     private val lastAuthorRegex = Regex("^!last\$", RegexOption.IGNORE_CASE)
@@ -40,10 +40,6 @@ class Bot(
     fun postConstruct() {
         TelegramBotsApi(DefaultBotSession::class.java).registerBot(this)
         log.info("Sono partito!")
-    }
-
-    override fun getBotToken(): String {
-        return botConfig.token
     }
 
     override fun getBotUsername(): String {
