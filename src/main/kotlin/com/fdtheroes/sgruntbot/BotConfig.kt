@@ -24,8 +24,8 @@ class BotConfig(
     var pignolo: Boolean = false
     var pausedTime: LocalDateTime? = null
 
-    private fun getDefaultBotOptions(proxy: String?): DefaultBotOptions {
-        if (proxy.isNullOrEmpty()) {
+    private fun getDefaultBotOptions(proxy: String): DefaultBotOptions {
+        if (proxy.isEmpty()) {
             return DefaultBotOptions()
         }
         val uri = URI(proxy)
