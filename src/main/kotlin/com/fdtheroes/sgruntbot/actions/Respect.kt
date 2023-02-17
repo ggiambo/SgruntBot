@@ -6,9 +6,12 @@ import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.Message
 
 @Service
-class Respect(private val botUtils: BotUtils) : Action, HasHalp {
+class Respect(
+    sgruntBot: SgruntBot,
+    private val botUtils: BotUtils
+) : Action(sgruntBot), HasHalp {
 
-    override fun doAction(message: Message, sgruntBot: SgruntBot) {
+    override fun doAction(message: Message) {
         val don = message.replyToMessage?.from
         if (message.text == "F" && don != null) {
             sgruntBot.rispondi(message.replyToMessage, "Baciamo le mani Don ${botUtils.getUserLink(don)}")

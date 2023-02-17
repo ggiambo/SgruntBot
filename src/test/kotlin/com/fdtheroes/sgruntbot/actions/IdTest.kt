@@ -9,11 +9,11 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 internal class IdTest : BaseTest() {
 
-    private val id = Id()
+    private val id = Id(sgruntBot)
 
     @Test
     fun testPositive() {
-        id.doAction(message("!id"), sgruntBot)
+        id.doAction(message("!id"))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction

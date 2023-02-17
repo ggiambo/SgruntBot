@@ -9,11 +9,11 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 internal class GoogleTest : BaseTest() {
 
-    private val google = Google()
+    private val google = Google(sgruntBot)
 
     @Test
     fun testPositive() {
-        google.doAction(message("!google Sgrunt bot"), sgruntBot)
+        google.doAction(message("!google Sgrunt bot"))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction

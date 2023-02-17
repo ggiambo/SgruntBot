@@ -10,11 +10,11 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 internal class CoccolinoTest : BaseTest() {
 
-    private val coccolino = Coccolino()
+    private val coccolino = Coccolino(sgruntBot)
 
     @Test
     fun testPositive_1() {
-        coccolino.doAction(message("coccolo", from = user(id = Users.SUORA.id)), sgruntBot)
+        coccolino.doAction(message("coccolo", from = user(id = Users.SUORA.id)))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -25,7 +25,7 @@ internal class CoccolinoTest : BaseTest() {
 
     @Test
     fun testPositive_2() {
-        coccolino.doAction(message("coccolino", from = user(id = Users.SUORA.id)), sgruntBot)
+        coccolino.doAction(message("coccolino", from = user(id = Users.SUORA.id)))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -36,7 +36,7 @@ internal class CoccolinoTest : BaseTest() {
 
     @Test
     fun testNegative() {
-        coccolino.doAction(message("coccolino", from = user(id = Users.GENGY.id)), sgruntBot)
+        coccolino.doAction(message("coccolino", from = user(id = Users.GENGY.id)))
 
         assertThat(botArguments).isEmpty()
     }

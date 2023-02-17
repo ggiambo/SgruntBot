@@ -6,11 +6,11 @@ import org.telegram.telegrambots.meta.api.objects.Message
 import kotlin.random.Random.Default.nextBoolean
 
 @Service
-class Bellissim : Action {
+class Bellissim(sgruntBot: SgruntBot) : Action(sgruntBot) {
 
     private val regex = Regex("bellissim", RegexOption.IGNORE_CASE)
 
-    override fun doAction(message: Message, sgruntBot: SgruntBot) {
+    override fun doAction(message: Message) {
         if (regex.containsMatchIn(message.text)) {
             if (nextBoolean()) {
                 sgruntBot.rispondi(message, "IO sono bellissimo! .... anzi stupendo! fantastico! eccezionale!")

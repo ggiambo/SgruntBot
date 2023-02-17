@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 
 class RandomSloganTest : BaseTest() {
 
-    private val slogan = Slogan(botUtils)
+    private val slogan = Slogan(sgruntBot, botUtils)
     private val randomSlogan = RandomSlogan(slogan, sgruntBot, botConfig)
 
     @Test

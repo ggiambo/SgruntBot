@@ -5,11 +5,11 @@ import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.Message
 
 @Service
-class Fortune : Action, HasHalp {
+class Fortune(sgruntBot: SgruntBot) : Action(sgruntBot), HasHalp {
 
     private val regex = Regex("^!(fortune|quote)", RegexOption.IGNORE_CASE)
 
-    override fun doAction(message: Message, sgruntBot: SgruntBot) {
+    override fun doAction(message: Message) {
         if (regex.containsMatchIn(message.text)) {
             sgruntBot.rispondi(message, getFortune())
         }

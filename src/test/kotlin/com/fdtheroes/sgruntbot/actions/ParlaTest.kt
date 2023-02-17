@@ -7,11 +7,11 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 internal class ParlaTest : BaseTest() {
 
-    private val parla = Parla(botConfig)
+    private val parla = Parla(sgruntBot, botConfig)
 
     @Test
     fun testPositive() {
-        parla.doAction(message("!parla questo bot è stupendo!"), sgruntBot)
+        parla.doAction(message("!parla questo bot è stupendo!"))
 
         assertThat(botArguments).hasSize(1)
         val sendMessage = botArguments[0] as SendMessage

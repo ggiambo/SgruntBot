@@ -8,7 +8,7 @@ import org.telegram.telegrambots.meta.api.objects.Message
 import kotlin.random.Random.Default.nextInt
 
 @Service
-class Cazzate(private val botUtils: BotUtils) : Action {
+class Cazzate(sgruntBot: SgruntBot, private val botUtils: BotUtils) : Action(sgruntBot) {
 
     private val cazzate = listOf("cazzate", "stronzate", "stupidate", "boiate figliolo")
     private val rispondiGiambo = listOf(
@@ -18,7 +18,7 @@ class Cazzate(private val botUtils: BotUtils) : Action {
         "Giambo, tu si che sai parlare bene!",
     )
 
-    override fun doAction(message: Message, sgruntBot: SgruntBot) {
+    override fun doAction(message: Message) {
         if (nextInt(200) == 0) {
             val fromId = message.from.id
             if (fromId == Users.GIAMBO.id) {

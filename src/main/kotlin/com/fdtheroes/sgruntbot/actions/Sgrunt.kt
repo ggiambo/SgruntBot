@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.Message
 
 @Service
-class Sgrunt : Action {
+class Sgrunt(sgruntBot: SgruntBot) : Action(sgruntBot) {
 
     private val regex = Regex("^sgrunt(bot|y|olino|olomeo)", RegexOption.IGNORE_CASE)
     private val reply = listOf(
@@ -17,7 +17,7 @@ class Sgrunt : Action {
         "Sgru' che... smuà!"
     )
 
-    override fun doAction(message: Message, sgruntBot: SgruntBot) {
+    override fun doAction(message: Message) {
         if (regex.containsMatchIn(message.text)) {
             val user = Users.byId(message.from.id)
             if (user == Users.SUORA) {

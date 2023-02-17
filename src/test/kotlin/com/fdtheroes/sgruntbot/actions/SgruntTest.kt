@@ -10,11 +10,11 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 internal class SgruntTest : BaseTest() {
 
-    private val sgrunt = Sgrunt()
+    private val sgrunt = Sgrunt(sgruntBot)
 
     @Test
     fun testPositive() {
-        sgrunt.doAction(message("sgrunty"), sgruntBot)
+        sgrunt.doAction(message("sgrunty"))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -25,7 +25,7 @@ internal class SgruntTest : BaseTest() {
 
     @Test
     fun testPositive_1() {
-        sgrunt.doAction(message(text = "sgruntbot", from = user(id = Users.SUORA.id)), sgruntBot)
+        sgrunt.doAction(message(text = "sgruntbot", from = user(id = Users.SUORA.id)))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction

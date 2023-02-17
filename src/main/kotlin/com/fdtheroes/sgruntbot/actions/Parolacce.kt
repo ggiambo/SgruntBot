@@ -7,14 +7,18 @@ import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.Message
 
 @Service
-class Parolacce(private val botUtils: BotUtils, private val botConfig: BotConfig) : Action {
+class Parolacce(
+    sgruntBot: SgruntBot,
+    private val botUtils: BotUtils,
+    private val botConfig: BotConfig
+) : Action(sgruntBot) {
 
     private val regex = Regex(
         "[ck]a[tz]z[io]|[ck]ulo|\\bfica\\b|vaffanculo|stronz[aoie]|coglion[aei]|merda",
         RegexOption.IGNORE_CASE
     )
 
-    override fun doAction(message: Message, sgruntBot: SgruntBot) {
+    override fun doAction(message: Message) {
         if (botConfig.pignolo && regex.containsMatchIn(message.text)) {
             val userLink = botUtils.getUserLink(message.from)
             sgruntBot.rispondi(message, getTesto(userLink))

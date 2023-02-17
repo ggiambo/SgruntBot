@@ -8,11 +8,15 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import org.telegram.telegrambots.meta.api.objects.Message
 
 @Service
-class Last(private val slogan: Slogan, private val botConfig: BotConfig) : Action, HasHalp {
+class Last(
+    sgruntBot: SgruntBot,
+    private val slogan: Slogan,
+    private val botConfig: BotConfig
+) : Action(sgruntBot), HasHalp {
 
     private val regex = Regex("^!last\$", RegexOption.IGNORE_CASE)
 
-    override fun doAction(message: Message, sgruntBot: SgruntBot) {
+    override fun doAction(message: Message) {
         if (regex.matches(message.text) && botConfig.lastAuthor != null) {
             val sendMessage = SendMessage()
             sendMessage.chatId = message.chatId.toString()

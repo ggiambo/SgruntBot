@@ -10,13 +10,13 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 internal class ParolacceTest : BaseTest() {
 
-    private val parolacce = Parolacce(botUtils, botConfig)
+    private val parolacce = Parolacce(sgruntBot, botUtils, botConfig)
 
     @ParameterizedTest
     @ValueSource(strings = ["cazzone", "culona", " fica ", "stronzi", "merdah!"])
     fun testPositive(parolaccia: String) {
         botConfig.pignolo = true
-        parolacce.doAction(message("blah banf $parolaccia yadda yadda"), sgruntBot)
+        parolacce.doAction(message("blah banf $parolaccia yadda yadda"))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction

@@ -3,9 +3,9 @@ package com.fdtheroes.sgruntbot.scheduled
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.BotUtils
-import com.fdtheroes.sgruntbot.SgruntBot
 import org.springframework.stereotype.Service
 import com.fdtheroes.sgruntbot.BotUtils.Companion.length
+import com.fdtheroes.sgruntbot.SgruntBot
 
 @Service
 class RandomImgur(

@@ -9,12 +9,12 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 internal class PorcaMadonnaTest : BaseTest() {
 
-    private val porcaMadonna = PorcaMadonna(botConfig)
+    private val porcaMadonna = PorcaMadonna(sgruntBot, botConfig)
 
     @Test
     fun testPositive() {
         botConfig.pignolo = true
-        porcaMadonna.doAction(message(("\tporca madonna")), sgruntBot)
+        porcaMadonna.doAction(message(("\tporca madonna")))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -25,7 +25,7 @@ internal class PorcaMadonnaTest : BaseTest() {
 
     @Test
     fun testNegative() {
-        porcaMadonna.doAction(message(("copporca madonna ")), sgruntBot)
+        porcaMadonna.doAction(message(("copporca madonna ")))
 
         assertThat(botArguments).isEmpty()
     }

@@ -16,9 +16,9 @@ internal class KarmaTest : BaseTest() {
 
     @Test
     fun testGetKarma() {
-        val karma = Karma(botUtils, karmaService(0, 99))
+        val karma = Karma(sgruntBot, botUtils, karmaService(0, 99))
 
-        karma.doAction(message("!karma"), sgruntBot)
+        karma.doAction(message("!karma"))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -31,10 +31,10 @@ internal class KarmaTest : BaseTest() {
 
     @Test
     fun testKarmaPlus_self() {
-        val karma = Karma(botUtils, karmaService(0, 99))
+        val karma = Karma(sgruntBot, botUtils, karmaService(0, 99))
 
         val replyToMessage = message("Message")
-        karma.doAction(message("+", replyToMessage = replyToMessage), sgruntBot)
+        karma.doAction(message("+", replyToMessage = replyToMessage))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -45,10 +45,10 @@ internal class KarmaTest : BaseTest() {
 
     @Test
     fun testKarmaPlus_noCredit() {
-        val karma = Karma(botUtils, karmaService(0, 99))
+        val karma = Karma(sgruntBot, botUtils, karmaService(0, 99))
 
         val replyToMessage = message("Message", user(Users.DADA))
-        karma.doAction(message("+", replyToMessage = replyToMessage), sgruntBot)
+        karma.doAction(message("+", replyToMessage = replyToMessage))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -59,10 +59,10 @@ internal class KarmaTest : BaseTest() {
 
     @Test
     fun testKarmaPlus() {
-        val karma = Karma(botUtils, karmaService(10, 99))
+        val karma = Karma(sgruntBot, botUtils, karmaService(10, 99))
 
         val replyToMessage = message("Message", user(Users.DADA))
-        karma.doAction(message("+", replyToMessage = replyToMessage), sgruntBot)
+        karma.doAction(message("+", replyToMessage = replyToMessage))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -74,10 +74,10 @@ Crediti di <a href="tg://user?id=42">Pippo</a>: 10""")
 
     @Test
     fun testKarmaMinus_self() {
-        val karma = Karma(botUtils, karmaService(0, 99))
+        val karma = Karma(sgruntBot, botUtils, karmaService(0, 99))
 
         val replyToMessage = message("Message")
-        karma.doAction(message("-", replyToMessage = replyToMessage), sgruntBot)
+        karma.doAction(message("-", replyToMessage = replyToMessage))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -89,10 +89,10 @@ Crediti di <a href="tg://user?id=42">Pippo</a>: 10""")
 
     @Test
     fun testKarmaMinus_noCredit() {
-        val karma = Karma(botUtils, karmaService(0, 99))
+        val karma = Karma(sgruntBot, botUtils, karmaService(0, 99))
 
         val replyToMessage = message("Message", user(Users.DADA))
-        karma.doAction(message("-", replyToMessage = replyToMessage), sgruntBot)
+        karma.doAction(message("-", replyToMessage = replyToMessage))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -104,10 +104,10 @@ Crediti di <a href="tg://user?id=42">Pippo</a>: 10""")
 
     @Test
     fun testKarmaMinus() {
-        val karma = Karma(botUtils, karmaService(10, 99))
+        val karma = Karma(sgruntBot, botUtils, karmaService(10, 99))
 
         val replyToMessage = message("Message", user(Users.DADA))
-        karma.doAction(message("-", replyToMessage = replyToMessage), sgruntBot)
+        karma.doAction(message("-", replyToMessage = replyToMessage))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction

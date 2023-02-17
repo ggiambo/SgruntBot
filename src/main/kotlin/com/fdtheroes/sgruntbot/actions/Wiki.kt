@@ -8,14 +8,19 @@ import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.Message
 
 @Service
-class Wiki(private val botUtils: BotUtils, val mapper: ObjectMapper) : Action, HasHalp {
+class Wiki(
+    sgruntBot: SgruntBot,
+    private val botUtils: BotUtils,
+    val mapper: ObjectMapper
+) : Action(sgruntBot), HasHalp {
 
     private val regex = Regex("^!wiki (.*)$", RegexOption.IGNORE_CASE)
 
     private val URL_titleAndURL = "https://it.wikipedia.org/w/api.php?action=opensearch&profile=fuzzy&search=%s"
-    private val URL_extract = "https://it.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=%s"
+    private val URL_extract =
+        "https://it.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=%s"
 
-    override fun doAction(message: Message, sgruntBot: SgruntBot) {
+    override fun doAction(message: Message) {
         val query = regex.find(message.text)?.groupValues?.get(1)
         if (query != null) {
             val titleAndURL = getTitleAndURL(query.urlEncode())

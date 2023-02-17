@@ -9,11 +9,11 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 internal class FortuneTest : BaseTest() {
 
-    private val fortune = Fortune()
+    private val fortune = Fortune(sgruntBot)
 
     @Test
     fun testPositive() {
-        fortune.doAction(message("!fortune"), sgruntBot)
+        fortune.doAction(message("!fortune"))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -24,7 +24,7 @@ internal class FortuneTest : BaseTest() {
 
     @Test
     fun testPositive_2() {
-        fortune.doAction(message("!quote"), sgruntBot)
+        fortune.doAction(message("!quote"))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction

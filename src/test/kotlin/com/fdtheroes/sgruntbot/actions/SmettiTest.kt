@@ -11,12 +11,12 @@ import java.time.LocalDateTime
 
 internal class SmettiTest : BaseTest() {
 
-    private val smetti = Smetti(botConfig)
+    private val smetti = Smetti(sgruntBot, botConfig)
 
     @ParameterizedTest
     @ValueSource(strings = ["sgrunty ora smetti", "sgruntbot smettila", "@sgrunty smetti!"])
     fun testPositive(message: String) {
-        smetti.doAction(message(message), sgruntBot)
+        smetti.doAction(message(message))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction

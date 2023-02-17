@@ -8,8 +8,9 @@ import kotlin.random.Random
 
 @Service
 class Logorroico(
+    sgruntBot: SgruntBot,
     private val botUtils: BotUtils,
-) : Action {
+) : Action(sgruntBot) {
 
 
     private val risposte = listOf(
@@ -26,7 +27,7 @@ class Logorroico(
     var lastAuthorId: Long = 0L
     var lastAuthorCount = 0
 
-    override fun doAction(message: Message, sgruntBot: SgruntBot) {
+    override fun doAction(message: Message) {
         if (!botUtils.isMessageInChat(message)) {
             return
         }

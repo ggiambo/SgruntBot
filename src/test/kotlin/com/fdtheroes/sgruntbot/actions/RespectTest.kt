@@ -10,7 +10,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 internal class RespectTest : BaseTest() {
 
-    private val respect = Respect(botUtils)
+    private val respect = Respect(sgruntBot, botUtils)
 
     @Test
     fun testPositive() {
@@ -18,8 +18,7 @@ internal class RespectTest : BaseTest() {
             message(
                 text = "F",
                 replyToMessage = message(text = "whatever", from = user(id = Users.AVVE.id, userName = "AvveFaTutti"))
-            ),
-            sgruntBot
+            )
         )
 
         Assertions.assertThat(botArguments).hasSize(2)
@@ -32,7 +31,7 @@ internal class RespectTest : BaseTest() {
 
     @Test
     fun testNegative() {
-        respect.doAction(message("F..anculo"), sgruntBot)
+        respect.doAction(message("F..anculo"))
 
         Assertions.assertThat(botArguments).isEmpty()
     }

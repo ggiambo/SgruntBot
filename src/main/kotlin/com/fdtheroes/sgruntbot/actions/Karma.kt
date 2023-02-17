@@ -9,11 +9,12 @@ import kotlin.random.Random.Default.nextInt
 
 @Service
 class Karma(
+    sgruntBot: SgruntBot,
     private val botUtils: BotUtils,
     private val karmaService: KarmaService,
-) : Action, HasHalp {
+) : Action(sgruntBot), HasHalp {
 
-    override fun doAction(message: Message, sgruntBot: SgruntBot) {
+    override fun doAction(message: Message) {
         val ricevente = message.replyToMessage?.from?.id
         if (message.text == "+" && ricevente != null) {
             giveTakeKarma(message, sgruntBot, ricevente, Int::inc)

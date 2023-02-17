@@ -8,14 +8,17 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import org.telegram.telegrambots.meta.api.objects.Message
 
 @Service
-class ParlaSuper(private val botConfig: BotConfig) : Action, HasHalp {
+class ParlaSuper(
+    sgruntBot: SgruntBot,
+    private val botConfig: BotConfig
+) : Action(sgruntBot), HasHalp {
 
     private val regex = Regex(
         "^!parlasuper (.*)$",
         setOf(RegexOption.IGNORE_CASE, RegexOption.MULTILINE, RegexOption.DOT_MATCHES_ALL)
     )
 
-    override fun doAction(message: Message, sgruntBot: SgruntBot) {
+    override fun doAction(message: Message) {
         val testo = regex.find(message.text)?.groupValues?.get(1)
         if (testo != null && Users.byId(message.from.id) != null) {
             sgruntBot.rispondi(SendMessage(botConfig.chatId.toString(), testo))

@@ -24,6 +24,7 @@ internal class StatsTest : BaseTest() {
     )
 
     val stats = com.fdtheroes.sgruntbot.actions.Stats(
+        sgruntBot,
         mock {
             on { getStatsThisMonth() } doReturn (monthStats)
         },
@@ -33,8 +34,7 @@ internal class StatsTest : BaseTest() {
     @Test
     fun test_positive() {
         stats.doAction(
-            message("!stats"),
-            sgruntBot
+            message("!stats")
         )
 
         assertThat(botArguments).hasSize(1)

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 
 class RandomFortuneTest : BaseTest() {
 
-    private val fortune = Fortune()
+    private val fortune = Fortune(sgruntBot)
     private val randomFortune = RandomFortune(fortune, sgruntBot, botConfig)
 
     @Test

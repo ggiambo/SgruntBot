@@ -9,11 +9,11 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 internal class BellissimTest : BaseTest() {
 
-    private val bellissim = Bellissim()
+    private val bellissim = Bellissim(sgruntBot)
 
     @Test
     fun testPositive() {
-        bellissim.doAction(message(("XYZ_bEllISSimo_123")), sgruntBot)
+        bellissim.doAction(message(("XYZ_bEllISSimo_123")))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -24,7 +24,7 @@ internal class BellissimTest : BaseTest() {
 
     @Test
     fun testNegative() {
-        bellissim.doAction(message(("XYZ_quack_123")), sgruntBot)
+        bellissim.doAction(message(("XYZ_quack_123")))
 
         assertThat(botArguments).hasSize(0)
     }

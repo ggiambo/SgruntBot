@@ -6,11 +6,11 @@ import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.Message
 
 @Service
-class Coccolino : Action {
+class Coccolino(sgruntBot: SgruntBot) : Action(sgruntBot) {
 
     private val regex = Regex("coccol(o|ino)", RegexOption.IGNORE_CASE)
 
-    override fun doAction(message: Message, sgruntBot: SgruntBot) {
+    override fun doAction(message: Message) {
         if (regex.containsMatchIn(message.text)) {
             val user = Users.byId(message.from.id)
             if (user == Users.SUORA) {

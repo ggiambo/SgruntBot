@@ -20,9 +20,10 @@ import org.telegram.telegrambots.meta.api.objects.Message
 @Lazy
 @Service
 class Stats(
+    sgruntBot: SgruntBot,
     private val statsService: StatsService,
     private val botUtils: BotUtils,
-) : Action, HasHalp {
+) : Action(sgruntBot), HasHalp {
 
     private val regex = Regex("^!stats(.*)\$", RegexOption.IGNORE_CASE)
 
@@ -36,7 +37,7 @@ class Stats(
         pieChart.styler.seriesColors = ChartUtils.seriesColors
     }
 
-    override fun doAction(message: Message, sgruntBot: SgruntBot) {
+    override fun doAction(message: Message) {
         if (!botUtils.isMessageInChat(message)) {
             return
         }

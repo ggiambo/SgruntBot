@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.BeforeEach
 import org.mockito.kotlin.doAnswer
 import org.mockito.kotlin.isA
+import org.mockito.kotlin.mock
 import org.mockito.kotlin.spy
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod
 import org.telegram.telegrambots.meta.api.methods.send.SendAudio
@@ -11,6 +12,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendPhoto
 import org.telegram.telegrambots.meta.api.objects.Chat
 import org.telegram.telegrambots.meta.api.objects.Message
 import org.telegram.telegrambots.meta.api.objects.User
+import org.telegram.telegrambots.meta.bots.AbsSender
 import java.io.Serializable
 import java.util.concurrent.CompletableFuture
 
@@ -32,7 +34,7 @@ open class BaseTest {
     val botUtils = BotUtils(botConfig)
     val mapper = ObjectMapper()
 
-    val sgruntBot: Bot = spy(Bot(botConfig, botUtils, emptyList())) {
+    val sgruntBot: SgruntBot = spy(SgruntBot(botConfig)) {
         onGeneric { rispondi(isA<BotApiMethod<Serializable>>()) } doAnswer {
             botArguments.add(it.arguments.first())
             CompletableFuture.completedFuture(message("done"))
