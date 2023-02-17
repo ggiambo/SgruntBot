@@ -19,11 +19,12 @@ class RandomCuloDiPapa(
         val banfata = Jsoup.parse(html)
         val contenitore = banfata.body()
             .select("div.content")
-            .select("div.left")
-            .select("div.b1")
+            .select("div.b2")
+            .select("div.b2")
+            .select("div.b2")
 
         val testo = contenitore
-            .select("span.v1")
+            .select("span.v2")
             .text()
 
         val autore = contenitore
