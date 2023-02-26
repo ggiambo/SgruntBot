@@ -66,6 +66,11 @@ class Karma(
             karmaMessage = karmaMessage.plus("\n\n$karmaRoulette")
         }
 
+        if (nextInt(5) == 0) { // 20%
+            val creditRoulette = creditRoulette(message)
+            karmaMessage = karmaMessage.plus("\n\n$creditRoulette")
+        }
+
         sgruntBot.rispondi(message, karmaMessage)
     }
 
@@ -74,6 +79,13 @@ class Karma(
         karmaService.takeGiveKarma(ricevente, newKarma)
         val karma = karmaService.getKarma(ricevente)
         return "<b>Karmaroulette</b> ! Il tuo Karma è ora di $karma"
+    }
+
+    private fun creditRoulette(message: Message): String {
+        val ricevente = message.from.id
+        karmaService.incCredit(ricevente)
+        val credit = karmaService.getKarmaCredit(ricevente)
+        return "<b>Creditroulette</b> ! Hai vinto un credito, ora sei a quota $credit"
     }
 
     fun testoKarmaReport(sgruntBot: SgruntBot): String {
