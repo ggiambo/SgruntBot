@@ -46,6 +46,12 @@ class KarmaService(
         repo.updateKarma(updatedKarma, ricevente)
     }
 
+    @Transactional
+    fun incCredit(ricevente: Long) {
+        val credit = repo.getKarmaCredit(ricevente)
+        repo.updateCredit(credit + 1, ricevente)
+    }
+
     fun getKarmas(): List<Pair<Long, Int>> {
         return repo.findAll().map {
             Pair(it.userId, it.karma)
