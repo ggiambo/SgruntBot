@@ -14,7 +14,7 @@ internal class SmettiTest : BaseTest() {
     private val smetti = Smetti(botConfig)
 
     @ParameterizedTest
-    @ValueSource(strings = ["sgrunty ora smetti", "sgruntbot smettila", "@sgrunty smetti!"])
+    @ValueSource(strings = ["sgrunty ora smetti", "sgruntbot smettila", "@sgrunty smetti!", "@BlahBanfBot smetti", "@BlahBanfBot smettila"])
     fun testPositive(message: String) {
         smetti.doAction(message(message), sgruntBot)
 
