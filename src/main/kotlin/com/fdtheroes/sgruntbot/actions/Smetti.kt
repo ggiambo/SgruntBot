@@ -9,7 +9,7 @@ import java.time.LocalDateTime
 @Service
 class Smetti(private val botConfig: BotConfig) : Action {
 
-    private val regex = Regex("^@?BlaBanfBot .*smetti.*", RegexOption.IGNORE_CASE)
+    private val regex = Regex("^@?(sgrunt(y|bot)|BlaBanfBot) .*smetti.*", RegexOption.IGNORE_CASE)
 
     override fun doAction(message: Message, sgruntBot: SgruntBot) {
         if (regex.containsMatchIn(message.text)) {
