@@ -1,17 +1,21 @@
 package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BotUtils
+import com.fdtheroes.sgruntbot.BotUtils.Companion.length
 import com.fdtheroes.sgruntbot.SgruntBot
-import com.fdtheroes.sgruntbot.Users
+import com.fdtheroes.sgruntbot.actions.persistence.KarmaService
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.Message
 import kotlin.random.Random.Default.nextInt
 
 @Service
-class Cazzate(private val botUtils: BotUtils) : Action {
+class Cazzate(
+    private val botUtils: BotUtils,
+    private val karmaService: KarmaService,
+) : Action {
 
-    private val cazzate = listOf("cazzate", "stronzate", "stupidate", "boiate figliolo")
-    private val rispondiGiambo = listOf(
+    private val insulti = listOf("cazzate", "stronzate", "stupidate", "boiate figliolo")
+    private val complimenti = listOf(
         "Amen, AMEN!",
         "Questa è una grande verità",
         "WOW, non ci avevo mai pensato!",
@@ -20,17 +24,32 @@ class Cazzate(private val botUtils: BotUtils) : Action {
 
     override fun doAction(message: Message, sgruntBot: SgruntBot) {
         if (nextInt(200) == 0) {
-            val fromId = message.from.id
-            if (fromId == Users.GIAMBO.id) {
-                sgruntBot.rispondi(message, rispondiGiambo.random())
+            if (riceveComplimento(message.from.id)) {
+                complimenta(message, sgruntBot)
             } else {
-                if (nextInt(5) == 0) {
-                    val userName = botUtils.getUserName(sgruntBot.getChatMember(fromId))
-                    sgruntBot.rispondi(message, "Ma chiudi il becco, $userName!")
-                } else {
-                    sgruntBot.rispondi(message, "Ma la smetti di dire ${cazzate.random()}?")
-                }
+                insulta(message, sgruntBot)
             }
+        }
+    }
+
+    // decide se complimentare o insultare a seconda del karma
+    private fun riceveComplimento(userId: Long): Boolean {
+        val karmas = karmaService.getKarmas().map { it.second }
+        val mediaKarma = karmas.sum() / karmas.length()
+        val userKarma = karmaService.getKarma(userId)
+        return userKarma > mediaKarma
+    }
+
+    private fun complimenta(message: Message, sgruntBot: SgruntBot) {
+        sgruntBot.rispondi(message, complimenti.random())
+    }
+
+    private fun insulta(message: Message, sgruntBot: SgruntBot) {
+        if (nextInt(5) == 0) {
+            val userName = botUtils.getUserName(sgruntBot.getChatMember(message.from.id))
+            sgruntBot.rispondi(message, "Ma chiudi il becco, $userName!")
+        } else {
+            sgruntBot.rispondi(message, "Ma la smetti di dire ${insulti.random()}?")
         }
     }
 
