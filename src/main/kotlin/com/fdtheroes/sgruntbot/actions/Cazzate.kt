@@ -1,12 +1,12 @@
 package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BotUtils
-import com.fdtheroes.sgruntbot.BotUtils.Companion.length
 import com.fdtheroes.sgruntbot.SgruntBot
 import com.fdtheroes.sgruntbot.actions.persistence.KarmaService
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.Message
 import kotlin.random.Random.Default.nextInt
+import kotlin.random.Random.Default.nextLong
 
 @Service
 class Cazzate(
@@ -14,12 +14,12 @@ class Cazzate(
     private val karmaService: KarmaService,
 ) : Action {
 
-    private val insulti = listOf("cazzate", "stronzate", "stupidate", "boiate figliolo")
+    private val insulti = listOf("cazzate", "stronzate", "stupidate", "boiate figliuolo")
     private val complimenti = listOf(
         "Amen, AMEN!",
         "Questa è una grande verità",
         "WOW, non ci avevo mai pensato!",
-        "Giambo, tu si che sai parlare bene!",
+        "Stai zitto e baciami, ora!",
     )
 
     override fun doAction(message: Message, sgruntBot: SgruntBot) {
@@ -35,9 +35,10 @@ class Cazzate(
     // decide se complimentare o insultare a seconda del karma
     private fun riceveComplimento(userId: Long): Boolean {
         val karmas = karmaService.getKarmas().map { it.second }
-        val mediaKarma = karmas.sum() / karmas.length()
+        val maxKarma = karmas.max()
+        val minKarma = karmas.min()
         val userKarma = karmaService.getKarma(userId)
-        return userKarma > mediaKarma
+        return nextInt(minKarma, maxKarma) < userKarma
     }
 
     private fun complimenta(message: Message, sgruntBot: SgruntBot) {
