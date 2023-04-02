@@ -6,7 +6,6 @@ import com.fdtheroes.sgruntbot.actions.persistence.KarmaService
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.Message
 import kotlin.random.Random.Default.nextInt
-import kotlin.random.Random.Default.nextLong
 
 @Service
 class Cazzate(
@@ -23,7 +22,7 @@ class Cazzate(
     )
 
     override fun doAction(message: Message, sgruntBot: SgruntBot) {
-        if (nextInt(200) == 0) {
+        if (nextInt(100) == 0) {
             if (riceveComplimento(message.from.id)) {
                 complimenta(message, sgruntBot)
             } else {
