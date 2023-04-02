@@ -26,10 +26,10 @@ class Parolacce(private val botUtils: BotUtils, private val botConfig: BotConfig
             "$userLink non approvo il tuo linguaggio, tuttavia in uno sforzo congiunto nella direzione del benessere comune non sarò io a dirti cosa dire o meno, ma storcerò soltanto il naso.",
             "$userLink non dire parolacce!",
             "Ma dai $userLink, ci sono dei bambini!",
-            "Cosa mi tocca sentire! Pregherò per la tua anima",
+            "Cosa mi tocca sentire! $userLink, pregherò per la tua anima",
             "$userLink vai subito a lavarti la bocca col sapone!",
             "Gnbe gne $userLink specchio riflesso!",
-            "Un giovanotto come te che dice queste parole?!",
+            "Un giovanotto come $userLink che dice queste parole?!",
         ).random()
     }
 }
