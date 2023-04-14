@@ -22,7 +22,7 @@ class Cazzate(
     )
 
     override fun doAction(message: Message, sgruntBot: SgruntBot) {
-        if (nextInt(100) == 0) {
+        if (nextInt(150) == 0) {
             if (riceveComplimento(message.from.id)) {
                 complimenta(message, sgruntBot)
             } else {
