@@ -21,7 +21,8 @@ internal class SmettiTest : BaseTest() {
             "sgruntbot smettila",
             "blahbanf smettila",
             "@sgrunty smetti!",
-            "@blahbanfbot smetti!",
+            "@blahbanfbot smettilaaaa!",
+            "@sgrunt dismetti",
         ]
     )
     fun testPositive(message: String) {
@@ -38,8 +39,9 @@ internal class SmettiTest : BaseTest() {
     @ParameterizedTest
     @ValueSource(
         strings = [
+            "sgruntollo smetti",
             "sgruntavo sulle colline",
-            "sgruntsmetti"
+            "sgruntsmetti",
         ]
     )
     fun testNegative(message: String) {
