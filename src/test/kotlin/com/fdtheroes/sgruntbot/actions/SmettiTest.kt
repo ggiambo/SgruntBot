@@ -16,9 +16,13 @@ internal class SmettiTest : BaseTest() {
     @ParameterizedTest
     @ValueSource(
         strings = [
-            "sgrunty ora smetti", "blahbanfbot ora smetti",
-            "sgruntbot smettila", "blahbanf smettila",
-            "@sgrunty smetti!", "@blahbanfbot smetti!",
+            "sgrunty ora smetti",
+            "blahbanfbot ora smetti",
+            "sgruntbot smettila",
+            "blahbanf smettila",
+            "@sgrunty smetti!",
+            "@blahbanfbot smettilaaaa!",
+            "@sgrunt dismetti",
         ]
     )
     fun testPositive(message: String) {
@@ -30,6 +34,20 @@ internal class SmettiTest : BaseTest() {
         assertThat(sendChatAction.actionType).isEqualTo(ActionType.TYPING)
         assertThat(sendMessage.text).isEqualTo("Ok, sto zitto 5 minuti. :(")
         assertThat(botConfig.pausedTime?.isAfter(LocalDateTime.now()))
+    }
+
+    @ParameterizedTest
+    @ValueSource(
+        strings = [
+            "sgruntollo smetti",
+            "sgruntavo sulle colline",
+            "sgruntsmetti",
+        ]
+    )
+    fun testNegative(message: String) {
+        smetti.doAction(message(message), sgruntBot)
+
+        assertThat(botArguments).hasSize(0)
     }
 
 }
