@@ -3,6 +3,7 @@ package com.fdtheroes.sgruntbot.actions
 import com.fdtheroes.sgruntbot.SgruntBot
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.Message
+import kotlin.random.Random
 import kotlin.random.Random.Default.nextBoolean
 
 @Service
@@ -20,7 +21,9 @@ class Bellissim : Action {
 
     override fun doAction(message: Message, sgruntBot: SgruntBot) {
         if (regex.containsMatchIn(message.text)) {
-            sgruntBot.rispondi(message, risposte.random())
+            if (Random.nextInt(5) == 0) {
+                sgruntBot.rispondi(message, risposte.random())
+            }
         }
     }
 }
