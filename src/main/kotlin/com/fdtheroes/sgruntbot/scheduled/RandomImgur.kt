@@ -15,8 +15,10 @@ class RandomImgur(
     botConfig: BotConfig,
 ) : RandomScheduledAction(sgruntBot, botConfig) {
 
+    private val headers = listOf(Pair("Authorization", "Client-ID "))
+
     override fun getMessageText(): String{
-        val viral = botUtils.textFromURL("https://api.imgur.com/3/gallery/hot/viral/0.json")
+        val viral = botUtils.textFromURL("https://api.imgur.com/3/gallery/hot/viral/0.json", headers = headers)
         val randomEntry = mapper.readTree(viral)
             .get("data").asSequence()
             .filter { !it.get("title")?.textValue().isNullOrEmpty() }
