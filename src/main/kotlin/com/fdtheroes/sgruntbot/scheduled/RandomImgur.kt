@@ -15,7 +15,8 @@ class RandomImgur(
     botConfig: BotConfig,
 ) : RandomScheduledAction(sgruntBot, botConfig) {
 
-    private val headers = listOf(Pair("Authorization", "Client-ID "))
+    // fake Client-ID, is enough
+    private val headers = listOf(Pair("Authorization", "Client-ID 1234567890"))
 
     override fun getMessageText(): String{
         val viral = botUtils.textFromURL("https://api.imgur.com/3/gallery/hot/viral/0.json", headers = headers)
