@@ -24,9 +24,10 @@ open class BaseTest {
     val isLocalProxy = System.getenv()["SPRING_ACTIVE_PROFILE"] == "local-proxy"
 
     val botConfig: BotConfig = BotConfig(
-        chatId = "-9999",
-        telegramTokenFile = "dummyToken.txt",
-        proxy = if (isLocalProxy) "http://127.0.0.1:8888" else ""
+            chatId = "-9999",
+            telegramTokenFile = "dummyToken.txt",
+            imgUrClientIdFile = "dummyToken.txt",
+            proxy = if (isLocalProxy) "http://127.0.0.1:8888" else ""
     )
 
     val botUtils = BotUtils(botConfig)
@@ -56,9 +57,9 @@ open class BaseTest {
     }
 
     fun message(
-        text: String,
-        from: User = user(),
-        replyToMessage: Message? = null
+            text: String,
+            from: User = user(),
+            replyToMessage: Message? = null
     ): Message {
         return Message().apply {
             this.text = text

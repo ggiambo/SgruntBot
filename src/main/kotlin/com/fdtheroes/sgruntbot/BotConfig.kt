@@ -12,11 +12,13 @@ import java.time.LocalDateTime
 class BotConfig(
     @Value("\${sgruntbot.config.chat-id}") val chatId: String,
     @Value("\${sgruntbot.config.telegram-token-file}") telegramTokenFile: String,
+    @Value("\${sgruntbot.config.imgur-clientid-file}") imgUrClientIdFile: String,
     @Value("\${sgruntbot.config.proxy:}") proxy: String,
 ) {
 
     val botName = "SgruntBot"
     val token: String = File(telegramTokenFile).readText().trim()
+    val clientId: String = File(imgUrClientIdFile).readText().trim()
     val defaultBotOptions = getDefaultBotOptions(proxy)
 
     var lastSuper: User? = null
