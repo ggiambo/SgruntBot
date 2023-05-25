@@ -44,12 +44,13 @@ class BotUtils(private val botConfig: BotConfig) {
         return """<a href="tg://user?id=${user.id}">${name}</a>"""
     }
 
-    fun textFromURL(url: String, vararg params: String): String {
-        return URL(String.format(url, *params))
-            .openConnection(proxy)
-            .getInputStream()
-            .readAllBytes()
-            .decodeToString()
+    fun textFromURL(url: String, params: String? = null, headers: List<Pair<String, String>> = emptyList()): String {
+        return URL(String.format(url, params))
+                .openConnection(proxy)
+                .apply { headers.forEach { setRequestProperty(it.first, it.second) } }
+                .getInputStream()
+                .readAllBytes()
+                .decodeToString()
     }
 
     private fun initProxy(options: DefaultBotOptions): Proxy {
