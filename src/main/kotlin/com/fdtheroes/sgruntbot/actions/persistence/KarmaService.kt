@@ -68,7 +68,7 @@ class KarmaService(
 
     @Modifying
     private fun initKarmaData(forUserId: Long) {
-        repo.save(Karma(userId = forUserId))
+        repo.createKarma(Karma(userId = forUserId))
     }
 
     private fun getUserName(userId: Long, sgruntBot: SgruntBot): String {
