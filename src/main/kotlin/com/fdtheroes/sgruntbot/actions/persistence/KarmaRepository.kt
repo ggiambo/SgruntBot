@@ -3,6 +3,7 @@ package com.fdtheroes.sgruntbot.actions.persistence
 import org.springframework.data.jdbc.repository.query.Modifying
 import org.springframework.data.jdbc.repository.query.Query
 import org.springframework.data.repository.CrudRepository
+import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
 
@@ -12,6 +13,10 @@ interface KarmaRepository : CrudRepository<Karma, Long> {
     @Modifying
     @Query("update sgrunt.karma set sgrunt.karma.karma_credit = :updatedCredit where user_id = :userId")
     fun updateCredit(updatedCredit: Int, userId: Long)
+
+    @Modifying
+    @Query("insert into sgrunt.karma (user_id, karma, karma_credit, credit_updated) values (:#{#karma.userId}, :#{#karma.karma}, :#{#karma.karmaCredit}, :#{#karma.creditUpdated})")
+    fun createKarma(karma: Karma)
 
     @Query("select karma_credit from sgrunt.karma where user_id = :userId")
     fun getKarmaCredit(userId: Long): Int
