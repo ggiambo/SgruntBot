@@ -1,5 +1,6 @@
 package com.fdtheroes.sgruntbot.actions.persistence
 
+import com.fdtheroes.sgruntbot.actions.models.Stats
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.*

@@ -1,7 +1,7 @@
 package com.fdtheroes.sgruntbot.actions.persistence
 
 import com.fdtheroes.sgruntbot.BotUtils
-import com.fdtheroes.sgruntbot.SgruntBot
+import com.fdtheroes.sgruntbot.actions.models.Karma
 import org.springframework.data.jdbc.repository.query.Modifying
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service

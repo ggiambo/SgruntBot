@@ -5,8 +5,7 @@ import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.BotUtils.Companion.toDate
 import com.fdtheroes.sgruntbot.ChartUtils
 import com.fdtheroes.sgruntbot.ChartUtils.getAsInputFile
-import com.fdtheroes.sgruntbot.SgruntBot
-import com.fdtheroes.sgruntbot.actions.persistence.Stats
+import com.fdtheroes.sgruntbot.actions.models.Stats
 import com.fdtheroes.sgruntbot.actions.persistence.StatsService
 import jakarta.annotation.PostConstruct
 import org.knowm.xchart.XYChart

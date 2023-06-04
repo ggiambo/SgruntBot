@@ -1,7 +1,7 @@
 package com.fdtheroes.sgruntbot.actions
 
-import com.fdtheroes.sgruntbot.SgruntBot
 import com.fdtheroes.sgruntbot.Users
+import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.Message
 
@@ -17,13 +17,13 @@ class Sgrunt : Action {
         "Sgru' che... smuà!"
     )
 
-    override fun doAction(message: Message, sgruntBot: SgruntBot) {
+    override fun doAction(message: Message, doNext: (ActionResponse) -> Unit) {
         if (regex.containsMatchIn(message.text)) {
             val user = Users.byId(message.from.id)
             if (user == Users.SUORA) {
-                sgruntBot.rispondi(message, "Ciao papà!")
+                doNext(ActionResponse.message("Ciao papà!"))
             } else {
-                sgruntBot.rispondi(message, reply.random())
+                doNext(ActionResponse.message(reply.random()))
             }
         }
     }

@@ -4,6 +4,8 @@ import com.fdtheroes.sgruntbot.BaseTest
 import com.fdtheroes.sgruntbot.Users
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.telegram.telegrambots.meta.api.methods.ActionType
+import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 internal class SloganTest : BaseTest() {
@@ -14,8 +16,10 @@ internal class SloganTest : BaseTest() {
     fun testPositive() {
         slogan.doAction(message("!slogan la cacca molle"), sgruntBot)
 
-        assertThat(botArguments).hasSize(1)
-        val sendMessage = botArguments[0] as SendMessage
+        assertThat(botArguments).hasSize(2)
+        val sendChatAction = botArguments[0] as SendChatAction
+        val sendMessage = botArguments[1] as SendMessage
+        assertThat(sendChatAction.actionType).isEqualTo(ActionType.TYPING)
         assertThat(sendMessage.text).containsIgnoringCase("la cacca molle")
     }
 

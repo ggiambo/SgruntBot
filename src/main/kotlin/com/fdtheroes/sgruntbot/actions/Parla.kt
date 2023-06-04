@@ -1,7 +1,7 @@
 package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BotConfig
-import com.fdtheroes.sgruntbot.SgruntBot
+import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import org.telegram.telegrambots.meta.api.objects.Message
@@ -14,11 +14,10 @@ class Parla(private val botConfig: BotConfig) : Action, HasHalp {
         setOf(RegexOption.IGNORE_CASE, RegexOption.MULTILINE, RegexOption.DOT_MATCHES_ALL)
     )
 
-    override fun doAction(message: Message, sgruntBot: SgruntBot) {
+    override fun doAction(message: Message, doNext: (ActionResponse) -> Unit) {
         val msg = regex.find(message.text)?.groupValues?.get(1)
         if (msg != null) {
-            val sendMessage = SendMessage(botConfig.chatId, "Mi dicono di dire: $msg")
-            sgruntBot.rispondi(sendMessage)
+            doNext(ActionResponse.message("Mi dicono di dire: $msg"))
         }
     }
 

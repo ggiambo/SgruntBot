@@ -1,4 +1,4 @@
-package com.fdtheroes.sgruntbot.actions.persistence
+package com.fdtheroes.sgruntbot.actions.models
 
 import com.fdtheroes.sgruntbot.actions.persistence.KarmaRepository.Companion.dailyKarmaCredit
 import org.springframework.data.annotation.Id

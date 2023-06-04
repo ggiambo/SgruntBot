@@ -1,7 +1,7 @@
 package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BotUtils
-import com.fdtheroes.sgruntbot.SgruntBot
+import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import com.fdtheroes.sgruntbot.actions.persistence.KarmaService
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.Message
@@ -21,12 +21,12 @@ class Cazzate(
         "Stai zitto e baciami, ora!",
     )
 
-    override fun doAction(message: Message, sgruntBot: SgruntBot) {
+    override fun doAction(message: Message, doNext: (ActionResponse) -> Unit) {
         if (nextInt(150) == 0) {
             if (riceveComplimento(message.from.id)) {
-                complimenta(message, sgruntBot)
+                doNext(ActionResponse.message(complimenti.random()))
             } else {
-                insulta(message, sgruntBot)
+                doNext(ActionResponse.message(insulta(message)))
             }
         }
     }
@@ -40,16 +40,12 @@ class Cazzate(
         return nextInt(minKarma, maxKarma) < userKarma
     }
 
-    private fun complimenta(message: Message, sgruntBot: SgruntBot) {
-        sgruntBot.rispondi(message, complimenti.random())
-    }
-
-    private fun insulta(message: Message, sgruntBot: SgruntBot) {
+    private fun insulta(message: Message): String {
         if (nextInt(5) == 0) {
             val userName = botUtils.getUserName(sgruntBot.getChatMember(message.from.id))
-            sgruntBot.rispondi(message, "Ma chiudi il becco, $userName!")
+            return "Ma chiudi il becco, $userName!"
         } else {
-            sgruntBot.rispondi(message, "Ma la smetti di dire ${insulti.random()}?")
+            return "Ma la smetti di dire ${insulti.random()}?"
         }
     }
 

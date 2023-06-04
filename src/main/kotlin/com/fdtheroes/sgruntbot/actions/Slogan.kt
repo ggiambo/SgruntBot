@@ -2,7 +2,7 @@ package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.BotUtils.Companion.urlEncode
-import com.fdtheroes.sgruntbot.SgruntBot
+import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.Message
 import org.telegram.telegrambots.meta.api.objects.User
@@ -14,11 +14,11 @@ class Slogan(private val botUtils: BotUtils) : Action, HasHalp {
     private val sloganPlaceholder = "XXX-XXX-XXX"
     private val urlSlogan = "http://www.sloganizer.net/en/outbound.php?slogan=%s"
 
-    override fun doAction(message: Message, sgruntBot: SgruntBot) {
+    override fun doAction(message: Message, doNext: (ActionResponse) -> Unit) {
         val testo = regex.find(message.text)?.groupValues?.get(1)
         if (testo != null) {
             val slogan = fetchSlogan(testo)
-            sgruntBot.rispondiAsText(message, slogan)
+            doNext.rispondi(message, slogan)
         }
     }
 

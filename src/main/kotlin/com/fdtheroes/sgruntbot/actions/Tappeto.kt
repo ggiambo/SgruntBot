@@ -1,9 +1,7 @@
 package com.fdtheroes.sgruntbot.actions
 
-import com.fdtheroes.sgruntbot.SgruntBot
+import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import org.springframework.stereotype.Service
-import org.telegram.telegrambots.meta.api.methods.ParseMode
-import org.telegram.telegrambots.meta.api.methods.send.SendPhoto
 import org.telegram.telegrambots.meta.api.objects.InputFile
 import org.telegram.telegrambots.meta.api.objects.Message
 import java.awt.Color
@@ -17,18 +15,12 @@ class Tappeto : Action, HasHalp {
 
     private val regex = Regex("^!tappeto (.*)\$", RegexOption.IGNORE_CASE)
 
-    override fun doAction(message: Message, sgruntBot: SgruntBot) {
+    override fun doAction(message: Message, doNext: (ActionResponse) -> Unit) {
         val cosa = regex.find(message.text)?.groupValues?.get(1)
         if (cosa != null) {
             val chi = if (message.from.userName != null) message.from.userName else message.from.firstName
             val tappeto = alTappeto(chi, cosa)
-            val sendPhoto = SendPhoto()
-            sendPhoto.chatId = message.chat.id.toString()
-            sendPhoto.replyToMessageId = message.messageId
-            sendPhoto.parseMode = ParseMode.HTML
-            sendPhoto.photo = tappeto
-            sendPhoto.caption = "$chi manda $cosa al tappeto!"
-            sgruntBot.rispondi(sendPhoto)
+            doNext(ActionResponse.photo(tappeto))
         }
     }
 

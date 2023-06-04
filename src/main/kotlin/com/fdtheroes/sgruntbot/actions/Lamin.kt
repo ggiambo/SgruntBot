@@ -1,6 +1,6 @@
 package com.fdtheroes.sgruntbot.actions
 
-import com.fdtheroes.sgruntbot.SgruntBot
+import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.Message
 
@@ -16,9 +16,9 @@ class Lamin : Action {
         "Ordine Reich approves.",
     )
 
-    override fun doAction(message: Message, sgruntBot: SgruntBot) {
+    override fun doAction(message: Message, doNext: (ActionResponse) -> Unit) {
         if (regex1.containsMatchIn(message.text) && !regex2.containsMatchIn(message.text)) {
-            sgruntBot.rispondi(message, risposte.random())
+            doNext(ActionResponse.message(risposte.random()))
         }
     }
 }

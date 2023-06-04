@@ -1,7 +1,6 @@
 package com.fdtheroes.sgruntbot.scheduled
 
 import com.fdtheroes.sgruntbot.BotConfig
-import com.fdtheroes.sgruntbot.SgruntBot
 import jakarta.annotation.PostConstruct
 import org.slf4j.LoggerFactory
 import org.telegram.telegrambots.meta.api.methods.ParseMode

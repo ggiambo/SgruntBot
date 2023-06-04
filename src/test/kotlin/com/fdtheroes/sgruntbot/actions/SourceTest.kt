@@ -3,6 +3,8 @@ package com.fdtheroes.sgruntbot.actions
 import com.fdtheroes.sgruntbot.BaseTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.telegram.telegrambots.meta.api.methods.ActionType
+import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 internal class SourceTest : BaseTest() {
@@ -13,8 +15,10 @@ internal class SourceTest : BaseTest() {
     fun testPositive() {
         source.doAction(message("!source"), sgruntBot)
 
-        assertThat(botArguments).hasSize(1)
-        val sendMessage = botArguments[0] as SendMessage
+        assertThat(botArguments).hasSize(2)
+        val sendChatAction = botArguments[0] as SendChatAction
+        val sendMessage = botArguments[1] as SendMessage
+        assertThat(sendChatAction.actionType).isEqualTo(ActionType.TYPING)
         assertThat(sendMessage.text).isEqualTo("http://github.com/ggiambo/SgruntBot")
     }
 

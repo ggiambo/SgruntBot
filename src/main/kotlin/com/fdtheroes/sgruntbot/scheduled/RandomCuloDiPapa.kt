@@ -2,7 +2,6 @@ package com.fdtheroes.sgruntbot.scheduled
 
 import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.BotUtils
-import com.fdtheroes.sgruntbot.SgruntBot
 import org.jsoup.Jsoup
 import org.springframework.stereotype.Service
 

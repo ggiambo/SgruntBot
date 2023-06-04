@@ -2,7 +2,7 @@ package com.fdtheroes.sgruntbot.actions.stats
 
 import com.fdtheroes.sgruntbot.BaseTest
 import com.fdtheroes.sgruntbot.Users
-import com.fdtheroes.sgruntbot.actions.persistence.Stats
+import com.fdtheroes.sgruntbot.actions.models.Stats
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.doReturn
