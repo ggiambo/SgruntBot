@@ -1,5 +1,6 @@
 package com.fdtheroes.sgruntbot.actions.persistence
 
+import com.fdtheroes.sgruntbot.Bot
 import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.actions.models.Karma
 import org.springframework.data.jdbc.repository.query.Modifying
@@ -58,7 +59,7 @@ class KarmaService(
         }
     }
 
-    fun testoKarmaReport(sgruntBot: SgruntBot): String {
+    fun testoKarmaReport(sgruntBot: Bot): String {
         val karmas = getKarmas()
             .sortedByDescending { it.second }
             .map { "${getUserName(it.first, sgruntBot).padEnd(20)}%3d".format(it.second) }
@@ -71,7 +72,7 @@ class KarmaService(
         repo.createKarma(Karma(userId = forUserId))
     }
 
-    private fun getUserName(userId: Long, sgruntBot: SgruntBot): String {
+    private fun getUserName(userId: Long, sgruntBot: Bot): String {
         return botUtils.getUserName(sgruntBot.getChatMember(userId))
     }
 

@@ -1,5 +1,6 @@
 package com.fdtheroes.sgruntbot.scheduled
 
+import com.fdtheroes.sgruntbot.Bot
 import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.actions.persistence.KarmaService
 import jakarta.annotation.PostConstruct
@@ -13,7 +14,7 @@ import java.util.concurrent.TimeUnit
 class ScheduledKarma(
     private val karmaService: KarmaService,
     private val botConfig: BotConfig,
-    private val sgruntBot: SgruntBot,
+    private val sgruntBot: Bot,
 ) : Timer() {
 
     val mezzanotte = Calendar.getInstance().apply {
@@ -31,13 +32,7 @@ class ScheduledKarma(
 
     inner class PublishKarma : TimerTask() {
         override fun run() {
-            val message = SendMessage().apply {
-                this.text = karmaService.testoKarmaReport(sgruntBot)
-                this.chatId = botConfig.chatId
-                this.parseMode = ParseMode.HTML
-            }
-
-            sgruntBot.rispondi(message)
+            sgruntBot.messaggio(karmaService.testoKarmaReport(sgruntBot))
         }
     }
 }

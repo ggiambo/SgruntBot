@@ -1,5 +1,6 @@
 package com.fdtheroes.sgruntbot.scheduled
 
+import com.fdtheroes.sgruntbot.Bot
 import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.BotUtils
 import org.jsoup.Jsoup
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Service
 @Service
 class RandomCuloDiPapa(
     private val botUtils: BotUtils,
-    sgruntBot: SgruntBot,
+    sgruntBot: Bot,
     botConfig: BotConfig,
 ) : RandomScheduledAction(sgruntBot, botConfig) {
 

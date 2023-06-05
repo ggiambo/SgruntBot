@@ -1,10 +1,12 @@
 package com.fdtheroes.sgruntbot.scheduled
 
+import com.fdtheroes.sgruntbot.Bot
 import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.BotUtils.Companion.toDate
 import com.fdtheroes.sgruntbot.ChartUtils
 import com.fdtheroes.sgruntbot.ChartUtils.getAsInputFile
+import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import com.fdtheroes.sgruntbot.actions.models.Stats
 import com.fdtheroes.sgruntbot.actions.persistence.StatsService
 import jakarta.annotation.PostConstruct
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.methods.ParseMode
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto
 import org.telegram.telegrambots.meta.api.objects.InputFile
+import org.telegram.telegrambots.meta.api.objects.Message
 import java.awt.BasicStroke
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -21,7 +24,7 @@ import java.util.concurrent.TimeUnit
 @Service
 class ScheduledStats(
     private val botConfig: BotConfig,
-    private val sgruntBot: SgruntBot,
+    private val sgruntBot: Bot,
     private val botUtils: BotUtils,
     private val statsService: StatsService,
 ) {
@@ -55,13 +58,15 @@ class ScheduledStats(
         override fun run() {
             val statsLast15Days = statsService.getStatsLastDays(15)
                 .groupBy { it.userId }
-            val inputFile = getStatsInputFile(statsLast15Days)
 
-            val sendPhoto = SendPhoto()
-            sendPhoto.chatId = botConfig.chatId
-            sendPhoto.parseMode = ParseMode.HTML
-            sendPhoto.photo = inputFile
-            sgruntBot.rispondi(sendPhoto)
+
+            val inputFile = getStatsInputFile(statsLast15Days)
+            val actionResponse = ActionResponse.photo(inputFile)
+
+            val message = Message().apply {
+                this.chatId = botConfig.chatId
+            }
+            sgruntBot.rispondi(actionResponse, message)
         }
     }
 

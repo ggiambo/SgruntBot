@@ -3,9 +3,9 @@ package com.fdtheroes.sgruntbot.actions
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.BotUtils.Companion.urlEncode
+import com.fdtheroes.sgruntbot.actions.models.ActionContext
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import org.springframework.stereotype.Service
-import org.telegram.telegrambots.meta.api.objects.Message
 
 @Service
 class Wiki(private val botUtils: BotUtils, val mapper: ObjectMapper) : Action, HasHalp {
@@ -16,27 +16,26 @@ class Wiki(private val botUtils: BotUtils, val mapper: ObjectMapper) : Action, H
     private val URL_extract =
         "https://it.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=%s"
 
-    override fun doAction(message: Message, doNext: (ActionResponse) -> Unit) {
-        val query = regex.find(message.text)?.groupValues?.get(1)
+    override fun doAction(ctx: ActionContext, doNextAction: () -> Unit) {
+        val query = regex.find(ctx.message.text)?.groupValues?.get(1)
         if (query != null) {
             val titleAndURL = getTitleAndURL(query.urlEncode())
             val title = titleAndURL.first
             val url = titleAndURL.second
             if (title.isNullOrEmpty() || url.isNullOrEmpty()) {
-                doNext(ActionResponse.message("Non c'è."))
+                ctx.addResponse(ActionResponse.message("Non c'è."))
                 return
             }
 
             val testo = getExtract(title.urlEncode())
             if (testo.isNullOrEmpty()) {
-                return doNext(ActionResponse.message("Non c'è."))
+                ctx.addResponse(ActionResponse.message("Non c'è."))
                 return
             }
 
             val risposta = "$testo\n$url"
-            doNext(ActionResponse.message(risposta))
+            ctx.addResponse(ActionResponse.message(risposta))
         }
-
     }
 
     override fun halp() = "<b>!wiki</b> <i>termine da cercare</i>"

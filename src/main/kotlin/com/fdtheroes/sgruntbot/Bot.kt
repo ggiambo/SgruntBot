@@ -68,39 +68,44 @@ class Bot(
         botConfig.pignolo = nextInt(100) > 90
 
         val actionsIterator = actions.iterator()
-        val responses = mutableListOf<ActionResponse>()
-
-        lateinit var doNext: (ActionResponse) -> Unit
-        doNext = { resp: ActionResponse ->
-            responses.add(resp)
-            if (actionsIterator.hasNext()) actionsIterator.next().doAction(message, doNext)
-        }
 
         val ctx = ActionContext(message, this::getChatMember)
-        actionsIterator.next().doAction(message, doNext)
+        lateinit var doNextAction: () -> Unit
+        doNextAction = {
+            if (actionsIterator.hasNext()) actionsIterator.next().doAction(ctx, doNextAction)
+        }
 
-        responses.forEach {
-            when (it.type) {
-                ActionResponseType.Message -> rispondiMessaggio(message, it.message!!)
-                ActionResponseType.Photo -> rispondiPhoto(message, it.inputFile!!)
-                ActionResponseType.Audio -> rispondiAudio(message, it.inputFile!!)
+        actionsIterator.next().doAction(ctx, doNextAction)
 
-            }
+        ctx.actionResponses.forEach { rispondi(it, message) }
+    }
+
+    fun rispondi(actionMessage: ActionResponse, message: Message) {
+        when (actionMessage.type) {
+            ActionResponseType.Message -> rispondiMessaggio(message, actionMessage.message!!)
+            ActionResponseType.Photo -> rispondiPhoto(message, actionMessage.inputFile!!)
+            ActionResponseType.Audio -> rispondiAudio(message, actionMessage.inputFile!!)
         }
     }
 
-    private fun sgruntyScrive(message: Message, actionType: ActionType = ActionType.TYPING) {
+    fun messaggio(actionMessage: ActionResponse) {
+        ActionResponseType.Message -> messaggio(actionMessage.message!!)
+        ActionResponseType.Photo -> photo(actionMessage.inputFile!!)
+        ActionResponseType.Audio -> audio(actionMessage.inputFile!!)
+    }
+
+    private fun sgruntyScrive(chatId: Long, actionType: ActionType = ActionType.TYPING) {
         execute(
             SendChatAction().apply {
-                this.setChatId(message.chatId)
+                this.setChatId(chatId)
                 this.setAction(actionType)
             }
         )
         sleep(3..3)
     }
 
-    fun rispondiMessaggio(message: Message, textmd: String) {
-        sgruntyScrive(message)
+    private fun rispondiMessaggio(message: Message, textmd: String) {
+        sgruntyScrive(message.chatId)
         execute(
             SendMessage().apply {
                 this.chatId = message.chat.id.toString()
@@ -112,7 +117,7 @@ class Bot(
     }
 
     private fun rispondiPhoto(message: Message, photo: InputFile) {
-        sgruntyScrive(message, ActionType.UPLOADDOCUMENT)
+        sgruntyScrive(message.chatId, ActionType.UPLOADDOCUMENT)
         execute(
             SendPhoto().apply {
                 this.chatId = message.chat.id.toString()
@@ -124,7 +129,7 @@ class Bot(
     }
 
     private fun rispondiAudio(message: Message, audio: InputFile) {
-        sgruntyScrive(message, ActionType.UPLOADDOCUMENT)
+        sgruntyScrive(message.chatId, ActionType.UPLOADDOCUMENT)
         execute(
             SendAudio().apply {
                 this.chatId = message.chat.id.toString()

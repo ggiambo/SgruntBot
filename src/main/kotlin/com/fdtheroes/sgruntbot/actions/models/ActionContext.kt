@@ -5,10 +5,10 @@ import org.telegram.telegrambots.meta.api.objects.User
 
 class ActionContext(
     val message: Message,
-    val getChatMemer: (Long) -> User?
+    val getChatMember: (Long) -> User?
 ) {
 
-    private val actionResponses = mutableListOf<ActionResponse>()
-    fun getActionResponses(): List<ActionResponse> = actionResponses
-    fun addResponse(actionResponse: ActionResponse) = actionResponses.add(actionResponse)
+    private val _actionResponses = mutableListOf<ActionResponse>()
+    val actionResponses: List<ActionResponse> = _actionResponses
+    fun addResponse(actionResponse: ActionResponse) = _actionResponses.add(actionResponse)
 }

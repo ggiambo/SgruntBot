@@ -1,12 +1,10 @@
 package com.fdtheroes.sgruntbot.actions
 
+import com.fdtheroes.sgruntbot.actions.models.ActionContext
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
-import org.telegram.telegrambots.meta.api.methods.ActionType
-import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
 import org.telegram.telegrambots.meta.api.objects.InputFile
-import org.telegram.telegrambots.meta.api.objects.Message
 import java.io.File
 import java.nio.file.Path
 import kotlin.io.path.Path
@@ -29,12 +27,12 @@ class Canzone : Action, HasHalp {
         }
     }
 
-    override fun doAction(message: Message, doNext: (ActionResponse) -> Unit) {
-        val canzone = regex.find(message.text)?.groupValues?.get(1)
+    override fun doAction(ctx: ActionContext, doNextAction: () -> Unit) {
+        val canzone = regex.find(ctx.message.text)?.groupValues?.get(1)
         if (canzone != null) {
             val fileName = fetch(canzone)
             if (fileName == null) {
-                doNext(ActionResponse.message("Non ci riesco."))
+                ctx.addResponse(ActionResponse.message("Non ci riesco."))
                 return
             }
             val file = destPath.resolve(fileName).toFile()
@@ -42,7 +40,7 @@ class Canzone : Action, HasHalp {
                 log.info("canzone da ${getSize(file)}")
             }
             val audio = InputFile(file, fileName)
-            doNext(ActionResponse.audio(audio))
+            ctx.addResponse(ActionResponse.audio(audio))
         }
     }
 

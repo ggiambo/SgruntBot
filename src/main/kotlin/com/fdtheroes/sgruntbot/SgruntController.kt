@@ -18,7 +18,7 @@ import java.time.LocalDateTime
 @RestController
 @RequestMapping("/sgrunty/rest")
 class SgruntController(
-    private val sgruntBot: SgruntBot,
+    private val sgruntBot: Bot,
     private val botUtils: BotUtils,
     private val actions: List<Action>,
     private val karmaService: KarmaService,

@@ -1,8 +1,7 @@
 package com.fdtheroes.sgruntbot.actions
 
-import com.fdtheroes.sgruntbot.actions.models.ActionResponse
-import org.telegram.telegrambots.meta.api.objects.Message
+import com.fdtheroes.sgruntbot.actions.models.ActionContext
 
 fun interface Action {
-    fun doAction(message: Message, doNext: (ActionResponse) -> Unit)
+    fun doAction(ctx: ActionContext, doNextAction: () -> Unit)
 }

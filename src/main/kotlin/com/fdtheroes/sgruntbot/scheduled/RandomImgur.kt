@@ -5,12 +5,13 @@ import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.BotUtils
 import org.springframework.stereotype.Service
 import com.fdtheroes.sgruntbot.BotUtils.Companion.length
+import com.fdtheroes.sgruntbot.Bot
 
 @Service
 class RandomImgur(
     private val botUtils: BotUtils,
     private val mapper: ObjectMapper,
-    sgruntBot: SgruntBot,
+    sgruntBot: Bot,
     botConfig: BotConfig,
 ) : RandomScheduledAction(sgruntBot, botConfig) {
 

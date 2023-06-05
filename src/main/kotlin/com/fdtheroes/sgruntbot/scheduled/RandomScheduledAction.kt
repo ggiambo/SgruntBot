@@ -1,6 +1,8 @@
 package com.fdtheroes.sgruntbot.scheduled
 
+import com.fdtheroes.sgruntbot.Bot
 import com.fdtheroes.sgruntbot.BotConfig
+import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import jakarta.annotation.PostConstruct
 import org.slf4j.LoggerFactory
 import org.telegram.telegrambots.meta.api.methods.ParseMode
@@ -12,7 +14,7 @@ import java.time.temporal.ChronoUnit
 import java.util.*
 import kotlin.random.Random.Default.nextLong
 
-abstract class RandomScheduledAction(val sgruntBot: SgruntBot, val botConfig: BotConfig) {
+abstract class RandomScheduledAction(val sgruntBot: Bot, val botConfig: BotConfig) {
 
     private val log = LoggerFactory.getLogger(this.javaClass)
     private val timer = Timer()
@@ -32,7 +34,7 @@ abstract class RandomScheduledAction(val sgruntBot: SgruntBot, val botConfig: Bo
     private fun scheduleNext() {
         val delay = nextLong(delayRangeInMillis.first, delayRangeInMillis.second)
         val delayHr = Duration.of(delay, ChronoUnit.MILLIS)
-        this.nextScheduled = LocalDateTime.now().plus( delayHr)
+        this.nextScheduled = LocalDateTime.now().plus(delayHr)
         log.info(getLogMessage(delayHr))
         timer.schedule(SendAndReschedule(), delay)
     }
@@ -43,13 +45,7 @@ abstract class RandomScheduledAction(val sgruntBot: SgruntBot, val botConfig: Bo
             return
         }
 
-        val message = SendMessage().apply {
-            this.text = text
-            this.chatId = botConfig.chatId
-            this.parseMode = ParseMode.HTML
-        }
-
-        sgruntBot.rispondi(message)
+        sgruntBot.messaggio(text)
     }
 
     private fun getLogMessage(delayHr: Duration): String {
