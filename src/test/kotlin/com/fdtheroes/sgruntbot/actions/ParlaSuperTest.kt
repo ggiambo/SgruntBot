@@ -13,7 +13,7 @@ internal class ParlaSuperTest : BaseTest() {
     @Test
     fun testPositive() {
         parlaSuper.doAction(
-            message(
+            actionContext(
                 text = "!parlaSuper questo bot è stupendo!",
                 from = user(id = Users.AVVE.id)
             )
@@ -26,7 +26,7 @@ internal class ParlaSuperTest : BaseTest() {
 
     @Test
     fun testNegative() {
-        parlaSuper.doAction(message("!parlaSuper questo bot è stupendo!"))
+        parlaSuper.doAction(actionContext("!parlaSuper questo bot è stupendo!"))
 
         assertThat(botArguments).isEmpty()
     }

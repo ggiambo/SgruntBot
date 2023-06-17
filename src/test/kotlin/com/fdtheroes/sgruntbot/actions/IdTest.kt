@@ -13,7 +13,7 @@ internal class IdTest : BaseTest() {
 
     @Test
     fun testPositive() {
-        id.doAction(message("!id"))
+        id.doAction(actionContext("!id"))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction

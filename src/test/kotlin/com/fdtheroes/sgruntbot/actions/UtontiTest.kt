@@ -17,7 +17,7 @@ class UtontiTest : BaseTest() {
     @Test
     fun utonti_negative() {
         val utonti = Utonti(botUtils, botConfig, usersService())
-        val message = message("Blah Banf", user(Users.GENGY))
+        val message = actionContext("Blah Banf", user(Users.GENGY))
 
         utonti.doAction(message)
 
@@ -27,7 +27,7 @@ class UtontiTest : BaseTest() {
     @Test
     fun utonti_positive() {
         val utonti = Utonti(botUtils, botConfig, usersService())
-        val message = message("!utonti", user(Users.GENGY))
+        val message = actionContext("!utonti", user(Users.GENGY))
 
         utonti.doAction(message)
 

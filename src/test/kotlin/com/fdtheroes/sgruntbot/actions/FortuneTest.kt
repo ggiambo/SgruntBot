@@ -13,7 +13,7 @@ internal class FortuneTest : BaseTest() {
 
     @Test
     fun testPositive() {
-        fortune.doAction(message("!fortune"))
+        fortune.doAction(actionContext("!fortune"))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -24,7 +24,7 @@ internal class FortuneTest : BaseTest() {
 
     @Test
     fun testPositive_2() {
-        fortune.doAction(message("!quote"))
+        fortune.doAction(actionContext("!quote"))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction

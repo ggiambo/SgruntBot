@@ -14,7 +14,7 @@ internal class SgruntTest : BaseTest() {
 
     @Test
     fun testPositive() {
-        sgrunt.doAction(message("sgrunty"))
+        sgrunt.doAction(actionContext("sgrunty"))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -25,7 +25,7 @@ internal class SgruntTest : BaseTest() {
 
     @Test
     fun testPositive_1() {
-        sgrunt.doAction(message(text = "sgruntbot", from = user(id = Users.SUORA.id)))
+        sgrunt.doAction(actionContext(text = "sgruntbot", from = user(id = Users.SUORA.id)))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction

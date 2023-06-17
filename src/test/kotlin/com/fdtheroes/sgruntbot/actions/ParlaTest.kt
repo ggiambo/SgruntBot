@@ -11,7 +11,7 @@ internal class ParlaTest : BaseTest() {
 
     @Test
     fun testPositive() {
-        parla.doAction(message("!parla questo bot è stupendo!"))
+        parla.doAction(actionContext("!parla questo bot è stupendo!"))
 
         assertThat(botArguments).hasSize(1)
         val sendMessage = botArguments[0] as SendMessage

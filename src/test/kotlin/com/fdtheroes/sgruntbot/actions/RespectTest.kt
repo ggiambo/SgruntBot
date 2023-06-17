@@ -15,7 +15,7 @@ internal class RespectTest : BaseTest() {
     @Test
     fun testPositive() {
         respect.doAction(
-            message(
+            actionContext(
                 text = "F",
                 replyToMessage = message(text = "whatever", from = user(id = Users.AVVE.id, userName = "AvveFaTutti"))
             )
@@ -31,7 +31,7 @@ internal class RespectTest : BaseTest() {
 
     @Test
     fun testNegative() {
-        respect.doAction(message("F..anculo"))
+        respect.doAction(actionContext("F..anculo"))
 
         Assertions.assertThat(botArguments).isEmpty()
     }

@@ -13,7 +13,7 @@ internal class TestTest : BaseTest() {
 
     @Test
     fun testPositive() {
-        test.doAction(message("!test"))
+        test.doAction(actionContext("!test"))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction

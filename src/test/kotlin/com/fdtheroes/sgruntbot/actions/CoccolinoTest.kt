@@ -14,7 +14,7 @@ internal class CoccolinoTest : BaseTest() {
 
     @Test
     fun testPositive_1() {
-        coccolino.doAction(message("coccolo", from = user(id = Users.SUORA.id)))
+        coccolino.doAction(actionContext("coccolo", from = user(id = Users.SUORA.id)))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -25,7 +25,7 @@ internal class CoccolinoTest : BaseTest() {
 
     @Test
     fun testPositive_2() {
-        coccolino.doAction(message("coccolino", from = user(id = Users.SUORA.id)))
+        coccolino.doAction(actionContext("coccolino", from = user(id = Users.SUORA.id)))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -36,7 +36,7 @@ internal class CoccolinoTest : BaseTest() {
 
     @Test
     fun testNegative() {
-        coccolino.doAction(message("coccolino", from = user(id = Users.GENGY.id)))
+        coccolino.doAction(actionContext("coccolino", from = user(id = Users.GENGY.id)))
 
         assertThat(botArguments).isEmpty()
     }

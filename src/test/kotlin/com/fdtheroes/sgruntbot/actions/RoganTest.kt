@@ -13,7 +13,7 @@ internal class RoganTest : BaseTest() {
 
     @Test
     fun testPositive() {
-        rogan.doAction(message("a me rogan sta sulle balle"))
+        rogan.doAction(actionContext("a me rogan sta sulle balle"))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -24,7 +24,7 @@ internal class RoganTest : BaseTest() {
 
     @Test
     fun testNegative() {
-        rogan.doAction(message("stanno erogando cazzate"))
+        rogan.doAction(actionContext("stanno erogando cazzate"))
 
         assertThat(botArguments).isEmpty()
     }

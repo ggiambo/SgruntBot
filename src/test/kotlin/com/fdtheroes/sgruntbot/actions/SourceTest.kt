@@ -13,7 +13,7 @@ internal class SourceTest : BaseTest() {
 
     @Test
     fun testPositive() {
-        source.doAction(message("!source"))
+        source.doAction(actionContext("!source"))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction

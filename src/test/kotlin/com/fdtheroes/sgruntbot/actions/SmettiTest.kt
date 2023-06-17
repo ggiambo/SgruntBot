@@ -26,7 +26,7 @@ internal class SmettiTest : BaseTest() {
         ]
     )
     fun testPositive(message: String) {
-        smetti.doAction(message(message))
+        smetti.doAction(actionContext(message))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -45,7 +45,7 @@ internal class SmettiTest : BaseTest() {
         ]
     )
     fun testNegative(message: String) {
-        smetti.doAction(message(message))
+        smetti.doAction(actionContext(message))
 
         assertThat(botArguments).hasSize(0)
     }

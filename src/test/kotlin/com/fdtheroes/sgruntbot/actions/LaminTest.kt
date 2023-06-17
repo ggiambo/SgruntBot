@@ -13,7 +13,7 @@ internal class LaminTest : BaseTest() {
 
     @Test
     fun testPositive() {
-        lamin.doAction(message("negraccio"))
+        lamin.doAction(actionContext("negraccio"))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -24,7 +24,7 @@ internal class LaminTest : BaseTest() {
 
     @Test
     fun testPositive_2() {
-        lamin.doAction(message("__negher++"))
+        lamin.doAction(actionContext("__negher++"))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -35,7 +35,7 @@ internal class LaminTest : BaseTest() {
 
     @Test
     fun testNegative() {
-        lamin.doAction(message("**negrini!!"))
+        lamin.doAction(actionContext("**negrini!!"))
 
         assertThat(botArguments).isEmpty()
     }

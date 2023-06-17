@@ -33,7 +33,7 @@ internal class StatsTest : BaseTest() {
     @Test
     fun test_positive() {
         stats.doAction(
-            message("!stats")
+            actionContext("!stats")
         )
 
         assertThat(botArguments).hasSize(1)

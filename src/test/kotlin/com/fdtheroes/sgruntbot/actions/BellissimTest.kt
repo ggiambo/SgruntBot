@@ -13,7 +13,7 @@ internal class BellissimTest : BaseTest() {
 
     @Test
     fun testPositive() {
-        bellissim.doAction(message(("XYZ_bEllISSimo_123")))
+        bellissim.doAction(actionContext(("XYZ_bEllISSimo_123")))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -24,7 +24,7 @@ internal class BellissimTest : BaseTest() {
 
     @Test
     fun testNegative() {
-        bellissim.doAction(message(("XYZ_quack_123")))
+        bellissim.doAction(actionContext(("XYZ_quack_123")))
 
         assertThat(botArguments).hasSize(0)
     }

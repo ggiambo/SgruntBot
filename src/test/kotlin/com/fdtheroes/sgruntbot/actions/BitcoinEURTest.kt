@@ -13,7 +13,7 @@ internal class BitcoinEURTest : BaseTest() {
 
     @Test
     fun testPositive() {
-        bitcoinEUR.doAction(message(("!btce")))
+        bitcoinEUR.doAction(actionContext(("!btce")))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -24,7 +24,7 @@ internal class BitcoinEURTest : BaseTest() {
 
     @Test
     fun testNegative() {
-        bitcoinEUR.doAction(message(("!btce__")))
+        bitcoinEUR.doAction(actionContext(("!btce__")))
 
         assertThat(botArguments).hasSize(0)
     }

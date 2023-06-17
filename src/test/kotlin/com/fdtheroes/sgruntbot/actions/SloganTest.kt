@@ -14,7 +14,7 @@ internal class SloganTest : BaseTest() {
 
     @Test
     fun testPositive() {
-        slogan.doAction(message("!slogan la cacca molle"))
+        slogan.doAction(actionContext("!slogan la cacca molle"))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction

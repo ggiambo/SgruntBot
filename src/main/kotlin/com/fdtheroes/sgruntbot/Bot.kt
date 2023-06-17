@@ -73,7 +73,7 @@ class Bot(
         ctx.actionResponses.forEach { rispondi(it, message) }
     }
 
-    fun rispondi(actionMessage: ActionResponse, message: Message) {
+    fun rispondi(actionMessage: ActionResponse, message: Message) : Unit {
         when (actionMessage.type) {
             ActionResponseType.Message -> rispondiMessaggio(message, actionMessage.message!!)
             ActionResponseType.Photo -> rispondiPhoto(message, actionMessage.inputFile!!)
