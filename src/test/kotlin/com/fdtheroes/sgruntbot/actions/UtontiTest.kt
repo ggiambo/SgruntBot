@@ -16,7 +16,7 @@ class UtontiTest : BaseTest() {
 
     @Test
     fun utonti_negative() {
-        val utonti = Utonti(botUtils, botConfig, usersService())
+        val utonti = Utonti(botUtils, usersService())
         val message = actionContext("Blah Banf", user(Users.GENGY))
 
         utonti.doAction(message)
@@ -26,7 +26,7 @@ class UtontiTest : BaseTest() {
 
     @Test
     fun utonti_positive() {
-        val utonti = Utonti(botUtils, botConfig, usersService())
+        val utonti = Utonti(botUtils, usersService())
         val message = actionContext("!utonti", user(Users.GENGY))
 
         utonti.doAction(message)
@@ -44,7 +44,7 @@ class UtontiTest : BaseTest() {
 
     private fun usersService(): UsersService {
         return mock {
-            on { getAllUsers(isA()) } doReturn listOf(
+            on { getAllUsers() } doReturn listOf(
                 user(),
                 user(Users.AVVE)
             )
