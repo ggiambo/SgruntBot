@@ -9,7 +9,7 @@ class Source : Action, HasHalp {
 
     private val regex = Regex("^!source\$", RegexOption.IGNORE_CASE)
 
-    override fun doAction(ctx: ActionContext, doNextAction: () -> Unit) {
+    override fun doAction(ctx: ActionContext) {
         if (regex.containsMatchIn(ctx.message.text)) {
             ctx.addResponse(ActionResponse.message("http://github.com/ggiambo/SgruntBot"))
         }

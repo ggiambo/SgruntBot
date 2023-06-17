@@ -11,7 +11,7 @@ class BitcoinCHF(botUtils: BotUtils, mapper: ObjectMapper) : Bitcoin(botUtils, m
 
     private val regex = Regex("^!btcc\$", RegexOption.IGNORE_CASE)
 
-    override fun doAction(ctx: ActionContext, doNextAction: () -> Unit) {
+    override fun doAction(ctx: ActionContext) {
         if (regex.containsMatchIn(ctx.message.text)) {
             val value = bitcoinvalue("CHF")
             val testo = "Il buttcoin vale $value denti d'oro"

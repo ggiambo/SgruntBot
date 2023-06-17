@@ -1,7 +1,5 @@
 package com.fdtheroes.sgruntbot.actions
 
-import com.fdtheroes.sgruntbot.Bot
-import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.actions.models.ActionContext
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
@@ -16,7 +14,7 @@ class Utonti(
 
     private val regex = Regex("^!utonti$", RegexOption.IGNORE_CASE)
 
-    override fun doAction(ctx: ActionContext, doNextAction: () -> Unit) {
+    override fun doAction(ctx: ActionContext) {
         if (regex.matches(ctx.message.text)) {
             val utonti = usersService.getAllUsers()
                 .joinToString(separator = "\n") { "- ${it.id}: ${botUtils.getUserName(it)}" }

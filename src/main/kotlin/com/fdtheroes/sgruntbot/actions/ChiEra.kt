@@ -14,7 +14,7 @@ class ChiEra(private val botUtils: BotUtils, private val botConfig: BotConfig) :
         setOf(RegexOption.IGNORE_CASE, RegexOption.MULTILINE, RegexOption.DOT_MATCHES_ALL)
     )
 
-    override fun doAction(ctx: ActionContext, doNextAction: () -> Unit) {
+    override fun doAction(ctx: ActionContext) {
         if (regex.containsMatchIn(ctx.message.text) && botConfig.lastSuper != null) {
             ctx.addResponse(ActionResponse.message(botUtils.getUserLink(botConfig.lastSuper)))
         }

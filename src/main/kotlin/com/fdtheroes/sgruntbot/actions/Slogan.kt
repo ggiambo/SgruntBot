@@ -14,7 +14,7 @@ class Slogan(private val botUtils: BotUtils) : Action, HasHalp {
     private val sloganPlaceholder = "XXX-XXX-XXX"
     private val urlSlogan = "http://www.sloganizer.net/en/outbound.php?slogan=%s"
 
-    override fun doAction(ctx: ActionContext, doNextAction: () -> Unit) {
+    override fun doAction(ctx: ActionContext) {
         val testo = regex.find(ctx.message.text)?.groupValues?.get(1)
         if (testo != null) {
             val slogan = fetchSlogan(testo)

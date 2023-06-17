@@ -15,7 +15,7 @@ class Tappeto : Action, HasHalp {
 
     private val regex = Regex("^!tappeto (.*)\$", RegexOption.IGNORE_CASE)
 
-    override fun doAction(ctx: ActionContext, doNextAction: () -> Unit) {
+    override fun doAction(ctx: ActionContext) {
         val cosa = regex.find(ctx.message.text)?.groupValues?.get(1)
         if (cosa != null) {
             val chi = if (ctx.message.from.userName != null) ctx.message.from.userName else ctx.message.from.firstName

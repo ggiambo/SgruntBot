@@ -9,7 +9,7 @@ class Rogan : Action {
 
     private val regex = Regex("\\brogan\\b", RegexOption.IGNORE_CASE)
 
-    override fun doAction(ctx: ActionContext, doNextAction: () -> Unit) {
+    override fun doAction(ctx: ActionContext) {
         if (regex.containsMatchIn(ctx.message.text)) {
             ctx.addResponse(ActionResponse.message("Cheppalle! Yawn!"))
         }

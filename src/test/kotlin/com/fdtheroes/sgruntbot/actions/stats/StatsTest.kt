@@ -33,8 +33,7 @@ internal class StatsTest : BaseTest() {
     @Test
     fun test_positive() {
         stats.doAction(
-            message("!stats"),
-            sgruntBot
+            message("!stats")
         )
 
         assertThat(botArguments).hasSize(1)

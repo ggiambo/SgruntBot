@@ -18,8 +18,7 @@ internal class RespectTest : BaseTest() {
             message(
                 text = "F",
                 replyToMessage = message(text = "whatever", from = user(id = Users.AVVE.id, userName = "AvveFaTutti"))
-            ),
-            sgruntBot
+            )
         )
 
         Assertions.assertThat(botArguments).hasSize(2)
@@ -32,7 +31,7 @@ internal class RespectTest : BaseTest() {
 
     @Test
     fun testNegative() {
-        respect.doAction(message("F..anculo"), sgruntBot)
+        respect.doAction(message("F..anculo"))
 
         Assertions.assertThat(botArguments).isEmpty()
     }

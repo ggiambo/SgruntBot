@@ -17,7 +17,7 @@ class Sgrunt : Action {
         "Sgru' che... smuà!"
     )
 
-    override fun doAction(ctx: ActionContext, doNextAction: () -> Unit) {
+    override fun doAction(ctx: ActionContext) {
         if (regex.containsMatchIn(ctx.message.text)) {
             val user = Users.byId(ctx.message.from.id)
             if (user == Users.SUORA) {
@@ -26,6 +26,5 @@ class Sgrunt : Action {
                 ctx.addResponse(ActionResponse.message(reply.random()))
             }
         }
-        doNextAction()
     }
 }

@@ -27,7 +27,7 @@ class Canzone : Action, HasHalp {
         }
     }
 
-    override fun doAction(ctx: ActionContext, doNextAction: () -> Unit) {
+    override fun doAction(ctx: ActionContext) {
         val canzone = regex.find(ctx.message.text)?.groupValues?.get(1)
         if (canzone != null) {
             val fileName = fetch(canzone)

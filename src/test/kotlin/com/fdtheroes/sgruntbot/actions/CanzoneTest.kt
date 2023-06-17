@@ -12,7 +12,7 @@ internal class CanzoneTest : BaseTest() {
 
     //@Test
     fun testPositive() {
-        canzone.doAction(message("!canzone 2 Seconds Video"), sgruntBot)
+        canzone.doAction(message("!canzone 2 Seconds Video"))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction

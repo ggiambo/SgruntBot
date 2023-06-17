@@ -16,7 +16,7 @@ class Wiki(private val botUtils: BotUtils, val mapper: ObjectMapper) : Action, H
     private val URL_extract =
         "https://it.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=%s"
 
-    override fun doAction(ctx: ActionContext, doNextAction: () -> Unit) {
+    override fun doAction(ctx: ActionContext) {
         val query = regex.find(ctx.message.text)?.groupValues?.get(1)
         if (query != null) {
             val titleAndURL = getTitleAndURL(query.urlEncode())

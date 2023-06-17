@@ -11,7 +11,7 @@ class Smetti(private val botConfig: BotConfig) : Action {
 
     private val regex = Regex("^@?(sgrunty?|BlahBanf)(bot)? .*smetti.*", RegexOption.IGNORE_CASE)
 
-    override fun doAction(ctx: ActionContext, doNextAction: () -> Unit) {
+    override fun doAction(ctx: ActionContext) {
         if (regex.containsMatchIn(ctx.message.text)) {
             botConfig.pausedTime = LocalDateTime.now().plusMinutes(5)
             ctx.addResponse(ActionResponse.message("Ok, sto zitto 5 minuti. :("))

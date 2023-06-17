@@ -16,10 +16,9 @@ class Lamin : Action {
         "Ordine Reich approves.",
     )
 
-    override fun doAction(ctx: ActionContext, doNextAction: () -> Unit) {
+    override fun doAction(ctx: ActionContext) {
         if (regex1.containsMatchIn(ctx.message.text) && !regex2.containsMatchIn(ctx.message.text)) {
             ctx.addResponse(ActionResponse.message(risposte.random()))
         }
-        doNextAction()
     }
 }

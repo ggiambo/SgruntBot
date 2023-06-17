@@ -14,12 +14,11 @@ class Parolacce(private val botUtils: BotUtils, private val botConfig: BotConfig
         RegexOption.IGNORE_CASE
     )
 
-    override fun doAction(ctx: ActionContext, doNextAction: () -> Unit) {
+    override fun doAction(ctx: ActionContext) {
         if (botConfig.pignolo && regex.containsMatchIn(ctx.message.text)) {
             val userLink = botUtils.getUserLink(ctx.message.from)
             ctx.addResponse(ActionResponse.message(getTesto(userLink)))
         }
-        doNextAction()
     }
 
     private fun getTesto(userLink: String): String {

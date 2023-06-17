@@ -34,7 +34,7 @@ class Stats(
         pieChart.styler.seriesColors = ChartUtils.seriesColors
     }
 
-    override fun doAction(ctx: ActionContext, doNextAction: () -> Unit) {
+    override fun doAction(ctx: ActionContext) {
         if (!botUtils.isMessageInChat(ctx.message)) {
             return
         }

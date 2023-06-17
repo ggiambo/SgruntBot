@@ -14,7 +14,7 @@ class Aes : Action, HasHalp {
 
     private val regex = Regex("^!aes(d?) ([^ ]+) (.*)$")
 
-    override fun doAction(ctx: ActionContext, doNextAction: () -> Unit) {
+    override fun doAction(ctx: ActionContext) {
         val groupValues = regex.find(ctx.message.text)?.groupValues
         if (groupValues?.size == 4) {
             val decrypt = groupValues[1]

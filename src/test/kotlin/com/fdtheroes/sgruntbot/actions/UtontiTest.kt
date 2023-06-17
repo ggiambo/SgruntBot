@@ -19,7 +19,7 @@ class UtontiTest : BaseTest() {
         val utonti = Utonti(botUtils, botConfig, usersService())
         val message = message("Blah Banf", user(Users.GENGY))
 
-        utonti.doAction(message, sgruntBot)
+        utonti.doAction(message)
 
         assertThat(botArguments).hasSize(0)
     }
@@ -29,7 +29,7 @@ class UtontiTest : BaseTest() {
         val utonti = Utonti(botUtils, botConfig, usersService())
         val message = message("!utonti", user(Users.GENGY))
 
-        utonti.doAction(message, sgruntBot)
+        utonti.doAction(message)
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction

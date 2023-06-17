@@ -10,13 +10,12 @@ class Coccolino : Action {
 
     private val regex = Regex("coccol(o|ino)", RegexOption.IGNORE_CASE)
 
-    override fun doAction(ctx: ActionContext, doNextAction: () -> Unit) {
+    override fun doAction(ctx: ActionContext) {
         if (regex.containsMatchIn(ctx.message.text)) {
             val user = Users.byId(ctx.message.from.id)
             if (user == Users.SUORA) {
                 ctx.addResponse(ActionResponse.message("Non chiamarmi così davanti a tutti!"))
             }
         }
-        doNextAction()
     }
 }

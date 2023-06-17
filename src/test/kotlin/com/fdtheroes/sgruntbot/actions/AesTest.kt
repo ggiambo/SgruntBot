@@ -13,7 +13,7 @@ internal class AesTest : BaseTest() {
 
     @Test
     fun testEncrypt() {
-        aes.doAction(message("!aes mySecretKey testo segretissimo da da codificare"), sgruntBot)
+        aes.doAction(message("!aes mySecretKey testo segretissimo da da codificare"))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -25,8 +25,7 @@ internal class AesTest : BaseTest() {
     @Test
     fun testDencrypt() {
         aes.doAction(
-            message("!aesd mySecretKey L9dQ8mCVcA3EyHZN+X+Pi2CYZnGnRXE3ol3qSmYnkgjnfYdVGGcLraGEgVXJYsto"),
-            sgruntBot
+            message("!aesd mySecretKey L9dQ8mCVcA3EyHZN+X+Pi2CYZnGnRXE3ol3qSmYnkgjnfYdVGGcLraGEgVXJYsto")
         )
 
         assertThat(botArguments).hasSize(2)

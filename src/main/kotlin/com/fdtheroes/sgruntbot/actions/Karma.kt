@@ -15,7 +15,7 @@ class Karma(
     private val karmaService: KarmaService,
 ) : Action, HasHalp {
 
-    override fun doAction(ctx: ActionContext, doNextAction: () -> Unit) {
+    override fun doAction(ctx: ActionContext) {
         val ricevente = ctx.message.replyToMessage?.from?.id
         if (ctx.message.text == "+" && ricevente != null) {
             giveTakeKarma(ctx, ricevente, Int::inc)

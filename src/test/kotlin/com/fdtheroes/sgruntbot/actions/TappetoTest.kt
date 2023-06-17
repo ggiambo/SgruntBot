@@ -11,7 +11,7 @@ internal class TappetoTest : BaseTest() {
 
     @Test
     fun testPositive() {
-        tappeto.doAction(message("!tappeto malattia e tutto il FdT"), sgruntBot)
+        tappeto.doAction(message("!tappeto malattia e tutto il FdT"))
 
         Assertions.assertThat(botArguments).hasSize(1)
         val sendPhoto = botArguments[0] as SendPhoto

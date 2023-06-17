@@ -14,7 +14,9 @@ import org.knowm.xchart.XYChart
 import org.knowm.xchart.style.theme.GGPlot2Theme
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.methods.ParseMode
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto
+import org.telegram.telegrambots.meta.api.objects.Chat
 import org.telegram.telegrambots.meta.api.objects.InputFile
 import org.telegram.telegrambots.meta.api.objects.Message
 import java.awt.BasicStroke
@@ -59,14 +61,10 @@ class ScheduledStats(
             val statsLast15Days = statsService.getStatsLastDays(15)
                 .groupBy { it.userId }
 
-
             val inputFile = getStatsInputFile(statsLast15Days)
             val actionResponse = ActionResponse.photo(inputFile)
 
-            val message = Message().apply {
-                this.chatId = botConfig.chatId
-            }
-            sgruntBot.rispondi(actionResponse, message)
+            sgruntBot.messaggio(actionResponse)
         }
     }
 

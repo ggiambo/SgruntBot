@@ -13,7 +13,7 @@ internal class BitcoinCHFTest : BaseTest() {
 
     @Test
     fun testPositive() {
-        bitcoinCHF.doAction(message(("!btcc")), sgruntBot)
+        bitcoinCHF.doAction(message(("!btcc")))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -24,7 +24,7 @@ internal class BitcoinCHFTest : BaseTest() {
 
     @Test
     fun testNegative() {
-        bitcoinCHF.doAction(message(("!btcc__")), sgruntBot)
+        bitcoinCHF.doAction(message(("!btcc__")))
 
         assertThat(botArguments).hasSize(0)
     }

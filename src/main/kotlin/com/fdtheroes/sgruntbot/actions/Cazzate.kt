@@ -21,7 +21,7 @@ class Cazzate(
         "Stai zitto e baciami, ora!",
     )
 
-    override fun doAction(ctx: ActionContext, doNextAction: () -> Unit) {
+    override fun doAction(ctx: ActionContext) {
         if (nextInt(150) == 0) {
             if (riceveComplimento(ctx.message.from.id)) {
                 ctx.addResponse(ActionResponse.message(complimenti.random()))
@@ -29,7 +29,6 @@ class Cazzate(
                 ctx.addResponse(ActionResponse.message(insulta(ctx)))
             }
         }
-        doNextAction()
     }
 
     // decide se complimentare o insultare a seconda del karma

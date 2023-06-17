@@ -9,7 +9,7 @@ class Fortune : Action, HasHalp {
 
     private val regex = Regex("^!(fortune|quote)", RegexOption.IGNORE_CASE)
 
-    override fun doAction(ctx: ActionContext, doNextAction: () -> Unit) {
+    override fun doAction(ctx: ActionContext) {
         if (regex.containsMatchIn(ctx.message.text)) {
             ctx.addResponse(ActionResponse.message(getFortune()))
         }

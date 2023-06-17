@@ -16,8 +16,7 @@ internal class ParlaSuperTest : BaseTest() {
             message(
                 text = "!parlaSuper questo bot è stupendo!",
                 from = user(id = Users.AVVE.id)
-            ),
-            sgruntBot
+            )
         )
 
         assertThat(botArguments).hasSize(1)
@@ -27,7 +26,7 @@ internal class ParlaSuperTest : BaseTest() {
 
     @Test
     fun testNegative() {
-        parlaSuper.doAction(message("!parlaSuper questo bot è stupendo!"), sgruntBot)
+        parlaSuper.doAction(message("!parlaSuper questo bot è stupendo!"))
 
         assertThat(botArguments).isEmpty()
     }

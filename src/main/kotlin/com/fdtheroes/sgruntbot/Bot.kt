@@ -67,15 +67,8 @@ class Bot(
 
         botConfig.pignolo = nextInt(100) > 90
 
-        val actionsIterator = actions.iterator()
-
         val ctx = ActionContext(message, this::getChatMember)
-        lateinit var doNextAction: () -> Unit
-        doNextAction = {
-            if (actionsIterator.hasNext()) actionsIterator.next().doAction(ctx, doNextAction)
-        }
-
-        actionsIterator.next().doAction(ctx, doNextAction)
+        actions.forEach { it.doAction(ctx) }
 
         ctx.actionResponses.forEach { rispondi(it, message) }
     }
@@ -89,9 +82,11 @@ class Bot(
     }
 
     fun messaggio(actionMessage: ActionResponse) {
-        ActionResponseType.Message -> messaggio(actionMessage.message!!)
-        ActionResponseType.Photo -> photo(actionMessage.inputFile!!)
-        ActionResponseType.Audio -> audio(actionMessage.inputFile!!)
+        when (actionMessage.type) {
+            ActionResponseType.Message -> messaggio(actionMessage.message!!)
+            ActionResponseType.Photo -> photo(actionMessage.inputFile!!)
+            ActionResponseType.Audio -> audio(actionMessage.inputFile!!)
+        }
     }
 
     private fun sgruntyScrive(chatId: Long, actionType: ActionType = ActionType.TYPING) {
@@ -104,6 +99,16 @@ class Bot(
         sleep(3..3)
     }
 
+    private fun messaggio(textmd: String) {
+        execute(
+            SendMessage().apply {
+                this.chatId = botConfig.chatId
+                this.parseMode = ParseMode.HTML
+                this.text = textmd
+            }
+        )
+    }
+
     private fun rispondiMessaggio(message: Message, textmd: String) {
         sgruntyScrive(message.chatId)
         execute(
@@ -112,6 +117,16 @@ class Bot(
                 this.replyToMessageId = message.messageId
                 this.parseMode = ParseMode.HTML
                 this.text = textmd
+            }
+        )
+    }
+
+    private fun photo(photo: InputFile) {
+        execute(
+            SendPhoto().apply {
+                this.chatId = botConfig.chatId
+                this.parseMode = ParseMode.HTML
+                this.photo = photo
             }
         )
     }
@@ -128,6 +143,15 @@ class Bot(
         )
     }
 
+    private fun audio(audio: InputFile) {
+        execute(
+            SendAudio().apply {
+                this.chatId = botConfig.chatId
+                this.audio = audio
+            }
+        )
+    }
+
     private fun rispondiAudio(message: Message, audio: InputFile) {
         sgruntyScrive(message.chatId, ActionType.UPLOADDOCUMENT)
         execute(
@@ -135,7 +159,8 @@ class Bot(
                 this.chatId = message.chat.id.toString()
                 this.replyToMessageId = message.messageId
                 this.audio = audio
-            })
+            }
+        )
     }
 
     @Cacheable(cacheNames = ["userName"])

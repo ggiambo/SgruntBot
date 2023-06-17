@@ -45,7 +45,7 @@ class CheOreSono(
         "meno cinque"
     )
 
-    override fun doAction(ctx: ActionContext, doNextAction: () -> Unit) {
+    override fun doAction(ctx: ActionContext) {
         if (regex.containsMatchIn(ctx.message.text)) {
             ctx.addResponse(ActionResponse.message(oreInLettere()))
         }

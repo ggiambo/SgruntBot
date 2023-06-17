@@ -13,7 +13,7 @@ internal class LastTest : BaseTest() {
     @Test
     fun testPositive() {
         botConfig.lastAuthor = user(Users.GENGY)
-        last.doAction(message("!last"), sgruntBot)
+        last.doAction(message("!last"))
 
         assertThat(botArguments).hasSize(1)
         val sendMessage = botArguments[0] as SendMessage

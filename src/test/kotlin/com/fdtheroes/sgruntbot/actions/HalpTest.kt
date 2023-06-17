@@ -13,7 +13,7 @@ internal class HalpTest : BaseTest() {
 
     @Test
     fun testPositive() {
-        halp.doAction(message("!help"), sgruntBot)
+        halp.doAction(message("!help"))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction

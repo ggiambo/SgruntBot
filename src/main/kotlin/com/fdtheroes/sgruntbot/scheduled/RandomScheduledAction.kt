@@ -45,7 +45,7 @@ abstract class RandomScheduledAction(val sgruntBot: Bot, val botConfig: BotConfi
             return
         }
 
-        sgruntBot.messaggio(text)
+        sgruntBot.messaggio(ActionResponse.message(text))
     }
 
     private fun getLogMessage(delayHr: Duration): String {

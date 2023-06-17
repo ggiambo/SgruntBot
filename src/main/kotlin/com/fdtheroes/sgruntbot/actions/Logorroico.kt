@@ -26,7 +26,7 @@ class Logorroico(
     var lastAuthorId: Long = 0L
     var lastAuthorCount = 0
 
-    override fun doAction(ctx: ActionContext, doNextAction: () -> Unit) {
+    override fun doAction(ctx: ActionContext) {
         if (!botUtils.isMessageInChat(ctx.message)) {
             return
         }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 @Service
 class Respect(private val botUtils: BotUtils) : Action, HasHalp {
 
-    override fun doAction(ctx: ActionContext, doNextAction: () -> Unit) {
+    override fun doAction(ctx: ActionContext) {
         val don = ctx.message.replyToMessage?.from
         if (ctx.message.text == "F" && don != null) {
             ctx.addResponse(ActionResponse.message("Baciamo le mani Don ${botUtils.getUserLink(don)}"))

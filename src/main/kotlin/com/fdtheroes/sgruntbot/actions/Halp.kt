@@ -9,7 +9,7 @@ class Halp(private val halp: List<HasHalp>) : Action {
 
     private val regex = Regex("!help", RegexOption.IGNORE_CASE)
 
-    override fun doAction(ctx: ActionContext, doNextAction: () -> Unit) {
+    override fun doAction(ctx: ActionContext) {
         if (regex.containsMatchIn(ctx.message.text)) {
             val risposta = halp
                 .sortedBy { it.javaClass.simpleName }

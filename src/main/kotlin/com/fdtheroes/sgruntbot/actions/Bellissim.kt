@@ -17,10 +17,9 @@ class Bellissim : Action {
         "IO sono bellissimo! .... quante volte devo ripetermi?",
     )
 
-    override fun doAction(ctx: ActionContext, doNextAction: () -> Unit) {
+    override fun doAction(ctx: ActionContext) {
         if (regex.containsMatchIn(ctx.message.text)) {
             ctx.addResponse(ActionResponse.message(risposte.random()))
         }
-        doNextAction()
     }
 }

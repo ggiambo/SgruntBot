@@ -13,7 +13,7 @@ internal class WikiTest : BaseTest() {
 
     @Test
     fun testPositive() {
-        wiki.doAction(message("!wiki poesia giambica"), sgruntBot)
+        wiki.doAction(message("!wiki poesia giambica"))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -26,7 +26,7 @@ internal class WikiTest : BaseTest() {
 
     @Test
     fun testPositive_accento() {
-        wiki.doAction(message("!wiki fosse ardenne"), sgruntBot)
+        wiki.doAction(message("!wiki fosse ardenne"))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -39,7 +39,7 @@ internal class WikiTest : BaseTest() {
 
     @Test
     fun testNegative() {
-        wiki.doAction(message("!wiki barzuffo"), sgruntBot)
+        wiki.doAction(message("!wiki barzuffo"))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction

@@ -14,7 +14,7 @@ class ParlaSuper(private val botConfig: BotConfig) : Action, HasHalp {
         setOf(RegexOption.IGNORE_CASE, RegexOption.MULTILINE, RegexOption.DOT_MATCHES_ALL)
     )
 
-    override fun doAction(ctx: ActionContext, doNextAction: () -> Unit) {
+    override fun doAction(ctx: ActionContext) {
         val testo = regex.find(ctx.message.text)?.groupValues?.get(1)
         if (testo != null && Users.byId(ctx.message.from.id) != null) {
             ctx.addResponse(ActionResponse.message(testo))

@@ -14,7 +14,7 @@ internal class PorcoDioTest : BaseTest() {
     @Test
     fun testPositive() {
         botConfig.pignolo = true
-        porcoDio.doAction(message(("\tporco dio")), sgruntBot)
+        porcoDio.doAction(message(("\tporco dio")))
 
         assertThat(botArguments).hasSize(2)
         val sendChatAction = botArguments[0] as SendChatAction
@@ -25,7 +25,7 @@ internal class PorcoDioTest : BaseTest() {
 
     @Test
     fun testNegative() {
-        porcoDio.doAction(message(("porco dioh! ")), sgruntBot)
+        porcoDio.doAction(message(("porco dioh! ")))
 
         assertThat(botArguments).isEmpty()
     }

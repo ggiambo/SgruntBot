@@ -13,7 +13,7 @@ class Parla(private val botConfig: BotConfig) : Action, HasHalp {
         setOf(RegexOption.IGNORE_CASE, RegexOption.MULTILINE, RegexOption.DOT_MATCHES_ALL)
     )
 
-    override fun doAction(ctx: ActionContext, doNextAction: () -> Unit) {
+    override fun doAction(ctx: ActionContext) {
         val msg = regex.find(ctx.message.text)?.groupValues?.get(1)
         if (msg != null) {
             ctx.addResponse(ActionResponse.message("Mi dicono di dire: $msg"))

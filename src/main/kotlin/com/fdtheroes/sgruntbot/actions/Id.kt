@@ -9,7 +9,7 @@ class Id : Action, HasHalp {
 
     private val regex = Regex("^!id$", RegexOption.IGNORE_CASE)
 
-    override fun doAction(ctx: ActionContext, doNextAction: () -> Unit) {
+    override fun doAction(ctx: ActionContext) {
         if (regex.matches(ctx.message.text)) {
             ctx.addResponse(ActionResponse.message("Il tuo id: ${ctx.message.from.id}"))
         }

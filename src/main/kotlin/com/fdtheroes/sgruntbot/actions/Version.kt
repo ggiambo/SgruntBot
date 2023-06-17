@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 class Version(buildProperties: BuildProperties) : Action, HasHalp {
 
     private val versionString = "${buildProperties.name}: ${buildProperties.version} (${buildProperties.time})"
-    override fun doAction(ctx: ActionContext, doNextAction: () -> Unit) {
+    override fun doAction(ctx: ActionContext) {
         if (ctx.message.text == "!version") {
             ctx.addResponse(ActionResponse.message(versionString))
         }
