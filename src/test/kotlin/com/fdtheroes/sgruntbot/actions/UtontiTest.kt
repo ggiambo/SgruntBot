@@ -9,9 +9,6 @@ import org.junit.jupiter.api.Test
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.isA
 import org.mockito.kotlin.mock
-import org.telegram.telegrambots.meta.api.methods.ActionType
-import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 class UtontiTest : BaseTest() {
 
@@ -43,7 +40,7 @@ class UtontiTest : BaseTest() {
 
     private fun usersService(): UsersService {
         return mock {
-            on { getAllUsers() } doReturn listOf(
+            on { getAllUsers(isA()) } doReturn listOf(
                 user(),
                 user(Users.AVVE)
             )
