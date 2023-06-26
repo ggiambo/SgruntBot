@@ -9,7 +9,7 @@ class ActionResponse(
 ) {
     companion object {
         fun message(message: String) = ActionResponse(ActionResponseType.Message, message = message)
-        fun photo(inputFile: InputFile) = ActionResponse(ActionResponseType.Photo, inputFile = inputFile)
+        fun photo(caption: String, inputFile: InputFile) = ActionResponse(ActionResponseType.Photo, message = caption, inputFile = inputFile)
         fun audio(inputFile: InputFile) = ActionResponse(ActionResponseType.Audio, inputFile = inputFile)
     }
 

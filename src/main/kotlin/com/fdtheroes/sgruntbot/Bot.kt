@@ -73,10 +73,10 @@ class Bot(
         ctx.actionResponses.forEach { rispondi(it, message) }
     }
 
-    fun rispondi(actionMessage: ActionResponse, message: Message) : Unit {
+    fun rispondi(actionMessage: ActionResponse, message: Message): Unit {
         when (actionMessage.type) {
             ActionResponseType.Message -> rispondiMessaggio(message, actionMessage.message!!)
-            ActionResponseType.Photo -> rispondiPhoto(message, actionMessage.inputFile!!)
+            ActionResponseType.Photo -> rispondiPhoto(message, actionMessage.message!!, actionMessage.inputFile!!)
             ActionResponseType.Audio -> rispondiAudio(message, actionMessage.inputFile!!)
         }
     }
@@ -96,7 +96,7 @@ class Bot(
                 this.setAction(actionType)
             }
         )
-        sleep(3..3)
+        sleep(1..3)
     }
 
     private fun messaggio(textmd: String) {
@@ -131,7 +131,7 @@ class Bot(
         )
     }
 
-    private fun rispondiPhoto(message: Message, photo: InputFile) {
+    private fun rispondiPhoto(message: Message, caption: String, photo: InputFile) {
         sgruntyScrive(message.chatId, ActionType.UPLOADDOCUMENT)
         execute(
             SendPhoto().apply {
@@ -139,6 +139,7 @@ class Bot(
                 this.replyToMessageId = message.messageId
                 this.parseMode = ParseMode.HTML
                 this.photo = photo
+                this.caption = caption
             }
         )
     }

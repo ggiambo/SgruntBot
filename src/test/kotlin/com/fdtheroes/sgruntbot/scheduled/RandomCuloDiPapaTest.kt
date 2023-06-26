@@ -13,6 +13,5 @@ class RandomCuloDiPapaTest : BaseTest() {
         val messageText = randomCuloDiPapa.getMessageText()
 
         assertThat(messageText).isNotEmpty
-        assertThat(botArguments).isEmpty()
     }
 }

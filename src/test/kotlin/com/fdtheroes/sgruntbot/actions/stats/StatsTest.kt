@@ -32,13 +32,11 @@ internal class StatsTest : BaseTest() {
 
     @Test
     fun test_positive() {
-        stats.doAction(
-            actionContext("!stats")
-        )
+        val ctx = actionContext("!stats")
+        stats.doAction(ctx)
 
-        assertThat(botArguments).hasSize(1)
-        val sendPhoto = botArguments[0] as SendPhoto
-        val image = ImageIO.read(sendPhoto.photo.newMediaStream)
+        assertThat(ctx.actionResponses).hasSize(1)
+        val image = ImageIO.read(ctx.actionResponses.first().inputFile!!.newMediaStream)
 
         assertThat(image.type).isEqualTo(BufferedImage.TYPE_3BYTE_BGR)
         assertThat(image.width).isEqualTo(1280)

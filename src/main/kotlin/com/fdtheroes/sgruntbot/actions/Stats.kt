@@ -54,7 +54,7 @@ class Stats(
                 StatsType.ANNO -> statsService.getStatsThisYear()
             }
             val inputFile = getStatsInputFile(stats, "Logorroici di ${tipo.desc}", ctx)
-            ctx.addResponse(ActionResponse.photo(inputFile))
+            ctx.addResponse(ActionResponse.photo("", inputFile))
         }
     }
 

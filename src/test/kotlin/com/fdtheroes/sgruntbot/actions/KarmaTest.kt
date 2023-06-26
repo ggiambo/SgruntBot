@@ -2,6 +2,7 @@ package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BaseTest
 import com.fdtheroes.sgruntbot.Users
+import com.fdtheroes.sgruntbot.actions.models.ActionResponseType
 import com.fdtheroes.sgruntbot.actions.persistence.KarmaService
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -18,13 +19,12 @@ internal class KarmaTest : BaseTest() {
     fun testGetKarma() {
         val karma = Karma(botUtils, karmaService(0, 99))
 
-        karma.doAction(actionContext("!karma"))
+        val ctx = actionContext("!karma")
+        karma.doAction(ctx)
 
-        assertThat(botArguments).hasSize(2)
-        val sendChatAction = botArguments[0] as SendChatAction
-        val sendMessage = botArguments[1] as SendMessage
-        assertThat(sendChatAction.actionType).isEqualTo(ActionType.TYPING)
-        assertThat(sendMessage.text).isEqualTo("""<b><u>Karma Report</u></b>
+        assertThat(ctx.actionResponses).hasSize(1)
+        assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Message)
+        assertThat(ctx.actionResponses.first().message).isEqualTo("""<b><u>Karma Report</u></b>
 
 <pre></pre>""")
     }
@@ -34,13 +34,12 @@ internal class KarmaTest : BaseTest() {
         val karma = Karma(botUtils, karmaService(0, 99))
 
         val replyToMessage = message("Message")
-        karma.doAction(actionContext("+", replyToMessage = replyToMessage))
+        val ctx = actionContext("+", replyToMessage = replyToMessage)
+        karma.doAction(ctx)
 
-        assertThat(botArguments).hasSize(2)
-        val sendChatAction = botArguments[0] as SendChatAction
-        val sendMessage = botArguments[1] as SendMessage
-        assertThat(sendChatAction.actionType).isEqualTo(ActionType.TYPING)
-        assertThat(sendMessage.text).isEqualTo("Ti è stato dato il potere di dare o togliere ad altri, ma non a te stesso")
+        assertThat(ctx.actionResponses).hasSize(1)
+        assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Message)
+        assertThat(ctx.actionResponses.first().message).isEqualTo("Ti è stato dato il potere di dare o togliere ad altri, ma non a te stesso")
     }
 
     @Test
@@ -48,13 +47,12 @@ internal class KarmaTest : BaseTest() {
         val karma = Karma(botUtils, karmaService(0, 99))
 
         val replyToMessage = message("Message", user(Users.DADA))
-        karma.doAction(actionContext("+", replyToMessage = replyToMessage))
+        val ctx = actionContext("+", replyToMessage = replyToMessage)
+        karma.doAction(ctx)
 
-        assertThat(botArguments).hasSize(2)
-        val sendChatAction = botArguments[0] as SendChatAction
-        val sendMessage = botArguments[1] as SendMessage
-        assertThat(sendChatAction.actionType).isEqualTo(ActionType.TYPING)
-        assertThat(sendMessage.text).isEqualTo("Hai terminato i crediti per oggi")
+        assertThat(ctx.actionResponses).hasSize(1)
+        assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Message)
+        assertThat(ctx.actionResponses.first().message).isEqualTo("Hai terminato i crediti per oggi")
     }
 
     @Test
@@ -62,13 +60,12 @@ internal class KarmaTest : BaseTest() {
         val karma = Karma(botUtils, karmaService(10, 99))
 
         val replyToMessage = message("Message", user(Users.DADA))
-        karma.doAction(actionContext("+", replyToMessage = replyToMessage))
+        val ctx = actionContext("+", replyToMessage = replyToMessage)
+        karma.doAction(ctx)
 
-        assertThat(botArguments).hasSize(2)
-        val sendChatAction = botArguments[0] as SendChatAction
-        val sendMessage = botArguments[1] as SendMessage
-        assertThat(sendChatAction.actionType).isEqualTo(ActionType.TYPING)
-        assertThat(sendMessage.text).startsWith("""Karma totale di <a href="tg://user?id=252800958">DADA</a>: 99
+        assertThat(ctx.actionResponses).hasSize(1)
+        assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Message)
+        assertThat(ctx.actionResponses.first().message).startsWith("""Karma totale di <a href="tg://user?id=252800958">DADA</a>: 99
 Crediti di <a href="tg://user?id=42">Pippo</a>: 10""")
     }
 
@@ -77,13 +74,12 @@ Crediti di <a href="tg://user?id=42">Pippo</a>: 10""")
         val karma = Karma(botUtils, karmaService(0, 99))
 
         val replyToMessage = message("Message")
-        karma.doAction(actionContext("-", replyToMessage = replyToMessage))
+        val ctx = actionContext("-", replyToMessage = replyToMessage)
+        karma.doAction(ctx)
 
-        assertThat(botArguments).hasSize(2)
-        val sendChatAction = botArguments[0] as SendChatAction
-        val sendMessage = botArguments[1] as SendMessage
-        assertThat(sendChatAction.actionType).isEqualTo(ActionType.TYPING)
-        assertThat(sendMessage.text).isEqualTo("Ti è stato dato il potere di dare o togliere ad altri, ma non a te stesso")
+        assertThat(ctx.actionResponses).hasSize(1)
+        assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Message)
+        assertThat(ctx.actionResponses.first().message).isEqualTo("Ti è stato dato il potere di dare o togliere ad altri, ma non a te stesso")
     }
 
 
@@ -92,13 +88,12 @@ Crediti di <a href="tg://user?id=42">Pippo</a>: 10""")
         val karma = Karma(botUtils, karmaService(0, 99))
 
         val replyToMessage = message("Message", user(Users.DADA))
-        karma.doAction(actionContext("-", replyToMessage = replyToMessage))
+        val ctx = actionContext("-", replyToMessage = replyToMessage)
+        karma.doAction(ctx)
 
-        assertThat(botArguments).hasSize(2)
-        val sendChatAction = botArguments[0] as SendChatAction
-        val sendMessage = botArguments[1] as SendMessage
-        assertThat(sendChatAction.actionType).isEqualTo(ActionType.TYPING)
-        assertThat(sendMessage.text).isEqualTo("Hai terminato i crediti per oggi")
+        assertThat(ctx.actionResponses).hasSize(1)
+        assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Message)
+        assertThat(ctx.actionResponses.first().message).isEqualTo("Hai terminato i crediti per oggi")
     }
 
 
@@ -107,13 +102,12 @@ Crediti di <a href="tg://user?id=42">Pippo</a>: 10""")
         val karma = Karma(botUtils, karmaService(10, 99))
 
         val replyToMessage = message("Message", user(Users.DADA))
-        karma.doAction(actionContext("-", replyToMessage = replyToMessage))
+        val ctx = actionContext("-", replyToMessage = replyToMessage)
+        karma.doAction(ctx)
 
-        assertThat(botArguments).hasSize(2)
-        val sendChatAction = botArguments[0] as SendChatAction
-        val sendMessage = botArguments[1] as SendMessage
-        assertThat(sendChatAction.actionType).isEqualTo(ActionType.TYPING)
-        assertThat(sendMessage.text).startsWith("""Karma totale di <a href="tg://user?id=252800958">DADA</a>: 99
+        assertThat(ctx.actionResponses).hasSize(1)
+        assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Message)
+        assertThat(ctx.actionResponses.first().message).startsWith("""Karma totale di <a href="tg://user?id=252800958">DADA</a>: 99
 Crediti di <a href="tg://user?id=42">Pippo</a>: 10""")
     }
 

@@ -2,6 +2,7 @@ package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BaseTest
 import com.fdtheroes.sgruntbot.Users
+import com.fdtheroes.sgruntbot.actions.models.ActionResponseType
 import com.fdtheroes.sgruntbot.actions.persistence.UsersService
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -17,27 +18,25 @@ class UtontiTest : BaseTest() {
     @Test
     fun utonti_negative() {
         val utonti = Utonti(botUtils, usersService())
-        val message = actionContext("Blah Banf", user(Users.GENGY))
+        val ctx = actionContext("Blah Banf", user(Users.GENGY))
 
-        utonti.doAction(message)
+        utonti.doAction(ctx)
 
-        assertThat(botArguments).hasSize(0)
+        assertThat(ctx.actionResponses).hasSize(0)
     }
 
     @Test
     fun utonti_positive() {
         val utonti = Utonti(botUtils, usersService())
-        val message = actionContext("!utonti", user(Users.GENGY))
+        val ctx = actionContext("!utonti", user(Users.GENGY))
 
-        utonti.doAction(message)
+        utonti.doAction(ctx)
 
-        assertThat(botArguments).hasSize(2)
-        val sendChatAction = botArguments[0] as SendChatAction
-        val sendMessage = botArguments[1] as SendMessage
-        assertThat(sendChatAction.actionType).isEqualTo(ActionType.TYPING)
-        assertThat(sendMessage.text).startsWith("Utonti di questa ciat")
-        assertThat(sendMessage.text).contains("42: Pippo")
-        assertThat(sendMessage.text).contains("10427888: AVVE")
+        assertThat(ctx.actionResponses).hasSize(1)
+        assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Message)
+        assertThat(ctx.actionResponses.first().message).startsWith("Utonti di questa ciat")
+        assertThat(ctx.actionResponses.first().message).contains("42: Pippo")
+        assertThat(ctx.actionResponses.first().message).contains("10427888: AVVE")
 
     }
 

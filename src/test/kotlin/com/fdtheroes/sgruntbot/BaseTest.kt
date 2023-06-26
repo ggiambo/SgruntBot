@@ -2,6 +2,7 @@ package com.fdtheroes.sgruntbot
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fdtheroes.sgruntbot.actions.models.ActionContext
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.mockito.kotlin.doAnswer
 import org.mockito.kotlin.isA
@@ -11,8 +12,6 @@ import org.telegram.telegrambots.meta.api.objects.Message
 import org.telegram.telegrambots.meta.api.objects.User
 
 open class BaseTest {
-
-    val botArguments = mutableListOf<Any>()
 
     @BeforeEach
     fun resetContext() = botConfig.reset()
@@ -30,14 +29,6 @@ open class BaseTest {
     val mapper = ObjectMapper()
 
     val sgruntBot: Bot = spy(Bot(botConfig, botUtils, emptyList())) {
-        onGeneric { rispondi(isA(), isA()) } doAnswer {
-            botArguments.add(it.arguments.first())
-            Unit
-        }
-        onGeneric { messaggio(isA()) } doAnswer {
-            botArguments.add(it.arguments.first())
-            Unit
-        }
         onGeneric { sleep(isA()) } doAnswer { }
         onGeneric { getChatMember(isA()) } doAnswer {
             User().apply {

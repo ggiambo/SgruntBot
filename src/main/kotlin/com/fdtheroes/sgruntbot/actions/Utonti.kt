@@ -16,7 +16,7 @@ class Utonti(
 
     override fun doAction(ctx: ActionContext) {
         if (regex.matches(ctx.message.text)) {
-            val utonti = usersService.getAllUsers()
+            val utonti = usersService.getAllUsers(ctx.getChatMember)
                 .joinToString(separator = "\n") { "- ${it.id}: ${botUtils.getUserName(it)}" }
             ctx.addResponse(ActionResponse.message("Utonti di questa ciat:\n${utonti}"))
         }

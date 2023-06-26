@@ -20,7 +20,8 @@ class Tappeto : Action, HasHalp {
         if (cosa != null) {
             val chi = if (ctx.message.from.userName != null) ctx.message.from.userName else ctx.message.from.firstName
             val tappeto = alTappeto(chi, cosa)
-            ctx.addResponse(ActionResponse.photo(tappeto))
+            val caption = "$chi manda $cosa al tappeto!"
+            ctx.addResponse(ActionResponse.photo(caption, tappeto))
         }
     }
 
