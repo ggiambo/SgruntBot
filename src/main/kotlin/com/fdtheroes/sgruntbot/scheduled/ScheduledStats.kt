@@ -1,7 +1,6 @@
 package com.fdtheroes.sgruntbot.scheduled
 
 import com.fdtheroes.sgruntbot.Bot
-import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.BotUtils.Companion.toDate
 import com.fdtheroes.sgruntbot.ChartUtils
@@ -20,7 +19,6 @@ import java.util.concurrent.TimeUnit
 
 @Service
 class ScheduledStats(
-    private val botConfig: BotConfig,
     private val sgruntBot: Bot,
     private val botUtils: BotUtils,
     private val statsService: StatsService,
@@ -57,7 +55,7 @@ class ScheduledStats(
                 .groupBy { it.userId }
 
             val inputFile = getStatsInputFile(statsLast15Days)
-            val actionResponse = ActionResponse.photo(inputFile)
+            val actionResponse = ActionResponse.photo("", inputFile)
 
             sgruntBot.messaggio(actionResponse)
         }
