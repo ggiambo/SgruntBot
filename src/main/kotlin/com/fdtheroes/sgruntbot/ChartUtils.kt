@@ -23,7 +23,7 @@ object ChartUtils {
         colorFromString("#6a3d9a"),
     )
 
-    fun getAsInputFile(chart: Chart<*, *>) : InputFile {
+    fun getAsInputFile(chart: Chart<*, *>): InputFile {
         val image = BitmapEncoder.getBufferedImage(chart)
         val os = ByteArrayOutputStream()
         ImageIO.write(image, "png", os)

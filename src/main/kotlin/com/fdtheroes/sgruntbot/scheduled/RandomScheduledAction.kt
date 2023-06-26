@@ -5,8 +5,6 @@ import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import jakarta.annotation.PostConstruct
 import org.slf4j.LoggerFactory
-import org.telegram.telegrambots.meta.api.methods.ParseMode
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import java.time.Duration
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter

@@ -13,5 +13,5 @@ data class Karma(
     var userId: Long,
     var karma: Int = 0,
     @Column("karma_credit") var karmaCredit: Int = dailyKarmaCredit,
-    @Column("credit_updated") var creditUpdated : LocalDate = LocalDate.now()
+    @Column("credit_updated") var creditUpdated: LocalDate = LocalDate.now()
 )

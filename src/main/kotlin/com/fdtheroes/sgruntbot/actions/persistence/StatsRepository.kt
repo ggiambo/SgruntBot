@@ -14,6 +14,6 @@ interface StatsRepository : CrudRepository<Stats, Long> {
     fun findStatsByStatDayBetween(startStatDay: LocalDate, endStatDay: LocalDate): List<Stats>
 
     @Query("select distinct user_id from sgrunt.stats")
-    fun allIds() : List<Long>
+    fun allIds(): List<Long>
 
 }
