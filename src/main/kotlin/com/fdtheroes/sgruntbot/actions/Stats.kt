@@ -3,8 +3,9 @@ package com.fdtheroes.sgruntbot.actions
 import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.ChartUtils
 import com.fdtheroes.sgruntbot.ChartUtils.getAsInputFile
-import com.fdtheroes.sgruntbot.SgruntBot
-import com.fdtheroes.sgruntbot.actions.persistence.Stats
+import com.fdtheroes.sgruntbot.actions.models.ActionContext
+import com.fdtheroes.sgruntbot.actions.models.ActionResponse
+import com.fdtheroes.sgruntbot.actions.models.Stats
 import com.fdtheroes.sgruntbot.actions.persistence.StatsService
 import jakarta.annotation.PostConstruct
 import org.knowm.xchart.PieChart
@@ -12,10 +13,7 @@ import org.knowm.xchart.style.PieStyler
 import org.knowm.xchart.style.theme.GGPlot2Theme
 import org.springframework.context.annotation.Lazy
 import org.springframework.stereotype.Service
-import org.telegram.telegrambots.meta.api.methods.ParseMode
-import org.telegram.telegrambots.meta.api.methods.send.SendPhoto
 import org.telegram.telegrambots.meta.api.objects.InputFile
-import org.telegram.telegrambots.meta.api.objects.Message
 
 @Lazy
 @Service
@@ -36,36 +34,31 @@ class Stats(
         pieChart.styler.seriesColors = ChartUtils.seriesColors
     }
 
-    override fun doAction(message: Message, sgruntBot: SgruntBot) {
-        if (!botUtils.isMessageInChat(message)) {
+    override fun doAction(ctx: ActionContext) {
+        if (!botUtils.isMessageInChat(ctx.message)) {
             return
         }
 
-        if (message.from.isBot) {
+        if (ctx.message.from.isBot) {
             return
         }
 
-        statsService.increaseStats(message.from.id)
+        statsService.increaseStats(ctx.message.from.id)
 
-        if (regex.matches(message.text)) {
-            val tipo = StatsType.getByType(regex.find(message.text)?.groupValues?.get(1))
+        if (regex.matches(ctx.message.text)) {
+            val tipo = StatsType.getByType(regex.find(ctx.message.text)?.groupValues?.get(1))
             val stats = when (tipo) {
                 StatsType.GIORNO -> statsService.getStatsToday()
                 StatsType.SETTIMANA -> statsService.getStatsThisWeek()
                 StatsType.MESE -> statsService.getStatsThisMonth()
                 StatsType.ANNO -> statsService.getStatsThisYear()
             }
-            val inputFile = getStatsInputFile(stats, "Logorroici di ${tipo.desc}", sgruntBot)
-
-            val sendPhoto = SendPhoto()
-            sendPhoto.chatId = message.chat.id.toString()
-            sendPhoto.parseMode = ParseMode.HTML
-            sendPhoto.photo = inputFile
-            sgruntBot.rispondi(sendPhoto)
+            val inputFile = getStatsInputFile(stats, "Logorroici di ${tipo.desc}", ctx)
+            ctx.addResponse(ActionResponse.photo("", inputFile))
         }
     }
 
-    private fun getStatsInputFile(stats: List<Stats>, chartTitle: String, sgruntBot: SgruntBot): InputFile {
+    private fun getStatsInputFile(stats: List<Stats>, chartTitle: String, ctx: ActionContext): InputFile {
         val totalMessages = stats.sumOf { it.messages }
         pieChart.title = chartTitle
         pieChart.seriesMap.clear()
@@ -73,7 +66,7 @@ class Stats(
             .sortedBy { it.messages }
             .asReversed()
             .forEach { stat ->
-                val userName = botUtils.getUserName(sgruntBot.getChatMember(stat.userId))
+                val userName = botUtils.getUserName(ctx.getChatMember(stat.userId))
                 val percentage = getPercentage(stat.messages, totalMessages)
                 val name = "$userName $percentage%"
                 pieChart.addSeries(name, stat.messages)

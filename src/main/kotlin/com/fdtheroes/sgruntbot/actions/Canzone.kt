@@ -1,13 +1,10 @@
 package com.fdtheroes.sgruntbot.actions
 
-import com.fdtheroes.sgruntbot.SgruntBot
+import com.fdtheroes.sgruntbot.actions.models.ActionContext
+import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
-import org.telegram.telegrambots.meta.api.methods.ActionType
-import org.telegram.telegrambots.meta.api.methods.send.SendAudio
-import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
 import org.telegram.telegrambots.meta.api.objects.InputFile
-import org.telegram.telegrambots.meta.api.objects.Message
 import java.io.File
 import java.nio.file.Path
 import kotlin.io.path.Path
@@ -30,29 +27,20 @@ class Canzone : Action, HasHalp {
         }
     }
 
-    override fun doAction(message: Message, sgruntBot: SgruntBot) {
-        val canzone = regex.find(message.text)?.groupValues?.get(1)
+    override fun doAction(ctx: ActionContext) {
+        val canzone = regex.find(ctx.message.text)?.groupValues?.get(1)
         if (canzone != null) {
-            val sendChatAction = SendChatAction()
-            sendChatAction.setChatId(message.chatId)
-            sendChatAction.setAction(ActionType.UPLOADDOCUMENT)
-            sgruntBot.rispondi(sendChatAction)
             val fileName = fetch(canzone)
             if (fileName == null) {
-                sgruntBot.rispondi(message, "Non ci riesco.")
+                ctx.addResponse(ActionResponse.message("Non ci riesco."))
                 return
             }
             val file = destPath.resolve(fileName).toFile()
             if (file.exists()) {
                 log.info("canzone da ${getSize(file)}")
             }
-
-            val sendAudio = SendAudio()
-            sendAudio.chatId = message.chat.id.toString()
-            sendAudio.replyToMessageId = message.messageId
-            sendAudio.audio = InputFile(file, fileName)
-
-            sgruntBot.rispondi(sendAudio).thenApply { file.delete() }
+            val audio = InputFile(file, fileName)
+            ctx.addResponse(ActionResponse.audio(audio))
         }
     }
 

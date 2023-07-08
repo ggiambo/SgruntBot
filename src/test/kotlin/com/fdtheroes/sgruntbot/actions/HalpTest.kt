@@ -1,7 +1,7 @@
 package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BaseTest
-import com.fdtheroes.sgruntbot.Users
+import com.fdtheroes.sgruntbot.actions.models.ActionResponseType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.telegram.telegrambots.meta.api.methods.ActionType
@@ -14,13 +14,12 @@ internal class HalpTest : BaseTest() {
 
     @Test
     fun testPositive() {
-        halp.doAction(message("!help"), sgruntBot)
+        val ctx = actionContext("!help")
+        halp.doAction(ctx)
 
-        assertThat(botArguments).hasSize(2)
-        val sendChatAction = botArguments[0] as SendChatAction
-        val sendMessage = botArguments[1] as SendMessage
-        assertThat(sendChatAction.actionType).isEqualTo(ActionType.TYPING)
-        assertThat(sendMessage.text).contains("Dummy Halp")
+        assertThat(ctx.actionResponses).hasSize(1)
+        assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Message)
+        assertThat(ctx.actionResponses.first().message).contains("Dummy Halp")
     }
 
 }

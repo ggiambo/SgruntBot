@@ -1,8 +1,8 @@
 package com.fdtheroes.sgruntbot.actions
 
-import com.fdtheroes.sgruntbot.SgruntBot
+import com.fdtheroes.sgruntbot.actions.models.ActionContext
+import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import org.springframework.stereotype.Service
-import org.telegram.telegrambots.meta.api.objects.Message
 import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
 import java.util.*
@@ -14,16 +14,16 @@ class Aes : Action, HasHalp {
 
     private val regex = Regex("^!aes(d?) ([^ ]+) (.*)$")
 
-    override fun doAction(message: Message, sgruntBot: SgruntBot) {
-        val groupValues = regex.find(message.text)?.groupValues
+    override fun doAction(ctx: ActionContext) {
+        val groupValues = regex.find(ctx.message.text)?.groupValues
         if (groupValues?.size == 4) {
             val decrypt = groupValues[1]
             val key = groupValues[2]
             val body = groupValues[3]
             if (decrypt.isEmpty()) {
-                sgruntBot.rispondi(message, encrypt(key, body))
+                ctx.addResponse(ActionResponse.message(encrypt(key, body)))
             } else {
-                sgruntBot.rispondi(message, decrypt(key, body))
+                ctx.addResponse(ActionResponse.message(decrypt(key, body)))
             }
         }
     }

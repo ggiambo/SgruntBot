@@ -1,9 +1,9 @@
 package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BotUtils
-import com.fdtheroes.sgruntbot.SgruntBot
+import com.fdtheroes.sgruntbot.actions.models.ActionContext
+import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import org.springframework.stereotype.Service
-import org.telegram.telegrambots.meta.api.objects.Message
 import kotlin.random.Random
 
 @Service
@@ -26,12 +26,12 @@ class Logorroico(
     var lastAuthorId: Long = 0L
     var lastAuthorCount = 0
 
-    override fun doAction(message: Message, sgruntBot: SgruntBot) {
-        if (!botUtils.isMessageInChat(message)) {
+    override fun doAction(ctx: ActionContext) {
+        if (!botUtils.isMessageInChat(ctx.message)) {
             return
         }
 
-        val authorId = message.from.id
+        val authorId = ctx.message.from.id
         if (lastAuthorId == 0L || lastAuthorId == authorId) {
             lastAuthorCount++
         } else {
@@ -41,7 +41,7 @@ class Logorroico(
         // dal settimo messaggio di seguito, probabilità 20% di essere logorroico
         if (lastAuthorCount >= 7 && Random.nextInt(5) == 0) {
             lastAuthorCount = 0
-            sgruntBot.rispondi(message, risposte.random())
+            ctx.addResponse(ActionResponse.message(risposte.random()))
         }
 
         lastAuthorId = authorId

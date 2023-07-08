@@ -1,4 +1,4 @@
-package com.fdtheroes.sgruntbot.actions.persistence
+package com.fdtheroes.sgruntbot.actions.models
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Column

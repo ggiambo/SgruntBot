@@ -2,11 +2,9 @@ package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BaseTest
 import com.fdtheroes.sgruntbot.Users
+import com.fdtheroes.sgruntbot.actions.models.ActionResponseType
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
-import org.telegram.telegrambots.meta.api.methods.ActionType
-import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 internal class RespectTest : BaseTest() {
 
@@ -14,26 +12,23 @@ internal class RespectTest : BaseTest() {
 
     @Test
     fun testPositive() {
-        respect.doAction(
-            message(
-                text = "F",
-                replyToMessage = message(text = "whatever", from = user(id = Users.AVVE.id, userName = "AvveFaTutti"))
-            ),
-            sgruntBot
+        val ctx = actionContext(
+            text = "F",
+            replyToMessage = message(text = "whatever", from = user(id = Users.AVVE.id, userName = "AvveFaTutti"))
         )
+        respect.doAction(ctx)
 
-        Assertions.assertThat(botArguments).hasSize(2)
-        val sendChatAction = botArguments[0] as SendChatAction
-        val sendMessage = botArguments[1] as SendMessage
-        Assertions.assertThat(sendChatAction.actionType).isEqualTo(ActionType.TYPING)
-        Assertions.assertThat(sendMessage.text)
+        Assertions.assertThat(ctx.actionResponses).hasSize(1)
+        Assertions.assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Message)
+        Assertions.assertThat(ctx.actionResponses.first().message)
             .isEqualTo("""Baciamo le mani Don <a href="tg://user?id=10427888">AvveFaTutti</a>""")
     }
 
     @Test
     fun testNegative() {
-        respect.doAction(message("F..anculo"), sgruntBot)
+        val ctx = actionContext("F..anculo")
+        respect.doAction(ctx)
 
-        Assertions.assertThat(botArguments).isEmpty()
+        Assertions.assertThat(ctx.actionResponses).isEmpty()
     }
 }

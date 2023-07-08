@@ -2,6 +2,8 @@ package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BaseTest
 import com.fdtheroes.sgruntbot.Users
+import com.fdtheroes.sgruntbot.actions.models.ActionResponse
+import com.fdtheroes.sgruntbot.actions.models.ActionResponseType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.telegram.telegrambots.meta.api.methods.ActionType
@@ -14,30 +16,29 @@ internal class CoccolinoTest : BaseTest() {
 
     @Test
     fun testPositive_1() {
-        coccolino.doAction(message("coccolo", from = user(id = Users.SUORA.id)), sgruntBot)
+        val ctx = actionContext("coccolo", from = user(id = Users.SUORA.id))
+        coccolino.doAction(ctx)
 
-        assertThat(botArguments).hasSize(2)
-        val sendChatAction = botArguments[0] as SendChatAction
-        val sendMessage = botArguments[1] as SendMessage
-        assertThat(sendChatAction.actionType).isEqualTo(ActionType.TYPING)
-        assertThat(sendMessage.text).isEqualTo("Non chiamarmi così davanti a tutti!")
+        assertThat(ctx.actionResponses).hasSize(1)
+        assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Message)
+        assertThat(ctx.actionResponses.first().message).isEqualTo("Non chiamarmi così davanti a tutti!")
     }
 
     @Test
     fun testPositive_2() {
-        coccolino.doAction(message("coccolino", from = user(id = Users.SUORA.id)), sgruntBot)
+        val ctx = actionContext("coccolino", from = user(id = Users.SUORA.id))
+        coccolino.doAction(ctx)
 
-        assertThat(botArguments).hasSize(2)
-        val sendChatAction = botArguments[0] as SendChatAction
-        val sendMessage = botArguments[1] as SendMessage
-        assertThat(sendChatAction.actionType).isEqualTo(ActionType.TYPING)
-        assertThat(sendMessage.text).isEqualTo("Non chiamarmi così davanti a tutti!")
+        assertThat(ctx.actionResponses).hasSize(1)
+        assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Message)
+        assertThat(ctx.actionResponses.first().message).isEqualTo("Non chiamarmi così davanti a tutti!")
     }
 
     @Test
     fun testNegative() {
-        coccolino.doAction(message("coccolino", from = user(id = Users.GENGY.id)), sgruntBot)
+        val ctx = actionContext("coccolino", from = user(id = Users.GENGY.id))
+        coccolino.doAction(ctx)
 
-        assertThat(botArguments).isEmpty()
+        assertThat(ctx.actionResponses).isEmpty()
     }
 }

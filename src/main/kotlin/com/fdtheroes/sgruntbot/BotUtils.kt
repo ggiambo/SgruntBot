@@ -46,11 +46,11 @@ class BotUtils(private val botConfig: BotConfig) {
 
     fun textFromURL(url: String, params: String? = null, headers: List<Pair<String, String>> = emptyList()): String {
         return URL(String.format(url, params))
-                .openConnection(proxy)
-                .apply { headers.forEach { setRequestProperty(it.first, it.second) } }
-                .getInputStream()
-                .readAllBytes()
-                .decodeToString()
+            .openConnection(proxy)
+            .apply { headers.forEach { setRequestProperty(it.first, it.second) } }
+            .getInputStream()
+            .readAllBytes()
+            .decodeToString()
     }
 
     private fun initProxy(options: DefaultBotOptions): Proxy {

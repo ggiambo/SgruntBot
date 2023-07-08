@@ -1,11 +1,10 @@
 package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BotConfig
-import com.fdtheroes.sgruntbot.SgruntBot
 import com.fdtheroes.sgruntbot.Users
+import com.fdtheroes.sgruntbot.actions.models.ActionContext
+import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import org.springframework.stereotype.Service
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage
-import org.telegram.telegrambots.meta.api.objects.Message
 
 @Service
 class ParlaSuper(private val botConfig: BotConfig) : Action, HasHalp {
@@ -15,11 +14,11 @@ class ParlaSuper(private val botConfig: BotConfig) : Action, HasHalp {
         setOf(RegexOption.IGNORE_CASE, RegexOption.MULTILINE, RegexOption.DOT_MATCHES_ALL)
     )
 
-    override fun doAction(message: Message, sgruntBot: SgruntBot) {
-        val testo = regex.find(message.text)?.groupValues?.get(1)
-        if (testo != null && Users.byId(message.from.id) != null) {
-            sgruntBot.rispondi(SendMessage(botConfig.chatId.toString(), testo))
-            botConfig.lastSuper = message.from
+    override fun doAction(ctx: ActionContext) {
+        val testo = regex.find(ctx.message.text)?.groupValues?.get(1)
+        if (testo != null && Users.byId(ctx.message.from.id) != null) {
+            ctx.addResponse(ActionResponse.message(testo))
+            botConfig.lastSuper = ctx.message.from
         }
     }
 

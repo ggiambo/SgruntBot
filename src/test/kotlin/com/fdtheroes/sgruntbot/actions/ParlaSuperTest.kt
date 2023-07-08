@@ -2,9 +2,9 @@ package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BaseTest
 import com.fdtheroes.sgruntbot.Users
+import com.fdtheroes.sgruntbot.actions.models.ActionResponseType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 internal class ParlaSuperTest : BaseTest() {
 
@@ -12,24 +12,20 @@ internal class ParlaSuperTest : BaseTest() {
 
     @Test
     fun testPositive() {
-        parlaSuper.doAction(
-            message(
-                text = "!parlaSuper questo bot è stupendo!",
-                from = user(id = Users.AVVE.id)
-            ),
-            sgruntBot
-        )
+        val ctx = actionContext(text = "!parlaSuper questo bot è stupendo!", from = user(id = Users.AVVE.id))
+        parlaSuper.doAction(ctx)
 
-        assertThat(botArguments).hasSize(1)
-        val sendMessage = botArguments[0] as SendMessage
-        assertThat(sendMessage.text).isEqualTo("questo bot è stupendo!")
+        assertThat(ctx.actionResponses).hasSize(1)
+        assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Message)
+        assertThat(ctx.actionResponses.first().message).isEqualTo("questo bot è stupendo!")
     }
 
     @Test
     fun testNegative() {
-        parlaSuper.doAction(message("!parlaSuper questo bot è stupendo!"), sgruntBot)
+        val ctx = actionContext("!parlaSuper questo bot è stupendo!")
+        parlaSuper.doAction(ctx)
 
-        assertThat(botArguments).isEmpty()
+        assertThat(ctx.actionResponses).isEmpty()
     }
 
 }

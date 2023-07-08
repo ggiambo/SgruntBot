@@ -15,6 +15,5 @@ class RandomFortuneTest : BaseTest() {
         val messageText = randomFortune.getMessageText()
 
         assertThat(messageText).isNotEmpty
-        assertThat(botArguments).isEmpty()
     }
 }

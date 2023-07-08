@@ -18,6 +18,5 @@ class RandomSloganTest : BaseTest() {
 
         val seuLink = botUtils.getUserLink(botConfig.lastAuthor)
         assertThat(messageText).contains(seuLink)
-        assertThat(botArguments).isEmpty()
     }
 }

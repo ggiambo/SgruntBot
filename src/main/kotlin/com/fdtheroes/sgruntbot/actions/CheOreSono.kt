@@ -1,8 +1,8 @@
 package com.fdtheroes.sgruntbot.actions
 
-import com.fdtheroes.sgruntbot.SgruntBot
+import com.fdtheroes.sgruntbot.actions.models.ActionContext
+import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import org.springframework.stereotype.Service
-import org.telegram.telegrambots.meta.api.objects.Message
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -45,9 +45,9 @@ class CheOreSono(
         "meno cinque"
     )
 
-    override fun doAction(message: Message, sgruntBot: SgruntBot) {
-        if (regex.containsMatchIn(message.text)) {
-            sgruntBot.rispondi(message, oreInLettere())
+    override fun doAction(ctx: ActionContext) {
+        if (regex.containsMatchIn(ctx.message.text)) {
+            ctx.addResponse(ActionResponse.message(oreInLettere()))
         }
     }
 

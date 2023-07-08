@@ -1,28 +1,29 @@
 package com.fdtheroes.sgruntbot
 
 import com.fdtheroes.sgruntbot.actions.Action
+import com.fdtheroes.sgruntbot.actions.models.ActionContext
+import com.fdtheroes.sgruntbot.actions.models.ActionResponse
+import com.fdtheroes.sgruntbot.actions.models.ActionResponseType
 import jakarta.annotation.PostConstruct
+import kotlinx.coroutines.*
 import org.slf4j.LoggerFactory
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.bots.TelegramLongPollingBot
 import org.telegram.telegrambots.meta.TelegramBotsApi
 import org.telegram.telegrambots.meta.api.methods.ActionType
-import org.telegram.telegrambots.meta.api.methods.BotApiMethod
 import org.telegram.telegrambots.meta.api.methods.ParseMode
 import org.telegram.telegrambots.meta.api.methods.groupadministration.GetChatMember
 import org.telegram.telegrambots.meta.api.methods.send.SendAudio
 import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto
+import org.telegram.telegrambots.meta.api.objects.InputFile
 import org.telegram.telegrambots.meta.api.objects.Message
 import org.telegram.telegrambots.meta.api.objects.Update
 import org.telegram.telegrambots.meta.api.objects.User
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession
-import java.io.Serializable
 import java.time.LocalDateTime
-import java.util.concurrent.CompletableFuture
-import kotlin.concurrent.thread
 import kotlin.random.Random
 import kotlin.random.Random.Default.nextInt
 
@@ -31,10 +32,11 @@ class Bot(
     private val botConfig: BotConfig,
     private val botUtils: BotUtils,
     private val actions: List<Action>,
-) : TelegramLongPollingBot(botConfig.defaultBotOptions, botConfig.token), SgruntBot {
+) : TelegramLongPollingBot(botConfig.defaultBotOptions, botConfig.token) {
 
     private val log = LoggerFactory.getLogger(this.javaClass)
     private val lastAuthorRegex = Regex("^!last\$", RegexOption.IGNORE_CASE)
+    val coroutineScope = CoroutineScope(SupervisorJob())
 
     @PostConstruct
     fun postConstruct() {
@@ -67,50 +69,107 @@ class Bot(
 
         botConfig.pignolo = nextInt(100) > 90
 
-        actions.forEach {
-            thread(start = true, name = it::class.simpleName) {
-                it.doAction(message, this)
-            }
+        coroutineScope.launch {
+            val ctx = ActionContext(message, this@Bot::getChatMember)
+            actions.forEach { it.doAction(ctx) }
+
+            ctx.actionResponses.forEach { rispondi(it, message) }
         }
     }
 
-    override fun rispondiAsText(message: Message, text: String) {
-        sleep(0..5)
-        val reply = SendMessage()
-        reply.chatId = message.chatId.toString()
-        reply.text = text
-        reply.replyToMessageId = message.messageId
-        rispondi(reply)
+    fun rispondi(actionMessage: ActionResponse, message: Message): Unit {
+        when (actionMessage.type) {
+            ActionResponseType.Message -> rispondiMessaggio(message, actionMessage.message!!)
+            ActionResponseType.Photo -> rispondiPhoto(message, actionMessage.message!!, actionMessage.inputFile!!)
+            ActionResponseType.Audio -> rispondiAudio(message, actionMessage.inputFile!!)
+        }
     }
 
-    override fun rispondi(message: Message, textmd: String) {
-        val sendChatAction = SendChatAction()
-        sendChatAction.setChatId(message.chatId)
-        sendChatAction.setAction(ActionType.TYPING)
-        rispondi(sendChatAction)
-        sleep(3..5)
-        val reply = SendMessage()
-        reply.chatId = message.chat.id.toString()
-        reply.replyToMessageId = message.messageId
-        reply.parseMode = ParseMode.HTML
-        reply.text = textmd
-        rispondi(reply)
+    fun messaggio(actionMessage: ActionResponse) {
+        when (actionMessage.type) {
+            ActionResponseType.Message -> messaggio(actionMessage.message!!)
+            ActionResponseType.Photo -> photo(actionMessage.inputFile!!)
+            ActionResponseType.Audio -> audio(actionMessage.inputFile!!)
+        }
     }
 
-    override fun <T : Serializable, M : BotApiMethod<T>> rispondi(message: M): CompletableFuture<T>? {
-        return executeAsync(message)
+    private fun sgruntyScrive(chatId: Long, actionType: ActionType = ActionType.TYPING) {
+        execute(
+            SendChatAction().apply {
+                this.setChatId(chatId)
+                this.setAction(actionType)
+            }
+        )
+        sleep(1..3)
     }
 
-    override fun rispondi(sendAudio: SendAudio): CompletableFuture<Message> {
-        return executeAsync(sendAudio)
+    private fun messaggio(textmd: String) {
+        execute(
+            SendMessage().apply {
+                this.chatId = botConfig.chatId
+                this.parseMode = ParseMode.HTML
+                this.text = textmd
+            }
+        )
     }
 
-    override fun rispondi(sendPhoto: SendPhoto): CompletableFuture<Message> {
-        return executeAsync(sendPhoto)
+    private fun rispondiMessaggio(message: Message, textmd: String) {
+        sgruntyScrive(message.chatId)
+        execute(
+            SendMessage().apply {
+                this.chatId = message.chat.id.toString()
+                this.replyToMessageId = message.messageId
+                this.parseMode = ParseMode.HTML
+                this.text = textmd
+            }
+        )
+    }
+
+    private fun photo(photo: InputFile) {
+        execute(
+            SendPhoto().apply {
+                this.chatId = botConfig.chatId
+                this.parseMode = ParseMode.HTML
+                this.photo = photo
+            }
+        )
+    }
+
+    private fun rispondiPhoto(message: Message, caption: String, photo: InputFile) {
+        sgruntyScrive(message.chatId, ActionType.UPLOADDOCUMENT)
+        execute(
+            SendPhoto().apply {
+                this.chatId = message.chat.id.toString()
+                this.replyToMessageId = message.messageId
+                this.parseMode = ParseMode.HTML
+                this.photo = photo
+                this.caption = caption
+            }
+        )
+    }
+
+    private fun audio(audio: InputFile) {
+        execute(
+            SendAudio().apply {
+                this.chatId = botConfig.chatId
+                this.audio = audio
+            }
+        )
+    }
+
+    private fun rispondiAudio(message: Message, audio: InputFile) {
+        sgruntyScrive(message.chatId, ActionType.UPLOADDOCUMENT)
+        execute(
+            SendAudio().apply {
+                this.chatId = message.chat.id.toString()
+                this.replyToMessageId = message.messageId
+                this.audio = audio
+            }
+        )
     }
 
     @Cacheable(cacheNames = ["userName"])
-    override fun getChatMember(userId: Long): User? {
+    fun getChatMember(userId: Long): User? {
         val getChatMember = GetChatMember().apply {
             this.chatId = botConfig.chatId
             this.userId = userId

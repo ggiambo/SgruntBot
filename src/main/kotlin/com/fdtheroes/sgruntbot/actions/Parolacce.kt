@@ -2,9 +2,9 @@ package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.BotUtils
-import com.fdtheroes.sgruntbot.SgruntBot
+import com.fdtheroes.sgruntbot.actions.models.ActionContext
+import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import org.springframework.stereotype.Service
-import org.telegram.telegrambots.meta.api.objects.Message
 
 @Service
 class Parolacce(private val botUtils: BotUtils, private val botConfig: BotConfig) : Action {
@@ -14,10 +14,10 @@ class Parolacce(private val botUtils: BotUtils, private val botConfig: BotConfig
         RegexOption.IGNORE_CASE
     )
 
-    override fun doAction(message: Message, sgruntBot: SgruntBot) {
-        if (botConfig.pignolo && regex.containsMatchIn(message.text)) {
-            val userLink = botUtils.getUserLink(message.from)
-            sgruntBot.rispondi(message, getTesto(userLink))
+    override fun doAction(ctx: ActionContext) {
+        if (botConfig.pignolo && regex.containsMatchIn(ctx.message.text)) {
+            val userLink = botUtils.getUserLink(ctx.message.from)
+            ctx.addResponse(ActionResponse.message(getTesto(userLink)))
         }
     }
 

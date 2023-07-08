@@ -2,7 +2,7 @@ package com.fdtheroes.sgruntbot.actions.stats
 
 import com.fdtheroes.sgruntbot.BaseTest
 import com.fdtheroes.sgruntbot.Users
-import com.fdtheroes.sgruntbot.actions.persistence.Stats
+import com.fdtheroes.sgruntbot.actions.models.Stats
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.doReturn
@@ -32,14 +32,11 @@ internal class StatsTest : BaseTest() {
 
     @Test
     fun test_positive() {
-        stats.doAction(
-            message("!stats"),
-            sgruntBot
-        )
+        val ctx = actionContext("!stats")
+        stats.doAction(ctx)
 
-        assertThat(botArguments).hasSize(1)
-        val sendPhoto = botArguments[0] as SendPhoto
-        val image = ImageIO.read(sendPhoto.photo.newMediaStream)
+        assertThat(ctx.actionResponses).hasSize(1)
+        val image = ImageIO.read(ctx.actionResponses.first().inputFile!!.newMediaStream)
 
         assertThat(image.type).isEqualTo(BufferedImage.TYPE_3BYTE_BGR)
         assertThat(image.width).isEqualTo(1280)

@@ -1,27 +1,24 @@
 package com.fdtheroes.sgruntbot.actions
 
-import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.BotUtils
-import com.fdtheroes.sgruntbot.SgruntBot
+import com.fdtheroes.sgruntbot.actions.models.ActionContext
+import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import com.fdtheroes.sgruntbot.actions.persistence.UsersService
 import org.springframework.stereotype.Service
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage
-import org.telegram.telegrambots.meta.api.objects.Message
 
 @Service
 class Utonti(
     private val botUtils: BotUtils,
-    private val botConfig: BotConfig,
     private val usersService: UsersService,
 ) : Action, HasHalp {
 
     private val regex = Regex("^!utonti$", RegexOption.IGNORE_CASE)
 
-    override fun doAction(message: Message, sgruntBot: SgruntBot) {
-        if (regex.matches(message.text)) {
-            val utonti = usersService.getAllUsers(sgruntBot)
+    override fun doAction(ctx: ActionContext) {
+        if (regex.matches(ctx.message.text)) {
+            val utonti = usersService.getAllUsers(ctx.getChatMember)
                 .joinToString(separator = "\n") { "- ${it.id}: ${botUtils.getUserName(it)}" }
-            sgruntBot.rispondi(message, "Utonti di questa ciat:\n${utonti}")
+            ctx.addResponse(ActionResponse.message("Utonti di questa ciat:\n${utonti}"))
         }
     }
 

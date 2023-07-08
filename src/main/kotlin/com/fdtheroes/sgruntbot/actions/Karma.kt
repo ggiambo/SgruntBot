@@ -1,10 +1,12 @@
 package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BotUtils
-import com.fdtheroes.sgruntbot.SgruntBot
+import com.fdtheroes.sgruntbot.actions.models.ActionContext
+import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import com.fdtheroes.sgruntbot.actions.persistence.KarmaService
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.Message
+import org.telegram.telegrambots.meta.api.objects.User
 import kotlin.random.Random.Default.nextInt
 
 @Service
@@ -13,16 +15,16 @@ class Karma(
     private val karmaService: KarmaService,
 ) : Action, HasHalp {
 
-    override fun doAction(message: Message, sgruntBot: SgruntBot) {
-        val ricevente = message.replyToMessage?.from?.id
-        if (message.text == "+" && ricevente != null) {
-            giveTakeKarma(message, sgruntBot, ricevente, Int::inc)
+    override fun doAction(ctx: ActionContext) {
+        val ricevente = ctx.message.replyToMessage?.from?.id
+        if (ctx.message.text == "+" && ricevente != null) {
+            giveTakeKarma(ctx, ricevente, Int::inc)
         }
-        if (message.text == "-" && ricevente != null) {
-            giveTakeKarma(message, sgruntBot, ricevente, Int::dec)
+        if (ctx.message.text == "-" && ricevente != null) {
+            giveTakeKarma(ctx, ricevente, Int::dec)
         }
-        if (message.text == "!karma") {
-            sgruntBot.rispondi(message, testoKarmaReport(sgruntBot))
+        if (ctx.message.text == "!karma") {
+            ctx.addResponse(ActionResponse.message(testoKarmaReport(ctx)))
         }
     }
 
@@ -33,14 +35,13 @@ class Karma(
         """.trimIndent()
 
     private fun giveTakeKarma(
-        message: Message,
-        sgruntBot: SgruntBot,
+        ctx: ActionContext,
         ricevente: Long,
         newKarma: (oldKarma: Int) -> Int
     ) {
-        val donatore = message.from.id
+        val donatore = ctx.message.from.id
         if (donatore == ricevente) {
-            sgruntBot.rispondi(message, "Ti è stato dato il potere di dare o togliere ad altri, ma non a te stesso")
+            ctx.addResponse(ActionResponse.message("Ti è stato dato il potere di dare o togliere ad altri, ma non a te stesso"))
             return
         }
 
@@ -48,29 +49,29 @@ class Karma(
         karmaService.precheck(ricevente)
 
         if (karmaService.getKarmaCredit(donatore) < 1) {
-            sgruntBot.rispondi(message, "Hai terminato i crediti per oggi")
+            ctx.addResponse(ActionResponse.message("Hai terminato i crediti per oggi"))
             return
         }
 
         karmaService.takeGiveKarma(donatore, ricevente, newKarma)
 
-        val riceventeLink = botUtils.getUserLink(message.replyToMessage.from)
-        val donatoreLink = botUtils.getUserLink(message.from)
+        val riceventeLink = botUtils.getUserLink(ctx.message.replyToMessage.from)
+        val donatoreLink = botUtils.getUserLink(ctx.message.from)
         val karma = karmaService.getKarma(ricevente)
         val crediti = karmaService.getKarmaCredit(donatore)
         var karmaMessage = "Karma totale di $riceventeLink: $karma\nCrediti di $donatoreLink: $crediti"
 
         if (nextInt(5) == 0) { // 20%
-            val karmaRoulette = karmaRoulette(message, newKarma)
+            val karmaRoulette = karmaRoulette(ctx.message, newKarma)
             karmaMessage = karmaMessage.plus("\n\n$karmaRoulette")
         }
 
         if (nextInt(5) == 0) { // 20%
-            val creditRoulette = creditRoulette(message)
+            val creditRoulette = creditRoulette(ctx.message)
             karmaMessage = karmaMessage.plus("\n\n$creditRoulette")
         }
 
-        sgruntBot.rispondi(message, karmaMessage)
+        ctx.addResponse(ActionResponse.message(karmaMessage))
     }
 
     private fun karmaRoulette(message: Message, newKarma: (oldKarma: Int) -> Int): String {
@@ -87,13 +88,13 @@ class Karma(
         return "<b>Creditroulette</b> ! Hai vinto un credito, ora sei a quota $credit"
     }
 
-    fun testoKarmaReport(sgruntBot: SgruntBot): String {
+    fun testoKarmaReport(ctx: ActionContext): String {
         val karmas = karmaService.getKarmas()
             .sortedByDescending { it.second }
-            .map { "${getUserName(it.first, sgruntBot).padEnd(20)}%3d".format(it.second) }
+            .map { "${getUserName(it.first, ctx.getChatMember).padEnd(20)}%3d".format(it.second) }
             .joinToString("\n")
         return "<b><u>Karma Report</u></b>\n\n<pre>${karmas}</pre>"
     }
 
-    private fun getUserName(userId: Long, sgruntBot: SgruntBot) = botUtils.getUserName(sgruntBot.getChatMember(userId))
+    private fun getUserName(userId: Long, getChatMember: (Long) -> User?) = botUtils.getUserName(getChatMember(userId))
 }

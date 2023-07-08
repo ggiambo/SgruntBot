@@ -1,5 +1,6 @@
 package com.fdtheroes.sgruntbot.actions.persistence
 
+import com.fdtheroes.sgruntbot.actions.models.Stats
 import org.springframework.data.jdbc.repository.query.Query
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
@@ -13,6 +14,6 @@ interface StatsRepository : CrudRepository<Stats, Long> {
     fun findStatsByStatDayBetween(startStatDay: LocalDate, endStatDay: LocalDate): List<Stats>
 
     @Query("select distinct user_id from sgrunt.stats")
-    fun allIds() : List<Long>
+    fun allIds(): List<Long>
 
 }
