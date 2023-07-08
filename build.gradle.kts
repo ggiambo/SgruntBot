@@ -29,6 +29,7 @@ dependencies {
     implementation("com.fasterxml.jackson.module", "jackson-module-kotlin")
     implementation("org.jetbrains.kotlin", "kotlin-reflect")
     implementation("org.jetbrains.kotlin", "kotlin-stdlib-jdk8")
+    implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core")
     implementation("org.telegram", "telegrambots", "6.5.0")
     implementation("org.jsoup", "jsoup", "1.15.4")
     implementation("org.springdoc", "springdoc-openapi-ui", "1.6.15")

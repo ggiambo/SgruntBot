@@ -5,6 +5,7 @@ import com.fdtheroes.sgruntbot.actions.models.ActionContext
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import com.fdtheroes.sgruntbot.actions.models.ActionResponseType
 import jakarta.annotation.PostConstruct
+import kotlinx.coroutines.*
 import org.slf4j.LoggerFactory
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
@@ -35,6 +36,7 @@ class Bot(
 
     private val log = LoggerFactory.getLogger(this.javaClass)
     private val lastAuthorRegex = Regex("^!last\$", RegexOption.IGNORE_CASE)
+    val coroutineScope = CoroutineScope(SupervisorJob())
 
     @PostConstruct
     fun postConstruct() {
@@ -67,10 +69,12 @@ class Bot(
 
         botConfig.pignolo = nextInt(100) > 90
 
-        val ctx = ActionContext(message, this::getChatMember)
-        actions.forEach { it.doAction(ctx) }
+        coroutineScope.launch {
+            val ctx = ActionContext(message, this@Bot::getChatMember)
+            actions.forEach { it.doAction(ctx) }
 
-        ctx.actionResponses.forEach { rispondi(it, message) }
+            ctx.actionResponses.forEach { rispondi(it, message) }
+        }
     }
 
     fun rispondi(actionMessage: ActionResponse, message: Message): Unit {
