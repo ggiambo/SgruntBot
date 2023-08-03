@@ -19,3 +19,13 @@ create table if not exists stats
     constraint user_id_stat_day_uindex
         unique (user_id, stat_day)
 );
+
+create table if not exists errepigi
+(
+    user_id        bigint not null,
+    hp             int    not null,
+    attaccanti_ids text   not null,
+    primary key (user_id),
+    constraint user_id_uindex
+        unique (user_id)
+);
