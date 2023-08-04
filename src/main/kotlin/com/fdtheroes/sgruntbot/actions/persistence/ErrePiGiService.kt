@@ -21,6 +21,10 @@ class ErrePiGiService(
         "una restrospettiva sul cinema muto Uzbeko fine anni '70",
         "la tecnica segreta di Ken il guerriero",
         "le sue affilatissime e laccatissime unghie",
+        "le mutande di Richard Stallman",
+        "un Nokia 3310",
+        "la sua collezione di Mio Mini Pony",
+        "la stampa completa di 'Howto install Arch Linux'",
     )
 
     fun init(userId: Long): ErrePiGi {
