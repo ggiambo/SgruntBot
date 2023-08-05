@@ -3,7 +3,6 @@ package com.fdtheroes.sgruntbot.actions.persistence
 import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.actions.models.ErrePiGi
 import org.springframework.stereotype.Service
-import org.springframework.scheduling.annotation.Scheduled
 import org.telegram.telegrambots.meta.api.objects.User
 import kotlin.random.Random.Default.nextInt
 
@@ -32,9 +31,16 @@ class ErrePiGiService(
         return errePiGiRepository.getErrePiGiByUserId(userId)!!
     }
 
-    @Scheduled(cron = "0 0 0 * * *")
     fun reset() {
         errePiGiRepository.deleteAll()
+    }
+
+    fun testoErrePiGiReport(getChatMember: (Long) -> User?): String? {
+        val errePiGis = errePiGiRepository.findAll().toList()
+        if (errePiGis.isEmpty()) {
+            return null
+        }
+        return errePiGis.joinToString(separator = "\n") { getTestoReport(it, getChatMember) }
     }
 
     fun attacca(attaccante: User, difensore: User): String {
@@ -56,11 +62,7 @@ class ErrePiGiService(
             return "Vile, vuoi attaccare $difensoreName che è già morto!\nAspetta fino a domani per riprovare."
         }
 
-        val attaccantiIds = difensoreErrePiGi.attaccantiIds
-            .split(",")
-            .filter { it.isNotEmpty() }
-            .map { it.toLong() }
-            .toMutableList()
+        val attaccantiIds = getAttaccantiIds(difensoreErrePiGi).toMutableList()
         if (attaccantiIds.contains(attaccante.id)) {
             return "Oggi hai già attaccato $difensoreName.\nAspetta fino a domani per riprovare."
         }
@@ -77,9 +79,33 @@ class ErrePiGiService(
         errePiGiRepository.save(difensoreErrePiGi)
 
         val attacco = "<b>$attaccanteName attacca $difensoreName con ${attacchi.random()}!</b>"
-        val risultatoAttaccante = "$attaccanteName ora ha ${attaccanteErrePiGi.hp} punti-vita."
-        val risultatoDifensore = "$difensoreName ora ha ${difensoreErrePiGi.hp} punti-vita."
+        val risultatoAttaccante = "$attaccanteName e ${getStato(attaccanteErrePiGi)}"
+        val risultatoDifensore = "$difensoreName e ${getStato(difensoreErrePiGi)}"
 
         return "$attacco\n\n$risultatoAttaccante\n$risultatoDifensore"
+    }
+
+    private fun getAttaccantiIds(errePiGi: ErrePiGi): List<Long> {
+        return errePiGi.attaccantiIds
+            .split(",")
+            .filter { it.isNotEmpty() }
+            .map { it.toLong() }
+    }
+
+    private fun getTestoReport(errePiGi: ErrePiGi, getChatMember: (Long) -> User?): String {
+        val utente = getChatMember(errePiGi.userId)
+        val attaccanti = getAttaccantiIds(errePiGi).map { getChatMember(it) }
+        if (attaccanti.isEmpty()) {
+            return "${botUtils.getUserLink(utente)} non è stato attaccato e ${getStato(errePiGi)}"
+        }
+        val nomiAttaccanti = attaccanti.joinToString { botUtils.getUserLink(it) }
+        return "${botUtils.getUserLink(utente)} è stato attaccato da $nomiAttaccanti e ${getStato(errePiGi)}"
+    }
+
+    private fun getStato(errePiGi: ErrePiGi): String {
+        if (errePiGi.hp <= 0) {
+            return "è moruto."
+        }
+        return "ha ${errePiGi.hp} punti-vita."
     }
 }
