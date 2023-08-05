@@ -13,17 +13,24 @@ class Attacca(
     override fun doAction(ctx: ActionContext) {
         val message = ctx.message
         if (message.text == "!attacca") {
+            val testo: String
             if (message.replyToMessage == null) {
-                ctx.addResponse(ActionResponse.message("E chi vorresti mai attaccare, grullo?"))
-                return
+                testo = getErrePiGiReport(ctx)
+            } else {
+                testo = errePiGiService.attacca(message.from, message.replyToMessage.from)
             }
-
-            val attacco = errePiGiService.attacca(message.from, message.replyToMessage.from)
-            ctx.addResponse(ActionResponse.message(attacco))
+            ctx.addResponse(ActionResponse.message(testo))
         }
     }
 
-    override fun halp() =
-        "<b>!attacca</b> Rispondi a un messaggio con questo testo per attaccare l'autore"
+    private fun getErrePiGiReport(ctx: ActionContext): String {
+        val testoErrePiGiReport = errePiGiService.testoErrePiGiReport(ctx.getChatMember)
+        if (testoErrePiGiReport == null) {
+            return "E chi vorresti mai attaccare, grullo?"
+        }
+        return "E chi vorresti mai attaccare, grullo?\n\n$testoErrePiGiReport"
+    }
+
+    override fun halp() = "<b>!attacca</b> Rispondi a un messaggio con questo testo per attaccare l'autore"
 
 }
