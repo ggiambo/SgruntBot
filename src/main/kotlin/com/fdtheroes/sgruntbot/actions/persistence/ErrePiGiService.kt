@@ -48,7 +48,7 @@ class ErrePiGiService(
         if (attaccanteErrePiGi == null) {
             attaccanteErrePiGi = init(attaccante.id)
         }
-        val attaccanteName = botUtils.getUserLink(attaccante)
+        val attaccanteName = botUtils.getUserName(attaccante)
         if (attaccanteErrePiGi.hp <= 0) {
             return "Sei morto, non puoi attaccare.\nAspetta fino a domani per riprovare."
         }
@@ -79,8 +79,8 @@ class ErrePiGiService(
         errePiGiRepository.save(difensoreErrePiGi)
 
         val attacco = "<b>$attaccanteName attacca $difensoreName con ${attacchi.random()}!</b>"
-        val risultatoAttaccante = "$attaccanteName e ${getStato(attaccanteErrePiGi)}"
-        val risultatoDifensore = "$difensoreName e ${getStato(difensoreErrePiGi)}"
+        val risultatoAttaccante = "$attaccanteName ${getStato(attaccanteErrePiGi)}."
+        val risultatoDifensore = "$difensoreName ${getStato(difensoreErrePiGi)}."
 
         return "$attacco\n\n$risultatoAttaccante\n$risultatoDifensore"
     }
@@ -94,18 +94,19 @@ class ErrePiGiService(
 
     private fun getTestoReport(errePiGi: ErrePiGi, getChatMember: (Long) -> User?): String {
         val utente = getChatMember(errePiGi.userId)
-        val attaccanti = getAttaccantiIds(errePiGi).map { getChatMember(it) }
-        if (attaccanti.isEmpty()) {
-            return "${botUtils.getUserLink(utente)} non è stato attaccato e ${getStato(errePiGi)}"
+        var nomiAttaccanti = getAttaccantiIds(errePiGi)
+            .map { getChatMember(it) }
+            .joinToString { botUtils.getUserName(it) }
+        if (nomiAttaccanti.isEmpty()) {
+            nomiAttaccanti = "nessuno"
         }
-        val nomiAttaccanti = attaccanti.joinToString { botUtils.getUserLink(it) }
-        return "${botUtils.getUserLink(utente)} è stato attaccato da $nomiAttaccanti e ${getStato(errePiGi)}"
+        return "${botUtils.getUserName(utente)} ${getStato(errePiGi)}. È stato attaccato da $nomiAttaccanti."
     }
 
     private fun getStato(errePiGi: ErrePiGi): String {
         if (errePiGi.hp <= 0) {
-            return "è moruto."
+            return "è moruto"
         }
-        return "ha ${errePiGi.hp} punti-vita."
+        return "ha ${errePiGi.hp} punti-vita"
     }
 }

@@ -2,11 +2,8 @@ package com.fdtheroes.sgruntbot
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fdtheroes.sgruntbot.actions.models.ActionContext
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
-import org.mockito.kotlin.doAnswer
-import org.mockito.kotlin.isA
-import org.mockito.kotlin.spy
+import org.mockito.kotlin.*
 import org.telegram.telegrambots.meta.api.objects.Chat
 import org.telegram.telegrambots.meta.api.objects.Message
 import org.telegram.telegrambots.meta.api.objects.User
@@ -30,21 +27,17 @@ open class BaseTest {
 
     val sgruntBot: Bot = spy(Bot(botConfig, botUtils, emptyList())) {
         onGeneric { sleep(isA()) } doAnswer { }
-        onGeneric { getChatMember(isA()) } doAnswer {
+    }
+
+    // per qualche oscura ragione, dev'essere qui e non in "spy" (Il metodo originale viene chiamato!)
+    init {
+        doAnswer {
             User().apply {
                 val id = it.arguments.first() as Long
                 this.id = id
                 this.userName = "Username_$id"
             }
-        }
-    }
-
-    fun getChatMember(userId: Long): User {
-        return User().apply {
-            val id = userId
-            this.id = id
-            this.userName = "Username_$id"
-        }
+        }.whenever(sgruntBot).getChatMember(any())
     }
 
     fun message(
@@ -65,7 +58,7 @@ open class BaseTest {
         from: User = user(),
         replyToMessage: Message? = null
     ): ActionContext {
-        return ActionContext(message(text, from, replyToMessage), ::getChatMember)
+        return ActionContext(message(text, from, replyToMessage), sgruntBot::getChatMember)
     }
 
     fun user(id: Long = 42, userName: String = "Pippo", firstName: String = ""): User {
