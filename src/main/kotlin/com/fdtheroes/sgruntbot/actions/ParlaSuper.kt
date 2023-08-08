@@ -17,7 +17,7 @@ class ParlaSuper(private val botConfig: BotConfig) : Action, HasHalp {
     override fun doAction(ctx: ActionContext) {
         val testo = regex.find(ctx.message.text)?.groupValues?.get(1)
         if (testo != null && Users.byId(ctx.message.from.id) != null) {
-            ctx.addResponse(ActionResponse.message(testo))
+            ctx.addResponse(ActionResponse.message(testo, false))
             botConfig.lastSuper = ctx.message.from
         }
     }

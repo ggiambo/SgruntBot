@@ -5,8 +5,11 @@ import com.fdtheroes.sgruntbot.actions.models.ActionContext
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import com.fdtheroes.sgruntbot.actions.models.ActionResponseType
 import jakarta.annotation.PostConstruct
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.bots.TelegramLongPollingBot
@@ -78,10 +81,18 @@ class Bot(
     }
 
     fun rispondi(actionMessage: ActionResponse, message: Message): Unit {
-        when (actionMessage.type) {
-            ActionResponseType.Message -> rispondiMessaggio(message, actionMessage.message!!)
-            ActionResponseType.Photo -> rispondiPhoto(message, actionMessage.message!!, actionMessage.inputFile!!)
-            ActionResponseType.Audio -> rispondiAudio(message, actionMessage.inputFile!!)
+        if (actionMessage.rispondi) {
+            when (actionMessage.type) {
+                ActionResponseType.Message -> rispondiMessaggio(message, actionMessage.message!!)
+                ActionResponseType.Photo -> rispondiPhoto(message, actionMessage.message!!, actionMessage.inputFile!!)
+                ActionResponseType.Audio -> rispondiAudio(message, actionMessage.inputFile!!)
+            }
+        } else {
+            when (actionMessage.type) {
+                ActionResponseType.Message -> messaggio(actionMessage.message!!)
+                ActionResponseType.Photo -> photo(actionMessage.inputFile!!)
+                ActionResponseType.Audio -> audio(actionMessage.inputFile!!)
+            }
         }
     }
 
@@ -168,7 +179,6 @@ class Bot(
         )
     }
 
-    @Cacheable(cacheNames = ["userName"])
     fun getChatMember(userId: Long): User? {
         val getChatMember = GetChatMember().apply {
             this.chatId = botConfig.chatId
