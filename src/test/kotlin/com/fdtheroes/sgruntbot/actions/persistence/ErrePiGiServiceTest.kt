@@ -102,8 +102,8 @@ class ErrePiGiServiceTest : BaseTest() {
         assertThat(testoErrePiGiReport).hasSize(4)
         assertThat(testoErrePiGiReport[0]).isEqualTo("Username_1 è moruto. È stato attaccato da Username_1, Username_2.")
         assertThat(testoErrePiGiReport[1]).isEqualTo("Username_2 ha 5 punti-vita. È stato attaccato da nessuno.")
-        assertThat(testoErrePiGiReport[2]).isEqualTo("Username_3 ha 4 punti-vita. È stato attaccato da Username_4, Username_2.")
-        assertThat(testoErrePiGiReport[3]).isEqualTo("Username_4 ha 2 punti-vita. È stato attaccato da Username_1, Username_4.")
+        assertThat(testoErrePiGiReport[2]).isEqualTo("Username_3 ha 7 punti-vita. È stato attaccato da Username_4, Username_2.")
+        assertThat(testoErrePiGiReport[3]).isEqualTo("Username_4 ha 6 punti-vita. È stato attaccato da Username_1, Username_4.")
     }
 
     private fun status(): List<ErrePiGi> {
@@ -115,12 +115,12 @@ class ErrePiGiServiceTest : BaseTest() {
             ),
             ErrePiGi(
                 userId = 2,
-                hp = 6,
+                hp = 5,
                 attaccantiIds = ""
             ),
             ErrePiGi(
                 userId = 3,
-                hp = 6,
+                hp = 7,
                 attaccantiIds = "4,2"
             ),
             ErrePiGi(
