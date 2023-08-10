@@ -13,13 +13,13 @@ internal class LastTest : BaseTest() {
 
     @Test
     fun testPositive() {
-        botConfig.lastAuthor = user(Users.GENGY)
+        botConfig.lastAuthor = user(Users.F)
         val ctx = actionContext("!last")
         last.doAction(ctx)
 
         assertThat(ctx.actionResponses).hasSize(1)
         assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Message)
-        assertThat(ctx.actionResponses.first().message).contains("GENGY")
+        assertThat(ctx.actionResponses.first().message).contains("F")
     }
 
 }

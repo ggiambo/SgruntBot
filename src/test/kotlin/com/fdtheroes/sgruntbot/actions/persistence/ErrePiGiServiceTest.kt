@@ -115,17 +115,17 @@ class ErrePiGiServiceTest : BaseTest() {
             ),
             ErrePiGi(
                 userId = 2,
-                hp = 5,
+                hp = 6,
                 attaccantiIds = ""
             ),
             ErrePiGi(
                 userId = 3,
-                hp = 4,
+                hp = 6,
                 attaccantiIds = "4,2"
             ),
             ErrePiGi(
                 userId = 4,
-                hp = 2,
+                hp = 6,
                 attaccantiIds = "1,4"
             )
         )

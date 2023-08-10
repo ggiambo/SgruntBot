@@ -14,14 +14,14 @@ internal class RespectTest : BaseTest() {
     fun testPositive() {
         val ctx = actionContext(
             text = "F",
-            replyToMessage = message(text = "whatever", from = user(id = Users.AVVE.id, userName = "AvveFaTutti"))
+            replyToMessage = message(text = "whatever", from = user(id = Users.IL_VINCI.id, userName = "AvveFaTutti"))
         )
         respect.doAction(ctx)
 
         Assertions.assertThat(ctx.actionResponses).hasSize(1)
         Assertions.assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Message)
         Assertions.assertThat(ctx.actionResponses.first().message)
-            .isEqualTo("""Baciamo le mani Don <a href="tg://user?id=10427888">AvveFaTutti</a>""")
+            .isEqualTo("""Baciamo le mani Don <a href="tg://user?id=104278889">AvveFaTutti</a>""")
     }
 
     @Test

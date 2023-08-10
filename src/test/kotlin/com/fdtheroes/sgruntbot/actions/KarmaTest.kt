@@ -46,7 +46,7 @@ internal class KarmaTest : BaseTest() {
     fun testKarmaPlus_noCredit() {
         val karma = Karma(botUtils, karmaService(0, 99))
 
-        val replyToMessage = message("Message", user(Users.DADA))
+        val replyToMessage = message("Message", user(Users.DA_DA212))
         val ctx = actionContext("+", replyToMessage = replyToMessage)
         karma.doAction(ctx)
 
@@ -59,13 +59,13 @@ internal class KarmaTest : BaseTest() {
     fun testKarmaPlus() {
         val karma = Karma(botUtils, karmaService(10, 99))
 
-        val replyToMessage = message("Message", user(Users.DADA))
+        val replyToMessage = message("Message", user(Users.DA_DA212))
         val ctx = actionContext("+", replyToMessage = replyToMessage)
         karma.doAction(ctx)
 
         assertThat(ctx.actionResponses).hasSize(1)
         assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Message)
-        assertThat(ctx.actionResponses.first().message).startsWith("""Karma totale di <a href="tg://user?id=252800958">DADA</a>: 99
+        assertThat(ctx.actionResponses.first().message).startsWith("""Karma totale di <a href="tg://user?id=252800958">DA_DA212</a>: 99
 Crediti di <a href="tg://user?id=42">Pippo</a>: 10""")
     }
 
@@ -87,7 +87,7 @@ Crediti di <a href="tg://user?id=42">Pippo</a>: 10""")
     fun testKarmaMinus_noCredit() {
         val karma = Karma(botUtils, karmaService(0, 99))
 
-        val replyToMessage = message("Message", user(Users.DADA))
+        val replyToMessage = message("Message", user(Users.DA_DA212))
         val ctx = actionContext("-", replyToMessage = replyToMessage)
         karma.doAction(ctx)
 
@@ -101,13 +101,13 @@ Crediti di <a href="tg://user?id=42">Pippo</a>: 10""")
     fun testKarmaMinus() {
         val karma = Karma(botUtils, karmaService(10, 99))
 
-        val replyToMessage = message("Message", user(Users.DADA))
+        val replyToMessage = message("Message", user(Users.DA_DA212))
         val ctx = actionContext("-", replyToMessage = replyToMessage)
         karma.doAction(ctx)
 
         assertThat(ctx.actionResponses).hasSize(1)
         assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Message)
-        assertThat(ctx.actionResponses.first().message).startsWith("""Karma totale di <a href="tg://user?id=252800958">DADA</a>: 99
+        assertThat(ctx.actionResponses.first().message).startsWith("""Karma totale di <a href="tg://user?id=252800958">DA_DA212</a>: 99
 Crediti di <a href="tg://user?id=42">Pippo</a>: 10""")
     }
 

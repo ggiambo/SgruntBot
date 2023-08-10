@@ -5,9 +5,6 @@ import com.fdtheroes.sgruntbot.Users
 import com.fdtheroes.sgruntbot.actions.models.ActionResponseType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.telegram.telegrambots.meta.api.methods.ActionType
-import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 internal class SgruntTest : BaseTest() {
 
@@ -25,7 +22,7 @@ internal class SgruntTest : BaseTest() {
 
     @Test
     fun testPositive_1() {
-        val ctx = actionContext(text = "sgruntbot", from = user(id = Users.SUORA.id))
+        val ctx = actionContext(text = "sgruntbot", from = user(id = Users.DANIELE.id))
         sgrunt.doAction(ctx)
 
         assertThat(ctx.actionResponses).hasSize(1)

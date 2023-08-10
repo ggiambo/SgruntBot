@@ -20,7 +20,7 @@ class Sgrunt : Action {
     override fun doAction(ctx: ActionContext) {
         if (regex.containsMatchIn(ctx.message.text)) {
             val user = Users.byId(ctx.message.from.id)
-            if (user == Users.SUORA) {
+            if (user == Users.DANIELE) {
                 ctx.addResponse(ActionResponse.message("Ciao papà!"))
             } else {
                 ctx.addResponse(ActionResponse.message(reply.random()))

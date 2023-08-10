@@ -15,7 +15,7 @@ class UtontiTest : BaseTest() {
     @Test
     fun utonti_negative() {
         val utonti = Utonti(botUtils, usersService())
-        val ctx = actionContext("Blah Banf", user(Users.GENGY))
+        val ctx = actionContext("Blah Banf", user(Users.F))
 
         utonti.doAction(ctx)
 
@@ -25,7 +25,7 @@ class UtontiTest : BaseTest() {
     @Test
     fun utonti_positive() {
         val utonti = Utonti(botUtils, usersService())
-        val ctx = actionContext("!utonti", user(Users.GENGY))
+        val ctx = actionContext("!utonti", user(Users.F))
 
         utonti.doAction(ctx)
 
@@ -33,7 +33,7 @@ class UtontiTest : BaseTest() {
         assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Message)
         assertThat(ctx.actionResponses.first().message).startsWith("Utonti di questa ciat")
         assertThat(ctx.actionResponses.first().message).contains("42: Pippo")
-        assertThat(ctx.actionResponses.first().message).contains("10427888: AVVE")
+        assertThat(ctx.actionResponses.first().message).contains("104278889: IL_VINCI")
 
     }
 
@@ -42,7 +42,7 @@ class UtontiTest : BaseTest() {
         return mock {
             on { getAllUsers(isA()) } doReturn listOf(
                 user(),
-                user(Users.AVVE)
+                user(Users.IL_VINCI)
             )
         }
     }

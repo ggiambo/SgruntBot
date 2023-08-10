@@ -12,7 +12,7 @@ internal class ParlaSuperTest : BaseTest() {
 
     @Test
     fun testPositive() {
-        val ctx = actionContext(text = "!parlaSuper questo bot è stupendo!", from = user(id = Users.AVVE.id))
+        val ctx = actionContext(text = "!parlaSuper questo bot è stupendo!", from = user(id = Users.IL_VINCI.id))
         parlaSuper.doAction(ctx)
 
         assertThat(ctx.actionResponses).hasSize(1)

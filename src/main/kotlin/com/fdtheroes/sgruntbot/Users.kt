@@ -1,18 +1,19 @@
 package com.fdtheroes.sgruntbot
 
 enum class Users(val id: Long) {
-    SUORA(32657811),
-    GIAMBO(353708759),
-    DADA(252800958),
-    SEU(68714652),
-    GENGY(259607683),
-    AVVE(10427888),
+    DANIELE(32657811),
+    BLAHBANFBOT(2097709389),
+    GGIAMBO(353708759),
+    DA_DA212(252800958),
+    SHDX_T(68714652),
+    F(259607683),
+    IL_VINCI(104278889),
     LICHENE(5707999649),
     ALE(5770928065)
     ;
 
     companion object {
-        private val userIds = values().associateBy { it.id }
+        private val userIds = entries.associateBy { it.id }
         fun byId(id: Long) = userIds[id]
     }
 

@@ -13,7 +13,7 @@ class RandomSloganTest : BaseTest() {
 
     @Test
     fun testRandomSlogan() {
-        botConfig.lastAuthor = user(Users.SEU)
+        botConfig.lastAuthor = user(Users.SHDX_T)
         val messageText = randomSlogan.getMessageText()
 
         val seuLink = botUtils.getUserLink(botConfig.lastAuthor)

@@ -25,10 +25,10 @@ internal class SloganTest : BaseTest() {
 
     @Test
     fun testFetchSloganUser() {
-        val user = user(Users.SEU)
+        val user = user(Users.SHDX_T)
         val slogan = slogan.fetchSlogan(user)
 
-        assertThat(slogan).contains("""<a href="tg://user?id=68714652">SEU</a>""")
+        assertThat(slogan).contains("""<a href="tg://user?id=68714652">SHDX_T</a>""")
     }
 
 }
