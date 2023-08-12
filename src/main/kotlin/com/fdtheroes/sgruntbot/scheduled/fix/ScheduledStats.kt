@@ -1,4 +1,4 @@
-package com.fdtheroes.sgruntbot.scheduled
+package com.fdtheroes.sgruntbot.scheduled.fix
 
 import com.fdtheroes.sgruntbot.Bot
 import com.fdtheroes.sgruntbot.BotUtils
@@ -8,57 +8,48 @@ import com.fdtheroes.sgruntbot.ChartUtils.getAsInputFile
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import com.fdtheroes.sgruntbot.actions.models.Stats
 import com.fdtheroes.sgruntbot.actions.persistence.StatsService
-import jakarta.annotation.PostConstruct
 import org.knowm.xchart.XYChart
 import org.knowm.xchart.style.theme.GGPlot2Theme
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.InputFile
 import java.awt.BasicStroke
-import java.util.*
-import java.util.concurrent.TimeUnit
+import java.time.LocalDateTime
 
 @Service
 class ScheduledStats(
     private val sgruntBot: Bot,
     private val botUtils: BotUtils,
     private val statsService: StatsService,
-) {
+) : ScheduledAMezzanotte {
 
-    private val mezzanotte = Calendar.getInstance().apply {
-        set(Calendar.DAY_OF_MONTH, get(Calendar.DAY_OF_MONTH) + 1)
-        set(Calendar.HOUR_OF_DAY, 0)
-        set(Calendar.MINUTE, 0)
-        set(Calendar.SECOND, 0)
-    }.time
-
-    private val chart = XYChart(1280, 1024)
+    private val chart = XYChart(1280, 1024).apply {
+        this.styler.theme = GGPlot2Theme()
+        this.styler.seriesColors = ChartUtils.seriesColors
+        this.title = "Logorroici degli ultimi 15 giorni"
+        this.styler.theme = GGPlot2Theme()
+        this.styler.isToolTipsEnabled = false
+        this.styler.seriesColors = ChartUtils.seriesColors
+        this.styler.datePattern = "d"
+    }
     private val seriesStroke = BasicStroke(6F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER)
 
+    override fun firstRun(): LocalDateTime {
+        val mezzanotte = LocalDateTime.now()
+            .withHour(0)
+            .withMinute(0)
+            .withSecond(0)
+            .withNano(0)
 
-    @PostConstruct
-    fun start() {
-        chart.styler.theme = GGPlot2Theme()
-        chart.styler.seriesColors = ChartUtils.seriesColors
-        chart.title = "Logorroici degli ultimi 15 giorni"
-        chart.styler.theme = GGPlot2Theme()
-        chart.styler.isToolTipsEnabled = false
-        chart.styler.seriesColors = ChartUtils.seriesColors
-        chart.styler.datePattern = "d"
-
-        val oneDayInMilleseconds = TimeUnit.MILLISECONDS.convert(1, TimeUnit.DAYS)
-        Timer().schedule(PublishStats(), mezzanotte, oneDayInMilleseconds)
+        return mezzanotte.plusDays(1)
     }
 
-    inner class PublishStats : TimerTask() {
-        override fun run() {
-            val statsLast15Days = statsService.getStatsLastDays(15)
-                .groupBy { it.userId }
+    override fun execute() {
+        val statsLast15Days = statsService.getStatsLastDays(15).groupBy { it.userId }
 
-            val inputFile = getStatsInputFile(statsLast15Days)
-            val actionResponse = ActionResponse.photo("", inputFile)
+        val inputFile = getStatsInputFile(statsLast15Days)
+        val actionResponse = ActionResponse.photo("", inputFile, false)
 
-            sgruntBot.messaggio(actionResponse)
-        }
+        sgruntBot.messaggio(actionResponse)
     }
 
     private fun getStatsInputFile(statsThisMonthByUserId: Map<Long, List<Stats>>): InputFile {
@@ -76,7 +67,7 @@ class ScheduledStats(
         return getAsInputFile(chart)
     }
 
-    fun getSerieName(userId: Long): String {
+    private fun getSerieName(userId: Long): String {
         val serieName = botUtils.getUserName(sgruntBot.getChatMember(userId))
         if (serieName.isNotEmpty()) {
             return serieName

@@ -1,19 +1,15 @@
-package com.fdtheroes.sgruntbot.scheduled
+package com.fdtheroes.sgruntbot.scheduled.random
 
 import com.fdtheroes.sgruntbot.Bot
-import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.BotUtils
+import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import org.jsoup.Jsoup
 import org.springframework.stereotype.Service
 
 @Service
-class RandomCuloDiPapa(
-    private val botUtils: BotUtils,
-    sgruntBot: Bot,
-    botConfig: BotConfig,
-) : RandomScheduledAction(sgruntBot, botConfig) {
+class ScheduledRandomCuloDiPapa(private val botUtils: BotUtils, private val sgruntBot: Bot) : ScheduledRandom {
 
-    override fun getMessageText(): String {
+    override fun execute() {
         val html = botUtils.textFromURL("https://dailyverses.net/it/versetto-casuale-bibbia")
 
         val banfata = Jsoup.parse(html)
@@ -32,7 +28,9 @@ class RandomCuloDiPapa(
             .select("a.vc")
             .text()
 
-        return "${testo}\n${autore}"
+        val text = "${testo}\n${autore}"
+
+        sgruntBot.messaggio(ActionResponse.message(text, false))
     }
 
 }

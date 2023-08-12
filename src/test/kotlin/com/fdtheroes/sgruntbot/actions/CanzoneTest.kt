@@ -3,9 +3,6 @@ package com.fdtheroes.sgruntbot.actions
 import com.fdtheroes.sgruntbot.BaseTest
 import com.fdtheroes.sgruntbot.actions.models.ActionResponseType
 import org.assertj.core.api.Assertions.assertThat
-import org.telegram.telegrambots.meta.api.methods.ActionType
-import org.telegram.telegrambots.meta.api.methods.send.SendAudio
-import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
 
 internal class CanzoneTest : BaseTest() {
 

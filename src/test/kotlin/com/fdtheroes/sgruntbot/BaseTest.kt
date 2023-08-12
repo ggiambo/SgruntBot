@@ -25,7 +25,7 @@ open class BaseTest {
     val botUtils = BotUtils(botConfig)
     val mapper = ObjectMapper()
 
-    val sgruntBot: Bot = spy(Bot(botConfig, botUtils, emptyList())) {
+    val sgruntBot: Bot = mock {
         onGeneric { sleep(isA()) } doAnswer { }
     }
 

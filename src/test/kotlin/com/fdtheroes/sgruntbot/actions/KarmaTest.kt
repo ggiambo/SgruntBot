@@ -9,9 +9,6 @@ import org.junit.jupiter.api.Test
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.isA
 import org.mockito.kotlin.mock
-import org.telegram.telegrambots.meta.api.methods.ActionType
-import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 
 internal class KarmaTest : BaseTest() {
 
@@ -24,9 +21,11 @@ internal class KarmaTest : BaseTest() {
 
         assertThat(ctx.actionResponses).hasSize(1)
         assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Message)
-        assertThat(ctx.actionResponses.first().message).isEqualTo("""<b><u>Karma Report</u></b>
+        assertThat(ctx.actionResponses.first().message).isEqualTo(
+            """<b><u>Karma Report</u></b>
 
-<pre></pre>""")
+<pre></pre>"""
+        )
     }
 
     @Test
@@ -65,8 +64,10 @@ internal class KarmaTest : BaseTest() {
 
         assertThat(ctx.actionResponses).hasSize(1)
         assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Message)
-        assertThat(ctx.actionResponses.first().message).startsWith("""Karma totale di <a href="tg://user?id=252800958">DA_DA212</a>: 99
-Crediti di <a href="tg://user?id=42">Pippo</a>: 10""")
+        assertThat(ctx.actionResponses.first().message).startsWith(
+            """Karma totale di <a href="tg://user?id=252800958">DA_DA212</a>: 99
+Crediti di <a href="tg://user?id=42">Pippo</a>: 10"""
+        )
     }
 
     @Test
@@ -107,14 +108,16 @@ Crediti di <a href="tg://user?id=42">Pippo</a>: 10""")
 
         assertThat(ctx.actionResponses).hasSize(1)
         assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Message)
-        assertThat(ctx.actionResponses.first().message).startsWith("""Karma totale di <a href="tg://user?id=252800958">DA_DA212</a>: 99
-Crediti di <a href="tg://user?id=42">Pippo</a>: 10""")
+        assertThat(ctx.actionResponses.first().message).startsWith(
+            """Karma totale di <a href="tg://user?id=252800958">DA_DA212</a>: 99
+Crediti di <a href="tg://user?id=42">Pippo</a>: 10"""
+        )
     }
 
-    private fun karmaService(credits: Int, karma: Int) : KarmaService {
+    private fun karmaService(credits: Int, karma: Int): KarmaService {
         return mock {
-            on { getKarmaCredit(isA())} doReturn credits
-            on { getKarma(isA())} doReturn karma
+            on { getKarmaCredit(isA()) } doReturn credits
+            on { getKarma(isA()) } doReturn karma
         }
     }
 }

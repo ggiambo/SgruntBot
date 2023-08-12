@@ -5,7 +5,7 @@ import com.fdtheroes.sgruntbot.actions.Action
 import com.fdtheroes.sgruntbot.actions.HasHalp
 import com.fdtheroes.sgruntbot.actions.persistence.KarmaService
 import com.fdtheroes.sgruntbot.actions.persistence.StatsService
-import com.fdtheroes.sgruntbot.scheduled.RandomScheduledAction
+import com.fdtheroes.sgruntbot.scheduled.Scheduled
 import io.swagger.v3.oas.annotations.Operation
 import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.web.bind.annotation.GetMapping
@@ -24,7 +24,7 @@ class SgruntController(
     private val karmaService: KarmaService,
     private val statsService: StatsService,
     private val botConfig: BotConfig,
-    private val randomScheduledActions: List<RandomScheduledAction>,
+    private val randomScheduledActions: List<Scheduled>,
 ) {
 
     @GetMapping("/actions")
@@ -74,19 +74,6 @@ class SgruntController(
     @Operation(summary = "Fino a quando Sgrunty sta zitto")
     fun getPausedTime(): LocalDateTime? {
         return botConfig.pausedTime
-    }
-
-    @GetMapping("/randomScheduledActions")
-    @Operation(summary = "Lista delle azioni schedulate")
-    fun getRandomSchedules(): List<Any> {
-        return randomScheduledActions.map {
-            val randomScheduledAction = it::class.simpleName
-            val nextScheduled = it.nextScheduled
-            object {
-                val randomScheduledAction = randomScheduledAction
-                val actionWhen = nextScheduled
-            }
-        }
     }
 
     @GetMapping("/karma")

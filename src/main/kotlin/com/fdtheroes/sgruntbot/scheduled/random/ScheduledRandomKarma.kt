@@ -1,24 +1,23 @@
-package com.fdtheroes.sgruntbot.scheduled
+package com.fdtheroes.sgruntbot.scheduled.random
 
 import com.fdtheroes.sgruntbot.Bot
-import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.Users
+import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import com.fdtheroes.sgruntbot.actions.persistence.KarmaService
 import com.fdtheroes.sgruntbot.actions.persistence.UsersService
 import org.springframework.stereotype.Service
 import kotlin.random.Random
 
 @Service
-class RandomKarma(
+class ScheduledRandomKarma(
     private val usersService: UsersService,
     private val karmaService: KarmaService,
     private val botUtils: BotUtils,
-    sgruntBot: Bot,
-    botConfig: BotConfig,
-) : RandomScheduledAction(sgruntBot, botConfig) {
+    private val sgruntBot: Bot,
+) : ScheduledRandom {
 
-    override fun getMessageText(): String {
+    override fun execute() {
         val vittima = usersService
             .getAllUsers { sgruntBot.getChatMember(it) }
             .filter { it.id != Users.BLAHBANFBOT.id }    // e filtra sgrunty
@@ -31,7 +30,11 @@ class RandomKarma(
         } else {
             karmaService.takeGiveKarma(vittima.id) { it - 1 }
         }
-        return "${botUtils.getUserLink(vittima)} in verità in verità ti dico: Sgrunty da, Sgrunty toglie.\nIl tuo kama è $azione di 1."
+
+        val testo =
+            "${botUtils.getUserLink(vittima)} in verità in verità ti dico: Sgrunty da, Sgrunty toglie.\nIl tuo karma è $azione di 1."
+
+        sgruntBot.messaggio(ActionResponse.message(testo, false))
     }
 
 }
