@@ -35,14 +35,6 @@ class ErrePiGiService(
         errePiGiRepository.deleteAll()
     }
 
-    fun attaccabiliDa(attaccante: User): List<ErrePiGi> {
-        return errePiGiRepository.findAll()
-            .filter { it.hp >= 0 }
-            .filter {
-                it.userId != attaccante.id && it.hp >= 0 && !getAttaccantiIds(it).contains(attaccante.id)
-            }
-    }
-
     fun testoErrePiGiReport(getChatMember: (Long) -> User?): String? {
         val errePiGis = errePiGiRepository.findAll().toList()
         if (errePiGis.isEmpty()) {
