@@ -25,7 +25,7 @@ class ScheduledRandomSloganTest : BaseTest() {
         verify(sgruntBot, times(1)).messaggio(argumentCaptor.capture())
         val actionResponse = argumentCaptor.firstValue
         assertThat(actionResponse.type).isEqualTo(ActionResponseType.Message)
-        assertThat(actionResponse.message).contains("<a href=\"tg://user?id=68714652\">SHDX_T</a> ")
+        assertThat(actionResponse.message).contains("<a href=\"tg://user?id=68714652\">SHDX_T</a>")
         assertThat(actionResponse.inputFile).isNull()
         assertThat(actionResponse.rispondi).isFalse()
     }
