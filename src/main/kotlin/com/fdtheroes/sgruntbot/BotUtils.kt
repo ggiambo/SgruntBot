@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service
 import org.telegram.telegrambots.bots.DefaultBotOptions
 import org.telegram.telegrambots.meta.api.objects.Message
 import org.telegram.telegrambots.meta.api.objects.User
+import java.io.InputStream
 import java.net.InetSocketAddress
 import java.net.Proxy
 import java.net.URL
@@ -44,11 +45,15 @@ class BotUtils(private val botConfig: BotConfig) {
         return """<a href="tg://user?id=${user.id}">${name}</a>"""
     }
 
-    fun textFromURL(url: String, params: String? = null, headers: List<Pair<String, String>> = emptyList()): String {
+    fun streamFromURL(url: String, params: String? = null, headers: List<Pair<String, String>> = emptyList()): InputStream {
         return URL(String.format(url, params))
             .openConnection(proxy)
             .apply { headers.forEach { setRequestProperty(it.first, it.second) } }
             .getInputStream()
+    }
+
+    fun textFromURL(url: String, params: String? = null, headers: List<Pair<String, String>> = emptyList()): String {
+        return streamFromURL(url, params)
             .readAllBytes()
             .decodeToString()
     }
