@@ -4,9 +4,8 @@ import com.fdtheroes.sgruntbot.Bot
 import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import org.jsoup.Jsoup
-import org.springframework.stereotype.Service
 
-@Service
+//@Service
 class ScheduledRandomCuloDiPapa(private val botUtils: BotUtils, private val sgruntBot: Bot) : ScheduledRandom {
 
     override fun execute() {
