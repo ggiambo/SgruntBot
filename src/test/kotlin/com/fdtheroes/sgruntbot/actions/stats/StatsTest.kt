@@ -7,7 +7,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
-import org.telegram.telegrambots.meta.api.methods.send.SendPhoto
 import java.awt.image.BufferedImage
 import java.time.LocalDate
 import javax.imageio.ImageIO

@@ -11,6 +11,7 @@ import java.net.URL
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.ZoneId
 import java.util.*
 import java.util.stream.StreamSupport
@@ -90,6 +91,10 @@ class BotUtils(private val botConfig: BotConfig) {
 
         fun LocalDate.toDate(): Date {
             return Date.from(this.atStartOfDay(ZoneId.systemDefault()).toInstant())
+        }
+
+        fun LocalDateTime.toDate(): Date {
+            return Date.from(this.atZone(ZoneId.systemDefault()).toInstant())
         }
     }
 }

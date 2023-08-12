@@ -4,7 +4,6 @@ import com.fdtheroes.sgruntbot.BaseTest
 import com.fdtheroes.sgruntbot.actions.models.ActionResponseType
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
-import org.telegram.telegrambots.meta.api.methods.send.SendPhoto
 
 internal class TappetoTest : BaseTest() {
 
