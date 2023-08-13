@@ -140,6 +140,7 @@ class Bot(
                 this.chatId = botConfig.chatId
                 this.parseMode = ParseMode.HTML
                 this.photo = photo
+                this.caption = caption
             }
         )
     }
