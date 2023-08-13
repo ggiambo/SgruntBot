@@ -13,7 +13,7 @@ import org.mockito.kotlin.verify
 class ScheduledRandomFortuneTest : BaseTest() {
 
     private val fortune = Fortune()
-    private val randomFortune = ScheduledRandomFortune(fortune, sgruntBot,)
+    private val randomFortune = ScheduledRandomFortune(fortune, sgruntBot)
 
     @Test
     fun testRandomFortune() {

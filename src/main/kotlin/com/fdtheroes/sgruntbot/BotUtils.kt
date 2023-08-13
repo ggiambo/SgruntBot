@@ -46,7 +46,11 @@ class BotUtils(private val botConfig: BotConfig) {
         return """<a href="tg://user?id=${user.id}">${name}</a>"""
     }
 
-    fun streamFromURL(url: String, params: String? = null, headers: List<Pair<String, String>> = emptyList()): InputStream {
+    fun streamFromURL(
+        url: String,
+        params: String? = null,
+        headers: List<Pair<String, String>> = emptyList()
+    ): InputStream {
         return URL(String.format(url, params))
             .openConnection(proxy)
             .apply { headers.forEach { setRequestProperty(it.first, it.second) } }

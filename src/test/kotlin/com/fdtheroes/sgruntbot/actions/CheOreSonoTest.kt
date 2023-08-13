@@ -16,7 +16,8 @@ internal class CheOreSonoTest : BaseTest() {
 
         Assertions.assertThat(ctx.actionResponses).hasSize(1)
         Assertions.assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Message)
-        Assertions.assertThat(ctx.actionResponses.first().message).isEqualTo("mezzogiorno meno venti (precisamente 11:44 ok?)")
+        Assertions.assertThat(ctx.actionResponses.first().message)
+            .isEqualTo("mezzogiorno meno venti (precisamente 11:44 ok?)")
     }
 
     @Test
@@ -27,7 +28,8 @@ internal class CheOreSonoTest : BaseTest() {
 
         Assertions.assertThat(ctx.actionResponses).hasSize(1)
         Assertions.assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Message)
-        Assertions.assertThat(ctx.actionResponses.first().message).isEqualTo("mezzogiorno e un quarto (precisamente 12:17 ok?)")
+        Assertions.assertThat(ctx.actionResponses.first().message)
+            .isEqualTo("mezzogiorno e un quarto (precisamente 12:17 ok?)")
     }
 
     @Test
@@ -38,7 +40,8 @@ internal class CheOreSonoTest : BaseTest() {
 
         Assertions.assertThat(ctx.actionResponses).hasSize(1)
         Assertions.assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Message)
-        Assertions.assertThat(ctx.actionResponses.first().message).isEqualTo("mezzanotte meno venti (precisamente 23:44 ok?)")
+        Assertions.assertThat(ctx.actionResponses.first().message)
+            .isEqualTo("mezzanotte meno venti (precisamente 23:44 ok?)")
     }
 
     @Test
@@ -49,6 +52,7 @@ internal class CheOreSonoTest : BaseTest() {
 
         Assertions.assertThat(ctx.actionResponses).hasSize(1)
         Assertions.assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Message)
-        Assertions.assertThat(ctx.actionResponses.first().message).isEqualTo("mezzanotte e un quarto (precisamente 00:17 ok?)")
+        Assertions.assertThat(ctx.actionResponses.first().message)
+            .isEqualTo("mezzanotte e un quarto (precisamente 00:17 ok?)")
     }
 }

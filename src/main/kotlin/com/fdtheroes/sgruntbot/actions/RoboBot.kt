@@ -17,6 +17,7 @@ class RoboBot : Action {
         "\"BEEP-BOOP! SONO UN BOT INTELLIGENTE, YUK YUK!\"",
         "RobBot: Prototipo della stupidità artificiale"
     )
+
     override fun doAction(ctx: ActionContext) {
         if (ctx.message.from.id == Users.ROBOBOT.id) {
             if (nextInt(10) == 0) {

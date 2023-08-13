@@ -11,7 +11,7 @@ import org.mockito.kotlin.*
 class TestScheduledKarma : BaseTest() {
 
     private val karmaService = mock<KarmaService> {
-        on { testoKarmaReport(isA())} doReturn "karma Service ha fatto qualcosa"
+        on { testoKarmaReport(isA()) } doReturn "karma Service ha fatto qualcosa"
     }
     private val scheduledKarma = ScheduledKarma(karmaService, sgruntBot)
 
