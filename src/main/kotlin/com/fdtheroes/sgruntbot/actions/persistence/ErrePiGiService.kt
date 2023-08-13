@@ -24,6 +24,14 @@ class ErrePiGiService(
         "un Nokia 3310",
         "la sua collezione di Mio Mini Pony",
         "la stampa completa di 'Howto install Arch Linux'",
+        "pene&botte",
+        "le tettone di Brì che ... smuà",
+        "le migliori barzellette di Gino Bramieri",
+        "il fondotinta di GRANDSSIMO SILVIO",
+        "un container docker",
+        "una tavoletta di parquet",
+        "un tuo ricordo imbarazzante di quando eri tredicenne",
+        "le ditone pasticcione di Giambo"
     )
 
     fun init(userId: Long): ErrePiGi {
