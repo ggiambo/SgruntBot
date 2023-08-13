@@ -9,7 +9,8 @@ enum class Users(val id: Long) {
     F(259607683),
     IL_VINCI(104278889),
     LICHENE(5707999649),
-    ALE(5770928065)
+    ALE(5770928065),
+    ROBOBOT(6383648928),
     ;
 
     companion object {
