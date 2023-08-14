@@ -52,7 +52,7 @@ class Bot(
     override fun onUpdateReceived(update: Update?) {
         val fromId = update?.message?.from?.id
         log.info("Messaggio da fromId")
-        log.info("1) fromId == ${Users.ROBOBOT.id} ...")
+        log.info("1) fromId == $fromId")
 
         if (botConfig.pausedTime != null) {
             if (LocalDateTime.now() < botConfig.pausedTime) {
@@ -63,7 +63,7 @@ class Bot(
             }
         }
 
-        log.info("2) fromId == ${Users.ROBOBOT.id} ...")
+        log.info("2) fromId == $fromId")
         val message = update?.message
         if (message?.text == null) {
             return
@@ -75,7 +75,7 @@ class Bot(
 
         botConfig.pignolo = nextInt(100) > 90
 
-        log.info("3) fromId == ${Users.ROBOBOT.id} ...")
+        log.info("3) fromId == $fromId")
 
         coroutineScope.launch {
             val ctx = ActionContext(message, this@Bot::getChatMember)
