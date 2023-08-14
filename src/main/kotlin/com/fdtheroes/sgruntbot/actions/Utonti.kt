@@ -20,6 +20,7 @@ class Utonti(
                 .joinToString(separator = "\n") { "- ${it.id}: ${botUtils.getUserName(it)}" }
             ctx.addResponse(ActionResponse.message("Utonti di questa ciat:\n${utonti}"))
         }
+        usersService.checkAndUpdate(ctx.message.from)
     }
 
     override fun halp() = "<b>!utonti</b> lista degli IDs degli utonti che hanno partecipato a questa ciat"
