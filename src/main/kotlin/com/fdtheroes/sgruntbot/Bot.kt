@@ -51,8 +51,8 @@ class Bot(
 
     override fun onUpdateReceived(update: Update?) {
         val fromId = update?.message?.from?.id
-        log.info("Messaggio da fromId")
-        log.info("1) fromId == $fromId")
+        val autore = "$fromId: '${botUtils.getUserName(update?.message?.from)}' -> ${update?.message?.from}"
+        log.info("1) $autore")
 
         if (botConfig.pausedTime != null) {
             if (LocalDateTime.now() < botConfig.pausedTime) {
@@ -63,7 +63,7 @@ class Bot(
             }
         }
 
-        log.info("2) fromId == $fromId")
+        log.info("2) $autore")
         val message = update?.message
         if (message?.text == null) {
             return
@@ -75,7 +75,7 @@ class Bot(
 
         botConfig.pignolo = nextInt(100) > 90
 
-        log.info("3) fromId == $fromId")
+        log.info("3) $autore")
 
         coroutineScope.launch {
             val ctx = ActionContext(message, this@Bot::getChatMember)
