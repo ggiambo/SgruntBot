@@ -50,10 +50,6 @@ class Bot(
     }
 
     override fun onUpdateReceived(update: Update?) {
-        val fromId = update?.message?.from?.id
-        val autore = "$fromId: '${botUtils.getUserName(update?.message?.from)}' -> ${update?.message?.from}"
-        log.info("1) $autore")
-
         if (botConfig.pausedTime != null) {
             if (LocalDateTime.now() < botConfig.pausedTime) {
                 botConfig.pausedTime = null
@@ -63,7 +59,6 @@ class Bot(
             }
         }
 
-        log.info("2) $autore")
         val message = update?.message
         if (message?.text == null) {
             return
@@ -74,8 +69,6 @@ class Bot(
         }
 
         botConfig.pignolo = nextInt(100) > 90
-
-        log.info("3) $autore")
 
         coroutineScope.launch {
             val ctx = ActionContext(message, this@Bot::getChatMember)
@@ -95,7 +88,7 @@ class Bot(
         } else {
             when (actionMessage.type) {
                 ActionResponseType.Message -> messaggio(actionMessage.message!!)
-                ActionResponseType.Photo -> photo(actionMessage.inputFile!!)
+                ActionResponseType.Photo -> photo(actionMessage.message!!, actionMessage.inputFile!!)
                 ActionResponseType.Audio -> audio(actionMessage.inputFile!!)
             }
         }
@@ -104,7 +97,7 @@ class Bot(
     fun messaggio(actionMessage: ActionResponse) {
         when (actionMessage.type) {
             ActionResponseType.Message -> messaggio(actionMessage.message!!)
-            ActionResponseType.Photo -> photo(actionMessage.inputFile!!)
+            ActionResponseType.Photo -> photo(actionMessage.message!!, actionMessage.inputFile!!)
             ActionResponseType.Audio -> audio(actionMessage.inputFile!!)
         }
     }
@@ -141,7 +134,7 @@ class Bot(
         )
     }
 
-    private fun photo(photo: InputFile) {
+    private fun photo(caption: String, photo: InputFile) {
         execute(
             SendPhoto().apply {
                 this.chatId = botConfig.chatId
