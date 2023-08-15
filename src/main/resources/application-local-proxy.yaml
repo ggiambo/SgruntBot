@@ -14,5 +14,5 @@ logging:
 sgruntbot:
   config:
     chat-id: -676046724
-    proxy: "http://localhost:8888"
+    proxy: "http://host.containers.internal:8888"
     baseRestUrl: http://localhost:8081

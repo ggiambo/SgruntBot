@@ -62,10 +62,14 @@ class ScheduledSanto(
 
         val testo = santi.joinToString(separator = "\n") {
             val nome = it["nome"].asText()
-            val url = it["permalink"].asText()
             val tipologia = it["tipologia"].asText()
-
-            "<a href='$url'>$nome</a> ($tipologia)"
+            val permalink = it["permalink"]
+            if (permalink != null) {
+                val url = permalink.asText()
+                "<a href='$url'>$nome</a> ($tipologia)"
+            } else {
+                "$nome ($tipologia)"
+            }
         }
 
         sgruntBot.messaggio(ActionResponse.message("<b>Altri santi</b>\n$testo", false))
