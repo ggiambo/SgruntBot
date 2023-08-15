@@ -25,8 +25,8 @@ import org.telegram.telegrambots.meta.api.objects.Update
 import org.telegram.telegrambots.meta.api.objects.User
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession
 import java.time.LocalDateTime
-import kotlin.random.Random
 import kotlin.random.Random.Default.nextInt
+import kotlin.random.Random.Default.nextLong
 
 @Service
 class Bot(
@@ -192,7 +192,7 @@ class Bot(
     }
 
     fun sleep(seconds: IntRange) {
-        Thread.sleep(Random.nextLong(seconds.first.toLong() * 1000, seconds.last.toLong() * 1000))
+        Thread.sleep(nextLong(seconds.first.toLong() * 1000, seconds.last.toLong() * 1000))
     }
 
 }

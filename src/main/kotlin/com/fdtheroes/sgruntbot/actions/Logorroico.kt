@@ -4,7 +4,7 @@ import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.actions.models.ActionContext
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import org.springframework.stereotype.Service
-import kotlin.random.Random
+import kotlin.random.Random.Default.nextInt
 
 @Service
 class Logorroico(
@@ -39,7 +39,7 @@ class Logorroico(
         }
 
         // dal settimo messaggio di seguito, probabilità 20% di essere logorroico
-        if (lastAuthorCount >= 7 && Random.nextInt(5) == 0) {
+        if (lastAuthorCount >= 7 && nextInt(5) == 0) {
             lastAuthorCount = 0
             ctx.addResponse(ActionResponse.message(risposte.random()))
         }

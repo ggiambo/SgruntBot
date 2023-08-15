@@ -7,7 +7,7 @@ import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import com.fdtheroes.sgruntbot.actions.persistence.KarmaService
 import com.fdtheroes.sgruntbot.actions.persistence.UsersService
 import org.springframework.stereotype.Service
-import kotlin.random.Random
+import kotlin.random.Random.Default.nextBoolean
 
 @Service
 class ScheduledRandomKarma(
@@ -22,7 +22,7 @@ class ScheduledRandomKarma(
             .getAllActiveUsers { sgruntBot.getChatMember(it) }
             .filter { it.id != Users.BLAHBANFBOT.id }    // filtra sgrunty
             .random()
-        val giveKarma = Random.nextBoolean()
+        val giveKarma = nextBoolean()
         val azione = if (giveKarma) "aumentato" else "diminuito"
         if (giveKarma) {
             karmaService.takeGiveKarma(vittima.id) { it + 1 }
