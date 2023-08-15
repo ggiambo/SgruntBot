@@ -1,5 +1,6 @@
 package com.fdtheroes.sgruntbot.scheduled.fix
 
+import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fdtheroes.sgruntbot.Bot
 import com.fdtheroes.sgruntbot.BotUtils
@@ -28,22 +29,46 @@ class ScheduledSanto(
     override fun execute() {
         val santi = botUtils.textFromURL("https://www.santodelgiorno.it/santi.json")
         val jsNode = mapper.readTree(santi)
-        val santo = jsNode.firstOrNull { it.get("default").asInt() == 1 }
+
+        santoDiDefault(jsNode)
+        altriSanti(jsNode)
+    }
+
+    fun santoDiDefault(jsNode: JsonNode) {
+        val santo = jsNode.firstOrNull { it["default"].asInt() == 1 }
 
         if (santo == null) {
             sgruntBot.messaggio(ActionResponse.message("Niente santo del giorno oggi"))
             return
         }
 
-        val nome = santo.get("nome").asText()
-        val descrizione = santo.get("descrizione").asText()
-        val url = santo.get("permalink").asText()
-        val urlPhoto = santo.get("urlimmagine").asText()
+        val nome = santo["nome"].asText()
+        val descrizione = santo["descrizione"].asText()
+        val url = santo["permalink"].asText()
+        val urlPhoto = santo["urlimmagine"].asText()
 
         val imageStream = botUtils.streamFromURL(urlPhoto)
         val inputPhoto = InputFile(imageStream, "santo.jpg")
 
         sgruntBot.messaggio(ActionResponse.photo("<a href='$url'>$nome</a>\n$descrizione", inputPhoto, false))
+    }
+
+    fun altriSanti(jsNode: JsonNode) {
+        val santi = jsNode.filter { it["default"].asInt() == 0 }
+
+        if (santi.isEmpty()) {
+            return
+        }
+
+        val testo = santi.joinToString(separator = "\n") {
+            val nome = it["nome"].asText()
+            val url = it["permalink"].asText()
+            val tipologia = it["tipologia"].asText()
+
+            "<a href='$url'>$nome</a> ($tipologia)"
+        }
+
+        sgruntBot.messaggio(ActionResponse.message("<b>Altri santi</b>\n$testo", false))
     }
 
 }
