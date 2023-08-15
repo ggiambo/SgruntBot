@@ -4,7 +4,7 @@ import com.fdtheroes.sgruntbot.scheduled.Scheduled
 import java.time.LocalDateTime
 import kotlin.random.Random
 
-interface ScheduledRandom : Scheduled {
+fun interface ScheduledRandom : Scheduled {
 
     // random tra 6 e 10 ore
     override fun firstRun() = LocalDateTime.now().plusHours(Random.nextLong(6, 10))

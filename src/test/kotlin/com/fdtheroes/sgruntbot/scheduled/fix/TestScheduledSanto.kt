@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test
 import org.mockito.kotlin.argumentCaptor
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
+import java.time.LocalDateTime
 
 class TestScheduledSanto : BaseTest() {
 
@@ -30,5 +31,33 @@ class TestScheduledSanto : BaseTest() {
         Assertions.assertThat(actionResponse2.message).startsWith("<b>Altri santi</b>")
         Assertions.assertThat(actionResponse2.inputFile).isNull()
         Assertions.assertThat(actionResponse2.rispondi).isFalse()
+    }
+
+    @Test
+    fun testFirstRun() {
+        val tomorrow = LocalDateTime.now().plusDays(1)
+        val firstRun = scheduledSanto.firstRun()
+
+        Assertions.assertThat(firstRun.year).isEqualTo(tomorrow.year)
+        Assertions.assertThat(firstRun.month).isEqualTo(tomorrow.month)
+        Assertions.assertThat(firstRun.dayOfMonth).isEqualTo(tomorrow.dayOfMonth)
+        Assertions.assertThat(firstRun.hour).isEqualTo(9)
+        Assertions.assertThat(firstRun.minute).isEqualTo(0)
+        Assertions.assertThat(firstRun.second).isEqualTo(0)
+        Assertions.assertThat(firstRun.nano).isEqualTo(0)
+    }
+
+    @Test
+    fun testNextRun() {
+        val tomorrow = LocalDateTime.now().plusDays(1)
+        val nextRun = scheduledSanto.nextRun()
+
+        Assertions.assertThat(nextRun.year).isEqualTo(tomorrow.year)
+        Assertions.assertThat(nextRun.month).isEqualTo(tomorrow.month)
+        Assertions.assertThat(nextRun.dayOfMonth).isEqualTo(tomorrow.dayOfMonth)
+        Assertions.assertThat(nextRun.hour).isEqualTo(9)
+        Assertions.assertThat(nextRun.minute).isEqualTo(0)
+        Assertions.assertThat(nextRun.second).isEqualTo(0)
+        Assertions.assertThat(nextRun.nano).isEqualTo(0)
     }
 }

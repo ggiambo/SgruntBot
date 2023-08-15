@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fdtheroes.sgruntbot.Bot
 import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
+import com.fdtheroes.sgruntbot.scheduled.Scheduled
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.InputFile
 import java.time.LocalDateTime
@@ -14,17 +15,11 @@ class ScheduledSanto(
     private val botUtils: BotUtils,
     private val mapper: ObjectMapper,
     private val sgruntBot: Bot,
-) : ScheduledAMezzanotte {
+) : Scheduled {
 
-    override fun firstRun(): LocalDateTime {
-        val noveDiMattina = LocalDateTime.now()
-            .withHour(9)
-            .withMinute(0)
-            .withSecond(0)
-            .withNano(0)
+    override fun firstRun() = noveDiMattina()
 
-        return noveDiMattina.plusDays(1)
-    }
+    override fun nextRun() = noveDiMattina()
 
     override fun execute() {
         val santi = botUtils.textFromURL("https://www.santodelgiorno.it/santi.json")
@@ -34,7 +29,7 @@ class ScheduledSanto(
         altriSanti(jsNode)
     }
 
-    fun santoDiDefault(jsNode: JsonNode) {
+    private fun santoDiDefault(jsNode: JsonNode) {
         val santo = jsNode.firstOrNull { it["default"].asInt() == 1 }
 
         if (santo == null) {
@@ -53,7 +48,7 @@ class ScheduledSanto(
         sgruntBot.messaggio(ActionResponse.photo("<a href='$url'>$nome</a>\n$descrizione", inputPhoto, false))
     }
 
-    fun altriSanti(jsNode: JsonNode) {
+    private fun altriSanti(jsNode: JsonNode) {
         val santi = jsNode.filter { it["default"].asInt() == 0 }
 
         if (santi.isEmpty()) {
@@ -73,6 +68,16 @@ class ScheduledSanto(
         }
 
         sgruntBot.messaggio(ActionResponse.message("<b>Altri santi</b>\n$testo", false))
+    }
+
+    private fun noveDiMattina(): LocalDateTime {
+        val noveDiMattina = LocalDateTime.now()
+            .withHour(9)
+            .withMinute(0)
+            .withSecond(0)
+            .withNano(0)
+
+        return noveDiMattina.plusDays(1)
     }
 
 }
