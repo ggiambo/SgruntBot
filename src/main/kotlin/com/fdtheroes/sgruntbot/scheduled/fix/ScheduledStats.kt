@@ -13,7 +13,6 @@ import org.knowm.xchart.style.theme.GGPlot2Theme
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.InputFile
 import java.awt.BasicStroke
-import java.time.LocalDateTime
 
 @Service
 class ScheduledStats(
@@ -32,16 +31,6 @@ class ScheduledStats(
         this.styler.datePattern = "d"
     }
     private val seriesStroke = BasicStroke(6F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER)
-
-    override fun firstRun(): LocalDateTime {
-        val mezzanotte = LocalDateTime.now()
-            .withHour(0)
-            .withMinute(0)
-            .withSecond(0)
-            .withNano(0)
-
-        return mezzanotte.plusDays(1)
-    }
 
     override fun execute() {
         val statsLast15Days = statsService.getStatsLastDays(15).groupBy { it.userId }

@@ -3,7 +3,7 @@ package com.fdtheroes.sgruntbot.scheduled.fix
 import com.fdtheroes.sgruntbot.scheduled.Scheduled
 import java.time.LocalDateTime
 
-interface ScheduledAMezzanotte : Scheduled {
+fun interface ScheduledAMezzanotte : Scheduled {
 
     override fun firstRun() = getMezzanotte()
 
