@@ -2,14 +2,13 @@ package com.fdtheroes.sgruntbot.scheduled.random;
 
 import com.fdtheroes.sgruntbot.scheduled.Scheduled
 import java.time.LocalDateTime
-import kotlin.random.Random.Default.nextLong
+import kotlin.random.Random
 
 interface ScheduledRandom : Scheduled {
 
-    override fun firstRun() = randomTra16e36Ore()
+    // random tra 6 e 10 ore
+    override fun firstRun() = LocalDateTime.now().plusHours(Random.nextLong(6, 10))
 
-    override fun nextRun() = randomTra16e36Ore()
-
-    private fun randomTra16e36Ore(): LocalDateTime = LocalDateTime.now()
-        .plusHours(nextLong(16, 36))
+    // random trha 10 e 14 ore
+    override fun nextRun() = LocalDateTime.now().plusHours(Random.nextLong(10, 14))
 }

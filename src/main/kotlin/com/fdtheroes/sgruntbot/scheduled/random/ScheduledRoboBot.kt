@@ -1,12 +1,8 @@
 package com.fdtheroes.sgruntbot.scheduled.random
 
 import com.fdtheroes.sgruntbot.Bot
-import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
-import com.fdtheroes.sgruntbot.scheduled.Scheduled
 import org.springframework.stereotype.Service
-import java.time.LocalDateTime
-import kotlin.random.Random
 
 /**
  * [Why doesn't my bot see messages from other bots?](https://core.telegram.org/bots/faq#why-doesn-39t-my-bot-see-messages-from-other-bots)
@@ -15,7 +11,7 @@ import kotlin.random.Random
  * not be able to see messages from other bots regardless of mode.
  */
 @Service
-class ScheduledRoboBot(private val botUtils: BotUtils, private val sgruntBot: Bot) : Scheduled {
+class ScheduledRoboBot(private val sgruntBot: Bot) : ScheduledRandom {
 
     private val risposte = listOf(
         "RoboBot, tu puzzi.",
@@ -26,15 +22,9 @@ class ScheduledRoboBot(private val botUtils: BotUtils, private val sgruntBot: Bo
         "RobBot: Prototipo della stupidità artificiale"
     )
 
-    override fun firstRun() = randomTra12e24Ore()
-    override fun nextRun() = randomTra12e24Ore()
-
     override fun execute() {
         val text = risposte.random()
         sgruntBot.messaggio(ActionResponse.message(text, false))
     }
-
-    private fun randomTra12e24Ore(): LocalDateTime = LocalDateTime.now()
-        .plusHours(Random.nextLong(10, 14))
 
 }
