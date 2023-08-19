@@ -58,12 +58,10 @@ class ScheduledSanto(
         val testo = santi.joinToString(separator = "\n") {
             val nome = it["nome"].asText()
             val tipologia = it["tipologia"].asText()
-            val permalink = it["permalink"]
-            if (permalink != null) {
-                val url = permalink.asText()
-                "<a href='$url'>$nome</a> ($tipologia)"
-            } else {
+            if (tipologia.isNotEmpty()) {
                 "$nome ($tipologia)"
+            } else {
+                nome
             }
         }
 
