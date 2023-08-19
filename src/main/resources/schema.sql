@@ -29,3 +29,15 @@ create table if not exists errepigi
     constraint user_id_uindex
         unique (user_id)
 );
+
+create table if not exists utonti
+(
+    user_id    bigint not null,
+    first_name text   not null,
+    last_name  text,
+    user_name  text,
+    updated    date   not null,
+    primary key (user_id),
+    constraint user_id_uindex
+        unique (user_id)
+);
