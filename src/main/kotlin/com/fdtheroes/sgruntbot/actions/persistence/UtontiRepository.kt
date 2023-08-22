@@ -27,7 +27,7 @@ interface UtontiRepository : CrudRepository<Utonto, Long> {
     @Query("update sgrunt.utonti set sgrunt.utonti.first_name = :firstName, sgrunt.utonti.last_name = :lastName, sgrunt.utonti.user_name = :userName where sgrunt.utonti.user_id = :userId")
     fun updateUtonto(
         userId: Long,
-        fistName: String,
+        firstName: String?,
         lastName: String?,
         userName: String?,
         updated: LocalDateTime = LocalDateTime.now()
