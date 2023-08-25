@@ -25,11 +25,6 @@ class ScheduledSanto(
         val santi = botUtils.textFromURL("https://www.santodelgiorno.it/santi.json")
         val jsNode = mapper.readTree(santi)
 
-        santoDiDefault(jsNode)
-        altriSanti(jsNode)
-    }
-
-    private fun santoDiDefault(jsNode: JsonNode) {
         val santo = jsNode.firstOrNull { it["default"].asInt() == 1 }
 
         if (santo == null) {
@@ -45,14 +40,22 @@ class ScheduledSanto(
         val imageStream = botUtils.streamFromURL(urlPhoto)
         val inputPhoto = InputFile(imageStream, "santo.jpg")
 
-        sgruntBot.messaggio(ActionResponse.photo("<a href='$url'>$nome</a>\n$descrizione", inputPhoto, false))
+        val altriSanti = altriSanti(jsNode)
+
+        sgruntBot.messaggio(
+            ActionResponse.photo(
+                "<a href='$url'>$nome</a>\n$descrizione\n$altriSanti",
+                inputPhoto,
+                false
+            )
+        )
     }
 
-    private fun altriSanti(jsNode: JsonNode) {
+    private fun altriSanti(jsNode: JsonNode): String {
         val santi = jsNode.filter { it["default"].asInt() == 0 }
 
         if (santi.isEmpty()) {
-            return
+            return ""
         }
 
         val testo = santi.joinToString(separator = "\n") {
@@ -65,7 +68,7 @@ class ScheduledSanto(
             }
         }
 
-        sgruntBot.messaggio(ActionResponse.message("<b>Altri santi</b>\n$testo", false))
+        return "\n<b>Altri santi</b>\n$testo"
     }
 
     private fun noveDiMattina(): LocalDateTime {
