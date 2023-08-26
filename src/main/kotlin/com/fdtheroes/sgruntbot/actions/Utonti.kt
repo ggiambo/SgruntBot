@@ -21,6 +21,9 @@ class Utonti(
             ctx.addResponse(ActionResponse.message("Utonti di questa ciat:\n${utonti}"))
         }
         usersService.checkAndUpdate(ctx.message.from)
+        if (ctx.message.replyToMessage?.from != null) {
+            usersService.checkAndUpdate(ctx.message.replyToMessage.from)
+        }
     }
 
     override fun halp() = "<b>!utonti</b> lista degli IDs degli utonti che hanno partecipato a questa ciat"
