@@ -15,6 +15,8 @@ data class Utonto(
     var lastName: String?,
     @Column("user_name")
     var userName: String?,
+    @Column("is_bot")
+    var isBot: Boolean,
     @Column("updated")
     var updated: LocalDate = LocalDate.now(),
 )

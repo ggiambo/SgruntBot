@@ -12,7 +12,7 @@ import org.mockito.kotlin.*
 class ScheduledRandomKarmaTest : BaseTest() {
 
     private val usersService = mock<UsersService> {
-        on { getAllActiveUsers(any()) } doReturn listOf(
+        on { getAllUsers(any()) } doReturn listOf(
             user(1, "uno"),
             user(2, "due"),
             user(3, "tre")

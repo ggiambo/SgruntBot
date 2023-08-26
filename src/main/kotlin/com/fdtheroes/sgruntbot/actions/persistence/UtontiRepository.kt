@@ -9,22 +9,24 @@ import java.time.LocalDateTime
 
 @Repository
 interface UtontiRepository : CrudRepository<Utonto, Long> {
+
     fun findByUserId(userId: Long): Utonto?
 
     fun getByUserId(userId: Long): Utonto
 
     @Modifying
-    @Query("insert into sgrunt.utonti (user_id, first_name, last_name, user_name, updated) values (:userId, :firstName, :lastName, :userName, :updated)")
+    @Query("insert into sgrunt.utonti (user_id, first_name, last_name, user_name, is_bot, updated) values (:userId, :firstName, :lastName, :userName, :isBot, :updated)")
     fun createUtonto(
         userId: Long,
         firstName: String,
         lastName: String?,
         userName: String?,
+        isBot: Boolean,
         updated: LocalDateTime = LocalDateTime.now()
     )
 
     @Modifying
-    @Query("update sgrunt.utonti set sgrunt.utonti.first_name = :firstName, sgrunt.utonti.last_name = :lastName, sgrunt.utonti.user_name = :userName where sgrunt.utonti.user_id = :userId")
+    @Query("update sgrunt.utonti set sgrunt.utonti.first_name = :firstName, sgrunt.utonti.last_name = :lastName, sgrunt.utonti.user_name = :userName, sgrunt.utonti.updated = :updated where sgrunt.utonti.user_id = :userId")
     fun updateUtonto(
         userId: Long,
         firstName: String?,

@@ -27,7 +27,7 @@ class Attacca(
         }
         if (message.text == "?attacca") {
             val difensore = usersService
-                .getAllActiveUsers { ctx.getChatMember(it) }
+                .getAllUsers { ctx.getChatMember(it) }
                 .random()
 
             val testoAttacco = errePiGiService.attacca(message.from, difensore)

@@ -19,8 +19,7 @@ class ScheduledRandomKarma(
 
     override fun execute() {
         val vittima = usersService
-            .getAllActiveUsers { sgruntBot.getChatMember(it) }
-            .filter { it.id != Users.BLAHBANFBOT.id }    // filtra sgrunty
+            .getAllUsers { sgruntBot.getChatMember(it) }
             .random()
         val giveKarma = nextBoolean()
         val azione = if (giveKarma) "aumentato" else "diminuito"
