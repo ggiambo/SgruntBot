@@ -6,7 +6,7 @@ import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import org.springframework.stereotype.Service
 import kotlin.random.Random.Default.nextInt
 
-@Service
+//@Service
 class Logorroico(
     private val botUtils: BotUtils,
 ) : Action {
