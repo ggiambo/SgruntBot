@@ -6,7 +6,7 @@ import com.fdtheroes.sgruntbot.actions.models.ActionContext
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import org.springframework.stereotype.Service
 
-@Service
+//@Service
 class Parolacce(private val botUtils: BotUtils, private val botConfig: BotConfig) : Action {
 
     private val regex = Regex(

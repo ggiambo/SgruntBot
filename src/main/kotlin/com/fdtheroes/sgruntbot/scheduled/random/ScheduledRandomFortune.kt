@@ -5,7 +5,7 @@ import com.fdtheroes.sgruntbot.actions.Fortune
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import org.springframework.stereotype.Service
 
-@Service
+//@Service
 class ScheduledRandomFortune(private val fortune: Fortune, private val sgruntBot: Bot) : ScheduledRandom {
     override fun execute() {
         sgruntBot.messaggio(ActionResponse.message(fortune.getFortune(), false))

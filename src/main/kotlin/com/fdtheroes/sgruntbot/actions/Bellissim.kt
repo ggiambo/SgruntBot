@@ -4,7 +4,7 @@ import com.fdtheroes.sgruntbot.actions.models.ActionContext
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import org.springframework.stereotype.Service
 
-@Service
+//@Service
 class Bellissim : Action {
 
     private val regex = Regex("bellissim", RegexOption.IGNORE_CASE)

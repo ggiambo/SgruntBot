@@ -7,7 +7,7 @@ import com.fdtheroes.sgruntbot.actions.persistence.KarmaService
 import org.springframework.stereotype.Service
 import kotlin.random.Random.Default.nextInt
 
-@Service
+//@Service
 class Cazzate(
     private val botUtils: BotUtils,
     private val karmaService: KarmaService,

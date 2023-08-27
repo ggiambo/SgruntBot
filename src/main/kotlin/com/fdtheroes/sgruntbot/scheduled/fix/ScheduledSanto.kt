@@ -26,7 +26,7 @@ class ScheduledSanto(
         val jsNode = mapper.readTree(santi)
 
         santoDiDefault(jsNode)
-        altriSanti(jsNode)
+        //altriSanti(jsNode)
     }
 
     private fun santoDiDefault(jsNode: JsonNode) {

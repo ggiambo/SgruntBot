@@ -6,7 +6,7 @@ import com.fdtheroes.sgruntbot.actions.Slogan
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import org.springframework.stereotype.Service
 
-@Service
+//@Service
 class ScheduledRandomSlogan(
     private val slogan: Slogan,
     private val sgruntBot: Bot,

@@ -4,7 +4,7 @@ import com.fdtheroes.sgruntbot.actions.models.ActionContext
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import org.springframework.stereotype.Service
 
-@Service
+//@Service
 class Lamin : Action {
 
     private val regex1 = Regex("(negr|negher)", RegexOption.IGNORE_CASE)

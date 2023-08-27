@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
  * Bots talking to each other could potentially get stuck in unwelcome loops. To avoid this, we decided that bots will
  * not be able to see messages from other bots regardless of mode.
  */
-@Service
+//@Service
 class ScheduledRoboBot(private val sgruntBot: Bot) : ScheduledRandom {
 
     private val risposte = listOf(

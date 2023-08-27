@@ -5,7 +5,7 @@ import com.fdtheroes.sgruntbot.actions.models.ActionContext
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import org.springframework.stereotype.Service
 
-@Service
+//@Service
 class PorcaMadonna(private val botConfig: BotConfig) : Action {
 
     private val regex = Regex("\\bporca madonna\\b", setOf(RegexOption.IGNORE_CASE, RegexOption.MULTILINE))
