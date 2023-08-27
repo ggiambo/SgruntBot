@@ -24,7 +24,6 @@ class SgruntController(
     private val karmaService: KarmaService,
     private val statsService: StatsService,
     private val botConfig: BotConfig,
-    private val randomScheduledActions: List<Scheduled>,
 ) {
 
     @GetMapping("/actions")

@@ -58,7 +58,7 @@ class BotUtils(private val botConfig: BotConfig) {
     }
 
     fun textFromURL(url: String, params: String? = null, headers: List<Pair<String, String>> = emptyList()): String {
-        return streamFromURL(url, params)
+        return streamFromURL(url, params, headers)
             .readAllBytes()
             .decodeToString()
     }
