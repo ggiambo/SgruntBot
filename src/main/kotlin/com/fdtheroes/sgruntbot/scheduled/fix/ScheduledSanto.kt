@@ -17,9 +17,9 @@ class ScheduledSanto(
     private val sgruntBot: Bot,
 ) : Scheduled {
 
-    override fun firstRun() = noveDiMattina()
+    override fun firstRun() = seiDiMattina()
 
-    override fun nextRun() = noveDiMattina()
+    override fun nextRun() = seiDiMattina()
 
     override fun execute() {
         val santi = botUtils.textFromURL("https://www.santodelgiorno.it/santi.json")
@@ -68,14 +68,14 @@ class ScheduledSanto(
         sgruntBot.messaggio(ActionResponse.message("<b>Altri santi</b>\n$testo", false))
     }
 
-    private fun noveDiMattina(): LocalDateTime {
-        val noveDiMattina = LocalDateTime.now()
-            .withHour(9)
+    private fun seiDiMattina(): LocalDateTime {
+        val seiDiMattina = LocalDateTime.now()
+            .withHour(6)
             .withMinute(0)
             .withSecond(0)
             .withNano(0)
 
-        return noveDiMattina.plusDays(1)
+        return seiDiMattina.plusDays(1)
     }
 
 }
