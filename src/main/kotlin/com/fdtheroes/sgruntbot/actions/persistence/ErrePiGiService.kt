@@ -1,10 +1,12 @@
 package com.fdtheroes.sgruntbot.actions.persistence
 
 import com.fdtheroes.sgruntbot.BotUtils
+import com.fdtheroes.sgruntbot.Users
 import com.fdtheroes.sgruntbot.actions.models.ErrePiGi
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.User
 import kotlin.random.Random.Default.nextInt
+import kotlin.reflect.KFunction1
 
 @Service
 class ErrePiGiService(
@@ -91,6 +93,30 @@ class ErrePiGiService(
         val risultatoDifensore = "$difensoreName ${getStato(difensoreErrePiGi)}."
 
         return "$attacco\n\n$risultatoAttaccante\n$risultatoDifensore"
+    }
+
+    fun sgruntyAttacca(getChatMember: (Long) -> User?): String? {
+        val sgruntyId = Users.BLAHBANFBOT.id
+        var sgruntyAttaccante = errePiGiRepository.getErrePiGiByUserId(sgruntyId)
+        if (sgruntyAttaccante == null) {
+            sgruntyAttaccante = init(Users.BLAHBANFBOT.id)
+        }
+        if (sgruntyAttaccante.hp <= 0) {
+            return null
+        }
+
+        val attaccabili = errePiGiRepository.findAll()
+            .filter { it.userId != sgruntyId }
+            .filter { it.hp > 0 }
+            .filterNot { getAttaccantiIds(it).contains(sgruntyId) }
+        if (attaccabili.isEmpty()) {
+            return null
+        }
+
+        val difensoreId = attaccabili.random().userId
+        val difensoreName = botUtils.getUserLink(getChatMember(difensoreId))
+        return "<b>Sgrunty attacca $difensoreName con ${attacchi.random()}!</b>"
+
     }
 
     private fun getAttaccantiIds(errePiGi: ErrePiGi): List<Long> {
