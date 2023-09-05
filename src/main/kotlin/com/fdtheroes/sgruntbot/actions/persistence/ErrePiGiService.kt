@@ -6,12 +6,12 @@ import com.fdtheroes.sgruntbot.actions.models.ErrePiGi
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.User
 import kotlin.random.Random.Default.nextInt
-import kotlin.reflect.KFunction1
 
 @Service
 class ErrePiGiService(
     private val botUtils: BotUtils,
     private val errePiGiRepository: ErrePiGiRepository,
+    private val usersService: UsersService,
 ) {
 
     private val attacchi = listOf(
@@ -58,7 +58,6 @@ class ErrePiGiService(
         if (attaccanteErrePiGi == null) {
             attaccanteErrePiGi = init(attaccante.id)
         }
-        val attaccanteName = botUtils.getUserName(attaccante)
         if (attaccanteErrePiGi.hp <= 0) {
             return "Sei morto, non puoi attaccare.\nAspetta fino a domani per riprovare."
         }
@@ -77,9 +76,46 @@ class ErrePiGiService(
             return "Oggi hai già attaccato $difensoreName.\nAspetta fino a domani per riprovare."
         }
 
+        attacco(attaccanteErrePiGi, difensoreErrePiGi)
+
+        return testoAttacco(attaccante, difensore)
+    }
+
+    fun sgruntyAttacca(getChatMember: (Long) -> User?): String? {
+        val sgrunty = getChatMember(Users.BLAHBANFBOT.id)
+        if (sgrunty == null) {
+            return null // non dovrebbe succedere
+        }
+
+        var sgruntyErrePiGi = errePiGiRepository.getErrePiGiByUserId(sgrunty.id)
+        if (sgruntyErrePiGi == null) {
+            sgruntyErrePiGi = init(Users.BLAHBANFBOT.id)
+        }
+        if (sgruntyErrePiGi.hp <= 0) {
+            return null
+        }
+
+        val difensore = usersService
+            .getAllUsers(getChatMember)
+            .filter { it.id != sgrunty.id }
+            .random()
+
+        var difensoreErrePiGi = errePiGiRepository.getErrePiGiByUserId(difensore.id)
+        if (difensoreErrePiGi == null) {
+            difensoreErrePiGi = init(difensore.id)
+        }
+
+        attacco(sgruntyErrePiGi, difensoreErrePiGi)
+
+        return testoAttacco(sgrunty, difensore)
+    }
+
+    private fun attacco(attaccanteErrePiGi: ErrePiGi, difensoreErrePiGi: ErrePiGi) {
+        val attaccantiIds = getAttaccantiIds(difensoreErrePiGi).toMutableList()
+
         val puntiFeritaAttaccante = nextInt(5)
         attaccanteErrePiGi.hp = Math.max(attaccanteErrePiGi.hp - puntiFeritaAttaccante, 0)
-        attaccantiIds.add(attaccante.id)
+        attaccantiIds.add(attaccanteErrePiGi.userId)
 
         val puntiFeritaDifensore = nextInt(5)
         difensoreErrePiGi.hp = Math.max(difensoreErrePiGi.hp - puntiFeritaDifensore, 0)
@@ -87,36 +123,19 @@ class ErrePiGiService(
 
         errePiGiRepository.save(attaccanteErrePiGi)
         errePiGiRepository.save(difensoreErrePiGi)
+    }
+
+    private fun testoAttacco(attaccante: User, difensore: User) : String {
+        val attaccanteName = botUtils.getUserName(attaccante)
+        val attaccanteErrePiGi = errePiGiRepository.getErrePiGiByUserId(attaccante.id)!!
+        val difensoreErrePiGi = errePiGiRepository.getErrePiGiByUserId(difensore.id)!!
+        val difensoreName = botUtils.getUserLink(difensore)
 
         val attacco = "<b>$attaccanteName attacca $difensoreName con ${attacchi.random()}!</b>"
         val risultatoAttaccante = "$attaccanteName ${getStato(attaccanteErrePiGi)}."
         val risultatoDifensore = "$difensoreName ${getStato(difensoreErrePiGi)}."
 
         return "$attacco\n\n$risultatoAttaccante\n$risultatoDifensore"
-    }
-
-    fun sgruntyAttacca(getChatMember: (Long) -> User?): String? {
-        val sgruntyId = Users.BLAHBANFBOT.id
-        var sgruntyAttaccante = errePiGiRepository.getErrePiGiByUserId(sgruntyId)
-        if (sgruntyAttaccante == null) {
-            sgruntyAttaccante = init(Users.BLAHBANFBOT.id)
-        }
-        if (sgruntyAttaccante.hp <= 0) {
-            return null
-        }
-
-        val attaccabili = errePiGiRepository.findAll()
-            .filter { it.userId != sgruntyId }
-            .filter { it.hp > 0 }
-            .filterNot { getAttaccantiIds(it).contains(sgruntyId) }
-        if (attaccabili.isEmpty()) {
-            return null
-        }
-
-        val difensoreId = attaccabili.random().userId
-        val difensoreName = botUtils.getUserLink(getChatMember(difensoreId))
-        return "<b>Sgrunty attacca $difensoreName con ${attacchi.random()}!</b>"
-
     }
 
     private fun getAttaccantiIds(errePiGi: ErrePiGi): List<Long> {
