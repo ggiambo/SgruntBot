@@ -42,7 +42,11 @@ class ErrePiGiService(
     }
 
     fun reset() {
-        errePiGiRepository.deleteAll()
+        errePiGiRepository.findAll().forEach {
+            it.hp = 0
+            it.attaccantiIds = ""
+            errePiGiRepository.save(it)
+        }
     }
 
     fun testoErrePiGiReport(getChatMember: (Long) -> User?): String? {
