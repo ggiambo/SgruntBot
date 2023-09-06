@@ -50,7 +50,10 @@ class ErrePiGiService(
     }
 
     fun testoErrePiGiReport(getChatMember: (Long) -> User?): String? {
-        val errePiGis = errePiGiRepository.findAll().toList()
+        val errePiGis = errePiGiRepository.findAll()
+            .filterNot {
+                it.attaccantiIds.isEmpty()
+            }
         if (errePiGis.isEmpty()) {
             return null
         }
