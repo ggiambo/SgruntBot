@@ -3,6 +3,7 @@ package com.fdtheroes.sgruntbot.actions.persistence
 import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.Users
 import com.fdtheroes.sgruntbot.actions.models.ErrePiGi
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.User
 import kotlin.random.Random.Default.nextInt
@@ -13,6 +14,8 @@ class ErrePiGiService(
     private val botUtils: BotUtils,
     private val errePiGiRepository: ErrePiGiRepository,
 ) {
+
+    private val log = LoggerFactory.getLogger(this.javaClass)
 
     private val attacchi = listOf(
         "un grosso tonno puzzolente",
@@ -42,11 +45,18 @@ class ErrePiGiService(
     }
 
     fun reset() {
-        errePiGiRepository.deleteAll()
+        errePiGiRepository.findAll().forEach {
+            it.hp = 0
+            it.attaccantiIds = ""
+            errePiGiRepository.save(it)
+        }
     }
 
     fun testoErrePiGiReport(getChatMember: (Long) -> User?): String? {
-        val errePiGis = errePiGiRepository.findAll().toList()
+        val errePiGis = errePiGiRepository.findAll()
+            .filterNot {
+                it.attaccantiIds.isEmpty()
+            }
         if (errePiGis.isEmpty()) {
             return null
         }
@@ -105,10 +115,15 @@ class ErrePiGiService(
             return null
         }
 
+        log.info("Sgrunty è vivo e può attaccare")
+
         val attaccabili = errePiGiRepository.findAll()
             .filter { it.userId != sgruntyId }
             .filter { it.hp > 0 }
             .filterNot { getAttaccantiIds(it).contains(sgruntyId) }
+
+        log.info("Lista attaccabili: ${attaccabili.joinToString { it.userId.toString() }}")
+
         if (attaccabili.isEmpty()) {
             return null
         }

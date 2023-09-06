@@ -99,11 +99,10 @@ class ErrePiGiServiceTest : BaseTest() {
             .split("\n")
 
         assertThat(testoErrePiGiReport).isNotEmpty()
-        assertThat(testoErrePiGiReport).hasSize(4)
+        assertThat(testoErrePiGiReport).hasSize(3)
         assertThat(testoErrePiGiReport[0]).isEqualTo("Username_1 è moruto. È stato attaccato da Username_1, Username_2.")
-        assertThat(testoErrePiGiReport[1]).isEqualTo("Username_2 ha 5 punti-vita. È stato attaccato da nessuno.")
-        assertThat(testoErrePiGiReport[2]).isEqualTo("Username_3 ha 7 punti-vita. È stato attaccato da Username_4, Username_2.")
-        assertThat(testoErrePiGiReport[3]).isEqualTo("Username_4 ha 6 punti-vita. È stato attaccato da Username_1, Username_4.")
+        assertThat(testoErrePiGiReport[1]).isEqualTo("Username_3 ha 7 punti-vita. È stato attaccato da Username_4, Username_2.")
+        assertThat(testoErrePiGiReport[2]).isEqualTo("Username_4 ha 6 punti-vita. È stato attaccato da Username_1, Username_4.")
     }
 
     private fun status(): List<ErrePiGi> {
