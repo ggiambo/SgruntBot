@@ -2,14 +2,17 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     application
-    kotlin("jvm") version "1.9.0"
-    kotlin("plugin.spring") version "1.9.0"
-    id("org.springframework.boot") version "3.1.2"
-    id("io.spring.dependency-management") version "1.1.2"
-    id("com.github.ben-manes.versions") version "0.47.0"
+    kotlin("jvm") version "1.9.10"
+    kotlin("plugin.spring") version "1.9.10"
+    id("org.springframework.boot") version "3.1.3"
+    id("io.spring.dependency-management") version "1.1.3"
+    id("com.github.ben-manes.versions") version "0.48.0"
     id("com.glovoapp.semantic-versioning") version "1.1.10"
 }
 
+configurations.all {
+    exclude("commons-logging", "commons-logging")
+}
 
 repositories {
     mavenLocal()
@@ -30,16 +33,16 @@ dependencies {
     implementation("org.jetbrains.kotlin", "kotlin-reflect")
     implementation("org.jetbrains.kotlin", "kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core")
-    implementation("org.telegram", "telegrambots", "6.7.0")
+    implementation("org.telegram", "telegrambots", "6.8.0")
     implementation("org.jsoup", "jsoup", "1.16.1")
     implementation("org.springdoc", "springdoc-openapi-starter-common", "2.2.0")
     implementation("org.springdoc", "springdoc-openapi-starter-webmvc-ui", "2.2.0")
-    implementation("org.knowm.xchart", "xchart", "3.8.4")
+    implementation("org.knowm.xchart", "xchart", "3.8.5")
     runtimeOnly("org.mariadb.jdbc", "mariadb-java-client")
     runtimeOnly("com.h2database", "h2")
     annotationProcessor("org.springframework.boot", "spring-boot-configuration-processor")
     testImplementation("org.springframework.boot", "spring-boot-starter-test")
-    testImplementation("org.mockito.kotlin", "mockito-kotlin", "5.0.0")
+    testImplementation("org.mockito.kotlin", "mockito-kotlin", "5.1.0")
 }
 
 springBoot {
