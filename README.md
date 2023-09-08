@@ -20,3 +20,6 @@ create user 'sgrunt'@localhost identified by 'sgrunt';
 grant all privileges on sgrunt.* to 'sgrunt'@localhost identified by 'sgrunt';
 flush privileges;
 ```
+
+## API
+Non sono il massimo, ma forse possono piacerti le [REST API](http://localhost:8081/sgrunty/swagger-ui/index.html)
