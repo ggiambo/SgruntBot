@@ -46,7 +46,7 @@ class ErrePiGiService(
 
     fun reset() {
         errePiGiRepository.findAll().forEach {
-            it.hp = 0
+            it.hp = 10
             it.attaccantiIds = ""
             errePiGiRepository.save(it)
         }
