@@ -5,7 +5,7 @@ import com.fdtheroes.sgruntbot.actions.Action
 import com.fdtheroes.sgruntbot.actions.HasHalp
 import com.fdtheroes.sgruntbot.actions.persistence.KarmaService
 import com.fdtheroes.sgruntbot.actions.persistence.StatsService
-import com.fdtheroes.sgruntbot.scheduled.Scheduled
+import com.fdtheroes.sgruntbot.scheduled.InitScheduled
 import io.swagger.v3.oas.annotations.Operation
 import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.web.bind.annotation.GetMapping
@@ -24,6 +24,7 @@ class SgruntController(
     private val karmaService: KarmaService,
     private val statsService: StatsService,
     private val botConfig: BotConfig,
+    private val initScheduled: InitScheduled,
 ) {
 
     @GetMapping("/actions")
@@ -98,6 +99,18 @@ class SgruntController(
                     val userName = botUtils.getUserName(sgruntBot.getChatMember(it.userId))
                     var day = it.statDay
                     var messages = it.messages
+                }
+            }
+    }
+
+    @GetMapping("/scheduled")
+    @Operation(summary = "Cosa ci riseva nel futuro Sgrunty?")
+    fun getScheduled(): List<Any> {
+        return initScheduled.getSchedulingInfo()
+            .map {
+                object {
+                    val cosa = it.key.simpleName
+                    val quando = it.value
                 }
             }
     }
