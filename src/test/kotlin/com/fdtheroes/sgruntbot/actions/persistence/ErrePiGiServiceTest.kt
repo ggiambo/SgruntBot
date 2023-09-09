@@ -24,7 +24,7 @@ class ErrePiGiServiceTest : BaseTest() {
         val userWithId1 = user(id = 1, userName = "Username_1")
         val userWithId2 = user(id = 2, userName = "Username_2")
 
-        val attacca = errePiGiService.attacca(userWithId1, userWithId2)
+        val attacca = errePiGiService.attacca(userWithId1, userWithId2, sgruntBot::getChatMember)
             .split("\n")
 
         assertThat(attacca).isNotEmpty()
@@ -42,7 +42,7 @@ class ErrePiGiServiceTest : BaseTest() {
     fun testAttacca_difensoreMorto() {
         val userWithId1 = user(id = 1, userName = "Username_1")
         val userWithId2 = user(id = 2, userName = "Username_2")
-        val attacca = errePiGiService.attacca(userWithId2, userWithId1)
+        val attacca = errePiGiService.attacca(userWithId2, userWithId1, sgruntBot::getChatMember)
             .split("\n")
 
         assertThat(attacca).isNotEmpty()
@@ -60,7 +60,7 @@ class ErrePiGiServiceTest : BaseTest() {
     fun testAttacca_giaAttaccato() {
         val userWithId2 = user(id = 2, userName = "Username_2")
         val userWithId3 = user(id = 3, userName = "Username_3")
-        val attacca = errePiGiService.attacca(userWithId2, userWithId3)
+        val attacca = errePiGiService.attacca(userWithId2, userWithId3, sgruntBot::getChatMember)
             .split("\n")
 
         assertThat(attacca).isNotEmpty()
@@ -76,16 +76,16 @@ class ErrePiGiServiceTest : BaseTest() {
     @Test
     fun testAttacca() {
         val userWithId3 = user(id = 3, userName = "Username_3")
-        val userWithId4 = user(id = 2, userName = "Username_4")
-        val attacca = errePiGiService.attacca(userWithId3, userWithId4)
+        val userWithId4 = user(id = 4, userName = "Username_4")
+        val attacca = errePiGiService.attacca(userWithId3, userWithId4, sgruntBot::getChatMember)
             .split("\n")
 
         assertThat(attacca).isNotEmpty()
         assertThat(attacca).hasSize(4)
-        assertThat(attacca[0]).startsWith("<b>Username_3 attacca <a href=\"tg://user?id=2\">Username_4</a> con ")
+        assertThat(attacca[0]).startsWith("<b>Username_3 attacca <a href=\"tg://user?id=4\">Username_4</a> con ")
         assertThat(attacca[1]).isEmpty()
         assertThat(attacca[2]).startsWith("Username_3 ha ").endsWith(" punti-vita.")
-        assertThat(attacca[3]).startsWith("<a href=\"tg://user?id=2\">Username_4</a> ha ").endsWith(" punti-vita.")
+        assertThat(attacca[3]).startsWith("<a href=\"tg://user?id=4\">Username_4</a> ha ").endsWith(" punti-vita.")
 
         verify(errePiGiRepository, times(0)).createErrePiGi(isA())
         verify(errePiGiRepository, times(2)).getErrePiGiByUserId(isA())

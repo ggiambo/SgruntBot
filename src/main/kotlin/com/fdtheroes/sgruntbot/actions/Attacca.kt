@@ -21,7 +21,7 @@ class Attacca(
             if (message.replyToMessage == null) {
                 testo = getErrePiGiReport(ctx)
             } else {
-                testo = errePiGiService.attacca(message.from, message.replyToMessage.from)
+                testo = errePiGiService.attacca(message.from, message.replyToMessage.from, ctx.getChatMember)
             }
             ctx.addResponse(ActionResponse.message(testo))
         }
@@ -30,7 +30,7 @@ class Attacca(
                 .getAllUsers { ctx.getChatMember(it) }
                 .random()
 
-            val testoAttacco = errePiGiService.attacca(message.from, difensore)
+            val testoAttacco = errePiGiService.attacca(message.from, difensore, ctx.getChatMember)
             val testo = "${botUtils.getUserName(message.from)} ubriaco fradicio tenta di attaccare ${
                 botUtils.getUserName(difensore)
             }"
