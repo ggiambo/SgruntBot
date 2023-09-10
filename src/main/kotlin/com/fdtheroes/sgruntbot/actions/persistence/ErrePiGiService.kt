@@ -77,6 +77,10 @@ class ErrePiGiService(
             return "Vile, vuoi attaccare $difensoreName che è già morto!\nAspetta fino a domani per riprovare."
         }
 
+        if (difensore.id == Users.SHDX_T.id) {
+            return "Seu gode della protezione di Sgrunty. Seu non si può attaccare. Vergognati per averci solamente provato."
+        }
+
         val attaccantiIds = getAttaccantiIds(difensoreErrePiGi).toMutableList()
         if (attaccantiIds.contains(attaccante.id)) {
             return "Oggi hai già attaccato $difensoreName.\nAspetta fino a domani per riprovare."
@@ -97,6 +101,7 @@ class ErrePiGiService(
 
         val difensoreErrePiGi = errePiGiRepository.findAll()
             .filter { it.userId != sgruntyId }
+            .filter { it.userId != Users.SHDX_T.id }
             .filter { it.hp > 0 }
             .filterNot { getAttaccantiIds(it).contains(sgruntyId) }
             .randomOrNull()
