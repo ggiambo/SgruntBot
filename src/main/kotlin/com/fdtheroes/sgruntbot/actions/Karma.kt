@@ -37,6 +37,7 @@ class Karma(
     private fun giveTakeKarma(
         ctx: ActionContext,
         ricevente: Long,
+        n: Int,
         newKarma: (oldKarma: Int) -> Int
     ) {
         val donatore = ctx.message.from.id
