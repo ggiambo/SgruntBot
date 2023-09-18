@@ -17,11 +17,11 @@ class Karma(
 
     override fun doAction(ctx: ActionContext) {
         val ricevente = ctx.message.replyToMessage?.from?.id
-        if (ctx.message.text == "+" && ricevente != null) {
-            giveTakeKarma(ctx, ricevente, Int::inc)
+        if (Regex("\\++").matches(ctx.message.text) && ricevente != null) {
+            giveTakeKarma(ctx, ricevente, ctx.message.text.length, Int::inc)
         }
-        if (ctx.message.text == "-" && ricevente != null) {
-            giveTakeKarma(ctx, ricevente, Int::dec)
+        if (Regex("-+").matches(ctx.message.text) && ricevente != null) {
+            giveTakeKarma(ctx, ricevente, ctx.message.text.length, Int::dec)
         }
         if (ctx.message.text == "!karma") {
             ctx.addResponse(ActionResponse.message(testoKarmaReport(ctx)))
@@ -53,7 +53,26 @@ class Karma(
             return
         }
 
-        karmaService.takeGiveKarma(donatore, ricevente, newKarma)
+        var wonKarma = false
+        var wonCredit = 0
+
+        for(i in 1..n) {
+            if (karmaService.getKarmaCredit(donatore) < 1) {
+                break
+            }
+
+            karmaService.takeGiveKarma(donatore, ricevente, newKarma)
+
+            if (nextInt(5) == 0) { // 20%
+                karmaRoulette(ctx.message, newKarma)
+                wonKarma = true
+            }
+
+            if (nextInt(5) == 0) { // 20%
+                creditRoulette(ctx.message)
+                wonCredit++
+            }
+        }
 
         val riceventeLink = botUtils.getUserLink(ctx.message.replyToMessage.from)
         val donatoreLink = botUtils.getUserLink(ctx.message.from)
@@ -61,31 +80,28 @@ class Karma(
         val crediti = karmaService.getKarmaCredit(donatore)
         var karmaMessage = "Karma totale di $riceventeLink: $karma\nCrediti di $donatoreLink: $crediti"
 
-        if (nextInt(5) == 0) { // 20%
-            val karmaRoulette = karmaRoulette(ctx.message, newKarma)
-            karmaMessage = karmaMessage.plus("\n\n$karmaRoulette")
+        if (wonKarma) {
+            val karma = karmaService.getKarma(donatore)
+            karmaMessage = karmaMessage.plus("\n\n<b>Karmaroulette</b> ! Il tuo Karma è ora di $karma")
         }
 
-        if (nextInt(5) == 0) { // 20%
-            val creditRoulette = creditRoulette(ctx.message)
-            karmaMessage = karmaMessage.plus("\n\n$creditRoulette")
+        if (wonCredit == 1) {
+            karmaMessage = karmaMessage.plus("\n\n<b>Creditroulette</b> ! Hai vinto un credito")
+        } else if (wonCredit > 0) {
+            karmaMessage = karmaMessage.plus("\n\n<b>Creditroulette</b> ! Hai vinto $wonCredit crediti")
         }
 
         ctx.addResponse(ActionResponse.message(karmaMessage))
     }
 
-    private fun karmaRoulette(message: Message, newKarma: (oldKarma: Int) -> Int): String {
+    private fun karmaRoulette(message: Message, newKarma: (oldKarma: Int) -> Int) {
         val ricevente = message.from.id
         karmaService.takeGiveKarma(ricevente, newKarma)
-        val karma = karmaService.getKarma(ricevente)
-        return "<b>Karmaroulette</b> ! Il tuo Karma è ora di $karma"
     }
 
-    private fun creditRoulette(message: Message): String {
+    private fun creditRoulette(message: Message) {
         val ricevente = message.from.id
         karmaService.incCredit(ricevente)
-        val credit = karmaService.getKarmaCredit(ricevente)
-        return "<b>Creditroulette</b> ! Hai vinto un credito, ora sei a quota $credit"
     }
 
     fun testoKarmaReport(ctx: ActionContext): String {
