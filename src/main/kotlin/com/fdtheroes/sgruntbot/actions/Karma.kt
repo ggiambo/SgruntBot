@@ -7,6 +7,7 @@ import com.fdtheroes.sgruntbot.actions.persistence.KarmaService
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.Message
 import org.telegram.telegrambots.meta.api.objects.User
+import kotlin.random.Random.Default.nextBoolean
 import kotlin.random.Random.Default.nextInt
 
 @Service
@@ -21,7 +22,12 @@ class Karma(
             giveTakeKarma(ctx, ricevente, ctx.message.text.length, Int::inc)
         }
         if (Regex("-+").matches(ctx.message.text) && ricevente != null) {
-            giveTakeKarma(ctx, ricevente, ctx.message.text.length, Int::dec)
+            if (nextBoolean()) { // 50%
+                ctx.addResponse(ActionResponse.message("L'amore vince sempre sull'odio, Sgrunty trasforma il karma negativo in positivo"))
+                giveTakeKarma(ctx, ricevente, ctx.message.text.length, Int::inc)
+            } else {
+                giveTakeKarma(ctx, ricevente, ctx.message.text.length, Int::dec)
+            }
         }
         if (ctx.message.text == "!karma") {
             ctx.addResponse(ActionResponse.message(testoKarmaReport(ctx)))
@@ -31,7 +37,7 @@ class Karma(
     override fun halp() = """
         <b>!karma</b> mostra la situazione del Karma
         <b>+</b> da un punto karma all'autore del messaggio
-        <b>-</b> togle punto karma all'autore del messaggio
+        <b>-</b> toglie punto karma all'autore del messaggio
         """.trimIndent()
 
     private fun giveTakeKarma(
@@ -54,10 +60,10 @@ class Karma(
             return
         }
 
-        var wonKarma = false
+        var wonKarma = 0
         var wonCredit = 0
 
-        for(i in 1..n) {
+        for (i in 1..n) {
             if (karmaService.getKarmaCredit(donatore) < 1) {
                 break
             }
@@ -66,7 +72,7 @@ class Karma(
 
             if (nextInt(5) == 0) { // 20%
                 karmaRoulette(ctx.message, newKarma)
-                wonKarma = true
+                wonKarma = newKarma(wonKarma)
             }
 
             if (nextInt(5) == 0) { // 20%
@@ -81,9 +87,8 @@ class Karma(
         val crediti = karmaService.getKarmaCredit(donatore)
         var karmaMessage = "Karma totale di $riceventeLink: $karma\nCrediti di $donatoreLink: $crediti"
 
-        if (wonKarma) {
-            val karma = karmaService.getKarma(donatore)
-            karmaMessage = karmaMessage.plus("\n\n<b>Karmaroulette</b> ! Il tuo Karma è ora di $karma")
+        if (wonKarma != 0) {
+            karmaMessage = karmaMessage.plus("\n\n<b>Karmaroulette</b> ! Hai vinto $wonKarma e ora è uguale a $karma")
         }
 
         if (wonCredit == 1) {
