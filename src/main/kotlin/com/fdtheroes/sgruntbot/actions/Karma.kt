@@ -83,12 +83,13 @@ class Karma(
 
         val riceventeLink = botUtils.getUserLink(ctx.message.replyToMessage.from)
         val donatoreLink = botUtils.getUserLink(ctx.message.from)
-        val karma = karmaService.getKarma(ricevente)
+        val newKarmaRicevente = karmaService.getKarma(ricevente)
         val crediti = karmaService.getKarmaCredit(donatore)
-        var karmaMessage = "Karma totale di $riceventeLink: $karma\nCrediti di $donatoreLink: $crediti"
+        var karmaMessage = "Karma totale di $riceventeLink: $newKarmaRicevente\nCrediti di $donatoreLink: $crediti"
 
         if (wonKarma != 0) {
-            karmaMessage = karmaMessage.plus("\n\n<b>Karmaroulette</b> ! Hai vinto $wonKarma e ora è uguale a $karma")
+            val newKarmaDonatore = karmaService.getKarma(donatore)
+            karmaMessage = karmaMessage.plus("\n\n<b>Karmaroulette</b> ! Hai vinto $wonKarma karma, e ora sei a quota $newKarmaDonatore")
         }
 
         if (wonCredit == 1) {
