@@ -1,22 +1,22 @@
 package com.fdtheroes.sgruntbot.actions.models
 
-import org.springframework.data.relational.core.mapping.Column
-import org.springframework.data.relational.core.mapping.Table
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.Id
 import java.time.LocalDate
-import java.time.LocalDateTime
 
-@Table("utonti")
+@Entity(name = "utonti")
 data class Utonto(
-    @Column("user_id")
-    var userId: Long,
-    @Column("first_name")
+    @Column(name = "first_name", nullable = false)
     var firstName: String,
-    @Column("last_name")
+    @Column(name = "last_name")
     var lastName: String?,
-    @Column("user_name")
+    @Column(name = "user_name")
     var userName: String?,
-    @Column("is_bot")
+    @Column(name = "is_bot", nullable = false)
     var isBot: Boolean,
-    @Column("updated")
+    @Column(name = "updated", nullable = false)
     var updated: LocalDate = LocalDate.now(),
+    @Id @Column(name = "user_id")
+    var userId: Long? = null,
 )

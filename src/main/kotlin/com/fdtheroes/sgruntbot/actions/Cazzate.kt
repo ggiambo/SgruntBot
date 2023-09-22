@@ -36,7 +36,7 @@ class Cazzate(
         val karmas = karmaService.getKarmas().map { it.second }
         val maxKarma = karmas.max()
         val minKarma = karmas.min()
-        val userKarma = karmaService.getKarma(userId)
+        val userKarma = karmaService.getKarma(userId).karma
         return nextInt(minKarma, maxKarma) < userKarma
     }
 

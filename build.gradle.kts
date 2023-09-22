@@ -4,7 +4,8 @@ plugins {
     application
     kotlin("jvm") version "1.9.10"
     kotlin("plugin.spring") version "1.9.10"
-    id("org.springframework.boot") version "3.1.3"
+    kotlin("plugin.jpa") version "1.9.10"
+    id("org.springframework.boot") version "3.1.4"
     id("io.spring.dependency-management") version "1.1.3"
     id("com.github.ben-manes.versions") version "0.48.0"
     id("com.glovoapp.semantic-versioning") version "1.1.10"
@@ -26,7 +27,7 @@ configurations {
 }
 
 dependencies {
-    implementation("org.springframework.boot", "spring-boot-starter-data-jdbc")
+    implementation("org.springframework.boot", "spring-boot-starter-data-jpa")
     implementation("org.springframework.boot", "spring-boot-starter-web")
     implementation("org.springframework.boot", "spring-boot-starter-cache")
     implementation("com.fasterxml.jackson.module", "jackson-module-kotlin")

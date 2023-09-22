@@ -3,6 +3,7 @@ package com.fdtheroes.sgruntbot.actions.persistence
 import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.Users
 import com.fdtheroes.sgruntbot.actions.models.ErrePiGi
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.User
 import kotlin.random.Random.Default.nextInt
@@ -36,8 +37,8 @@ class ErrePiGiService(
     )
 
     fun init(userId: Long): ErrePiGi {
-        errePiGiRepository.createErrePiGi(ErrePiGi(userId))
-        return errePiGiRepository.getErrePiGiByUserId(userId)!!
+        errePiGiRepository.save(ErrePiGi(userId = userId))
+        return errePiGiRepository.findByIdOrNull(userId)!!
     }
 
     fun reset() {
@@ -60,7 +61,7 @@ class ErrePiGiService(
     }
 
     fun attacca(attaccante: User, difensore: User, getChatMember: (Long) -> User?): String {
-        var attaccanteErrePiGi = errePiGiRepository.getErrePiGiByUserId(attaccante.id)
+        var attaccanteErrePiGi = errePiGiRepository.findByIdOrNull(attaccante.id)
         if (attaccanteErrePiGi == null) {
             attaccanteErrePiGi = init(attaccante.id)
         }
@@ -68,7 +69,7 @@ class ErrePiGiService(
             return "Sei morto, non puoi attaccare.\nAspetta fino a domani per riprovare."
         }
 
-        var difensoreErrePiGi = errePiGiRepository.getErrePiGiByUserId(difensore.id)
+        var difensoreErrePiGi = errePiGiRepository.findByIdOrNull(difensore.id)
         if (difensoreErrePiGi == null) {
             difensoreErrePiGi = init(difensore.id)
         }
@@ -91,7 +92,7 @@ class ErrePiGiService(
 
     fun sgruntyAttacca(getChatMember: (Long) -> User?): String? {
         val sgruntyId = Users.BLAHBANFBOT.id
-        var sgruntyErrePiGi = errePiGiRepository.getErrePiGiByUserId(sgruntyId)
+        var sgruntyErrePiGi = errePiGiRepository.findByIdOrNull(sgruntyId)
         if (sgruntyErrePiGi == null) {
             sgruntyErrePiGi = init(Users.BLAHBANFBOT.id)
         }
@@ -122,7 +123,7 @@ class ErrePiGiService(
 
         val puntiFeritaAttaccante = nextInt(5)
         attaccanteErrePiGi.hp = Math.max(attaccanteErrePiGi.hp - puntiFeritaAttaccante, 0)
-        attaccantiIds.add(attaccanteErrePiGi.userId)
+        attaccantiIds.add(attaccanteErrePiGi.userId!!)
 
         val puntiFeritaDifensore = nextInt(5)
         difensoreErrePiGi.hp = Math.max(difensoreErrePiGi.hp - puntiFeritaDifensore, 0)
@@ -131,8 +132,8 @@ class ErrePiGiService(
         errePiGiRepository.save(attaccanteErrePiGi)
         errePiGiRepository.save(difensoreErrePiGi)
 
-        val attaccanteName = botUtils.getUserName(getChatMember(attaccanteErrePiGi.userId))
-        val difensoreName = botUtils.getUserLink(getChatMember(difensoreErrePiGi.userId))
+        val attaccanteName = botUtils.getUserName(getChatMember(attaccanteErrePiGi.userId!!))
+        val difensoreName = botUtils.getUserLink(getChatMember(difensoreErrePiGi.userId!!))
 
         val attacco = "<b>$attaccanteName attacca $difensoreName con ${attacchi.random()}!</b>"
         val risultatoAttaccante = "$attaccanteName ${getStato(attaccanteErrePiGi)}."
@@ -149,7 +150,7 @@ class ErrePiGiService(
     }
 
     private fun getTestoReport(errePiGi: ErrePiGi, getChatMember: (Long) -> User?): String {
-        val utente = getChatMember(errePiGi.userId)
+        val utente = getChatMember(errePiGi.userId!!)
         var nomiAttaccanti = getAttaccantiIds(errePiGi)
             .map { getChatMember(it) }
             .joinToString { botUtils.getUserName(it) }

@@ -1,5 +1,6 @@
 package com.fdtheroes.sgruntbot.actions.persistence;
 
+import com.fdtheroes.sgruntbot.actions.models.Utonto
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.User
 import java.time.LocalDate
@@ -11,19 +12,29 @@ class UsersService(
 ) {
     fun getAllUsers(getChatMember: (Long) -> User?): List<User> {
         return usersRepository.findAll()
-            .map { it.userId }
-            .mapNotNull { getChatMember(it) }
+            .mapNotNull { getChatMember(it.userId!!) }
     }
 
     fun checkAndUpdate(user: User) {
         var utonto = usersRepository.findByUserId(user.id)
         if (utonto == null) {
-            usersRepository.createUtonto(user.id, user.firstName, user.lastName, user.userName, user.isBot)
-            utonto = usersRepository.getByUserId(user.id)
+            utonto = usersRepository.save(
+                Utonto(
+                    firstName = user.firstName,
+                    lastName = user.lastName,
+                    userName = user.userName,
+                    isBot = user.isBot,
+                    userId = user.id
+                )
+            )
         }
         val delta = Period.between(utonto.updated, LocalDate.now())
         if (delta.days >= 3) {
-            usersRepository.updateUtonto(utonto.userId, utonto.firstName, utonto.lastName, utonto.userName)
+            utonto.firstName = user.firstName
+            utonto.firstName = user.firstName
+            utonto.lastName = user.lastName
+            utonto.userName = user.userName
+            usersRepository.save(utonto)
         }
     }
 }

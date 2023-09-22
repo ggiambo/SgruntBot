@@ -142,8 +142,7 @@ Crediti di <a href="tg://user?id=42">Pippo</a>: 10"""
 
     private fun karmaService(credits: Int, karma: Int): KarmaService {
         return mock {
-            on { getKarmaCredit(isA()) } doReturn credits
-            on { getKarma(isA()) } doReturn karma
+            on { getKarma(isA()) } doReturn com.fdtheroes.sgruntbot.actions.models.Karma(karma = karma, karmaCredit = credits)
         }
     }
 }
