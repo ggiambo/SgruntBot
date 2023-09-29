@@ -1,17 +1,12 @@
 package com.fdtheroes.sgruntbot.actions.models
 
-import org.springframework.data.annotation.Id
-import org.springframework.data.relational.core.mapping.Column
-import org.springframework.data.relational.core.mapping.Table
+import jakarta.persistence.*
 import java.time.LocalDate
 
-@Table("stats")
+@Entity(name = "stats")
 data class Stats(
-    @Id
-    var id: Long? = null,
-    @Column("user_id")
-    var userId: Long,
-    @Column("stat_day")
-    var statDay: LocalDate = LocalDate.now(),
+    @Column(name = "user_id") var userId: Long,
+    @Column(name = "stat_day") var statDay: LocalDate = LocalDate.now(),
     var messages: Int,
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) var id: Long? = null,
 )

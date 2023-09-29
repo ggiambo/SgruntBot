@@ -17,9 +17,9 @@ internal class StatsTest : BaseTest() {
 
     var id: Long = 1
     val monthStats = listOf(
-        Stats(id++, Users.IL_VINCI.id, dummyDate, 13),
-        Stats(id++, Users.F.id, dummyDate, 15),
-        Stats(id++, Users.DA_DA212.id, dummyDate, 21),
+        Stats(Users.IL_VINCI.id, dummyDate, 13, id++),
+        Stats(Users.F.id, dummyDate, 15, id++),
+        Stats(Users.DA_DA212.id, dummyDate, 21, id++),
     )
 
     val stats = com.fdtheroes.sgruntbot.actions.Stats(

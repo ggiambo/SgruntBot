@@ -3,10 +3,8 @@ package com.fdtheroes.sgruntbot.actions.persistence
 import com.fdtheroes.sgruntbot.Bot
 import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.actions.models.Karma
-import org.springframework.data.jdbc.repository.query.Modifying
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
 
 @Service
@@ -15,11 +13,14 @@ class KarmaService(
     private val repo: KarmaRepository,
 ) {
 
-    fun getKarma(userId: Long) = repo.getKarma(userId)
+    fun getKarma(userId: Long) = repo.getByUserId(userId)
 
-    fun getKarmaCredit(userId: Long) = repo.getKarmaCredit(userId)
+    fun updateCredit(userId: Long, update: (Int) -> Int) {
+        val karma = repo.getByUserId(userId)
+        karma.karmaCredit = update(karma.karmaCredit)
+        repo.save(karma)
+    }
 
-    @Transactional
     fun precheck(forUserId: Long) {
         val result = repo.findByIdOrNull(forUserId)
         if (result == null) {
@@ -28,34 +29,26 @@ class KarmaService(
         }
 
         if (result.creditUpdated.isBefore(LocalDate.now())) {
-            repo.resetCreditForToday(forUserId)
+            initKarmaData(forUserId)
         }
     }
 
     // donatore da' del karma a ricevente, credito di donatore diminiuisce
-    @Transactional
     fun takeGiveKarma(donatore: Long, ricevente: Long, newKarma: (oldKarma: Int) -> Int) {
         takeGiveKarma(ricevente, newKarma)
-        val updatedCredit = repo.getKarmaCredit(donatore) - 1
-        repo.updateCredit(updatedCredit, donatore)
+        updateCredit(donatore, Int::dec)
     }
 
     // ricevente riceve del karma
-    @Transactional
     fun takeGiveKarma(ricevente: Long, newKarma: (oldKarma: Int) -> Int) {
-        val updatedKarma = newKarma(repo.getKarma(ricevente))
-        repo.updateKarma(updatedKarma, ricevente)
-    }
-
-    @Transactional
-    fun incCredit(ricevente: Long) {
-        val credit = repo.getKarmaCredit(ricevente)
-        repo.updateCredit(credit + 1, ricevente)
+        val karma = repo.getByUserId(ricevente)
+        karma.karma = newKarma(karma.karmaCredit)
+        repo.save(karma)
     }
 
     fun getKarmas(): List<Pair<Long, Int>> {
         return repo.findAll().map {
-            Pair(it.userId, it.karma)
+            Pair(it.userId!!, it.karma)
         }
     }
 
@@ -67,9 +60,8 @@ class KarmaService(
         return "<b><u>Karma Report</u></b>\n\n<pre>${karmas}</pre>"
     }
 
-    @Modifying
     private fun initKarmaData(forUserId: Long) {
-        repo.createKarma(Karma(userId = forUserId))
+        repo.save(Karma(userId = forUserId))
     }
 
     private fun getUserName(userId: Long, sgruntBot: Bot): String {

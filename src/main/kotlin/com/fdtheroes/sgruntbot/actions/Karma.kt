@@ -55,7 +55,7 @@ class Karma(
         karmaService.precheck(donatore)
         karmaService.precheck(ricevente)
 
-        if (karmaService.getKarmaCredit(donatore) < 1) {
+        if (karmaService.getKarma(donatore).karmaCredit < 1) {
             ctx.addResponse(ActionResponse.message("Hai terminato i crediti per oggi"))
             return
         }
@@ -64,7 +64,7 @@ class Karma(
         var wonCredit = 0
 
         for (i in 1..n) {
-            if (karmaService.getKarmaCredit(donatore) < 1) {
+            if (karmaService.getKarma(donatore).karmaCredit < 1) {
                 break
             }
 
@@ -83,12 +83,12 @@ class Karma(
 
         val riceventeLink = botUtils.getUserLink(ctx.message.replyToMessage.from)
         val donatoreLink = botUtils.getUserLink(ctx.message.from)
-        val newKarmaRicevente = karmaService.getKarma(ricevente)
-        val crediti = karmaService.getKarmaCredit(donatore)
+        val newKarmaRicevente = karmaService.getKarma(ricevente).karma
+        val crediti = karmaService.getKarma(donatore).karmaCredit
         var karmaMessage = "Karma totale di $riceventeLink: $newKarmaRicevente\nCrediti di $donatoreLink: $crediti"
 
         if (wonKarma != 0) {
-            val newKarmaDonatore = karmaService.getKarma(donatore)
+            val newKarmaDonatore = karmaService.getKarma(donatore).karma
             karmaMessage = karmaMessage.plus("\n\n<b>Karmaroulette</b> ! Hai vinto $wonKarma karma, e ora sei a quota $newKarmaDonatore")
         }
 
@@ -108,7 +108,7 @@ class Karma(
 
     private fun creditRoulette(message: Message) {
         val ricevente = message.from.id
-        karmaService.incCredit(ricevente)
+        karmaService.updateCredit(ricevente, Int::inc)
     }
 
     fun testoKarmaReport(ctx: ActionContext): String {

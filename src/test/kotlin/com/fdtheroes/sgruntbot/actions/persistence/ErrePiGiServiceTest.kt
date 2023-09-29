@@ -6,14 +6,16 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.*
+import org.springframework.data.repository.findByIdOrNull
+import java.util.*
 
 class ErrePiGiServiceTest : BaseTest() {
 
     private val errePiGiRepository: ErrePiGiRepository = mock {
         on { findAll() } doReturn status()
-        on { getErrePiGiByUserId(isA()) } doAnswer {
+        on { findById(isA()) } doAnswer {
             val id = it.arguments.first() as Long
-            status().first { it.userId == id }
+            Optional.of(status().first { it.userId == id })
         }
     }
     private val errePiGiService = ErrePiGiService(botUtils, errePiGiRepository)
@@ -32,8 +34,7 @@ class ErrePiGiServiceTest : BaseTest() {
         assertThat(attacca[0]).isEqualTo("Sei morto, non puoi attaccare.")
         assertThat(attacca[1]).isEqualTo("Aspetta fino a domani per riprovare.")
 
-        verify(errePiGiRepository, times(0)).createErrePiGi(isA())
-        verify(errePiGiRepository, times(1)).getErrePiGiByUserId(isA())
+        verify(errePiGiRepository, times(1)).findById(isA())
         verify(errePiGiRepository, times(0)).save(isA())
     }
 
@@ -50,8 +51,7 @@ class ErrePiGiServiceTest : BaseTest() {
         assertThat(attacca[0]).isEqualTo("Vile, vuoi attaccare <a href=\"tg://user?id=1\">Username_1</a> che è già morto!")
         assertThat(attacca[1]).isEqualTo("Aspetta fino a domani per riprovare.")
 
-        verify(errePiGiRepository, times(0)).createErrePiGi(isA())
-        verify(errePiGiRepository, times(2)).getErrePiGiByUserId(isA())
+        verify(errePiGiRepository, times(2)).findById(isA())
         verify(errePiGiRepository, times(0)).save(isA())
     }
 
@@ -68,8 +68,7 @@ class ErrePiGiServiceTest : BaseTest() {
         assertThat(attacca[0]).isEqualTo("Oggi hai già attaccato <a href=\"tg://user?id=3\">Username_3</a>.")
         assertThat(attacca[1]).isEqualTo("Aspetta fino a domani per riprovare.")
 
-        verify(errePiGiRepository, times(0)).createErrePiGi(isA())
-        verify(errePiGiRepository, times(2)).getErrePiGiByUserId(isA())
+        verify(errePiGiRepository, times(2)).findById(isA())
         verify(errePiGiRepository, times(0)).save(isA())
     }
 
@@ -87,8 +86,7 @@ class ErrePiGiServiceTest : BaseTest() {
         assertThat(attacca[2]).startsWith("Username_3 ha ").endsWith(" punti-vita.")
         assertThat(attacca[3]).startsWith("<a href=\"tg://user?id=4\">Username_4</a> ha ").endsWith(" punti-vita.")
 
-        verify(errePiGiRepository, times(0)).createErrePiGi(isA())
-        verify(errePiGiRepository, times(2)).getErrePiGiByUserId(isA())
+        verify(errePiGiRepository, times(2)).findById(isA())
         verify(errePiGiRepository, times(2)).save(isA())
     }
 
