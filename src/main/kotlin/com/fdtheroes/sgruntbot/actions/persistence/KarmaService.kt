@@ -29,7 +29,9 @@ class KarmaService(
         }
 
         if (result.creditUpdated.isBefore(LocalDate.now())) {
-            initKarmaData(forUserId)
+            result.karmaCredit = 0
+            result.creditUpdated = LocalDate.now()
+            repo.save(result)
         }
     }
 
