@@ -44,7 +44,7 @@ class KarmaService(
     // ricevente riceve del karma
     fun takeGiveKarma(ricevente: Long, newKarma: (oldKarma: Int) -> Int) {
         val karma = repo.getByUserId(ricevente)
-        karma.karma = newKarma(karma.karmaCredit)
+        karma.karma = newKarma(karma.karma)
         repo.save(karma)
     }
 
