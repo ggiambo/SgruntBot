@@ -8,6 +8,7 @@ import com.fdtheroes.sgruntbot.actions.persistence.UsersService
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.Message
 import org.telegram.telegrambots.meta.api.objects.User
+import kotlin.math.max
 import kotlin.random.Random.Default.nextInt
 
 @Service
@@ -86,7 +87,7 @@ class Karma(
 
         val riceventeLink = botUtils.getUserLink(ctx.message.replyToMessage.from)
         val donatoreLink = botUtils.getUserLink(ctx.message.from)
-        val newKarmaRicevente = karmaService.getKarma(ricevente).karma
+        val newKarmaRicevente = max(0, karmaService.getKarma(ricevente).karma)
         val crediti = karmaService.getKarma(donatore).karmaCredit
         var karmaMessage = "Karma totale di $riceventeLink: $newKarmaRicevente\nCrediti di $donatoreLink: $crediti"
 

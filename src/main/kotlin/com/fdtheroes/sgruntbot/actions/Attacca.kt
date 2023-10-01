@@ -19,7 +19,7 @@ class Attacca(
         if (message.text == "!attacca") {
             val testo: String
             if (message.replyToMessage == null) {
-                testo = getErrePiGiReport(ctx)
+                testo = "E chi vorresti mai attaccare, grullo?"
             } else {
                 testo = errePiGiService.attacca(message.from, message.replyToMessage.from, ctx.getChatMember)
             }
@@ -36,14 +36,6 @@ class Attacca(
             }"
             ctx.addResponse(ActionResponse.message("$testo\n$testoAttacco"))
         }
-    }
-
-    private fun getErrePiGiReport(ctx: ActionContext): String {
-        val testoErrePiGiReport = errePiGiService.testoErrePiGiReport(ctx.getChatMember)
-        if (testoErrePiGiReport == null) {
-            return "E chi vorresti mai attaccare, grullo?"
-        }
-        return "E chi vorresti mai attaccare, grullo?\n\n$testoErrePiGiReport"
     }
 
     override fun halp() =
