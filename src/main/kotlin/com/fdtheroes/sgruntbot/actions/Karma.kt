@@ -4,16 +4,17 @@ import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.actions.models.ActionContext
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import com.fdtheroes.sgruntbot.actions.persistence.KarmaService
+import com.fdtheroes.sgruntbot.actions.persistence.UsersService
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.Message
 import org.telegram.telegrambots.meta.api.objects.User
-import kotlin.random.Random.Default.nextBoolean
 import kotlin.random.Random.Default.nextInt
 
 @Service
 class Karma(
     private val botUtils: BotUtils,
     private val karmaService: KarmaService,
+    private val userService: UsersService,
 ) : Action, HasHalp {
 
     override fun doAction(ctx: ActionContext) {
@@ -22,12 +23,7 @@ class Karma(
             giveTakeKarma(ctx, ricevente, ctx.message.text.length, Int::inc)
         }
         if (Regex("-+").matches(ctx.message.text) && ricevente != null) {
-            if (nextBoolean()) { // 50%
-                ctx.addResponse(ActionResponse.message("L'amore vince sempre sull'odio, Sgrunty trasforma il karma negativo in positivo"))
-                giveTakeKarma(ctx, ricevente, ctx.message.text.length, Int::inc)
-            } else {
-                giveTakeKarma(ctx, ricevente, ctx.message.text.length, Int::dec)
-            }
+            giveTakeKarma(ctx, ricevente, ctx.message.text.length, Int::dec)
         }
         if (ctx.message.text == "!karma") {
             ctx.addResponse(ActionResponse.message(testoKarmaReport(ctx)))
@@ -46,6 +42,13 @@ class Karma(
         n: Int,
         newKarma: (oldKarma: Int) -> Int
     ) {
+
+        val utonto = userService.getUser(ricevente)
+        if (utonto?.isBot == true) {
+            ctx.addResponse(ActionResponse.message("${utonto.firstName} è un bot senz'anima. Assegna il karma saggiamente"))
+            return
+        }
+
         val donatore = ctx.message.from.id
         if (donatore == ricevente) {
             ctx.addResponse(ActionResponse.message("Ti è stato dato il potere di dare o togliere ad altri, ma non a te stesso"))
@@ -89,7 +92,8 @@ class Karma(
 
         if (wonKarma != 0) {
             val newKarmaDonatore = karmaService.getKarma(donatore).karma
-            karmaMessage = karmaMessage.plus("\n\n<b>Karmaroulette</b> ! Hai vinto $wonKarma karma, e ora sei a quota $newKarmaDonatore")
+            karmaMessage =
+                karmaMessage.plus("\n\n<b>Karmaroulette</b> ! Hai vinto $wonKarma karma, e ora sei a quota $newKarmaDonatore")
         }
 
         if (wonCredit == 1) {

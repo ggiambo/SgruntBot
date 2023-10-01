@@ -10,6 +10,9 @@ import java.time.Period
 class UsersService(
     private val usersRepository: UtontiRepository,
 ) {
+
+    fun getUser(userId: Long) = usersRepository.findByUserId(userId)
+
     fun getAllUsers(getChatMember: (Long) -> User?): List<User> {
         return usersRepository.findAll()
             .mapNotNull { getChatMember(it.userId!!) }

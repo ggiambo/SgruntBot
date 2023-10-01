@@ -57,8 +57,7 @@ class KarmaService(
     fun testoKarmaReport(sgruntBot: Bot): String {
         val karmas = getKarmas()
             .sortedByDescending { it.second }
-            .map { "${getUserName(it.first, sgruntBot).padEnd(20)}%3d".format(it.second) }
-            .joinToString("\n")
+            .joinToString("\n") { lineaKarmaReport(it.first, it.second, sgruntBot) }
         return "<b><u>Karma Report</u></b>\n\n<pre>${karmas}</pre>"
     }
 
@@ -66,8 +65,10 @@ class KarmaService(
         repo.save(Karma(userId = forUserId))
     }
 
-    private fun getUserName(userId: Long, sgruntBot: Bot): String {
-        return botUtils.getUserName(sgruntBot.getChatMember(userId))
+    private fun lineaKarmaReport(userId: Long, karma: Int, sgruntBot: Bot): String {
+        val userName = botUtils.getUserName(sgruntBot.getChatMember(userId))
+        val formattedKarma = "%3d".format(karma)
+        return "{$userName.padEnd(20)}$formattedKarma"
     }
 
 }
