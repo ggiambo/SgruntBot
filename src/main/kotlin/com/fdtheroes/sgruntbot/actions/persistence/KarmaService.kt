@@ -29,7 +29,7 @@ class KarmaService(
         }
 
         if (result.creditUpdated.isBefore(LocalDate.now())) {
-            result.karmaCredit = 0
+            result.karmaCredit = 5
             result.creditUpdated = LocalDate.now()
             repo.save(result)
         }
