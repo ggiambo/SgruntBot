@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 class ScheduledKarma(private val karmaService: KarmaService, private val sgruntBot: Bot) : ScheduledAMezzanotte {
 
     override fun execute() {
-        val testo = karmaService.testoKarmaReport(sgruntBot)
+        val testo = karmaService.testoKarmaReport(sgruntBot::getChatMember)
         sgruntBot.messaggio(ActionResponse.message(testo, false))
     }
 }

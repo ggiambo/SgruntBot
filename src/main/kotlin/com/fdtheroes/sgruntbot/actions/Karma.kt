@@ -27,7 +27,7 @@ class Karma(
             giveTakeKarma(ctx, ricevente, ctx.message.text.length, Int::dec)
         }
         if (ctx.message.text == "!karma") {
-            ctx.addResponse(ActionResponse.message(testoKarmaReport(ctx)))
+            ctx.addResponse(ActionResponse.message(karmaService.testoKarmaReport(ctx.getChatMember)))
         }
     }
 
@@ -116,13 +116,4 @@ class Karma(
         karmaService.updateCredit(ricevente, Int::inc)
     }
 
-    fun testoKarmaReport(ctx: ActionContext): String {
-        val karmas = karmaService.getKarmas()
-            .sortedByDescending { it.second }
-            .map { "${getUserName(it.first, ctx.getChatMember).padEnd(20)}%3d".format(it.second) }
-            .joinToString("\n")
-        return "<b><u>Karma Report</u></b>\n\n<pre>${karmas}</pre>"
-    }
-
-    private fun getUserName(userId: Long, getChatMember: (Long) -> User?) = botUtils.getUserName(getChatMember(userId))
 }

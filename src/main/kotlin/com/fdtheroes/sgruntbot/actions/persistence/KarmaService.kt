@@ -5,6 +5,7 @@ import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.actions.models.Karma
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import org.telegram.telegrambots.meta.api.objects.User
 import java.time.LocalDate
 
 @Service
@@ -48,16 +49,12 @@ class KarmaService(
         repo.save(karma)
     }
 
-    fun getKarmas(): List<Pair<Long, Int>> {
-        return repo.findAll().map {
-            Pair(it.userId!!, it.karma)
-        }
-    }
+    fun getKarmas() = repo.findAll()
 
-    fun testoKarmaReport(sgruntBot: Bot): String {
-        val karmas = getKarmas()
-            .sortedByDescending { it.second }
-            .joinToString("\n") { lineaKarmaReport(it.first, it.second, sgruntBot) }
+    fun testoKarmaReport(getChatMember: (Long) -> User?): String {
+        val karmas = repo.findAll()
+            .sortedByDescending { it.karma }
+            .joinToString("\n") { lineaKarmaReport(it, getChatMember) }
         return "<b><u>Karma Report</u></b>\n\n<pre>${karmas}</pre>"
     }
 
@@ -65,10 +62,10 @@ class KarmaService(
         repo.save(Karma(userId = forUserId))
     }
 
-    private fun lineaKarmaReport(userId: Long, karma: Int, sgruntBot: Bot): String {
-        val userName = botUtils.getUserName(sgruntBot.getChatMember(userId))
+    private fun lineaKarmaReport(karma: Karma, getChatMember: (Long) -> User?): String {
+        val userName = botUtils.getUserName(getChatMember(karma.userId!!)).padEnd(20)
         val formattedKarma = "%3d".format(karma)
-        return "{$userName.padEnd(20)}$formattedKarma"
+        return "{$userName)}$formattedKarma"
     }
 
 }
