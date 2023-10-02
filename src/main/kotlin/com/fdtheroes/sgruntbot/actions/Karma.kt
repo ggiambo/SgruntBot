@@ -8,6 +8,7 @@ import com.fdtheroes.sgruntbot.actions.persistence.UsersService
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.Message
 import org.telegram.telegrambots.meta.api.objects.User
+import kotlin.math.abs
 import kotlin.math.max
 import kotlin.random.Random.Default.nextInt
 
@@ -93,8 +94,9 @@ class Karma(
 
         if (wonKarma != 0) {
             val newKarmaDonatore = karmaService.getKarma(donatore).karma
+            val vintoPerso = if (wonKarma > 0) "vinto" else "perso"
             karmaMessage =
-                karmaMessage.plus("\n\n<b>Karmaroulette</b> ! Hai vinto $wonKarma karma, e ora sei a quota $newKarmaDonatore")
+                karmaMessage.plus("\n\n<b>Karmaroulette</b> ! Hai $vintoPerso ${abs(wonKarma)} karma, e ora sei a quota $newKarmaDonatore")
         }
 
         if (wonCredit == 1) {

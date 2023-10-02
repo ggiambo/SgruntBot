@@ -1,9 +1,7 @@
 package com.fdtheroes.sgruntbot.actions.persistence
 
-import com.fdtheroes.sgruntbot.Bot
 import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.actions.models.Karma
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.User
 import java.time.LocalDate
@@ -23,7 +21,7 @@ class KarmaService(
     }
 
     fun precheck(forUserId: Long) {
-        val result = repo.findByIdOrNull(forUserId)
+        val result = repo.findById(forUserId).orElse(null)
         if (result == null) {
             initKarmaData(forUserId)
             return
@@ -64,8 +62,8 @@ class KarmaService(
 
     private fun lineaKarmaReport(karma: Karma, getChatMember: (Long) -> User?): String {
         val userName = botUtils.getUserName(getChatMember(karma.userId!!)).padEnd(20)
-        val formattedKarma = "%3d".format(karma)
-        return "{$userName)}$formattedKarma"
+        val formattedKarma = "%3d".format(karma.karma)
+        return "$userName$formattedKarma"
     }
 
 }

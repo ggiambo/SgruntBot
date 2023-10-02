@@ -38,7 +38,7 @@ class ErrePiGiService(
 
     fun init(userId: Long): ErrePiGi {
         errePiGiRepository.save(ErrePiGi(userId = userId))
-        return errePiGiRepository.findByIdOrNull(userId)!!
+        return errePiGiRepository.findById(userId).get()
     }
 
     fun reset() {
@@ -61,7 +61,7 @@ class ErrePiGiService(
     }
 
     fun attacca(attaccante: User, difensore: User, getChatMember: (Long) -> User?): String {
-        var attaccanteErrePiGi = errePiGiRepository.findByIdOrNull(attaccante.id)
+        var attaccanteErrePiGi = errePiGiRepository.findById(attaccante.id).orElse(null)
         if (attaccanteErrePiGi == null) {
             attaccanteErrePiGi = init(attaccante.id)
         }
@@ -69,7 +69,7 @@ class ErrePiGiService(
             return "Sei morto, non puoi attaccare.\nAspetta fino a domani per riprovare."
         }
 
-        var difensoreErrePiGi = errePiGiRepository.findByIdOrNull(difensore.id)
+        var difensoreErrePiGi = errePiGiRepository.findById(difensore.id).orElse(null)
         if (difensoreErrePiGi == null) {
             difensoreErrePiGi = init(difensore.id)
         }
@@ -92,7 +92,7 @@ class ErrePiGiService(
 
     fun sgruntyAttacca(getChatMember: (Long) -> User?): String? {
         val sgruntyId = Users.BLAHBANFBOT.id
-        var sgruntyErrePiGi = errePiGiRepository.findByIdOrNull(sgruntyId)
+        var sgruntyErrePiGi = errePiGiRepository.findById(sgruntyId).orElse(null)
         if (sgruntyErrePiGi == null) {
             sgruntyErrePiGi = init(Users.BLAHBANFBOT.id)
         }
