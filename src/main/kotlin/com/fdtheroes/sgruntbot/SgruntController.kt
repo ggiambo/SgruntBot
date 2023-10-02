@@ -3,6 +3,7 @@ package com.fdtheroes.sgruntbot
 
 import com.fdtheroes.sgruntbot.actions.Action
 import com.fdtheroes.sgruntbot.actions.HasHalp
+import com.fdtheroes.sgruntbot.actions.models.Karma
 import com.fdtheroes.sgruntbot.actions.persistence.KarmaService
 import com.fdtheroes.sgruntbot.actions.persistence.StatsService
 import com.fdtheroes.sgruntbot.scheduled.InitScheduled
@@ -78,15 +79,8 @@ class SgruntController(
 
     @GetMapping("/karma")
     @Operation(summary = "Karma!")
-    fun getKarma(): List<Any> {
-        return karmaService.getKarmas()
-            .map {
-                object {
-                    val userId = it.first
-                    val userName = botUtils.getUserName(sgruntBot.getChatMember(it.first))
-                    val karma = it.second
-                }
-            }
+    fun getKarma(): List<Karma> {
+        return karmaService.getKarmas().toList()
     }
 
     @GetMapping("/stats/{date}")

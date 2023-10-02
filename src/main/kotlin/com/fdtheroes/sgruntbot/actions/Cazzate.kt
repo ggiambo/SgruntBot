@@ -33,7 +33,7 @@ class Cazzate(
 
     // decide se complimentare o insultare a seconda del karma
     private fun riceveComplimento(userId: Long): Boolean {
-        val karmas = karmaService.getKarmas().map { it.second }
+        val karmas = karmaService.getKarmas().map { it.karma }
         val maxKarma = karmas.max()
         val minKarma = karmas.min()
         val userKarma = karmaService.getKarma(userId).karma

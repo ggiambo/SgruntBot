@@ -13,21 +13,21 @@ class BotConfig(
     @Value("\${sgruntbot.config.chat-id}") val chatId: String,
     @Value("\${sgruntbot.config.telegram-token-file}") telegramTokenFile: String,
     @Value("\${sgruntbot.config.imgur-clientid-file}") imgUrClientIdFile: String,
-    @Value("\${sgruntbot.config.proxy:}") proxy: String,
 ) {
 
     val botName = "SgruntBot"
     val token: String = File(telegramTokenFile).readText().trim()
     val clientId: String = File(imgUrClientIdFile).readText().trim()
-    val defaultBotOptions = getDefaultBotOptions(proxy)
+    val defaultBotOptions = initDefaultBotOptions()
 
     var lastSuper: User? = null
     var lastAuthor: User? = null
     var pignolo: Boolean = false
     var pausedTime: LocalDateTime? = null
 
-    private fun getDefaultBotOptions(proxy: String): DefaultBotOptions {
-        if (proxy.isEmpty()) {
+    private fun initDefaultBotOptions(): DefaultBotOptions {
+        val proxy = System.getenv()["https_proxy"]
+        if (proxy.isNullOrEmpty()) {
             return DefaultBotOptions()
         }
         val uri = URI(proxy)
