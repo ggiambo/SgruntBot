@@ -2,9 +2,9 @@ package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.actions.models.ActionContext
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
-import org.springframework.stereotype.Service
+import jakarta.enterprise.context.ApplicationScoped
 
-@Service
+@ApplicationScoped
 class Id : Action, HasHalp {
 
     private val regex = Regex("^!id$", RegexOption.IGNORE_CASE)

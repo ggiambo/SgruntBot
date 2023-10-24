@@ -1,62 +1,62 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
-    application
     kotlin("jvm") version "1.9.10"
-    kotlin("plugin.spring") version "1.9.10"
-    kotlin("plugin.jpa") version "1.9.10"
-    id("org.springframework.boot") version "3.1.4"
-    id("io.spring.dependency-management") version "1.1.3"
-    id("com.github.ben-manes.versions") version "0.48.0"
-    id("com.glovoapp.semantic-versioning") version "1.1.10"
-}
-
-configurations.all {
-    exclude("commons-logging", "commons-logging")
+    kotlin("plugin.allopen") version "1.9.10"
+    kotlin("plugin.noarg") version "1.9.10"
+    id("io.quarkus")
 }
 
 repositories {
-    mavenLocal()
     mavenCentral()
+    mavenLocal()
 }
 
-configurations {
-    compileOnly {
-        extendsFrom(configurations.annotationProcessor.get())
-    }
-}
+val quarkusPlatformGroupId: String by project
+val quarkusPlatformArtifactId: String by project
+val quarkusPlatformVersion: String by project
 
 dependencies {
-    implementation("org.springframework.boot", "spring-boot-starter-data-jpa")
-    implementation("org.springframework.boot", "spring-boot-starter-web")
-    implementation("org.springframework.boot", "spring-boot-starter-cache")
-    implementation("com.fasterxml.jackson.module", "jackson-module-kotlin")
-    implementation("org.jetbrains.kotlin", "kotlin-reflect")
-    implementation("org.jetbrains.kotlin", "kotlin-stdlib-jdk8")
-    implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core")
+    implementation(enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}"))
+    implementation("io.quarkus:quarkus-rest-client-jackson")
+    implementation("io.quarkus:quarkus-hibernate-orm-panache-kotlin")
+    implementation("io.quarkus:quarkus-jdbc-h2")
+    implementation("io.quarkus:quarkus-rest-client")
+    implementation("io.quarkus:quarkus-jdbc-mariadb")
+    implementation("io.quarkus:quarkus-kotlin")
+    implementation("io.quarkus:quarkus-jackson")
+    implementation("io.quarkus:quarkus-resteasy")
+    implementation("io.quarkus:quarkus-resteasy-jackson")
+    // implementation("io.quarkus:quarkus-spring-data-jpa")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("io.quarkus:quarkus-arc")
     implementation("org.telegram", "telegrambots", "6.8.0")
-    implementation("org.jsoup", "jsoup", "1.16.1")
-    implementation("org.springdoc", "springdoc-openapi-starter-common", "2.2.0")
-    implementation("org.springdoc", "springdoc-openapi-starter-webmvc-ui", "2.2.0")
     implementation("org.knowm.xchart", "xchart", "3.8.5")
-    runtimeOnly("org.mariadb.jdbc", "mariadb-java-client")
-    runtimeOnly("com.h2database", "h2")
-    annotationProcessor("org.springframework.boot", "spring-boot-configuration-processor")
-    testImplementation("org.springframework.boot", "spring-boot-starter-test")
-    testImplementation("org.mockito.kotlin", "mockito-kotlin", "5.1.0")
+    testImplementation("io.quarkus:quarkus-junit5")
 }
 
-springBoot {
-    buildInfo()
-}
+group = "com.fdtheroes.sgruntbot"
+version = "1.0-SNAPSHOT"
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = "17"
-    }
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 tasks.withType<Test> {
-    useJUnitPlatform()
+    systemProperty("java.util.logging.manager", "org.jboss.logmanager.LogManager")
+}
+allOpen {
+    annotation("jakarta.ws.rs.Path")
+    annotation("jakarta.enterprise.context.ApplicationScoped")
+    annotation("io.quarkus.test.junit.QuarkusTest")
+    annotation("jakarta.persistence.Entity")
+}
+noArg {
+    annotation("com.fdtheroes.sgruntbot.NoArgConstructor")
+    annotation("jakarta.persistence.Entity")
+    invokeInitializers = true
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions.jvmTarget = JavaVersion.VERSION_17.toString()
+    kotlinOptions.javaParameters = true
 }

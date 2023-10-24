@@ -2,9 +2,9 @@ package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.actions.models.ActionContext
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
-import org.springframework.stereotype.Service
+import jakarta.enterprise.context.ApplicationScoped
 
-@Service
+@ApplicationScoped
 class Google : Action, HasHalp {
 
     private val regex = Regex("^!google (.*)$", RegexOption.IGNORE_CASE)

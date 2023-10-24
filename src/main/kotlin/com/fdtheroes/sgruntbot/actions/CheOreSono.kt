@@ -2,11 +2,11 @@ package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.actions.models.ActionContext
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
-import org.springframework.stereotype.Service
+import jakarta.enterprise.context.ApplicationScoped
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-@Service
+@ApplicationScoped
 class CheOreSono(
     private val nowSupplier: () -> LocalDateTime = { LocalDateTime.now() } // used for testing){}
 ) : Action, HasHalp {

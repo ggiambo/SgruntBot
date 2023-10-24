@@ -1,25 +1,58 @@
-# SgruntBot [![Java CI with Gradle](https://github.com/ggiambo/SgruntBot/actions/workflows/gradle.yml/badge.svg)](https://github.com/ggiambo/SgruntBot/actions/workflows/gradle.yml)
-Tentativo di riscrittura di Sgrunty usando un linguaggio moderno, giovane e dinamico, proprio come te!
-## Come lo faccio partire?
-Prima di tutto devi avere un file `token.txt` contenente il token per il bot, altrimenti ciccia.\
-Il comando magico per far partire il tutto è:
-```shell
-./gradlew run
+# sgruntbot
+
+This project uses Quarkus, the Supersonic Subatomic Java Framework.
+
+If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
+
+## Running the application in dev mode
+
+You can run your application in dev mode that enables live coding using:
+```shell script
+./gradlew quarkusDev
 ```
 
-Se vuoi usare un proxy HTTP, usa qualcosa del tipo `-proxy http://localhost:8080`\
-Per una resa ottimale, assicurati di aver installato `fortunes-it` e l'ultimissima versione di `youtube-dl`.
+> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at http://localhost:8080/q/dev/.
 
-Ah, ci sarebbe anche il token per imgur, un file chiamato `imgurClientId.txt`. 
+## Packaging and running the application
 
-## Non funzionahhh!
-LOL, ho dimenticato di dire che devi avere un database. MariaDB, per la precisione.\
-E un utente "sgrunt" con password "sgrunt" con accesso a un database che si chiama ... "sgrunt"!
-```mariadb
-create user 'sgrunt'@localhost identified by 'sgrunt';
-grant all privileges on sgrunt.* to 'sgrunt'@localhost identified by 'sgrunt';
-flush privileges;
+The application can be packaged using:
+```shell script
+./gradlew build
+```
+It produces the `quarkus-run.jar` file in the `build/quarkus-app/` directory.
+Be aware that it’s not an _über-jar_ as the dependencies are copied into the `build/quarkus-app/lib/` directory.
+
+The application is now runnable using `java -jar build/quarkus-app/quarkus-run.jar`.
+
+If you want to build an _über-jar_, execute the following command:
+```shell script
+./gradlew build -Dquarkus.package.type=uber-jar
 ```
 
-## API
-Non sono il massimo, ma forse possono piacerti le [REST API](http://localhost:8081/sgrunty/swagger-ui/index.html)
+The application, packaged as an _über-jar_, is now runnable using `java -jar build/*-runner.jar`.
+
+## Creating a native executable
+
+You can create a native executable using: 
+```shell script
+./gradlew build -Dquarkus.package.type=native
+```
+
+Or, if you don't have GraalVM installed, you can run the native executable build in a container using: 
+```shell script
+./gradlew build -Dquarkus.package.type=native -Dquarkus.native.container-build=true
+```
+
+You can then execute your native executable with: `./build/sgruntbot-1.0-SNAPSHOT-runner`
+
+If you want to learn more about building native executables, please consult https://quarkus.io/guides/gradle-tooling.
+
+## Related Guides
+
+- Hibernate ORM with Panache and Kotlin ([guide](https://quarkus.io/guides/hibernate-orm-panache-kotlin)): Define your persistent model in Hibernate ORM with Panache
+- JDBC Driver - H2 ([guide](https://quarkus.io/guides/datasource)): Connect to the H2 database via JDBC
+- REST Client Classic ([guide](https://quarkus.io/guides/rest-client)): Call REST services
+- JDBC Driver - MariaDB ([guide](https://quarkus.io/guides/datasource)): Connect to the MariaDB database via JDBC
+- Kotlin ([guide](https://quarkus.io/guides/kotlin)): Write your services in Kotlin
+- RESTEasy Classic ([guide](https://quarkus.io/guides/resteasy)): REST endpoint framework implementing Jakarta REST and more
+- Quarkus Extension for Spring Data JPA API ([guide](https://quarkus.io/guides/spring-data-jpa)): Use Spring Data JPA annotations to create your data access layer

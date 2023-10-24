@@ -2,14 +2,14 @@ package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.actions.models.ActionContext
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
-import org.springframework.stereotype.Service
+import jakarta.enterprise.context.ApplicationScoped
 import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
 import java.util.*
 import javax.crypto.Cipher
 import javax.crypto.spec.SecretKeySpec
 
-@Service
+@ApplicationScoped
 class Aes : Action, HasHalp {
 
     private val regex = Regex("^!aes(d?) ([^ ]+) (.*)$")

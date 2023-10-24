@@ -2,11 +2,11 @@ package com.fdtheroes.sgruntbot.actions.persistence
 
 import com.fdtheroes.sgruntbot.BotUtils.Companion.elseIfNull
 import com.fdtheroes.sgruntbot.actions.models.Stats
-import org.springframework.stereotype.Service
+import jakarta.enterprise.context.ApplicationScoped
 import java.time.DayOfWeek
 import java.time.LocalDate
 
-@Service
+@ApplicationScoped
 class StatsService(private val statsRepository: StatsRepository) {
 
     fun increaseStats(userId: Long) {
@@ -15,7 +15,7 @@ class StatsService(private val statsRepository: StatsRepository) {
             messages = 0
         )
         stats!!.messages++
-        statsRepository.save(stats)
+        statsRepository.persist(stats)
     }
 
     fun getStatsFromDate(startDate: LocalDate): List<Stats> {

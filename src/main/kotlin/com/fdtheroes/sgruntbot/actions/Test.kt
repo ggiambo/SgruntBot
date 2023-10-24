@@ -3,9 +3,9 @@ package com.fdtheroes.sgruntbot.actions
 import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.actions.models.ActionContext
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
-import org.springframework.stereotype.Service
+import jakarta.enterprise.context.ApplicationScoped
 
-@Service
+@ApplicationScoped
 class Test(private val botUtils: BotUtils) : Action, HasHalp {
 
     override fun doAction(ctx: ActionContext) {

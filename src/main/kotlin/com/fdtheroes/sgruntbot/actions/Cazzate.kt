@@ -4,7 +4,6 @@ import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.actions.models.ActionContext
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import com.fdtheroes.sgruntbot.actions.persistence.KarmaService
-import org.springframework.stereotype.Service
 import kotlin.random.Random.Default.nextInt
 
 //@Service

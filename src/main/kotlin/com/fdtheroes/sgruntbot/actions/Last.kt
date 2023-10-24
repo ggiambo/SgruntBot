@@ -3,9 +3,9 @@ package com.fdtheroes.sgruntbot.actions
 import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.actions.models.ActionContext
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
-import org.springframework.stereotype.Service
+import jakarta.enterprise.context.ApplicationScoped
 
-@Service
+@ApplicationScoped
 class Last(private val slogan: Slogan, private val botConfig: BotConfig) : Action, HasHalp {
 
     private val regex = Regex("^!last\$", RegexOption.IGNORE_CASE)

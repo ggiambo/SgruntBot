@@ -1,6 +1,6 @@
 package com.fdtheroes.sgruntbot
 
-import org.springframework.stereotype.Service
+import jakarta.enterprise.context.ApplicationScoped
 import org.telegram.telegrambots.bots.DefaultBotOptions
 import org.telegram.telegrambots.meta.api.objects.Message
 import org.telegram.telegrambots.meta.api.objects.User
@@ -16,7 +16,7 @@ import java.time.ZoneId
 import java.util.*
 import java.util.stream.StreamSupport
 
-@Service
+@ApplicationScoped
 class BotUtils(private val botConfig: BotConfig) {
 
     private val proxy = initProxy(botConfig.defaultBotOptions)

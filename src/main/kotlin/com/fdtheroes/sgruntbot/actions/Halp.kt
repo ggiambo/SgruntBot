@@ -2,10 +2,11 @@ package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.actions.models.ActionContext
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
-import org.springframework.stereotype.Service
+import jakarta.enterprise.context.ApplicationScoped
+import jakarta.enterprise.inject.Instance
 
-@Service
-class Halp(private val halp: List<HasHalp>) : Action {
+@ApplicationScoped
+class Halp(private val halp: Instance<HasHalp>) : Action {
 
     private val regex = Regex("^!help", RegexOption.IGNORE_CASE)
 

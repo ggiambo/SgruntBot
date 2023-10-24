@@ -3,12 +3,11 @@ package com.fdtheroes.sgruntbot.actions.persistence
 import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.Users
 import com.fdtheroes.sgruntbot.actions.models.ErrePiGi
-import org.springframework.data.repository.findByIdOrNull
-import org.springframework.stereotype.Service
+import jakarta.enterprise.context.ApplicationScoped
 import org.telegram.telegrambots.meta.api.objects.User
 import kotlin.random.Random.Default.nextInt
 
-@Service
+@ApplicationScoped
 class ErrePiGiService(
     private val botUtils: BotUtils,
     private val errePiGiRepository: ErrePiGiRepository,
@@ -37,20 +36,20 @@ class ErrePiGiService(
     )
 
     fun init(userId: Long): ErrePiGi {
-        errePiGiRepository.save(ErrePiGi(userId = userId))
-        return errePiGiRepository.findById(userId).get()
+        errePiGiRepository.persist(ErrePiGi(userId = userId))
+        return errePiGiRepository.findById(userId)!!
     }
 
     fun reset() {
-        errePiGiRepository.findAll().forEach {
+        errePiGiRepository.listAll().forEach {
             it.hp = 10
             it.attaccantiIds = ""
-            errePiGiRepository.save(it)
+            errePiGiRepository.persist(it)
         }
     }
 
     fun testoErrePiGiReport(getChatMember: (Long) -> User?): String? {
-        val errePiGis = errePiGiRepository.findAll()
+        val errePiGis = errePiGiRepository.listAll()
             .filterNot {
                 it.attaccantiIds.isEmpty()
             }
@@ -61,7 +60,7 @@ class ErrePiGiService(
     }
 
     fun attacca(attaccante: User, difensore: User, getChatMember: (Long) -> User?): String {
-        var attaccanteErrePiGi = errePiGiRepository.findById(attaccante.id).orElse(null)
+        var attaccanteErrePiGi = errePiGiRepository.findById(attaccante.id)
         if (attaccanteErrePiGi == null) {
             attaccanteErrePiGi = init(attaccante.id)
         }
@@ -69,7 +68,7 @@ class ErrePiGiService(
             return "Sei morto, non puoi attaccare.\nAspetta fino a domani per riprovare."
         }
 
-        var difensoreErrePiGi = errePiGiRepository.findById(difensore.id).orElse(null)
+        var difensoreErrePiGi = errePiGiRepository.findById(difensore.id)
         if (difensoreErrePiGi == null) {
             difensoreErrePiGi = init(difensore.id)
         }
@@ -92,7 +91,7 @@ class ErrePiGiService(
 
     fun sgruntyAttacca(getChatMember: (Long) -> User?): String? {
         val sgruntyId = Users.BLAHBANFBOT.id
-        var sgruntyErrePiGi = errePiGiRepository.findById(sgruntyId).orElse(null)
+        var sgruntyErrePiGi = errePiGiRepository.findById(sgruntyId)
         if (sgruntyErrePiGi == null) {
             sgruntyErrePiGi = init(Users.BLAHBANFBOT.id)
         }
@@ -100,7 +99,7 @@ class ErrePiGiService(
             return null
         }
 
-        val difensoreErrePiGi = errePiGiRepository.findAll()
+        val difensoreErrePiGi = errePiGiRepository.listAll()
             .filter { it.userId != sgruntyId }
             .filter { it.userId != Users.SHDX_T.id }
             .filter { it.hp > 0 }
@@ -129,8 +128,8 @@ class ErrePiGiService(
         difensoreErrePiGi.hp = Math.max(difensoreErrePiGi.hp - puntiFeritaDifensore, 0)
         difensoreErrePiGi.attaccantiIds = attaccantiIds.joinToString(separator = ",")
 
-        errePiGiRepository.save(attaccanteErrePiGi)
-        errePiGiRepository.save(difensoreErrePiGi)
+        errePiGiRepository.persist(attaccanteErrePiGi)
+        errePiGiRepository.persist(difensoreErrePiGi)
 
         val attaccanteName = botUtils.getUserName(getChatMember(attaccanteErrePiGi.userId!!))
         val difensoreName = botUtils.getUserLink(getChatMember(difensoreErrePiGi.userId!!))

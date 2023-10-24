@@ -5,14 +5,13 @@ import com.fdtheroes.sgruntbot.actions.models.ActionContext
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import com.fdtheroes.sgruntbot.actions.persistence.KarmaService
 import com.fdtheroes.sgruntbot.actions.persistence.UsersService
-import org.springframework.stereotype.Service
+import jakarta.enterprise.context.ApplicationScoped
 import org.telegram.telegrambots.meta.api.objects.Message
-import org.telegram.telegrambots.meta.api.objects.User
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.random.Random.Default.nextInt
 
-@Service
+@ApplicationScoped
 class Karma(
     private val botUtils: BotUtils,
     private val karmaService: KarmaService,

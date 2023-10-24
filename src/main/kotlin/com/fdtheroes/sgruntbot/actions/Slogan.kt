@@ -4,10 +4,10 @@ import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.BotUtils.Companion.urlEncode
 import com.fdtheroes.sgruntbot.actions.models.ActionContext
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
-import org.springframework.stereotype.Service
+import jakarta.enterprise.context.ApplicationScoped
 import org.telegram.telegrambots.meta.api.objects.User
 
-@Service
+@ApplicationScoped
 class Slogan(private val botUtils: BotUtils) : Action, HasHalp {
 
     private val regex = Regex("^!slogan (.*)\$", RegexOption.IGNORE_CASE)

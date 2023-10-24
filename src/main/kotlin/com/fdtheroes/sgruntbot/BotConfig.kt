@@ -1,23 +1,19 @@
 package com.fdtheroes.sgruntbot
 
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.stereotype.Service
+import jakarta.enterprise.context.ApplicationScoped
+import org.eclipse.microprofile.config.inject.ConfigProperty
 import org.telegram.telegrambots.bots.DefaultBotOptions
 import org.telegram.telegrambots.meta.api.objects.User
-import java.io.File
 import java.net.URI
 import java.time.LocalDateTime
 
-@Service
+@ApplicationScoped
 class BotConfig(
-    @Value("\${sgruntbot.config.chat-id}") val chatId: String,
-    @Value("\${sgruntbot.config.telegram-token-file}") telegramTokenFile: String,
-    @Value("\${sgruntbot.config.imgur-clientid-file}") imgUrClientIdFile: String,
+    @ConfigProperty(name = "chatId") val chatId: String,
+    @ConfigProperty(name = "telegramToken") val token: String,
 ) {
 
     val botName = "SgruntBot"
-    val token: String = File(telegramTokenFile).readText().trim()
-    val clientId: String = File(imgUrClientIdFile).readText().trim()
     val defaultBotOptions = initDefaultBotOptions()
 
     var lastSuper: User? = null

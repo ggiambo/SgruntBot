@@ -2,8 +2,8 @@ package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.actions.models.ActionContext
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
+import jakarta.enterprise.context.ApplicationScoped
 import org.slf4j.LoggerFactory
-import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.InputFile
 import java.io.File
 import java.nio.file.Path
@@ -12,7 +12,7 @@ import kotlin.io.path.createDirectory
 import kotlin.io.path.exists
 import kotlin.io.path.pathString
 
-@Service
+@ApplicationScoped
 class Canzone : Action, HasHalp {
 
     private val log = LoggerFactory.getLogger(this.javaClass)

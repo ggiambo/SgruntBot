@@ -4,12 +4,16 @@ import com.fdtheroes.sgruntbot.actions.Action
 import com.fdtheroes.sgruntbot.actions.models.ActionContext
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import com.fdtheroes.sgruntbot.actions.models.ActionResponseType
+import io.quarkus.runtime.Quarkus
+import io.quarkus.runtime.QuarkusApplication
+import io.quarkus.runtime.annotations.QuarkusMain
 import jakarta.annotation.PostConstruct
+import jakarta.enterprise.context.ApplicationScoped
+import jakarta.enterprise.inject.Instance
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import org.slf4j.LoggerFactory
-import org.springframework.stereotype.Service
 import org.telegram.telegrambots.bots.TelegramLongPollingBot
 import org.telegram.telegrambots.meta.TelegramBotsApi
 import org.telegram.telegrambots.meta.api.methods.ActionType
@@ -28,12 +32,13 @@ import java.time.LocalDateTime
 import kotlin.random.Random.Default.nextInt
 import kotlin.random.Random.Default.nextLong
 
-@Service
+@QuarkusMain
+@ApplicationScoped
 class Bot(
     private val botConfig: BotConfig,
     private val botUtils: BotUtils,
-    private val actions: List<Action>,
-) : TelegramLongPollingBot(botConfig.defaultBotOptions, botConfig.token) {
+    private val actions: Instance<Action>,
+) : TelegramLongPollingBot(botConfig.defaultBotOptions, botConfig.token), QuarkusApplication {
 
     private val log = LoggerFactory.getLogger(this.javaClass)
     private val lastAuthorRegex = Regex("^!last\$", RegexOption.IGNORE_CASE)
@@ -43,6 +48,11 @@ class Bot(
     fun postConstruct() {
         TelegramBotsApi(DefaultBotSession::class.java).registerBot(this)
         log.info("Sono partito!")
+    }
+
+    override fun run(vararg args: String?): Int {
+        Quarkus.waitForExit();
+        return 0;
     }
 
     override fun getBotUsername(): String {

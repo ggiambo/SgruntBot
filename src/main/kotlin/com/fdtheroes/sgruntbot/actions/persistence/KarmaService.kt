@@ -2,11 +2,11 @@ package com.fdtheroes.sgruntbot.actions.persistence
 
 import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.actions.models.Karma
-import org.springframework.stereotype.Service
+import jakarta.enterprise.context.ApplicationScoped
 import org.telegram.telegrambots.meta.api.objects.User
 import java.time.LocalDate
 
-@Service
+@ApplicationScoped
 class KarmaService(
     private val botUtils: BotUtils,
     private val repo: KarmaRepository,
@@ -17,11 +17,11 @@ class KarmaService(
     fun updateCredit(userId: Long, update: (Int) -> Int) {
         val karma = repo.getByUserId(userId)
         karma.karmaCredit = update(karma.karmaCredit)
-        repo.save(karma)
+        repo.persist(karma)
     }
 
     fun precheck(forUserId: Long) {
-        val result = repo.findById(forUserId).orElse(null)
+        val result = repo.findById(forUserId)
         if (result == null) {
             initKarmaData(forUserId)
             return
@@ -30,7 +30,7 @@ class KarmaService(
         if (result.creditUpdated.isBefore(LocalDate.now())) {
             result.karmaCredit = 5
             result.creditUpdated = LocalDate.now()
-            repo.save(result)
+            repo.persist(result)
         }
     }
 
@@ -44,20 +44,20 @@ class KarmaService(
     fun takeGiveKarma(ricevente: Long, newKarma: (oldKarma: Int) -> Int) {
         val karma = repo.getByUserId(ricevente)
         karma.karma = newKarma(karma.karma)
-        repo.save(karma)
+        repo.persist(karma)
     }
 
-    fun getKarmas() = repo.findAll()
+    fun getKarmas() = repo.listAll()
 
     fun testoKarmaReport(getChatMember: (Long) -> User?): String {
-        val karmas = repo.findAll()
+        val karmas = repo.listAll()
             .sortedByDescending { it.karma }
             .joinToString("\n") { lineaKarmaReport(it, getChatMember) }
         return "<b><u>Karma Report</u></b>\n\n<pre>${karmas}</pre>"
     }
 
     private fun initKarmaData(forUserId: Long) {
-        repo.save(Karma(userId = forUserId))
+        repo.persist(Karma(userId = forUserId))
     }
 
     private fun lineaKarmaReport(karma: Karma, getChatMember: (Long) -> User?): String {

@@ -2,7 +2,9 @@ package com.fdtheroes.sgruntbot.actions
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fdtheroes.sgruntbot.BotUtils
+import com.fdtheroes.sgruntbot.NoArgConstructor
 
+@NoArgConstructor
 abstract class Bitcoin(val botUtils: BotUtils, val mapper: ObjectMapper) : HasHalp {
 
     fun bitcoinvalue(currency: String): Double {

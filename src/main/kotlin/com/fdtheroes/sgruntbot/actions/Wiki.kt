@@ -5,9 +5,9 @@ import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.BotUtils.Companion.urlEncode
 import com.fdtheroes.sgruntbot.actions.models.ActionContext
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
-import org.springframework.stereotype.Service
+import jakarta.enterprise.context.ApplicationScoped
 
-@Service
+@ApplicationScoped
 class Wiki(private val botUtils: BotUtils, val mapper: ObjectMapper) : Action, HasHalp {
 
     private val regex = Regex("^!wiki (.*)$", RegexOption.IGNORE_CASE)

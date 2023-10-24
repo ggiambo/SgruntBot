@@ -4,7 +4,6 @@ import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.actions.models.ActionContext
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
-import org.springframework.stereotype.Service
 
 //@Service
 class Parolacce(private val botUtils: BotUtils, private val botConfig: BotConfig) : Action {

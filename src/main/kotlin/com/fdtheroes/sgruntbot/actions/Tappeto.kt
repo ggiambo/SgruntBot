@@ -2,7 +2,7 @@ package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.actions.models.ActionContext
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
-import org.springframework.stereotype.Service
+import jakarta.enterprise.context.ApplicationScoped
 import org.telegram.telegrambots.meta.api.objects.InputFile
 import java.awt.Color
 import java.awt.Font
@@ -10,7 +10,7 @@ import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import javax.imageio.ImageIO
 
-@Service
+@ApplicationScoped
 class Tappeto : Action, HasHalp {
 
     private val regex = Regex("^!tappeto (.*)\$", RegexOption.IGNORE_CASE)

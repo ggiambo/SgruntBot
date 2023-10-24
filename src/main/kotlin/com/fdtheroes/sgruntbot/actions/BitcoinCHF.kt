@@ -4,10 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.actions.models.ActionContext
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
-import org.springframework.stereotype.Service
+import jakarta.enterprise.context.ApplicationScoped
 
-@Service
-class BitcoinCHF(botUtils: BotUtils, mapper: ObjectMapper) : Bitcoin(botUtils, mapper), Action {
+@ApplicationScoped
+open class BitcoinCHF(botUtils: BotUtils, mapper: ObjectMapper) : Bitcoin(botUtils, mapper), Action {
 
     private val regex = Regex("^!btcc\$", RegexOption.IGNORE_CASE)
 

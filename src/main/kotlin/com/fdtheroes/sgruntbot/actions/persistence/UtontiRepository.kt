@@ -1,12 +1,8 @@
 package com.fdtheroes.sgruntbot.actions.persistence
 
 import com.fdtheroes.sgruntbot.actions.models.Utonto
-import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.stereotype.Repository
+import io.quarkus.hibernate.orm.panache.kotlin.PanacheRepository
+import jakarta.enterprise.context.ApplicationScoped
 
-@Repository
-interface UtontiRepository : JpaRepository<Utonto, Long> {
-
-    fun findByUserId(userId: Long): Utonto?
-
-}
+@ApplicationScoped
+class UtontiRepository : PanacheRepository<Utonto>

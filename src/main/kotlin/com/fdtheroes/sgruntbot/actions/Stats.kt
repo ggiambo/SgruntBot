@@ -8,15 +8,13 @@ import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import com.fdtheroes.sgruntbot.actions.models.Stats
 import com.fdtheroes.sgruntbot.actions.persistence.StatsService
 import jakarta.annotation.PostConstruct
+import jakarta.enterprise.context.ApplicationScoped
 import org.knowm.xchart.PieChart
 import org.knowm.xchart.style.PieStyler
 import org.knowm.xchart.style.theme.GGPlot2Theme
-import org.springframework.context.annotation.Lazy
-import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.InputFile
 
-@Lazy
-@Service
+@ApplicationScoped
 class Stats(
     private val statsService: StatsService,
     private val botUtils: BotUtils,
