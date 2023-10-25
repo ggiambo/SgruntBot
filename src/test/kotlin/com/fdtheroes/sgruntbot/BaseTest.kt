@@ -15,8 +15,8 @@ open class BaseTest {
 
     val botConfig: BotConfig = BotConfig(
         chatId = "-9999",
-        telegramTokenFile = "dummyToken.txt",
-        imgUrClientIdFile = "dummyToken.txt",
+        telegramToken = "dummyToken.txt",
+        imgUrToken = "dummyToken.txt",
     )
 
     val botUtils = BotUtils(botConfig)

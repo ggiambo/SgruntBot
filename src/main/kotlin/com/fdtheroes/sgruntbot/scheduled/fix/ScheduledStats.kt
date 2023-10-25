@@ -8,13 +8,13 @@ import com.fdtheroes.sgruntbot.ChartUtils.getAsInputFile
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import com.fdtheroes.sgruntbot.actions.models.Stats
 import com.fdtheroes.sgruntbot.actions.persistence.StatsService
+import jakarta.enterprise.context.ApplicationScoped
 import org.knowm.xchart.XYChart
 import org.knowm.xchart.style.theme.GGPlot2Theme
-import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.InputFile
 import java.awt.BasicStroke
 
-@Service
+@ApplicationScoped
 class ScheduledStats(
     private val sgruntBot: Bot,
     private val botUtils: BotUtils,

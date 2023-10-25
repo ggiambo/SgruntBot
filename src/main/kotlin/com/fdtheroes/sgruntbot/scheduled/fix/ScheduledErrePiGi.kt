@@ -3,9 +3,9 @@ package com.fdtheroes.sgruntbot.scheduled.fix
 import com.fdtheroes.sgruntbot.Bot
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import com.fdtheroes.sgruntbot.actions.persistence.ErrePiGiService
-import org.springframework.stereotype.Service
+import jakarta.enterprise.context.ApplicationScoped
 
-@Service
+@ApplicationScoped
 class ScheduledErrePiGi(
     private val errePiGiService: ErrePiGiService,
     private val sgruntBot: Bot

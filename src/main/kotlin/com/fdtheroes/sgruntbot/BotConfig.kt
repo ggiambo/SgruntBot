@@ -10,7 +10,8 @@ import java.time.LocalDateTime
 @ApplicationScoped
 class BotConfig(
     @ConfigProperty(name = "chatId") val chatId: String,
-    @ConfigProperty(name = "telegramToken") val token: String,
+    @ConfigProperty(name = "telegramToken") val telegramToken: String,
+    @ConfigProperty(name = "imgUrToken") val imgUrToken: String,
 ) {
 
     val botName = "SgruntBot"

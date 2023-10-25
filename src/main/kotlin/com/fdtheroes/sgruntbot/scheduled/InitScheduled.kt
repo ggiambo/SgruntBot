@@ -2,14 +2,14 @@ package com.fdtheroes.sgruntbot.scheduled
 
 import com.fdtheroes.sgruntbot.BotUtils.Companion.toDate
 import jakarta.annotation.PostConstruct
+import jakarta.enterprise.context.ApplicationScoped
 import org.slf4j.LoggerFactory
-import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 import java.util.*
 import kotlin.concurrent.timerTask
 import kotlin.reflect.KClass
 
-@Service
+@ApplicationScoped
 class InitScheduled(private val scheduled: List<Scheduled>) {
 
     private val log = LoggerFactory.getLogger(this.javaClass)

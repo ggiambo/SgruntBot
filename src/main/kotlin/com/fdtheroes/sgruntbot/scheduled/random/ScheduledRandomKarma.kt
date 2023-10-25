@@ -2,14 +2,13 @@ package com.fdtheroes.sgruntbot.scheduled.random
 
 import com.fdtheroes.sgruntbot.Bot
 import com.fdtheroes.sgruntbot.BotUtils
-import com.fdtheroes.sgruntbot.Users
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import com.fdtheroes.sgruntbot.actions.persistence.KarmaService
 import com.fdtheroes.sgruntbot.actions.persistence.UsersService
-import org.springframework.stereotype.Service
+import jakarta.enterprise.context.ApplicationScoped
 import kotlin.random.Random.Default.nextBoolean
 
-@Service
+@ApplicationScoped
 class ScheduledRandomKarma(
     private val usersService: UsersService,
     private val karmaService: KarmaService,

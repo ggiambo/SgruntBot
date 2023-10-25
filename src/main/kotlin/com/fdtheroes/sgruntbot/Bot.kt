@@ -38,7 +38,7 @@ class Bot(
     private val botConfig: BotConfig,
     private val botUtils: BotUtils,
     private val actions: Instance<Action>,
-) : TelegramLongPollingBot(botConfig.defaultBotOptions, botConfig.token), QuarkusApplication {
+) : TelegramLongPollingBot(botConfig.defaultBotOptions, botConfig.telegramToken), QuarkusApplication {
 
     private val log = LoggerFactory.getLogger(this.javaClass)
     private val lastAuthorRegex = Regex("^!last\$", RegexOption.IGNORE_CASE)

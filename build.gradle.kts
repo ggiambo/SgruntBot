@@ -30,7 +30,13 @@ dependencies {
     implementation("io.quarkus:quarkus-arc")
     implementation("org.telegram", "telegrambots", "6.8.0")
     implementation("org.knowm.xchart", "xchart", "3.8.5")
-    testImplementation("io.quarkus:quarkus-junit5")
+    implementation("org.jsoup", "jsoup", "1.16.2")
+    testImplementation("io.quarkus","quarkus-junit5")
+    // https://mvnrepository.com/artifact/org.mockito.kotlin/mockito-kotlin
+    testImplementation("org.mockito.kotlin", "mockito-kotlin", "5.1.0")
+    testImplementation ("org.assertj", "assertj-core", "3.24.2")
+
+
 }
 
 group = "com.fdtheroes.sgruntbot"

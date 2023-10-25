@@ -6,11 +6,11 @@ import com.fdtheroes.sgruntbot.Bot
 import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import com.fdtheroes.sgruntbot.scheduled.Scheduled
-import org.springframework.stereotype.Service
+import jakarta.enterprise.context.ApplicationScoped
 import org.telegram.telegrambots.meta.api.objects.InputFile
 import java.time.LocalDateTime
 
-@Service
+@ApplicationScoped
 class ScheduledSanto(
     private val botUtils: BotUtils,
     private val mapper: ObjectMapper,
