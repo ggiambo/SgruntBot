@@ -183,12 +183,19 @@ class Bot(
             this.chatId = botConfig.chatId
             this.userId = userId
         }
-        return try {
-            execute(getChatMember)?.user
+        val chatMember = try {
+            execute(getChatMember)
         } catch (e: Exception) {
             log.error("Problema con l'utente $userId", e)
-            null
+            return null
         }
+        if (chatMember == null) {
+            return null
+        }
+        if (chatMember.status == "kicked") {
+            return null
+        }
+        return chatMember.user
     }
 
     fun sleep(seconds: IntRange) {
