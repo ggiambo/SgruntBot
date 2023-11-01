@@ -5,7 +5,7 @@ import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import com.fdtheroes.sgruntbot.actions.persistence.ErrePiGiService
 import org.springframework.stereotype.Service
 
-@Service
+// @Service
 class ScheduledErrePiGi(
     private val errePiGiService: ErrePiGiService,
     private val sgruntBot: Bot
