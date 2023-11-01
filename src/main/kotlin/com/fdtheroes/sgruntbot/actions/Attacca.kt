@@ -7,7 +7,7 @@ import com.fdtheroes.sgruntbot.actions.persistence.ErrePiGiService
 import com.fdtheroes.sgruntbot.actions.persistence.UsersService
 import org.springframework.stereotype.Service
 
-@Service
+//@Service
 class Attacca(
     private val errePiGiService: ErrePiGiService,
     private val usersService: UsersService,
