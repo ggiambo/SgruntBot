@@ -28,10 +28,12 @@ class Cleanup(
         val fantasmi = utontiRepository.findAll()
             .map { it.userId!! }
             .filter { bot.getChatMember(it) == null }
-        log.info("Cancello i seguenti fantasmi: ${fantasmi.joinToString()}")
-        errePiGiRepository.deleteAllByUserIdIn(fantasmi)
-        karmaRepository.deleteAllByUserIdIn(fantasmi)
-        statsRepository.deleteAllByUserIdIn(fantasmi)
-        utontiRepository.deleteAllByUserIdIn(fantasmi)
+        if (fantasmi.isNotEmpty()) {
+            log.info("Cancello i seguenti fantasmi: ${fantasmi.joinToString()}")
+            errePiGiRepository.deleteAllByUserIdIn(fantasmi)
+            karmaRepository.deleteAllByUserIdIn(fantasmi)
+            statsRepository.deleteAllByUserIdIn(fantasmi)
+            utontiRepository.deleteAllByUserIdIn(fantasmi)
+        }
     }
 }

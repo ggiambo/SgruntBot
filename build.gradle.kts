@@ -2,12 +2,12 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     application
-    kotlin("jvm") version "1.9.10"
-    kotlin("plugin.spring") version "1.9.10"
-    kotlin("plugin.jpa") version "1.9.10"
-    id("org.springframework.boot") version "3.1.4"
+    kotlin("jvm") version "1.9.20"
+    kotlin("plugin.spring") version "1.9.20"
+    kotlin("plugin.jpa") version "1.9.20"
+    id("org.springframework.boot") version "3.1.5"
     id("io.spring.dependency-management") version "1.1.3"
-    id("com.github.ben-manes.versions") version "0.48.0"
+    id("com.github.ben-manes.versions") version "0.49.0"
     id("com.glovoapp.semantic-versioning") version "1.1.10"
 }
 
@@ -35,7 +35,7 @@ dependencies {
     implementation("org.jetbrains.kotlin", "kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core")
     implementation("org.telegram", "telegrambots", "6.8.0")
-    implementation("org.jsoup", "jsoup", "1.16.1")
+    implementation("org.jsoup", "jsoup", "1.16.2")
     implementation("org.springdoc", "springdoc-openapi-starter-common", "2.2.0")
     implementation("org.springdoc", "springdoc-openapi-starter-webmvc-ui", "2.2.0")
     implementation("org.knowm.xchart", "xchart", "3.8.5")
