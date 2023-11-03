@@ -30,6 +30,6 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ~/SgruntBot
-            ./gradlew -stop
+            ./gradlew --stop
             git pull
             nohup ./gradlew bootRun > out.log 2>error.log &
