@@ -42,3 +42,16 @@ create table if not exists utonti
     constraint user_id_uindex
         unique (user_id)
 );
+
+
+create table if not exists todos
+(
+    id         int    not null auto_increment,
+    user_id    bigint  not null,
+    updated    date    not null,
+    todo       text    not null,
+    open       boolean not null,
+    primary key (id),
+    constraint id_uindex
+    unique (id_uindex)
+);
