@@ -9,14 +9,14 @@ class TodosService(private val todosRepository: TodosRepository) {
 
     fun addTodo(userId: Long, testo: String) {
         val todos = Todos(
+            userId = userId,
             todo = testo,
             open = true,
-            userId = userId
         )
         todosRepository.save(todos)
     }
 
-    fun closeTodo(id: Long, userId: Long): Boolean {
+    fun closeTodo(userId: Long, id: Long): Boolean {
         val todo = todosRepository.findByIdAndUserIdAndOpen(id, userId, true)
         if (todo == null) {
             return false
