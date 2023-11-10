@@ -1,8 +1,6 @@
 package com.fdtheroes.sgruntbot.actions.models
 
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.Id
+import jakarta.persistence.*
 import java.time.LocalDate
 
 @Entity(name = "todos")
@@ -11,5 +9,5 @@ data class Todos(
     @Column(name = "updated") var updated: LocalDate = LocalDate.now(),
     @Column(name = "todo") var todo: String,
     @Column(name = "open") var open: Boolean,
-    @Id @Column(name = "id") var id: Long? = null,
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) var id: Long? = null,
 )

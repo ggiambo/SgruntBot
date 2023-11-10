@@ -7,13 +7,13 @@ import org.springframework.stereotype.Service
 @Service
 class TodosService(private val todosRepository: TodosRepository) {
 
-    fun addTodo(userId: Long, testo: String) {
+    fun addTodo(userId: Long, testo: String): Todos {
         val todos = Todos(
             userId = userId,
             todo = testo,
             open = true,
         )
-        todosRepository.save(todos)
+        return todosRepository.save(todos)
     }
 
     fun closeTodo(userId: Long, id: Long): Boolean {
