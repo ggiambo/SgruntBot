@@ -11,7 +11,7 @@ import kotlin.math.abs
 class Todo(private val todosService: TodosService) : Action, HasHalp {
 
     private val regex_todo_add = Regex("^!TODO (.+)\$", RegexOption.IGNORE_CASE)
-    private val regex_todo_done = Regex("^!TODO (-\\d+)\$", RegexOption.IGNORE_CASE)
+    private val regex_todo_done = Regex("^!TODO (-\\d{1,6})\$", RegexOption.IGNORE_CASE)
     private val regex_todos = Regex("^!TODOS\$", RegexOption.IGNORE_CASE)
 
     override fun doAction(ctx: ActionContext) {
@@ -19,11 +19,11 @@ class Todo(private val todosService: TodosService) : Action, HasHalp {
         val userId = ctx.message.from.id
         var risposta: String? = null
         if (regex_todo_done.matches(message.text)) { // precedenza!
-            val argomento = regex_todo_done.find(message.text)?.groupValues?.get(1)
-            risposta = messaggioTodoChiuso(userId, argomento.orEmpty())
+            val argomento = regex_todo_done.find(message.text)?.groupValues?.get(1)!!
+            risposta = messaggioTodoChiuso(userId, abs(argomento.toLong()))
         } else if (regex_todo_add.matches(message.text)) {
-            val argomento = regex_todo_add.find(message.text)?.groupValues?.get(1)
-            risposta = messaggioTodoAggiunto(userId, argomento.orEmpty())
+            val argomento = regex_todo_add.find(message.text)?.groupValues?.get(1)!!
+            risposta = messaggioTodoAggiunto(userId, argomento)
         } else if (regex_todos.matches(message.text)) {
             risposta = messaggioListaTodos(ctx.getChatMember)
         }
@@ -34,21 +34,14 @@ class Todo(private val todosService: TodosService) : Action, HasHalp {
     }
 
     private fun messaggioTodoAggiunto(userId: Long, testoTodo: String): String {
+        if (testoTodo.isBlank()) {
+            return "Niente da fare..."
+        }
         val todo = todosService.addTodo(userId, testoTodo)
         return "Todo '${todo.id}' aggiunto. Datti da fare!"
     }
 
-    private fun messaggioTodoChiuso(userId: Long, argomento: String): String {
-        val todoId = argomento.toLongOrNull().let {
-            if (it != null) {
-                abs(it) // c'è un "-" davanti al numero!
-            } else {
-                null
-            }
-        }
-        if (todoId == null) {
-            return "Non riesco a trovare il TODO '$argomento'"
-        }
+    private fun messaggioTodoChiuso(userId: Long, todoId: Long): String {
         val closed = todosService.closeTodo(userId, todoId)
         if (closed) {
             return "Todo numero '$todoId' completato. Bravo lavoratore!"
@@ -61,7 +54,7 @@ class Todo(private val todosService: TodosService) : Action, HasHalp {
         return todos.joinToString(separator = "\n", prefix = "<pre>", postfix = "</pre>") {
             val nr = it.id.toString().padStart(4)
             val chi = getChatMember(it.userId)?.userName.orEmpty().padStart(8)
-            val todo = truncate(it.todo, 14)
+            val todo = truncate(it.todo, 25)
             "$nr $chi '$todo'"
         }
     }
@@ -77,6 +70,6 @@ class Todo(private val todosService: TodosService) : Action, HasHalp {
     }
 
     override fun halp(): String {
-        return "<b>!TODO testo</b> aggiungi un TODO / <b>!TODO -nr</b> questo todo è terminato / <b>!TODOS</b> tutti i todos"
+        return "<b>!TODO</b> <i>testo</i> aggiungi un TODO / <b>!TODO -</b><i>nr</i> termina TODO con numero <i>nr</i> / <b>!TODOS</b> tutti i todos"
     }
 }
