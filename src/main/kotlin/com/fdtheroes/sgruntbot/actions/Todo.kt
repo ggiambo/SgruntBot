@@ -1,5 +1,6 @@
 package com.fdtheroes.sgruntbot.actions
 
+import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.actions.models.ActionContext
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import com.fdtheroes.sgruntbot.actions.persistence.TodosService
@@ -8,7 +9,10 @@ import org.telegram.telegrambots.meta.api.objects.User
 import kotlin.math.abs
 
 @Service
-class Todo(private val todosService: TodosService) : Action, HasHalp {
+class Todo(
+    private val todosService: TodosService,
+    private val botUtils: BotUtils,
+) : Action, HasHalp {
 
     private val regex_todo_add = Regex("^!TODO (.+)\$", RegexOption.IGNORE_CASE)
     private val regex_todo_done = Regex("^!TODO (-\\d{1,6})\$", RegexOption.IGNORE_CASE)
@@ -53,7 +57,7 @@ class Todo(private val todosService: TodosService) : Action, HasHalp {
         val todos = todosService.allTodos(true)
         return todos.joinToString(separator = "\n", prefix = "<pre>", postfix = "</pre>") {
             val nr = it.id.toString().padStart(4)
-            val chi = getChatMember(it.userId)?.userName.orEmpty().padStart(8)
+            val chi = botUtils.getUserName(getChatMember(it.userId)).padStart(8)
             val todo = truncate(it.todo, 25)
             "$nr $chi '$todo'"
         }
