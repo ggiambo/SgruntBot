@@ -9,7 +9,7 @@ import com.fdtheroes.sgruntbot.actions.persistence.UsersService
 import org.springframework.stereotype.Service
 import kotlin.random.Random.Default.nextBoolean
 
-@Service
+//@Service
 class ScheduledRandomKarma(
     private val usersService: UsersService,
     private val karmaService: KarmaService,
