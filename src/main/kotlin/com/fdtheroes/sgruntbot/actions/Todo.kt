@@ -58,7 +58,7 @@ class Todo(
         return todos.joinToString(separator = "\n", prefix = "<pre>", postfix = "</pre>") {
             val nr = it.id.toString().padStart(4)
             val chi = botUtils.getUserName(getChatMember(it.userId)).padStart(8)
-            val todo = truncate(it.todo, 25)
+            val todo = truncate(it.todo, 40)
             "$nr $chi '$todo'"
         }
     }
