@@ -98,6 +98,6 @@ class TodoTest : BaseTest() {
         val lines = actionContext.actionResponses.first().message!!.split("\n")
         assertThat(lines.length()).isEqualTo(2)
         assertThat(lines[0]).isEqualTo("<pre> 111 Username_1 'Todo corto'")
-        assertThat(lines[1]).isEqualTo(" 222 Username_2 'Todo con testo molto lun…'</pre>")
+        assertThat(lines[1]).isEqualTo(" 222 Username_2 'Todo con testo molto lungo che spero ve…'</pre>")
     }
 }
