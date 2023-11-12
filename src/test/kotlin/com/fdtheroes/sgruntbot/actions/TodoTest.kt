@@ -36,7 +36,7 @@ class TodoTest : BaseTest() {
         )
     }
 
-    private val todo = Todo(todosService)
+    private val todo = Todo(todosService, botUtils)
 
     @Test
     fun test_no_trigger() {
