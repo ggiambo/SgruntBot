@@ -47,7 +47,7 @@ class ScheduledTodos(
             .withMinute(0)
             .withSecond(0)
             .withNano(0)
-        return mezzanotte.with(TemporalAdjusters.next(DayOfWeek.FRIDAY))
+        return mezzanotte.with(TemporalAdjusters.next(DayOfWeek.SATURDAY)) // Mezzanotte tra venerdi e sabato
     }
 
 }
