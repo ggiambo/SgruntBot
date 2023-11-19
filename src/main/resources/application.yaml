@@ -35,15 +35,6 @@ springdoc:
   api-docs:
     path: /sgrunty/v3/api-docs
 
-management:
-    endpoint:
-      shutdown:
-        enabled: true
-      info:
-        enabled: true
-    endpoints:
-      web.exposure.include: health,info,shutdown
-
 sgruntbot:
   config:
     chat-id: -1001103213994
