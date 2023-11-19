@@ -30,6 +30,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ~/SgruntBot
-            ./gradlew --stop
             git pull
-            nohup ./gradlew bootRun > out.log 2>error.log &
+            kill `cat sgruntbot.pid`
+            ./mvnw clean install -DskipTests
+            java -jar target/sgruntbot.jar > out.log 2>error.log &
