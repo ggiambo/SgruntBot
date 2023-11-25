@@ -8,7 +8,7 @@ import com.fdtheroes.sgruntbot.BotUtils.Companion.length
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import org.springframework.stereotype.Service
 
-@Service
+//@Service
 class ScheduledRandomImgur(
     private val botUtils: BotUtils,
     private val mapper: ObjectMapper,
