@@ -5,7 +5,7 @@ plugins {
     kotlin("jvm") version "1.9.20"
     kotlin("plugin.spring") version "1.9.20"
     kotlin("plugin.jpa") version "1.9.20"
-    id("org.springframework.boot") version "3.1.5"
+    id("org.springframework.boot") version "3.2.0"
     id("io.spring.dependency-management") version "1.1.3"
     id("com.github.ben-manes.versions") version "0.49.0"
     id("com.glovoapp.semantic-versioning") version "1.1.10"
@@ -34,7 +34,10 @@ dependencies {
     implementation("org.jetbrains.kotlin", "kotlin-reflect")
     implementation("org.jetbrains.kotlin", "kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core")
-    implementation("org.telegram", "telegrambots", "6.8.0")
+    implementation("org.telegram", "telegrambots", "6.8.0") {
+        // telegrambot dipende ancora da javax :(
+        exclude(group = "com.fasterxml.jackson.module", "jackson-jaxrs-json-provider")
+    }
     implementation("org.jsoup", "jsoup", "1.16.2")
     implementation("org.springdoc", "springdoc-openapi-starter-common", "2.2.0")
     implementation("org.springdoc", "springdoc-openapi-starter-webmvc-ui", "2.2.0")
