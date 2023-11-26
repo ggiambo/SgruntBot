@@ -4,7 +4,6 @@ import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.actions.models.ActionContext
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import com.fdtheroes.sgruntbot.actions.persistence.KarmaService
-import org.springframework.stereotype.Service
 import kotlin.random.Random.Default.nextInt
 
 //@Service
@@ -41,11 +40,11 @@ class Cazzate(
     }
 
     private fun insulta(ctx: ActionContext): String {
-        if (nextInt(5) == 0) {
+        return if (nextInt(5) == 0) {
             val userName = botUtils.getUserName(ctx.getChatMember(ctx.message.from.id))
-            return "Ma chiudi il becco, $userName!"
+            "Ma chiudi il becco, $userName!"
         } else {
-            return "Ma la smetti di dire ${insulti.random()}?"
+            "Ma la smetti di dire ${insulti.random()}?"
         }
     }
 

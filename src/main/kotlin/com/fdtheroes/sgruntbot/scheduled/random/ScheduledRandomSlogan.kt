@@ -4,7 +4,6 @@ import com.fdtheroes.sgruntbot.Bot
 import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.actions.Slogan
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
-import org.springframework.stereotype.Service
 
 //@Service
 class ScheduledRandomSlogan(

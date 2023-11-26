@@ -45,8 +45,8 @@ class Wiki(private val botUtils: BotUtils, val mapper: ObjectMapper) : Action, H
             botUtils.textFromURL(URL_titleAndURL, query)
         val jsNode = mapper.readTree(testo)
 
-        val titolo = jsNode.get(1).get(0)?.textValue()
-        val url = jsNode.get(3).get(0)?.textValue()
+        val titolo = jsNode[1][0]?.textValue()
+        val url = jsNode[3][0]?.textValue()
 
         return Pair(titolo, url)
     }
@@ -54,12 +54,9 @@ class Wiki(private val botUtils: BotUtils, val mapper: ObjectMapper) : Action, H
     private fun getExtract(title: String): String? {
         val testo =
             botUtils.textFromURL(URL_extract, title)
-        val jsNode = mapper.readTree(testo)
-            .get("query")
-            .get("pages")
+        val jsNode = mapper.readTree(testo)["query"]["pages"]
             .elements()
-            .next()
-            .get("extract")
+            .next()["extract"]
 
         return jsNode?.textValue()
     }

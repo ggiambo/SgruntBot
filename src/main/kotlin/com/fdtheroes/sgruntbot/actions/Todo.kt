@@ -22,14 +22,18 @@ class Todo(
         val message = ctx.message
         val userId = ctx.message.from.id
         var risposta: String? = null
-        if (regex_todo_done.matches(message.text)) { // precedenza!
-            val argomento = regex_todo_done.find(message.text)?.groupValues?.get(1)!!
-            risposta = messaggioTodoChiuso(userId, abs(argomento.toLong()))
-        } else if (regex_todo_add.matches(message.text)) {
-            val argomento = regex_todo_add.find(message.text)?.groupValues?.get(1)!!
-            risposta = messaggioTodoAggiunto(userId, argomento)
-        } else if (regex_todos.matches(message.text)) {
-            risposta = messaggioListaTodos(ctx.getChatMember)
+        when {
+            regex_todo_done.matches(message.text) -> { // precedenza!
+                val argomento = regex_todo_done.find(message.text)?.groupValues?.get(1)!!
+                risposta = messaggioTodoChiuso(userId, abs(argomento.toLong()))
+            }
+            regex_todo_add.matches(message.text) -> {
+                val argomento = regex_todo_add.find(message.text)?.groupValues?.get(1)!!
+                risposta = messaggioTodoAggiunto(userId, argomento)
+            }
+            regex_todos.matches(message.text) -> {
+                risposta = messaggioListaTodos(ctx.getChatMember)
+            }
         }
 
         if (risposta != null) {

@@ -3,7 +3,6 @@ package com.fdtheroes.sgruntbot.scheduled.random
 import com.fdtheroes.sgruntbot.Bot
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import com.fdtheroes.sgruntbot.actions.persistence.ErrePiGiService
-import org.springframework.stereotype.Service
 
 //@Service
 class ScheduledErrePiGiSgrunty(

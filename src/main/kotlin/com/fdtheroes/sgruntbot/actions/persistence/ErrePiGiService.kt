@@ -3,7 +3,6 @@ package com.fdtheroes.sgruntbot.actions.persistence
 import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.Users
 import com.fdtheroes.sgruntbot.actions.models.ErrePiGi
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.User
 import kotlin.random.Random.Default.nextInt
