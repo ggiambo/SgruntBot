@@ -1,9 +1,7 @@
 package com.fdtheroes.sgruntbot.scheduled.random;
 
 import com.fdtheroes.sgruntbot.scheduled.Scheduled
-import java.time.Duration
 import java.time.LocalDateTime
-import java.time.temporal.ChronoUnit
 import kotlin.random.Random.Default.nextLong
 
 fun interface ScheduledRandom : Scheduled {

@@ -6,7 +6,6 @@ import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.BotUtils
 import com.fdtheroes.sgruntbot.BotUtils.Companion.length
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
-import org.springframework.stereotype.Service
 
 //@Service
 class ScheduledRandomImgur(
@@ -21,19 +20,15 @@ class ScheduledRandomImgur(
 
     override fun execute() {
         val viral = botUtils.textFromURL("https://api.imgur.com/3/gallery/hot/viral/0.json", headers = headers)
-        val randomEntry = mapper.readTree(viral)
-            .get("data").asSequence()
-            .filter { !it.get("title")?.textValue().isNullOrEmpty() }
-            .filter { it.get("images")?.length() == 1L }
+        val randomEntry = mapper.readTree(viral)["data"].asSequence()
+            .filter { !it["title"]?.textValue().isNullOrEmpty() }
+            .filter { it["images"]?.length() == 1L }
             .toList()
             .random()
 
-        val title = randomEntry
-            .get("title").textValue()
-        val link = randomEntry
-            .get("images")
-            .first()
-            .get("link").textValue()
+        val title = randomEntry["title"].textValue()
+        val link = randomEntry["images"]
+            .first()["link"].textValue()
 
         val testo = "${title}\n${link}"
 

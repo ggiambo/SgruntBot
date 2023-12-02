@@ -8,9 +8,7 @@ abstract class Bitcoin(val botUtils: BotUtils, val mapper: ObjectMapper) : HasHa
     fun bitcoinvalue(currency: String): Double {
         val api = botUtils.textFromURL("https://blockchain.info/ticker")
 
-        return mapper.readTree(api)
-            .get(currency)
-            .get("last").asDouble()
+        return mapper.readTree(api)[currency]["last"].asDouble()
     }
 
 }
