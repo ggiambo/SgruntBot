@@ -1,5 +1,6 @@
-package com.fdtheroes.sgruntbot
+package com.fdtheroes.sgruntbot.utils
 
+import com.fdtheroes.sgruntbot.BotConfig
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.bots.DefaultBotOptions
 import org.telegram.telegrambots.meta.api.objects.Message

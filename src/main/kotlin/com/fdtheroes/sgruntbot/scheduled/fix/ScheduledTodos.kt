@@ -1,7 +1,7 @@
 package com.fdtheroes.sgruntbot.scheduled.fix
 
 import com.fdtheroes.sgruntbot.Bot
-import com.fdtheroes.sgruntbot.BotUtils
+import com.fdtheroes.sgruntbot.utils.BotUtils
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import com.fdtheroes.sgruntbot.actions.models.Todos
 import com.fdtheroes.sgruntbot.actions.persistence.TodosService

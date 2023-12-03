@@ -4,6 +4,7 @@ import com.fdtheroes.sgruntbot.BaseTest
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import com.fdtheroes.sgruntbot.actions.models.ActionResponseType
 import com.fdtheroes.sgruntbot.actions.persistence.StatsService
+import com.fdtheroes.sgruntbot.utils.StatsUtil
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.argumentCaptor
@@ -16,7 +17,7 @@ class TestScheduledStats : BaseTest() {
     private val statsService = mock<StatsService> {
 
     }
-    private val scheduledStats = ScheduledStats(sgruntBot, botUtils, statsService)
+    private val scheduledStats = ScheduledStats(sgruntBot, StatsUtil(statsService, botUtils))
 
     @Test
     fun scheduledStatsTest() {

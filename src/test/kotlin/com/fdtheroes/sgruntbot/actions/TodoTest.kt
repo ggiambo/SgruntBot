@@ -1,7 +1,7 @@
 package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BaseTest
-import com.fdtheroes.sgruntbot.BotUtils.Companion.length
+import com.fdtheroes.sgruntbot.utils.BotUtils.Companion.length
 import com.fdtheroes.sgruntbot.actions.models.Todos
 import com.fdtheroes.sgruntbot.actions.persistence.TodosService
 import org.assertj.core.api.Assertions.assertThat

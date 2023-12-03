@@ -3,7 +3,7 @@ package com.fdtheroes.sgruntbot.scheduled.fix
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fdtheroes.sgruntbot.Bot
-import com.fdtheroes.sgruntbot.BotUtils
+import com.fdtheroes.sgruntbot.utils.BotUtils
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import com.fdtheroes.sgruntbot.scheduled.Scheduled
 import org.springframework.stereotype.Service

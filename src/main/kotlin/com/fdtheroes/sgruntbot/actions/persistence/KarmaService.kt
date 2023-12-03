@@ -1,6 +1,6 @@
 package com.fdtheroes.sgruntbot.actions.persistence
 
-import com.fdtheroes.sgruntbot.BotUtils
+import com.fdtheroes.sgruntbot.utils.BotUtils
 import com.fdtheroes.sgruntbot.actions.models.Karma
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.User

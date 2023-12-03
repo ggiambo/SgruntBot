@@ -1,6 +1,6 @@
 package com.fdtheroes.sgruntbot.actions.persistence
 
-import com.fdtheroes.sgruntbot.BotUtils.Companion.elseIfNull
+import com.fdtheroes.sgruntbot.utils.BotUtils.Companion.elseIfNull
 import com.fdtheroes.sgruntbot.actions.models.Stats
 import org.springframework.stereotype.Service
 import java.time.DayOfWeek
