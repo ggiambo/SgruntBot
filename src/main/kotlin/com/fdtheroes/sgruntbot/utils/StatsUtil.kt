@@ -22,6 +22,11 @@ class StatsUtil(
         return getStatsInputFile(stats, "Logorroici di ${tipo.desc}", getChatMember)
     }
 
+    fun getStats(days: Long, getChatMember: (Long) -> User?): InputFile {
+        val stats = statsService.getStatsLastDays(days)
+        return getStatsInputFile(stats, "Logorroici degli ultimi $stats giorni", getChatMember)
+    }
+
     private fun getStatsInputFile(
         stats: List<com.fdtheroes.sgruntbot.actions.models.Stats>,
         chartTitle: String,

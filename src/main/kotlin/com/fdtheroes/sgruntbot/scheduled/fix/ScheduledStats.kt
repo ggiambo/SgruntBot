@@ -19,7 +19,7 @@ class ScheduledStats(
     override fun nextRun() = mezzanotteDomenicaProssima()
 
     override fun execute() {
-        val inputFile = statsUtil.getStats(StatsUtil.StatsType.SETTIMANA, sgruntBot::getChatMember)
+        val inputFile = statsUtil.getStats(7, sgruntBot::getChatMember)
         val actionResponse = ActionResponse.photo("", inputFile, false)
 
         sgruntBot.messaggio(actionResponse)

@@ -79,7 +79,7 @@ class Bot(
         }
     }
 
-    fun rispondi(actionMessage: ActionResponse, message: Message): Unit {
+    fun rispondi(actionMessage: ActionResponse, message: Message) {
         if (actionMessage.rispondi) {
             when (actionMessage.type) {
                 ActionResponseType.Message -> rispondiMessaggio(message, actionMessage.message!!)
