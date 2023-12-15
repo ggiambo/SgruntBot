@@ -1,0 +1,362 @@
+[
+  {
+    "n": 1,
+    "text": "L’Italia"
+  },
+  {
+    "n": 2,
+    "text": "‘a piccerella (la bambina)"
+  },
+  {
+    "n": 3,
+    "text": "‘a gatta (la gatta)"
+  },
+  {
+    "n": 4,
+    "text": "‘o puorco (il maiale)"
+  },
+  {
+    "n": 5,
+    "text": "‘a mano (la mano)"
+  },
+  {
+    "n": 6,
+    "text": "chella ca guarda ‘nterra (l’organo femminile)"
+  },
+  {
+    "n": 7,
+    "text": "‘o vaso (il vaso)"
+  },
+  {
+    "n": 8,
+    "text": "‘a Maronna (la Madonna)"
+  },
+  {
+    "n": 9,
+    "text": "‘a figliata (gruppo di figli)"
+  },
+  {
+    "n": 10,
+    "text": "‘e fasule (i fagioli)"
+  },
+  {
+    "n": 11,
+    "text": "‘e suricille (i topolini)"
+  },
+  {
+    "n": 12,
+    "text": "‘e surdate (i soldati)"
+  },
+  {
+    "n": 13,
+    "text": "Sant’Antonio"
+  },
+  {
+    "n": 14,
+    "text": "‘o mbriaco (l’ubriaco)"
+  },
+  {
+    "n": 15,
+    "text": "‘o guaglione (il ragazzo)"
+  },
+  {
+    "n": 16,
+    "text": "‘o culo (il deretano)"
+  },
+  {
+    "n": 17,
+    "text": "‘a disgrazia (la disgrazia)"
+  },
+  {
+    "n": 18,
+    "text": "‘o sanghe (il sangue)"
+  },
+  {
+    "n": 19,
+    "text": "‘a resata (la risata)"
+  },
+  {
+    "n": 20,
+    "text": "‘a festa (la festa)"
+  },
+  {
+    "n": 21,
+    "text": "‘a femmena annure (la donna nuda)"
+  },
+  {
+    "n": 22,
+    "text": "‘o pazzo (il folle)"
+  },
+  {
+    "n": 23,
+    "text": "‘o scemo (lo stupido)"
+  },
+  {
+    "n": 24,
+    "text": "‘e gguardie (poliziotti, carabinieri, guardie carcerarie)"
+  },
+  {
+    "n": 25,
+    "text": "Natale"
+  },
+  {
+    "n": 26,
+    "text": "Nanninella (Anna)"
+  },
+  {
+    "n": 27,
+    "text": "‘o cantero (il vaso da Notte)"
+  },
+  {
+    "n": 28,
+    "text": "‘e zizze (il seno femminile)"
+  },
+  {
+    "n": 29,
+    "text": "‘o pate d’e criature (l’organo riproduttivo maschile)"
+  },
+  {
+    "n": 30,
+    "text": "‘e palle d’o tenente (le munizioni)"
+  },
+  {
+    "n": 31,
+    "text": "‘o padrone e casa (il proprietario di casa)"
+  },
+  {
+    "n": 32,
+    "text": "‘o capitone (l’anguilla femmina)"
+  },
+  {
+    "n": 33,
+    "text": "l’anne ‘e Cristo (gli anni di Gesù Cristo)"
+  },
+  {
+    "n": 34,
+    "text": "‘a capa (la testa)"
+  },
+  {
+    "n": 35,
+    "text": "l’aucelluzzo (l’uccellino)"
+  },
+  {
+    "n": 36,
+    "text": "‘e castagnelle (le nacchere spagnole)"
+  },
+  {
+    "n": 37,
+    "text": "‘o monaco (il monaco, il frate)"
+  },
+  {
+    "n": 38,
+    "text": "‘e mmazzate (le percosse, le botte)"
+  },
+  {
+    "n": 39,
+    "text": "‘a funa nganna (la corda al collo, l’impiccagione)"
+  },
+  {
+    "n": 40,
+    "text": "‘a paposcia (l’ernia inguinale)"
+  },
+  {
+    "n": 41,
+    "text": "‘o curtiello (il coltello)"
+  },
+  {
+    "n": 42,
+    "text": "‘o cafè (il caffe)"
+  },
+  {
+    "n": 43,
+    "text": "‘onna pereta for ‘o barcone (la donna pettegola)"
+  },
+  {
+    "n": 44,
+    "text": "‘e ccancelle (le carceri)"
+  },
+  {
+    "n": 45,
+    "text": "‘o vino buono (il vino gustoso)"
+  },
+  {
+    "n": 46,
+    "text": "‘e denare (i soldi)"
+  },
+  {
+    "n": 47,
+    "text": "‘o muorto (la persona defunta)"
+  },
+  {
+    "n": 48,
+    "text": "‘o muorto che parla (il defunto che parla)"
+  },
+  {
+    "n": 49,
+    "text": "‘o piezz e carne (la donna prosperosa)"
+  },
+  {
+    "n": 50,
+    "text": "‘o ppane (il pane)"
+  },
+  {
+    "n": 51,
+    "text": "‘o ciardino (il giardino)"
+  },
+  {
+    "n": 52,
+    "text": "‘a mamma (la madre)"
+  },
+  {
+    "n": 53,
+    "text": "‘o viecchio (l’anziano)"
+  },
+  {
+    "n": 54,
+    "text": "‘o cappiello (il cappello)"
+  },
+  {
+    "n": 55,
+    "text": "‘a museca (la musica)"
+  },
+  {
+    "n": 56,
+    "text": "‘a caruta (la caduta)"
+  },
+  {
+    "n": 57,
+    "text": "‘o scartellato (il gobbo)"
+  },
+  {
+    "n": 58,
+    "text": "‘o paccotto (il pacchetto)"
+  },
+  {
+    "n": 59,
+    "text": "‘e pile (i peli)"
+  },
+  {
+    "n": 60,
+    "text": "‘o lamiento (il lamentarsi)"
+  },
+  {
+    "n": 61,
+    "text": "‘o cacciatore (il cacciatore)"
+  },
+  {
+    "n": 62,
+    "text": "‘o muorto acciso (il morto assassinato)"
+  },
+  {
+    "n": 63,
+    "text": "‘a sposa (la sposa)"
+  },
+  {
+    "n": 64,
+    "text": "‘a sciammeria (la giacca per cerimonie)"
+  },
+  {
+    "n": 65,
+    "text": "‘o chianto (il pianto)"
+  },
+  {
+    "n": 66,
+    "text": "‘e ddoje zetelle (le due donne nubili)"
+  },
+  {
+    "n": 67,
+    "text": "‘o totaro int’a chitarra (il totano nella chitarra)"
+  },
+  {
+    "n": 68,
+    "text": "‘a zuppa cotta (la zuppa cotta)"
+  },
+  {
+    "n": 69,
+    "text": "sott’e ‘ncoppa (il sottosopra)"
+  },
+  {
+    "n": 70,
+    "text": "‘o palazzo (il palazzo, la casa)"
+  },
+  {
+    "n": 71,
+    "text": "l’omme ‘e merda (l’uomo meschino)"
+  },
+  {
+    "n": 72,
+    "text": "‘a maraviglia (la meraviglia)"
+  },
+  {
+    "n": 73,
+    "text": "‘o spitale (l’ospedale)"
+  },
+  {
+    "n": 74,
+    "text": "‘a rotta (la grotta)"
+  },
+  {
+    "n": 75,
+    "text": "Pulcinella"
+  },
+  {
+    "n": 76,
+    "text": "‘a funtana (la fontana)"
+  },
+  {
+    "n": 77,
+    "text": "‘e riavulille (i diavoletti, il diavolo)"
+  },
+  {
+    "n": 78,
+    "text": "‘a bella figliola (la prostituta)"
+  },
+  {
+    "n": 79,
+    "text": "‘o mariuolo (il ladro)"
+  },
+  {
+    "n": 80,
+    "text": "‘a vocca (la bocca)"
+  },
+  {
+    "n": 81,
+    "text": "‘e sciure (i fiori)"
+  },
+  {
+    "n": 82,
+    "text": "‘a tavula ‘mbandita (il banchetto)"
+  },
+  {
+    "n": 83,
+    "text": "‘o maletiempo (il mal tempo)"
+  },
+  {
+    "n": 84,
+    "text": "‘a cchiesa (la Chiesa)"
+  },
+  {
+    "n": 85,
+    "text": "ll’aneme ‘o priatorio (il purgatorio)"
+  },
+  {
+    "n": 86,
+    "text": "‘a puteca (il negozio)"
+  },
+  {
+    "n": 87,
+    "text": "‘e perucchie ( i pidocchi)"
+  },
+  {
+    "n": 88,
+    "text": "‘e casecavalle (i caciocavalli)"
+  },
+  {
+    "n": 89,
+    "text": "‘a vecchia (la donna anziana)"
+  },
+  {
+    "n": 90,
+    "text": "‘a paura (la paura)"
+  }
+]
