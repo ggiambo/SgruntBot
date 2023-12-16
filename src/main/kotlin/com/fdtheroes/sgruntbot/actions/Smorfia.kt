@@ -17,13 +17,11 @@ class Smorfia(val mapper: ObjectMapper) : Action {
     }
 
     override fun doAction(ctx: ActionContext) {
-        if (nextInt(50) == 0) {
-            val numero = getNumero(ctx.message.text)
-            if (numero != null) {
-                val testoSmorfia = smorfia[numero]
-                if (testoSmorfia != null) {
-                    ctx.addResponse(ActionResponse.message("\uD83C\uDDEE\uD83C\uDDF9 $numero: $testoSmorfia \uD83E\uDD0C"))
-                }
+        val numero = getNumero(ctx.message.text)
+        if (numero != null && nextInt(10) == 0) {
+            val testoSmorfia = smorfia[numero]
+            if (testoSmorfia != null) {
+                ctx.addResponse(ActionResponse.message("\uD83C\uDDEE\uD83C\uDDF9 $numero: $testoSmorfia \uD83E\uDD0C"))
             }
         }
     }
