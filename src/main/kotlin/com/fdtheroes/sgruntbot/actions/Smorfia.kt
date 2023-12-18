@@ -17,18 +17,12 @@ class Smorfia(val mapper: ObjectMapper) : Action {
             .associate { Pair(it["n"].asInt(), it["text"].asText()) }
     }
 
-    // ogni 3 messaggi, risponde con la smorfia
-    var contatore = AtomicInteger(0)
-
     override fun doAction(ctx: ActionContext) {
         val numero = getNumero(ctx.message.text)
-        if (numero != null) {
+        if (numero != null && nextInt(20) == 0) {   // 5% di probabilità
             val testoSmorfia = smorfia[numero]
             if (testoSmorfia != null) {
-                if (contatore.incrementAndGet() == 3) {
-                    contatore.set(0)
-                    ctx.addResponse(ActionResponse.message("\uD83C\uDDEE\uD83C\uDDF9 $numero: $testoSmorfia \uD83E\uDD0C"))
-                }
+                ctx.addResponse(ActionResponse.message("\uD83C\uDDEE\uD83C\uDDF9 $numero: $testoSmorfia \uD83E\uDD0C"))
             }
         }
     }
@@ -38,7 +32,6 @@ class Smorfia(val mapper: ObjectMapper) : Action {
         if (numero != null && numero.toInt() in 1..90) {
             return numero.toInt()
         }
-
         return null
     }
 
