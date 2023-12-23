@@ -11,7 +11,7 @@ class CheOreSono(
     private val nowSupplier: () -> LocalDateTime = { LocalDateTime.now() } // used for testing){}
 ) : Action, HasHalp {
 
-    private val regex = Regex("che ore sono|che ora è", setOf(RegexOption.IGNORE_CASE, RegexOption.MULTILINE))
+    private val regex = Regex("^che ore sono|^che ora è", setOf(RegexOption.IGNORE_CASE, RegexOption.MULTILINE))
     private val formatter = DateTimeFormatter.ofPattern("HH:mm")
 
     private val ore = listOf(
