@@ -3,8 +3,8 @@ package com.fdtheroes.sgruntbot.scheduled.random
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fdtheroes.sgruntbot.Bot
 import com.fdtheroes.sgruntbot.BotConfig
-import com.fdtheroes.sgruntbot.BotUtils
-import com.fdtheroes.sgruntbot.BotUtils.Companion.length
+import com.fdtheroes.sgruntbot.utils.BotUtils
+import com.fdtheroes.sgruntbot.utils.BotUtils.Companion.length
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 
 //@Service

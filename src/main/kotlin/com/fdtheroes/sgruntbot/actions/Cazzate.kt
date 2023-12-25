@@ -1,27 +1,29 @@
 package com.fdtheroes.sgruntbot.actions
 
-import com.fdtheroes.sgruntbot.BotUtils
+import com.fdtheroes.sgruntbot.utils.BotUtils
 import com.fdtheroes.sgruntbot.actions.models.ActionContext
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import com.fdtheroes.sgruntbot.actions.persistence.KarmaService
+import org.springframework.stereotype.Service
 import kotlin.random.Random.Default.nextInt
 
-//@Service
+@Service
 class Cazzate(
     private val botUtils: BotUtils,
     private val karmaService: KarmaService,
 ) : Action {
 
-    private val insulti = listOf("cazzate", "stronzate", "stupidate", "boiate figliuolo")
+    private val insulti = listOf("cazzate", "stronzate", "stupidate", "vaccate", "boiate figliuolo")
     private val complimenti = listOf(
         "Amen, AMEN!",
         "Questa è una grande verità",
         "WOW, non ci avevo mai pensato!",
         "Stai zitto e baciami, ora!",
+        "Giusto, non avrei potuto dirlo meglio",
     )
 
     override fun doAction(ctx: ActionContext) {
-        if (nextInt(150) == 0) {
+        if (nextInt(200) == 0) {
             if (riceveComplimento(ctx.message.from.id)) {
                 ctx.addResponse(ActionResponse.message(complimenti.random()))
             } else {

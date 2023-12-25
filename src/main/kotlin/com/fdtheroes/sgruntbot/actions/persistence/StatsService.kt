@@ -1,6 +1,6 @@
 package com.fdtheroes.sgruntbot.actions.persistence
 
-import com.fdtheroes.sgruntbot.BotUtils.Companion.elseIfNull
+import com.fdtheroes.sgruntbot.utils.BotUtils.Companion.elseIfNull
 import com.fdtheroes.sgruntbot.actions.models.Stats
 import org.springframework.stereotype.Service
 import java.time.DayOfWeek
@@ -44,7 +44,7 @@ class StatsService(private val statsRepository: StatsRepository) {
 
     fun getStatsLastDays(days: Long): List<Stats> {
         val startStatDay = LocalDate.now().minusDays(days)
-        return statsRepository.findStatsByStatDayBetween(startStatDay, LocalDate.now())
+        return aggregate(statsRepository.findStatsByStatDayBetween(startStatDay, LocalDate.now()))
     }
 
     fun getStatsThisYear(): List<Stats> {

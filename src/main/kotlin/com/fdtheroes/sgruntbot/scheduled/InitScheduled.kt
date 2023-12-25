@@ -1,6 +1,6 @@
 package com.fdtheroes.sgruntbot.scheduled
 
-import com.fdtheroes.sgruntbot.BotUtils.Companion.toDate
+import com.fdtheroes.sgruntbot.utils.BotUtils.Companion.toDate
 import jakarta.annotation.PostConstruct
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
