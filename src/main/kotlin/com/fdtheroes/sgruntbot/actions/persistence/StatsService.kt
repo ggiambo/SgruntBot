@@ -44,7 +44,7 @@ class StatsService(private val statsRepository: StatsRepository) {
 
     fun getStatsLastDays(days: Long): List<Stats> {
         val startStatDay = LocalDate.now().minusDays(days)
-        return statsRepository.findStatsByStatDayBetween(startStatDay, LocalDate.now())
+        return aggregate(statsRepository.findStatsByStatDayBetween(startStatDay, LocalDate.now()))
     }
 
     fun getStatsThisYear(): List<Stats> {
