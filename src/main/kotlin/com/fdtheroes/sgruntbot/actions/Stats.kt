@@ -2,16 +2,11 @@ package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.actions.models.ActionContext
 import com.fdtheroes.sgruntbot.actions.models.ActionResponse
-import com.fdtheroes.sgruntbot.actions.models.Stats
 import com.fdtheroes.sgruntbot.actions.persistence.StatsService
 import com.fdtheroes.sgruntbot.utils.BotUtils
-import com.fdtheroes.sgruntbot.utils.ChartUtils
 import com.fdtheroes.sgruntbot.utils.StatsUtil
-import org.springframework.context.annotation.Lazy
 import org.springframework.stereotype.Service
-import org.telegram.telegrambots.meta.api.objects.InputFile
 
-@Lazy
 @Service
 class Stats(
     private val statsService: StatsService,
