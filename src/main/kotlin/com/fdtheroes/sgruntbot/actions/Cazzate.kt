@@ -13,12 +13,13 @@ class Cazzate(
     private val karmaService: KarmaService,
 ) : Action {
 
-    private val insulti = listOf("cazzate", "stronzate", "stupidate", "boiate figliuolo")
+    private val insulti = listOf("cazzate", "stronzate", "stupidate", "vaccate", "boiate figliuolo")
     private val complimenti = listOf(
         "Amen, AMEN!",
         "Questa è una grande verità",
         "WOW, non ci avevo mai pensato!",
         "Stai zitto e baciami, ora!",
+        "Giusto, non avrei potuto dirlo meglio",
     )
 
     override fun doAction(ctx: ActionContext) {
