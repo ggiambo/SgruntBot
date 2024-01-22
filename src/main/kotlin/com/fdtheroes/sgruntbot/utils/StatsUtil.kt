@@ -24,7 +24,7 @@ class StatsUtil(
 
     fun getStats(days: Long, getChatMember: (Long) -> User?): InputFile {
         val stats = statsService.getStatsLastDays(days)
-        return getStatsInputFile(stats, "Logorroici degli ultimi $stats giorni", getChatMember)
+        return getStatsInputFile(stats, "Logorroici degli ultimi $days giorni", getChatMember)
     }
 
     private fun getStatsInputFile(
