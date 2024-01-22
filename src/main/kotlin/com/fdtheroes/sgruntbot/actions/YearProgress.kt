@@ -9,22 +9,28 @@ import java.time.LocalDateTime
 class YearProgress : Action, HasHalp {
 
     private val regex = Regex("^!yp$", RegexOption.IGNORE_CASE)
-    private val barLength = 16
-    private val completedChar = "▓"
-    private val notCompletedChar = "░"
-    private val calendar = "\uD83D\uDCC5"
 
     override fun doAction(ctx: ActionContext) {
         if (regex.containsMatchIn(ctx.message.text)) {
-            val percent = LocalDateTime.now().dayOfYear.toFloat() / 365
-            val completedPercent = Math.round(percent * 100)
-            val completedBar = completedChar.repeat(Math.round(percent * barLength))
-            val notCompletedBar = notCompletedChar.repeat(barLength - completedBar.length)
-            val progress = "$completedBar$notCompletedBar $completedPercent%"
-            ctx.addResponse(ActionResponse.message("Year Progress $calendar\n$progress"))
+            ctx.addResponse(ActionResponse.message(yearProgression()))
         }
     }
 
     override fun halp() = "<b>yp</b> percentuale dell'anno che hai sprecato"
+
+    companion object {
+        private const val BAR_LENGTH = 16
+        private const val COMPLETED_CHAR = "▓"
+        private const val NOT_COMPLETED_CHAR = "░"
+        private const val CALENDAR_CHAR = "\uD83D\uDCC5"
+        fun yearProgression(): String {
+            val percent = LocalDateTime.now().dayOfYear.toFloat() / 365
+            val completedPercent = Math.round(percent * 100)
+            val completedBar = COMPLETED_CHAR.repeat(Math.round(percent * BAR_LENGTH))
+            val notCompletedBar = NOT_COMPLETED_CHAR.repeat(BAR_LENGTH - completedBar.length)
+            val progress = "$completedBar$notCompletedBar $completedPercent%"
+            return "Year Progress $CALENDAR_CHAR\n$progress"
+        }
+    }
 
 }
