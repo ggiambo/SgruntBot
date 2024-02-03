@@ -11,15 +11,13 @@ import kotlin.random.Random
 @Service
 class ScheduledYearProgression(private val sgruntBot: Bot) : Scheduled {
 
-    // random tra 5 e 10 giorni
-    override fun firstRun(): LocalDateTime {
-        val giorni = Random.nextLong(5, 10)
-        return LocalDateTime.now().plusDays(giorni)
-    }
+    override fun firstRun() = getNext()
 
-    // random tra 10 e 20 giorni
-    override fun nextRun(): LocalDateTime {
-        val giorni = Random.nextLong(10, 20)
+    override fun nextRun() = getNext()
+
+    // random tra 5 e 10 giorni
+    private fun getNext(): LocalDateTime {
+        val giorni = Random.nextLong(5, 10)
         return LocalDateTime.now().plusDays(giorni)
     }
 
