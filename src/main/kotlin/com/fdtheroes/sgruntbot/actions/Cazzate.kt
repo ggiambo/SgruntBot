@@ -23,7 +23,7 @@ class Cazzate(
     )
 
     override fun doAction(ctx: ActionContext) {
-        if (nextInt(200) == 0) {
+        if (nextInt(300) == 0) {
             if (riceveComplimento(ctx.message.from.id)) {
                 ctx.addResponse(ActionResponse.message(complimenti.random()))
             } else {
