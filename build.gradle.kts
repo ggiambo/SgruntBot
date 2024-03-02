@@ -1,11 +1,17 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+val telegrambotsVersion = "6.9.7.1"
+val jsoupVersion = "1.17.2"
+val springdocOpenapiVersion = "2.3.0"
+val xchartVersion = "3.8.7"
+val mockitoKotlinVersion = "5.2.1"
+
 plugins {
     application
     kotlin("jvm") version "1.9.20"
     kotlin("plugin.spring") version "1.9.20"
     kotlin("plugin.jpa") version "1.9.20"
-    id("org.springframework.boot") version "3.2.2"
+    id("org.springframework.boot") version "3.2.3"
     id("io.spring.dependency-management") version "1.1.4"
     id("com.github.ben-manes.versions") version "0.51.0"
     id("com.glovoapp.semantic-versioning") version "1.1.10"
@@ -34,21 +40,25 @@ dependencies {
     implementation("org.jetbrains.kotlin", "kotlin-reflect")
     implementation("org.jetbrains.kotlin", "kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core")
-    implementation("org.telegram", "telegrambots", "6.9.7.1") {
+    implementation("org.telegram", "telegrambots", telegrambotsVersion) {
         // telegrambot dipende ancora da javax :(
         exclude(group = "com.fasterxml.jackson.module", "jackson-module-jaxb-annotations")
     }
-    implementation("org.jsoup", "jsoup", "1.17.2")
-    implementation("org.springdoc", "springdoc-openapi-starter-common", "2.3.0")
-    implementation("org.springdoc", "springdoc-openapi-starter-webmvc-ui", "2.3.0")
-    implementation("org.knowm.xchart", "xchart", "3.8.7")
+    implementation("org.jsoup", "jsoup", jsoupVersion)
+    implementation("org.springdoc", "springdoc-openapi-starter-common", springdocOpenapiVersion)
+    implementation("org.springdoc", "springdoc-openapi-starter-webmvc-ui", springdocOpenapiVersion)
+    implementation("org.knowm.xchart", "xchart", xchartVersion)
+
     runtimeOnly("org.mariadb.jdbc", "mariadb-java-client")
     runtimeOnly("com.h2database", "h2")
+
     annotationProcessor("org.springframework.boot", "spring-boot-configuration-processor")
+
     testImplementation("org.springframework.boot", "spring-boot-starter-test")
     testImplementation("org.junit.jupiter", "junit-jupiter")
+    testImplementation("org.mockito.kotlin", "mockito-kotlin", mockitoKotlinVersion)
+
     testRuntimeOnly("org.junit.platform", "junit-platform-launcher")
-    testImplementation("org.mockito.kotlin", "mockito-kotlin", "5.2.1")
 }
 
 springBoot {
