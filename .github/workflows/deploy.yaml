@@ -17,11 +17,11 @@ jobs:
       - name: Increase Patch version
         run: ./gradlew incrementSemanticVersion --patch
       - name: Commit & Push changes
-        uses: actions-js/push@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          message: Update PATCH Version to ${{ env.SGRUNT_VERSION }} [skip actions]
-          branch: master
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git commit -a -m "Update PATCH Version to ${{ env.SGRUNT_VERSION }} [skip actions]"
+          git push
       - name: Pull, build and restart SgruntBot
         uses: appleboy/ssh-action@1.0.3
         with:
