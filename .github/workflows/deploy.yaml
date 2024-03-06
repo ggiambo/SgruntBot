@@ -23,7 +23,7 @@ jobs:
           git commit -a -m "Update PATCH Version to ${{ env.SGRUNT_VERSION }} [skip actions]"
           git push
       - name: Pull, build and restart SgruntBot
-        uses: appleboy/ssh-action@1.0.3
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
