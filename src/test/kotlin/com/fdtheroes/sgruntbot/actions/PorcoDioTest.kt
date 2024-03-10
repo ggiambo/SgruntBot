@@ -1,31 +1,32 @@
 package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BaseTest
-import com.fdtheroes.sgruntbot.actions.models.ActionResponseType
+import com.fdtheroes.sgruntbot.handlers.message.PorcoDio
+import com.fdtheroes.sgruntbot.models.ActionResponseType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 internal class PorcoDioTest : BaseTest() {
 
-    private val porcoDio = PorcoDio(botConfig)
+    private val porcoDio = PorcoDio(botUtils, botConfig)
 
     @Test
     fun testPositive() {
         botConfig.pignolo = true
-        val ctx = actionContext(("\tporco dio"))
-        porcoDio.doAction(ctx)
+        val message = message("\tporco dio")
+        porcoDio.handle(message)
 
-        assertThat(ctx.actionResponses).hasSize(1)
-        assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Message)
-        assertThat(ctx.actionResponses.first().message).isEqualTo("E la madooonna!")
+        assertThat(actionResponses).hasSize(1)
+        assertThat(actionResponses.first().type).isEqualTo(ActionResponseType.Message)
+        assertThat(actionResponses.first().message).isEqualTo("E la madooonna!")
     }
 
     @Test
     fun testNegative() {
-        val ctx = actionContext(("porco dioh! "))
-        porcoDio.doAction(ctx)
+        val message = message("porco dioh! ")
+        porcoDio.handle(message)
 
-        assertThat(ctx.actionResponses).isEmpty()
+        assertThat(actionResponses).isEmpty()
     }
 
 }

@@ -1,9 +1,10 @@
 package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BaseTest
+import com.fdtheroes.sgruntbot.handlers.message.Todo
+import com.fdtheroes.sgruntbot.models.Todos
+import com.fdtheroes.sgruntbot.persistence.TodosService
 import com.fdtheroes.sgruntbot.utils.BotUtils.Companion.length
-import com.fdtheroes.sgruntbot.actions.models.Todos
-import com.fdtheroes.sgruntbot.actions.persistence.TodosService
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.*
@@ -36,32 +37,32 @@ class TodoTest : BaseTest() {
         )
     }
 
-    private val todo = Todo(todosService, botUtils)
+    private val todo = Todo(botUtils, botConfig, todosService)
 
     @Test
     fun test_no_trigger() {
-        val actionContext = actionContext(text = "!TODO")
-        todo.doAction(actionContext)
+        val message = message(text = "!TODO")
+        todo.handle(message)
 
-        assertThat(actionContext.actionResponses).hasSize(0)
+        assertThat(actionResponses).hasSize(0)
     }
 
     @Test
     fun test_todo_vuoto() {
-        val actionContext = actionContext(text = "!TODO  \t     \t")
-        todo.doAction(actionContext)
+        val actionContext = message(text = "!TODO  \t     \t")
+        todo.handle(actionContext)
 
-        assertThat(actionContext.actionResponses).hasSize(1)
-        assertThat(actionContext.actionResponses.first().message).isEqualTo("Niente da fare...")
+        assertThat(actionResponses).hasSize(1)
+        assertThat(actionResponses.first().message).isEqualTo("Niente da fare...")
     }
 
     @Test
     fun test_aggiunge_todo() {
-        val actionContext = actionContext(text = "!TODO fai qualcosa")
-        todo.doAction(actionContext)
+        val actionContext = message(text = "!TODO fai qualcosa")
+        todo.handle(actionContext)
 
-        assertThat(actionContext.actionResponses).hasSize(1)
-        assertThat(actionContext.actionResponses.first().message).isEqualTo("Todo '99' aggiunto. Datti da fare!")
+        assertThat(actionResponses).hasSize(1)
+        assertThat(actionResponses.first().message).isEqualTo("Todo '99' aggiunto. Datti da fare!")
         val addTodoCaptor = argumentCaptor<Long, String>()
         verify(todosService, times(1)).addTodo(addTodoCaptor.first.capture(), addTodoCaptor.second.capture())
         assertThat(addTodoCaptor.first.firstValue).isEqualTo(42)
@@ -71,31 +72,31 @@ class TodoTest : BaseTest() {
 
     @Test
     fun test_cancellare_todo_missing() {
-        val actionContext = actionContext(text = "!TODO -123")
-        todo.doAction(actionContext)
+        val actionContext = message(text = "!TODO -123")
+        todo.handle(actionContext)
 
-        assertThat(actionContext.actionResponses).hasSize(1)
-        assertThat(actionContext.actionResponses.first().message).isEqualTo("Non posso chiudere il todo numero '123'. Cosa combini?")
+        assertThat(actionResponses).hasSize(1)
+        assertThat(actionResponses.first().message).isEqualTo("Non posso chiudere il todo numero '123'. Cosa combini?")
         verify(todosService, times(0)).addTodo(any(), any())
     }
 
     @Test
     fun test_cancellare_todo() {
-        val actionContext = actionContext(text = "!TODO -42")
-        todo.doAction(actionContext)
+        val actionContext = message(text = "!TODO -42")
+        todo.handle(actionContext)
 
-        assertThat(actionContext.actionResponses).hasSize(1)
-        assertThat(actionContext.actionResponses.first().message).isEqualTo("Todo numero '42' completato. Bravo lavoratore!")
+        assertThat(actionResponses).hasSize(1)
+        assertThat(actionResponses.first().message).isEqualTo("Todo numero '42' completato. Bravo lavoratore!")
     }
 
     @Test
     fun test_list_todo() {
-        val actionContext = actionContext(text = "!TODOS")
-        todo.doAction(actionContext)
+        val actionContext = message(text = "!TODOS")
+        todo.handle(actionContext)
 
-        assertThat(actionContext.actionResponses).hasSize(1)
-        assertThat(actionContext.actionResponses.first().message).isNotNull()
-        val lines = actionContext.actionResponses.first().message!!.split("\n")
+        assertThat(actionResponses).hasSize(1)
+        assertThat(actionResponses.first().message).isNotNull()
+        val lines = actionResponses.first().message!!.split("\n")
         assertThat(lines.length()).isEqualTo(2)
         assertThat(lines[0]).isEqualTo("<pre> 111 Username_1 'Todo corto'")
         assertThat(lines[1]).isEqualTo(" 222 Username_2 'Todo con testo molto lungo che spero ve…'</pre>")

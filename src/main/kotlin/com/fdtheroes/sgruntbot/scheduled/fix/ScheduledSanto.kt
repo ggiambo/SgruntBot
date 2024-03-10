@@ -2,10 +2,9 @@ package com.fdtheroes.sgruntbot.scheduled.fix
 
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fdtheroes.sgruntbot.Bot
-import com.fdtheroes.sgruntbot.utils.BotUtils
-import com.fdtheroes.sgruntbot.actions.models.ActionResponse
+import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.scheduled.Scheduled
+import com.fdtheroes.sgruntbot.utils.BotUtils
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.InputFile
 import java.time.LocalDateTime
@@ -14,7 +13,6 @@ import java.time.LocalDateTime
 class ScheduledSanto(
     private val botUtils: BotUtils,
     private val mapper: ObjectMapper,
-    private val sgruntBot: Bot,
 ) : Scheduled {
 
     override fun firstRun() = seiDiMattina()
@@ -33,7 +31,7 @@ class ScheduledSanto(
         val santo = jsNode.firstOrNull { it["default"].asInt() == 1 }
 
         if (santo == null) {
-            sgruntBot.messaggio(ActionResponse.message("Niente santo del giorno oggi"))
+            botUtils.messaggio(ActionResponse.message("Niente santo del giorno oggi"))
             return
         }
 
@@ -45,7 +43,7 @@ class ScheduledSanto(
         val imageStream = botUtils.streamFromURL(urlPhoto)
         val inputPhoto = InputFile(imageStream, "santo.jpg")
 
-        sgruntBot.messaggio(ActionResponse.photo("<a href='$url'>$nome</a>\n$descrizione", inputPhoto, false))
+        botUtils.messaggio(ActionResponse.photo("<a href='$url'>$nome</a>\n$descrizione", inputPhoto, false))
     }
 
     private fun altriSanti(jsNode: JsonNode) {
@@ -65,7 +63,7 @@ class ScheduledSanto(
             }
         }
 
-        sgruntBot.messaggio(ActionResponse.message("<b>Altri santi</b>\n$testo", false))
+        botUtils.messaggio(ActionResponse.message("<b>Altri santi</b>\n$testo", false))
     }
 
     private fun seiDiMattina(): LocalDateTime {

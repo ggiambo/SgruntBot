@@ -1,29 +1,30 @@
 package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BaseTest
-import com.fdtheroes.sgruntbot.actions.models.ActionResponseType
+import com.fdtheroes.sgruntbot.handlers.message.BitcoinCHF
+import com.fdtheroes.sgruntbot.models.ActionResponseType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 internal class BitcoinCHFTest : BaseTest() {
 
-    private val bitcoinCHF = BitcoinCHF(botUtils, mapper)
+    private val bitcoinCHF = BitcoinCHF(botUtils, botConfig, mapper)
 
     @Test
     fun testPositive() {
-        val ctx = actionContext(("!btcc"))
-        bitcoinCHF.doAction(ctx)
+        val message = message("!btcc")
+        bitcoinCHF.handle(message)
 
-        assertThat(ctx.actionResponses).hasSize(1)
-        assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Message)
-        assertThat(ctx.actionResponses.first().message).startsWith("Il buttcoin vale ").endsWith(" denti d'oro")
+        assertThat(actionResponses).hasSize(1)
+        assertThat(actionResponses.first().type).isEqualTo(ActionResponseType.Message)
+        assertThat(actionResponses.first().message).startsWith("Il buttcoin vale ").endsWith(" denti d'oro")
     }
 
     @Test
     fun testNegative() {
-        val ctx = actionContext(("!btcc__"))
-        bitcoinCHF.doAction(ctx)
+        val message = message("!btcc__")
+        bitcoinCHF.handle(message)
 
-        assertThat(ctx.actionResponses).hasSize(0)
+        assertThat(actionResponses).hasSize(0)
     }
 }

@@ -1,15 +1,15 @@
 package com.fdtheroes.sgruntbot.scheduled.random
 
-import com.fdtheroes.sgruntbot.Bot
-import com.fdtheroes.sgruntbot.actions.YearProgress
-import com.fdtheroes.sgruntbot.actions.models.ActionResponse
+import com.fdtheroes.sgruntbot.handlers.message.YearProgress
+import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.scheduled.Scheduled
+import com.fdtheroes.sgruntbot.utils.BotUtils
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.time.LocalDateTime
 
 @Service
-class ScheduledYearProgression(private val sgruntBot: Bot) : Scheduled {
+class ScheduledYearProgression(private val botUtils: BotUtils) : Scheduled {
 
     override fun firstRun() = getNext()
 
@@ -34,6 +34,6 @@ class ScheduledYearProgression(private val sgruntBot: Bot) : Scheduled {
 
     override fun execute() {
         val yearProgression = YearProgress.yearProgression()
-        sgruntBot.messaggio(ActionResponse.message(yearProgression, false))
+        botUtils.messaggio(ActionResponse.message(yearProgression, false))
     }
 }

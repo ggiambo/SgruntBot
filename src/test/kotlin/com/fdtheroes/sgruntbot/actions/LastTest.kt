@@ -2,23 +2,25 @@ package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BaseTest
 import com.fdtheroes.sgruntbot.Users
-import com.fdtheroes.sgruntbot.actions.models.ActionResponseType
+import com.fdtheroes.sgruntbot.handlers.message.Last
+import com.fdtheroes.sgruntbot.handlers.message.Slogan
+import com.fdtheroes.sgruntbot.models.ActionResponseType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 internal class LastTest : BaseTest() {
 
-    private val last = Last(Slogan(botUtils), botConfig)
+    private val last = Last(botUtils, botConfig, Slogan(botUtils, botConfig))
 
     @Test
     fun testPositive() {
         botConfig.lastAuthor = user(Users.F)
-        val ctx = actionContext("!last")
-        last.doAction(ctx)
+         val message = message("!last")
+        last.handle(message)
 
-        assertThat(ctx.actionResponses).hasSize(1)
-        assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Message)
-        assertThat(ctx.actionResponses.first().message).contains("F")
+        assertThat(actionResponses).hasSize(1)
+        assertThat(actionResponses.first().type).isEqualTo(ActionResponseType.Message)
+        assertThat(actionResponses.first().message).contains("F")
     }
 
 }

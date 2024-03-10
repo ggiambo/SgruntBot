@@ -1,7 +1,9 @@
 package com.fdtheroes.sgruntbot.actions.persistence
 
 import com.fdtheroes.sgruntbot.BaseTest
-import com.fdtheroes.sgruntbot.actions.models.Karma
+import com.fdtheroes.sgruntbot.models.Karma
+import com.fdtheroes.sgruntbot.persistence.KarmaRepository
+import com.fdtheroes.sgruntbot.persistence.KarmaService
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.*
