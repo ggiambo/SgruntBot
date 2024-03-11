@@ -10,10 +10,7 @@ import com.fdtheroes.sgruntbot.persistence.KarmaService
 import com.fdtheroes.sgruntbot.persistence.UsersService
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.mockito.kotlin.doAnswer
-import org.mockito.kotlin.doReturn
-import org.mockito.kotlin.isA
-import org.mockito.kotlin.mock
+import org.mockito.kotlin.*
 import java.time.LocalDate
 import java.util.*
 
@@ -190,6 +187,9 @@ internal class KarmaTest : BaseTest() {
                 Optional.ofNullable(karmas.firstOrNull { it.userId == args.arguments.first() })
             }
             on { findAll() } doReturn karmas
+            onGeneric { save(isA()) } doAnswer { args ->
+                args.arguments.firstOrNull() as com.fdtheroes.sgruntbot.models.Karma
+            }
         }
         return KarmaService(botUtils, karmaRepository)
     }

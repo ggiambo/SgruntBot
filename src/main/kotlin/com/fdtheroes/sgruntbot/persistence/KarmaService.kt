@@ -43,7 +43,7 @@ class KarmaService(
     fun takeGiveKarma(ricevente: Long, newKarma: (oldKarma: Int) -> Int) {
         val karma = repo.getByUserId(ricevente)
         karma.karma = newKarma(karma.karma)
-        repo.save(karma)
+        repo.save(karma).karma
     }
 
     fun getKarmas() = repo.findAll()
