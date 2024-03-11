@@ -23,7 +23,6 @@ import java.net.Proxy
 import java.net.URL
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.util.*
@@ -44,12 +43,7 @@ class BotUtils(private val botConfig: BotConfig) : DefaultAbsSender(botConfig.de
         if (user == null) {
             return ""
         }
-        val name: String
-        if (!user.userName.isNullOrEmpty()) {
-            name = user.userName
-        } else {
-            name = user.firstName
-        }
+        val name = if (!user.userName.isNullOrEmpty()) user.userName else user.firstName
         return name
     }
 
@@ -221,23 +215,12 @@ class BotUtils(private val botConfig: BotConfig) : DefaultAbsSender(botConfig.de
             return other
         }
 
-        infix fun <T> T.elseIfNull(other: () -> T?): T? {
-            if (this != null) {
-                return this
-            }
-            return other()
-        }
-
         fun String.urlEncode(): String {
             return URLEncoder.encode(this, StandardCharsets.UTF_8)
         }
 
         fun Iterable<*>?.length(): Long {
             return StreamSupport.stream(this?.spliterator(), false).count()
-        }
-
-        fun LocalDate.toDate(): Date {
-            return Date.from(this.atStartOfDay(ZoneId.systemDefault()).toInstant())
         }
 
         fun LocalDateTime.toDate(): Date {
