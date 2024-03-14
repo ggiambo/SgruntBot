@@ -1,7 +1,8 @@
 package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BaseTest
-import com.fdtheroes.sgruntbot.actions.models.ActionResponseType
+import com.fdtheroes.sgruntbot.handlers.message.ChiEra
+import com.fdtheroes.sgruntbot.models.ActionResponseType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -12,31 +13,31 @@ internal class ChiEraTest : BaseTest() {
     @Test
     fun testPositive() {
         botConfig.lastSuper = user()
-        val ctx = actionContext("!chiera")
-        chiEra.doAction(ctx)
+         val message = message("!chiera")
+        chiEra.handle(message)
 
-        assertThat(ctx.actionResponses).hasSize(1)
-        assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Message)
-        assertThat(ctx.actionResponses.first().message).isEqualTo("""<a href="tg://user?id=42">Pippo</a>""")
+        assertThat(actionResponses).hasSize(1)
+        assertThat(actionResponses.first().type).isEqualTo(ActionResponseType.Message)
+        assertThat(actionResponses.first().message).isEqualTo("""<a href="tg://user?id=42">Pippo</a>""")
     }
 
     @Test
     fun testPositive_2() {
         botConfig.lastSuper = user(42, userName = "", firstName = "Topopippo")
-        val ctx = actionContext("!chiera")
-        chiEra.doAction(ctx)
+         val message = message("!chiera")
+        chiEra.handle(message)
 
-        assertThat(ctx.actionResponses).hasSize(1)
-        assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Message)
-        assertThat(ctx.actionResponses.first().message).isEqualTo("""<a href="tg://user?id=42">Topopippo</a>""")
+        assertThat(actionResponses).hasSize(1)
+        assertThat(actionResponses.first().type).isEqualTo(ActionResponseType.Message)
+        assertThat(actionResponses.first().message).isEqualTo("""<a href="tg://user?id=42">Topopippo</a>""")
     }
 
     @Test
     fun testNegative() {
         botConfig.lastSuper = null
-        val ctx = actionContext("!chiera")
-        chiEra.doAction(ctx)
+         val message = message("!chiera")
+        chiEra.handle(message)
 
-        assertThat(ctx.actionResponses).hasSize(0)
+        assertThat(actionResponses).hasSize(0)
     }
 }

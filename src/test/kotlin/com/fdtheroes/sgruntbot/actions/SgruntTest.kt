@@ -2,32 +2,33 @@ package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BaseTest
 import com.fdtheroes.sgruntbot.Users
-import com.fdtheroes.sgruntbot.actions.models.ActionResponseType
+import com.fdtheroes.sgruntbot.handlers.message.Sgrunt
+import com.fdtheroes.sgruntbot.models.ActionResponseType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 internal class SgruntTest : BaseTest() {
 
-    private val sgrunt = Sgrunt()
+    private val sgrunt = Sgrunt(botUtils, botConfig)
 
     @Test
     fun testPositive() {
-        val ctx = actionContext("sgrunty")
-        sgrunt.doAction(ctx)
+         val message = message("sgrunty")
+        sgrunt.handle(message)
 
-        assertThat(ctx.actionResponses).hasSize(1)
-        assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Message)
-        assertThat(ctx.actionResponses.first().message).isNotEmpty
+        assertThat(actionResponses).hasSize(1)
+        assertThat(actionResponses.first().type).isEqualTo(ActionResponseType.Message)
+        assertThat(actionResponses.first().message).isNotEmpty
     }
 
     @Test
     fun testPositive_1() {
-        val ctx = actionContext(text = "sgruntbot", from = user(id = Users.DANIELE.id))
-        sgrunt.doAction(ctx)
+         val message = message(text = "sgruntbot", from = user(id = Users.DANIELE.id))
+        sgrunt.handle(message)
 
-        assertThat(ctx.actionResponses).hasSize(1)
-        assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Message)
-        assertThat(ctx.actionResponses.first().message).isEqualTo("Ciao papà!")
+        assertThat(actionResponses).hasSize(1)
+        assertThat(actionResponses.first().type).isEqualTo(ActionResponseType.Message)
+        assertThat(actionResponses.first().message).isEqualTo("Ciao papà!")
     }
 
 }

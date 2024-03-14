@@ -1,9 +1,9 @@
 package com.fdtheroes.sgruntbot.scheduled.random
 
 import com.fdtheroes.sgruntbot.BaseTest
-import com.fdtheroes.sgruntbot.actions.Fortune
-import com.fdtheroes.sgruntbot.actions.models.ActionResponse
-import com.fdtheroes.sgruntbot.actions.models.ActionResponseType
+import com.fdtheroes.sgruntbot.handlers.message.Fortune
+import com.fdtheroes.sgruntbot.models.ActionResponse
+import com.fdtheroes.sgruntbot.models.ActionResponseType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.argumentCaptor
@@ -12,15 +12,15 @@ import org.mockito.kotlin.verify
 
 class ScheduledRandomFortuneTest : BaseTest() {
 
-    private val fortune = Fortune()
-    private val randomFortune = ScheduledRandomFortune(fortune, sgruntBot)
+    private val fortune = Fortune(botUtils, botConfig)
+    private val randomFortune = ScheduledRandomFortune(botUtils, fortune)
 
     @Test
     fun testRandomFortune() {
         randomFortune.execute()
 
         val argumentCaptor = argumentCaptor<ActionResponse>()
-        verify(sgruntBot, times(1)).messaggio(argumentCaptor.capture())
+        verify(botUtils, times(1)).messaggio(argumentCaptor.capture())
         val actionResponse = argumentCaptor.firstValue
         assertThat(actionResponse.type).isEqualTo(ActionResponseType.Message)
         assertThat(actionResponse.message).isNotEmpty()

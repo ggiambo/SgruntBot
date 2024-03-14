@@ -1,9 +1,9 @@
 package com.fdtheroes.sgruntbot.scheduled.fix
 
 import com.fdtheroes.sgruntbot.BaseTest
-import com.fdtheroes.sgruntbot.actions.models.ActionResponse
-import com.fdtheroes.sgruntbot.actions.models.Todos
-import com.fdtheroes.sgruntbot.actions.persistence.TodosService
+import com.fdtheroes.sgruntbot.models.ActionResponse
+import com.fdtheroes.sgruntbot.models.Todos
+import com.fdtheroes.sgruntbot.persistence.TodosService
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.*
@@ -13,7 +13,7 @@ class TestScheduledTodos : BaseTest() {
 
     @Test
     fun testFirstRun() {
-        val scheduledTodos = ScheduledTodos(sgruntBot, botUtils, mock())
+        val scheduledTodos = ScheduledTodos(botUtils, mock())
         val nextRun = scheduledTodos.firstRun()
         val now = LocalDateTime.now()
 
@@ -22,7 +22,7 @@ class TestScheduledTodos : BaseTest() {
 
     @Test
     fun testNextRun() {
-        val scheduledTodos = ScheduledTodos(sgruntBot, botUtils, mock())
+        val scheduledTodos = ScheduledTodos(botUtils, mock())
         val nextRun = scheduledTodos.nextRun()
         val now = LocalDateTime.now()
 
@@ -31,10 +31,10 @@ class TestScheduledTodos : BaseTest() {
 
     @Test
     fun testExecute_noMessages() {
-        val scheduledTodos = ScheduledTodos(sgruntBot, botUtils, mock())
+        val scheduledTodos = ScheduledTodos(botUtils, mock())
         scheduledTodos.execute()
 
-        verify(sgruntBot, times(0)).messaggio(isA())
+        verify(botUtils, times(0)).messaggio(isA())
     }
 
     @Test
@@ -48,11 +48,11 @@ class TestScheduledTodos : BaseTest() {
                 Todos(userId = 42, todo = "Todo id 5 Utente 42", open = true, id = 5),
             )
         }
-        val scheduledTodos = ScheduledTodos(sgruntBot, botUtils, todosService)
+        val scheduledTodos = ScheduledTodos(botUtils, todosService)
         scheduledTodos.execute()
 
         val argumentCaptor = argumentCaptor<ActionResponse>()
-        verify(sgruntBot, times(1)).messaggio(argumentCaptor.capture())
+        verify(botUtils, times(1)).messaggio(argumentCaptor.capture())
         assertThat(argumentCaptor.allValues).hasSize(1)
         val message = argumentCaptor.firstValue.message!!
         assertThat(message).startsWith("<b>Utenti pigri con todos ancora aperti:</b>")

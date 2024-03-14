@@ -1,29 +1,30 @@
 package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BaseTest
-import com.fdtheroes.sgruntbot.actions.models.ActionResponseType
+import com.fdtheroes.sgruntbot.handlers.message.BitcoinEUR
+import com.fdtheroes.sgruntbot.models.ActionResponseType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 internal class BitcoinEURTest : BaseTest() {
 
-    private val bitcoinEUR = BitcoinEUR(botUtils, mapper)
+    private val bitcoinEUR = BitcoinEUR(botUtils, botConfig, mapper)
 
     @Test
     fun testPositive() {
-        val ctx = actionContext(("!btce"))
-        bitcoinEUR.doAction(ctx)
+        val message = message("!btce")
+        bitcoinEUR.handle(message)
 
-        assertThat(ctx.actionResponses).hasSize(1)
-        assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Message)
-        assertThat(ctx.actionResponses.first().message).startsWith("Il buttcoin vale ").endsWith(" EUR")
+        assertThat(actionResponses).hasSize(1)
+        assertThat(actionResponses.first().type).isEqualTo(ActionResponseType.Message)
+        assertThat(actionResponses.first().message).startsWith("Il buttcoin vale ").endsWith(" EUR")
     }
 
     @Test
     fun testNegative() {
-        val ctx = actionContext(("!btce__"))
-        bitcoinEUR.doAction(ctx)
+        val message = message("!btce__")
+        bitcoinEUR.handle(message)
 
-        assertThat(ctx.actionResponses).hasSize(0)
+        assertThat(actionResponses).hasSize(0)
     }
 }

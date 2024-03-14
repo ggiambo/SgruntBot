@@ -1,18 +1,28 @@
 package com.fdtheroes.sgruntbot
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fdtheroes.sgruntbot.actions.models.ActionContext
+import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.utils.BotUtils
 import org.junit.jupiter.api.BeforeEach
-import org.mockito.kotlin.*
+import org.mockito.kotlin.any
+import org.mockito.kotlin.doAnswer
+import org.mockito.kotlin.spy
+import org.mockito.kotlin.whenever
 import org.telegram.telegrambots.meta.api.objects.Chat
 import org.telegram.telegrambots.meta.api.objects.Message
 import org.telegram.telegrambots.meta.api.objects.User
 
 open class BaseTest {
 
+    private val _actionResponses = mutableListOf<ActionResponse>()
+    val actionResponses: List<ActionResponse>
+        get() = _actionResponses
+
     @BeforeEach
-    fun resetContext() = botConfig.reset()
+    fun resetContext() {
+        botConfig.reset()
+        _actionResponses.clear()
+    }
 
     val botConfig: BotConfig = BotConfig(
         chatId = "-9999",
@@ -20,12 +30,8 @@ open class BaseTest {
         imgUrClientIdFile = "dummyToken.txt",
     )
 
-    val botUtils = BotUtils(botConfig)
+    val botUtils = spy(BotUtils(botConfig))
     val mapper = ObjectMapper()
-
-    val sgruntBot: Bot = mock {
-        onGeneric { sleep(isA()) } doAnswer { }
-    }
 
     // per qualche oscura ragione, dev'essere qui e non in "spy" (Il metodo originale viene chiamato!)
     init {
@@ -35,7 +41,21 @@ open class BaseTest {
                 this.id = id
                 this.userName = "Username_$id"
             }
-        }.whenever(sgruntBot).getChatMember(any())
+        }.whenever(botUtils).getChatMember(any())
+
+        doAnswer {
+            User().apply {
+                val actionResponse = it.arguments.first() as ActionResponse
+                _actionResponses.add(actionResponse)
+            }
+        }.whenever(botUtils).rispondi(any(), any())
+
+        doAnswer {
+            User().apply {
+                val actionResponse = it.arguments.first() as ActionResponse
+                _actionResponses.add(actionResponse)
+            }
+        }.whenever(botUtils).messaggio(any())
     }
 
     fun message(
@@ -49,14 +69,6 @@ open class BaseTest {
             this.from = from
             this.replyToMessage = replyToMessage
         }
-    }
-
-    fun actionContext(
-        text: String,
-        from: User = user(),
-        replyToMessage: Message? = null
-    ): ActionContext {
-        return ActionContext(message(text, from, replyToMessage), sgruntBot::getChatMember)
     }
 
     fun user(id: Long = 42, userName: String = "Pippo", firstName: String = ""): User {

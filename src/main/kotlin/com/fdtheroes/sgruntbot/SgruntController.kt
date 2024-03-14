@@ -1,11 +1,11 @@
 package com.fdtheroes.sgruntbot
 
 
-import com.fdtheroes.sgruntbot.actions.Action
-import com.fdtheroes.sgruntbot.actions.HasHalp
-import com.fdtheroes.sgruntbot.actions.models.Karma
-import com.fdtheroes.sgruntbot.actions.persistence.KarmaService
-import com.fdtheroes.sgruntbot.actions.persistence.StatsService
+import com.fdtheroes.sgruntbot.handlers.Handler
+import com.fdtheroes.sgruntbot.handlers.message.HasHalp
+import com.fdtheroes.sgruntbot.models.Karma
+import com.fdtheroes.sgruntbot.persistence.KarmaService
+import com.fdtheroes.sgruntbot.persistence.StatsService
 import com.fdtheroes.sgruntbot.scheduled.InitScheduled
 import com.fdtheroes.sgruntbot.utils.BotUtils
 import io.swagger.v3.oas.annotations.Operation
@@ -20,9 +20,8 @@ import java.time.LocalDateTime
 @RestController
 @RequestMapping("/sgrunty/rest")
 class SgruntController(
-    private val sgruntBot: Bot,
     private val botUtils: BotUtils,
-    private val actions: List<Action>,
+    private val actions: List<Handler>,
     private val karmaService: KarmaService,
     private val statsService: StatsService,
     private val botConfig: BotConfig,
@@ -49,7 +48,7 @@ class SgruntController(
         }
         return object {
             val userId = lastAuthorId
-            val userName = botUtils.getUserName(sgruntBot.getChatMember(lastAuthorId))
+            val userName = botUtils.getUserName(botUtils.getChatMember(lastAuthorId))
         }
     }
 
@@ -62,7 +61,7 @@ class SgruntController(
         }
         return object {
             val userId = lastSuperId
-            val userName = botUtils.getUserName(sgruntBot.getChatMember(lastSuperId))
+            val userName = botUtils.getUserName(botUtils.getChatMember(lastSuperId))
         }
     }
 
@@ -91,7 +90,7 @@ class SgruntController(
             .map {
                 object {
                     val userId = it.userId
-                    val userName = botUtils.getUserName(sgruntBot.getChatMember(it.userId))
+                    val userName = botUtils.getUserName(botUtils.getChatMember(it.userId))
                     var day = it.statDay
                     var messages = it.messages
                 }

@@ -1,19 +1,19 @@
 package com.fdtheroes.sgruntbot.scheduled.random
 
-import com.fdtheroes.sgruntbot.Bot
-import com.fdtheroes.sgruntbot.actions.HasHalp
-import com.fdtheroes.sgruntbot.actions.models.ActionResponse
+import com.fdtheroes.sgruntbot.handlers.message.HasHalp
+import com.fdtheroes.sgruntbot.models.ActionResponse
+import com.fdtheroes.sgruntbot.utils.BotUtils
 import org.springframework.stereotype.Service
 
 @Service
 class ScheduledRandomPubblicita(
+    private val botUtils: BotUtils,
     private val actions: List<HasHalp>,
-    private val sgruntBot: Bot,
 ) : ScheduledRandom {
     override fun execute() {
         val randomHalp = actions.random().halp()
         val messaggio = "Prova questa ficiur di Sgrunty!\n"
-        sgruntBot.messaggio(ActionResponse.message("$messaggio$randomHalp", false))
+        botUtils.messaggio(ActionResponse.message("$messaggio$randomHalp", false))
     }
 
 }
