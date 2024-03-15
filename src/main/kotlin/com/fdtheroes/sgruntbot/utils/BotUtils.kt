@@ -6,7 +6,6 @@ import com.fdtheroes.sgruntbot.models.ActionResponseType
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.bots.DefaultAbsSender
-import org.telegram.telegrambots.bots.DefaultBotOptions
 import org.telegram.telegrambots.meta.api.methods.ActionType
 import org.telegram.telegrambots.meta.api.methods.ParseMode
 import org.telegram.telegrambots.meta.api.methods.groupadministration.GetChatMember
@@ -18,8 +17,6 @@ import org.telegram.telegrambots.meta.api.objects.InputFile
 import org.telegram.telegrambots.meta.api.objects.Message
 import org.telegram.telegrambots.meta.api.objects.User
 import java.io.InputStream
-import java.net.InetSocketAddress
-import java.net.Proxy
 import java.net.URL
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
@@ -33,7 +30,6 @@ import kotlin.random.Random
 class BotUtils(private val botConfig: BotConfig) : DefaultAbsSender(botConfig.defaultBotOptions, botConfig.token) {
 
     private val log = LoggerFactory.getLogger(this.javaClass)
-    private val proxy = initProxy(botConfig.defaultBotOptions)
 
     fun isMessageInChat(message: Message): Boolean {
         return message.chatId?.toString() == botConfig.chatId
@@ -61,7 +57,7 @@ class BotUtils(private val botConfig: BotConfig) : DefaultAbsSender(botConfig.de
         headers: List<Pair<String, String>> = emptyList()
     ): InputStream {
         return URL(String.format(url, params))
-            .openConnection(proxy)
+            .openConnection(botConfig.proxy)
             .apply { headers.forEach { setRequestProperty(it.first, it.second) } }
             .getInputStream()
     }
@@ -70,13 +66,6 @@ class BotUtils(private val botConfig: BotConfig) : DefaultAbsSender(botConfig.de
         return streamFromURL(url, params, headers)
             .readAllBytes()
             .decodeToString()
-    }
-
-    private fun initProxy(options: DefaultBotOptions): Proxy {
-        if (options.proxyType == DefaultBotOptions.ProxyType.NO_PROXY) {
-            return Proxy.NO_PROXY
-        }
-        return Proxy(Proxy.Type.HTTP, InetSocketAddress(options.proxyHost, options.proxyPort))
     }
 
     fun shutdown() {

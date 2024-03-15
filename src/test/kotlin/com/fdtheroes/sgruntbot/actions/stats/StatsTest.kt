@@ -21,7 +21,7 @@ internal class StatsTest : BaseTest() {
     val monthStats = listOf(
         Stats(Users.IL_VINCI.id, dummyDate, 13, id++),
         Stats(Users.F.id, dummyDate, 15, id++),
-        Stats(Users.DA_DA212.id, dummyDate, 21, id++),
+        Stats(Users.DA_DA_212.id, dummyDate, 21, id++),
     )
 
     val statsService = mock<StatsService> {

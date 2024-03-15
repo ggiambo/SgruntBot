@@ -53,7 +53,7 @@ internal class KarmaTest : BaseTest() {
         val donatore = user(99, "Donatore")
         val donatoreUtonto = Utonto(firstName = donatore.userName, null, null, false, userId = donatore.id)
         val karma = Karma(botUtils, botConfig, karmaService(), usersService(listOf(donatoreUtonto)))
-        val replyToMessage = message("Message", user(Users.DA_DA212))
+        val replyToMessage = message("Message", user(Users.DA_DA_212))
         val message = message("+", donatore, replyToMessage = replyToMessage)
 
         karma.handle(message)
@@ -68,13 +68,13 @@ internal class KarmaTest : BaseTest() {
     fun testKarmaPlus() {
         val karma = Karma(botUtils, botConfig, karmaService(), usersService(listOf()))
 
-        val replyToMessage = message("Message", user(Users.DA_DA212))
+        val replyToMessage = message("Message", user(Users.DA_DA_212))
         karma.handle(message("+", replyToMessage = replyToMessage))
 
         assertThat(actionResponses).hasSize(1)
         assertThat(actionResponses.first().type).isEqualTo(ActionResponseType.Message)
         val message = actionResponses.first().message!!
-        assertThat(message).startsWith("Karma totale di <a href=\"tg://user?id=252800958\">DA_DA212</a>: 101")
+        assertThat(message).startsWith("Karma totale di <a href=\"tg://user?id=252800958\">DA_DA_212</a>: 101")
         if (message.contains("Karmaroulette")) {
             assertThat(message).contains("<b>Karmaroulette</b> ! Hai vinto 1 karma, e ora sei a quota 3")
         }
@@ -106,7 +106,7 @@ internal class KarmaTest : BaseTest() {
         val donatore = user(99, "Donatore")
         val donatoreUtonto = Utonto(firstName = donatore.userName, null, null, false, userId = donatore.id)
         val karma = Karma(botUtils, botConfig, karmaService(), usersService(listOf(donatoreUtonto)))
-        val replyToMessage = message("Message", user(Users.DA_DA212))
+        val replyToMessage = message("Message", user(Users.DA_DA_212))
         val message = message("-", donatore, replyToMessage = replyToMessage)
 
         karma.handle(message)
@@ -122,13 +122,13 @@ internal class KarmaTest : BaseTest() {
     fun testKarmaMinus() {
         val karma = Karma(botUtils, botConfig, karmaService(), usersService(listOf()))
 
-        val replyToMessage = message("Message", user(Users.DA_DA212))
+        val replyToMessage = message("Message", user(Users.DA_DA_212))
         karma.handle(message("-", replyToMessage = replyToMessage))
 
         assertThat(actionResponses).hasSize(1)
         assertThat(actionResponses.first().type).isEqualTo(ActionResponseType.Message)
         val message = actionResponses.first().message!!
-        assertThat(message).startsWith("Karma totale di <a href=\"tg://user?id=252800958\">DA_DA212</a>: 99")
+        assertThat(message).startsWith("Karma totale di <a href=\"tg://user?id=252800958\">DA_DA_212</a>: 99")
         if (message.contains("Karmaroulette")) {
             assertThat(message).contains("<b>Karmaroulette</b> ! Hai perso 1 karma, e ora sei a quota 1")
         }
@@ -148,11 +148,11 @@ internal class KarmaTest : BaseTest() {
             userName = "BlahBanfBot",
             isBot = true,
             updated = LocalDate.of(2023, 1, 1),
-            userId = Users.BLAHBANFBOT.id,
+            userId = Users.BLAH_BANF_BOT.id,
         )
         val karma = Karma(botUtils, botConfig, karmaService(), usersService(listOf(bot)))
 
-        val replyToMessage = message("Message", user(Users.BLAHBANFBOT))
+        val replyToMessage = message("Message", user(Users.BLAH_BANF_BOT))
         val message = message("-", replyToMessage = replyToMessage)
         karma.handle(message)
 
@@ -166,7 +166,7 @@ internal class KarmaTest : BaseTest() {
             com.fdtheroes.sgruntbot.models.Karma(
                 karma = 100,
                 karmaCredit = 1,
-                userId = Users.DA_DA212.id
+                userId = Users.DA_DA_212.id
             ),
             com.fdtheroes.sgruntbot.models.Karma(
                 karma = 2,

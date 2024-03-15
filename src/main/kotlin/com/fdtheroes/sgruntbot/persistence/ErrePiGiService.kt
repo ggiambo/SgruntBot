@@ -87,10 +87,10 @@ class ErrePiGiService(private val botUtils: BotUtils, private val errePiGiReposi
     }
 
     fun sgruntyAttacca(): String? {
-        val sgruntyId = Users.BLAHBANFBOT.id
+        val sgruntyId = Users.BLAH_BANF_BOT.id
         var sgruntyErrePiGi = errePiGiRepository.findById(sgruntyId).orElse(null)
         if (sgruntyErrePiGi == null) {
-            sgruntyErrePiGi = init(Users.BLAHBANFBOT.id)
+            sgruntyErrePiGi = init(Users.BLAH_BANF_BOT.id)
         }
         if (sgruntyErrePiGi.hp <= 0) {
             return null

@@ -15,7 +15,7 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession
 import org.telegram.telegrambots.util.WebhookUtils
 
 @Service
-class Bot(
+class SgruntBot(
     private val botConfig: BotConfig,
     private val botUtils: BotUtils,
     private val handlers: List<Handler>,
