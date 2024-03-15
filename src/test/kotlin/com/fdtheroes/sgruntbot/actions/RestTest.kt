@@ -1,5 +1,6 @@
 package com.fdtheroes.sgruntbot.actions
 
+import com.fdtheroes.sgruntbot.handlers.message.Rest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

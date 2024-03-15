@@ -1,20 +1,21 @@
 package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BaseTest
-import com.fdtheroes.sgruntbot.actions.models.ActionResponseType
+import com.fdtheroes.sgruntbot.handlers.message.Canzone
+import com.fdtheroes.sgruntbot.models.ActionResponseType
 import org.assertj.core.api.Assertions.assertThat
 
 internal class CanzoneTest : BaseTest() {
 
-    private val canzone = Canzone()
+    private val canzone = Canzone(botUtils, botConfig)
 
     //@Test
     fun testPositive() {
-        val ctx = actionContext("!canzone 2 Seconds Video")
-        canzone.doAction(ctx)
+        val message = message("!canzone 2 Seconds Video")
+        canzone.handle(message)
 
-        assertThat(ctx.actionResponses).hasSize(1)
-        assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Audio)
-        assertThat(ctx.actionResponses.first().inputFile!!.mediaName).isEqualTo("2_Second_Video.mp3")
+        assertThat(actionResponses).hasSize(1)
+        assertThat(actionResponses.first().type).isEqualTo(ActionResponseType.Audio)
+        assertThat(actionResponses.first().inputFile!!.mediaName).isEqualTo("2_Second_Video.mp3")
     }
 }

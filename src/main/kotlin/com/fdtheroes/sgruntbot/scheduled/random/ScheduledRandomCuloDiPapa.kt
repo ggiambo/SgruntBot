@@ -1,12 +1,11 @@
 package com.fdtheroes.sgruntbot.scheduled.random
 
-import com.fdtheroes.sgruntbot.Bot
+import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.utils.BotUtils
-import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 import org.jsoup.Jsoup
 
 //@Service
-class ScheduledRandomCuloDiPapa(private val botUtils: BotUtils, private val sgruntBot: Bot) : ScheduledRandom {
+class ScheduledRandomCuloDiPapa(private val botUtils: BotUtils) : ScheduledRandom {
 
     override fun execute() {
         val html = botUtils.textFromURL("https://dailyverses.net/it/versetto-casuale-bibbia")
@@ -29,7 +28,7 @@ class ScheduledRandomCuloDiPapa(private val botUtils: BotUtils, private val sgru
 
         val text = "${testo}\n${autore}"
 
-        sgruntBot.messaggio(ActionResponse.message(text, false))
+        botUtils.messaggio(ActionResponse.message(text, false))
     }
 
 }

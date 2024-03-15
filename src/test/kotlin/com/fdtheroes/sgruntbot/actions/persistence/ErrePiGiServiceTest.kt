@@ -1,7 +1,9 @@
 package com.fdtheroes.sgruntbot.actions.persistence
 
 import com.fdtheroes.sgruntbot.BaseTest
-import com.fdtheroes.sgruntbot.actions.models.ErrePiGi
+import com.fdtheroes.sgruntbot.models.ErrePiGi
+import com.fdtheroes.sgruntbot.persistence.ErrePiGiRepository
+import com.fdtheroes.sgruntbot.persistence.ErrePiGiService
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -25,7 +27,7 @@ class ErrePiGiServiceTest : BaseTest() {
         val userWithId1 = user(id = 1, userName = "Username_1")
         val userWithId2 = user(id = 2, userName = "Username_2")
 
-        val attacca = errePiGiService.attacca(userWithId1, userWithId2, sgruntBot::getChatMember)
+        val attacca = errePiGiService.attacca(userWithId1, userWithId2)
             .split("\n")
 
         assertThat(attacca).isNotEmpty()
@@ -42,7 +44,7 @@ class ErrePiGiServiceTest : BaseTest() {
     fun testAttacca_difensoreMorto() {
         val userWithId1 = user(id = 1, userName = "Username_1")
         val userWithId2 = user(id = 2, userName = "Username_2")
-        val attacca = errePiGiService.attacca(userWithId2, userWithId1, sgruntBot::getChatMember)
+        val attacca = errePiGiService.attacca(userWithId2, userWithId1)
             .split("\n")
 
         assertThat(attacca).isNotEmpty()
@@ -59,7 +61,7 @@ class ErrePiGiServiceTest : BaseTest() {
     fun testAttacca_giaAttaccato() {
         val userWithId2 = user(id = 2, userName = "Username_2")
         val userWithId3 = user(id = 3, userName = "Username_3")
-        val attacca = errePiGiService.attacca(userWithId2, userWithId3, sgruntBot::getChatMember)
+        val attacca = errePiGiService.attacca(userWithId2, userWithId3)
             .split("\n")
 
         assertThat(attacca).isNotEmpty()
@@ -75,7 +77,7 @@ class ErrePiGiServiceTest : BaseTest() {
     fun testAttacca() {
         val userWithId3 = user(id = 3, userName = "Username_3")
         val userWithId4 = user(id = 4, userName = "Username_4")
-        val attacca = errePiGiService.attacca(userWithId3, userWithId4, sgruntBot::getChatMember)
+        val attacca = errePiGiService.attacca(userWithId3, userWithId4)
             .split("\n")
 
         assertThat(attacca).isNotEmpty()
@@ -91,7 +93,7 @@ class ErrePiGiServiceTest : BaseTest() {
 
     @Test
     fun testTestoErrePiGiReport() {
-        val testoErrePiGiReport = errePiGiService.testoErrePiGiReport(sgruntBot::getChatMember)
+        val testoErrePiGiReport = errePiGiService.testoErrePiGiReport()
             .orEmpty()
             .split("\n")
 

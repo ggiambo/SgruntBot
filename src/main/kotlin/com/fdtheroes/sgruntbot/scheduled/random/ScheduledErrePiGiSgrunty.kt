@@ -1,13 +1,13 @@
 package com.fdtheroes.sgruntbot.scheduled.random
 
-import com.fdtheroes.sgruntbot.Bot
-import com.fdtheroes.sgruntbot.actions.models.ActionResponse
-import com.fdtheroes.sgruntbot.actions.persistence.ErrePiGiService
+import com.fdtheroes.sgruntbot.models.ActionResponse
+import com.fdtheroes.sgruntbot.persistence.ErrePiGiService
+import com.fdtheroes.sgruntbot.utils.BotUtils
 
 //@Service
 class ScheduledErrePiGiSgrunty(
+    private val botUtils: BotUtils,
     private val errePiGiService: ErrePiGiService,
-    private val sgruntBot: Bot,
 ) : ScheduledRandom {
 
     private val ragioni = listOf(
@@ -22,11 +22,11 @@ class ScheduledErrePiGiSgrunty(
     )
 
     override fun execute() {
-        val testoAttacco = errePiGiService.sgruntyAttacca(sgruntBot::getChatMember)
+        val testoAttacco = errePiGiService.sgruntyAttacca()
 
         if (testoAttacco != null) {
             val testo = "Sgrunty ${ragioni.random()}\n$testoAttacco"
-            sgruntBot.messaggio(ActionResponse.message(testo))
+            botUtils.messaggio(ActionResponse.message(testo))
         }
     }
 }

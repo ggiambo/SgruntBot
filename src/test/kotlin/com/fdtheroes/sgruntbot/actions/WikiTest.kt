@@ -1,46 +1,47 @@
 package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BaseTest
-import com.fdtheroes.sgruntbot.actions.models.ActionResponseType
+import com.fdtheroes.sgruntbot.handlers.message.Wiki
+import com.fdtheroes.sgruntbot.models.ActionResponseType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 internal class WikiTest : BaseTest() {
 
-    private val wiki = Wiki(botUtils, mapper)
+    private val wiki = Wiki(botUtils, botConfig, mapper)
 
     @Test
     fun testPositive() {
-        val ctx = actionContext("!wiki poesia giambica")
-        wiki.doAction(ctx)
+         val message = message("!wiki poesia giambica")
+        wiki.handle(message)
 
-        assertThat(ctx.actionResponses).hasSize(1)
-        assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Message)
-        assertThat(ctx.actionResponses.first().message)
+        assertThat(actionResponses).hasSize(1)
+        assertThat(actionResponses.first().type).isEqualTo(ActionResponseType.Message)
+        assertThat(actionResponses.first().message)
             .startsWith("La poesia giambica era un tipo di poesia ")
             .endsWith("https://it.wikipedia.org/wiki/Poesia_giambica")
     }
 
     @Test
     fun testPositive_accento() {
-        val ctx = actionContext("!wiki fosse ardenne")
-        wiki.doAction(ctx)
+         val message = message("!wiki fosse ardenne")
+        wiki.handle(message)
 
-        assertThat(ctx.actionResponses).hasSize(1)
-        assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Message)
-        assertThat(ctx.actionResponses.first().message)
+        assertThat(actionResponses).hasSize(1)
+        assertThat(actionResponses.first().type).isEqualTo(ActionResponseType.Message)
+        assertThat(actionResponses.first().message)
             .startsWith("Fossé è un comune francese di 54 abitanti ")
             .endsWith("https://it.wikipedia.org/wiki/Foss%C3%A9_(Ardenne)")
     }
 
     @Test
     fun testNegative() {
-        val ctx = actionContext("!wiki barzuffo")
-        wiki.doAction(ctx)
+         val message = message("!wiki barzuffo")
+        wiki.handle(message)
 
-        assertThat(ctx.actionResponses).hasSize(1)
-        assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Message)
-        assertThat(ctx.actionResponses.first().message).isEqualTo("Non c'è.")
+        assertThat(actionResponses).hasSize(1)
+        assertThat(actionResponses.first().type).isEqualTo(ActionResponseType.Message)
+        assertThat(actionResponses.first().message).isEqualTo("Non c'è.")
     }
 
 }

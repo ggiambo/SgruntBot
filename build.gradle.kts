@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 val telegrambotsVersion = "6.9.7.1"
 val jsoupVersion = "1.17.2"
-val springdocOpenapiVersion = "2.3.0"
+val springdocOpenapiVersion = "2.4.0"
 val xchartVersion = "3.8.7"
 val mockitoKotlinVersion = "5.2.1"
 

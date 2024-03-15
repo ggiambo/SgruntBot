@@ -1,15 +1,15 @@
 package com.fdtheroes.sgruntbot.scheduled.fix
 
-import com.fdtheroes.sgruntbot.Bot
-import com.fdtheroes.sgruntbot.actions.models.ActionResponse
-import com.fdtheroes.sgruntbot.actions.persistence.KarmaService
+import com.fdtheroes.sgruntbot.models.ActionResponse
+import com.fdtheroes.sgruntbot.persistence.KarmaService
+import com.fdtheroes.sgruntbot.utils.BotUtils
 import org.springframework.stereotype.Service
 
 @Service
-class ScheduledKarma(private val karmaService: KarmaService, private val sgruntBot: Bot) : ScheduledAMezzanotte {
+class ScheduledKarma(private val botUtils: BotUtils, private val karmaService: KarmaService) : ScheduledAMezzanotte {
 
     override fun execute() {
-        val testo = karmaService.testoKarmaReport(sgruntBot::getChatMember)
-        sgruntBot.messaggio(ActionResponse.message(testo, false))
+        val testo = karmaService.testoKarmaReport()
+        botUtils.messaggio(ActionResponse.message(testo, false))
     }
 }

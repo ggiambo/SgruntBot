@@ -1,31 +1,32 @@
 package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BaseTest
-import com.fdtheroes.sgruntbot.actions.models.ActionResponseType
+import com.fdtheroes.sgruntbot.handlers.message.PorcaMadonna
+import com.fdtheroes.sgruntbot.models.ActionResponseType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 internal class PorcaMadonnaTest : BaseTest() {
 
-    private val porcaMadonna = PorcaMadonna(botConfig)
+    private val porcaMadonna = PorcaMadonna(botUtils, botConfig)
 
     @Test
     fun testPositive() {
         botConfig.pignolo = true
-        val ctx = actionContext(("\tporca madonna"))
-        porcaMadonna.doAction(ctx)
+        val message = message("\tporca madonna")
+        porcaMadonna.handle(message)
 
-        assertThat(ctx.actionResponses).hasSize(1)
-        assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Message)
-        assertThat(ctx.actionResponses.first().message).isEqualTo("...e tutti gli angeli in colonna!")
+        assertThat(actionResponses).hasSize(1)
+        assertThat(actionResponses.first().type).isEqualTo(ActionResponseType.Message)
+        assertThat(actionResponses.first().message).isEqualTo("...e tutti gli angeli in colonna!")
     }
 
     @Test
     fun testNegative() {
-        val ctx = actionContext(("copporca madonna "))
-        porcaMadonna.doAction(ctx)
+        val message = message("copporca madonna ")
+        porcaMadonna.handle(message)
 
-        assertThat(ctx.actionResponses).isEmpty()
+        assertThat(actionResponses).isEmpty()
     }
 
 }

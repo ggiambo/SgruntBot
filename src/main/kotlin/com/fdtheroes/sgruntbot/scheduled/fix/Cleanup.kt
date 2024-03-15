@@ -1,15 +1,15 @@
 package com.fdtheroes.sgruntbot.scheduled.fix
 
-import com.fdtheroes.sgruntbot.Bot
-import com.fdtheroes.sgruntbot.actions.persistence.*
+import com.fdtheroes.sgruntbot.persistence.*
 import com.fdtheroes.sgruntbot.scheduled.Scheduled
+import com.fdtheroes.sgruntbot.utils.BotUtils
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
 @Service
 class Cleanup(
-    private val bot: Bot,
+    private val botUtils: BotUtils,
     private val errePiGiRepository: ErrePiGiRepository,
     private val karmaRepository: KarmaRepository,
     private val statsRepository: StatsRepository,
@@ -25,7 +25,7 @@ class Cleanup(
     override fun execute() {
         val fantasmi = utontiRepository.findAll()
             .map { it.userId!! }
-            .filter { bot.getChatMember(it) == null }
+            .filter { botUtils.getChatMember(it) == null }
         if (fantasmi.isNotEmpty()) {
             log.info("Cancello i seguenti fantasmi: ${fantasmi.joinToString()}")
             errePiGiRepository.deleteAllByUserIdIn(fantasmi)

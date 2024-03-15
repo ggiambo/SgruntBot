@@ -1,7 +1,7 @@
 package com.fdtheroes.sgruntbot.scheduled.random
 
-import com.fdtheroes.sgruntbot.Bot
-import com.fdtheroes.sgruntbot.actions.models.ActionResponse
+import com.fdtheroes.sgruntbot.models.ActionResponse
+import com.fdtheroes.sgruntbot.utils.BotUtils
 
 /**
  * [Why doesn't my bot see messages from other bots?](https://core.telegram.org/bots/faq#why-doesn-39t-my-bot-see-messages-from-other-bots)
@@ -10,7 +10,7 @@ import com.fdtheroes.sgruntbot.actions.models.ActionResponse
  * not be able to see messages from other bots regardless of mode.
  */
 //@Service
-class ScheduledRoboBot(private val sgruntBot: Bot) : ScheduledRandom {
+class ScheduledRoboBot(private val botUtils: BotUtils) : ScheduledRandom {
 
     private val risposte = listOf(
         "RoboBot, tu puzzi.",
@@ -23,7 +23,7 @@ class ScheduledRoboBot(private val sgruntBot: Bot) : ScheduledRandom {
 
     override fun execute() {
         val text = risposte.random()
-        sgruntBot.messaggio(ActionResponse.message(text, false))
+        botUtils.messaggio(ActionResponse.message(text, false))
     }
 
 }

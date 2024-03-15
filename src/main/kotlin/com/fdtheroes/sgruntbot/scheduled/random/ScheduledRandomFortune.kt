@@ -1,13 +1,13 @@
 package com.fdtheroes.sgruntbot.scheduled.random
 
-import com.fdtheroes.sgruntbot.Bot
-import com.fdtheroes.sgruntbot.actions.Fortune
-import com.fdtheroes.sgruntbot.actions.models.ActionResponse
+import com.fdtheroes.sgruntbot.handlers.message.Fortune
+import com.fdtheroes.sgruntbot.models.ActionResponse
+import com.fdtheroes.sgruntbot.utils.BotUtils
 
 //@Service
-class ScheduledRandomFortune(private val fortune: Fortune, private val sgruntBot: Bot) : ScheduledRandom {
+class ScheduledRandomFortune(private val botUtils: BotUtils, private val fortune: Fortune) : ScheduledRandom {
     override fun execute() {
-        sgruntBot.messaggio(ActionResponse.message(fortune.getFortune(), false))
+        botUtils.messaggio(ActionResponse.message(fortune.getFortune(), false))
     }
 
 }

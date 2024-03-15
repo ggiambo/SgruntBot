@@ -34,6 +34,6 @@ class InitScheduled(private val scheduled: List<Scheduled>) {
         Timer().schedule(timerTask { executeAndReschedule(scheduled) }, nextRun.toDate())
     }
 
-    fun getSchedulingInfo() : Map<KClass<out Scheduled>, LocalDateTime> = nextScheduled
+    fun getSchedulingInfo(): Map<KClass<out Scheduled>, LocalDateTime> = nextScheduled
 
 }

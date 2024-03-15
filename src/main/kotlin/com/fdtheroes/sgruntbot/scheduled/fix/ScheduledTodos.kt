@@ -1,22 +1,17 @@
 package com.fdtheroes.sgruntbot.scheduled.fix
 
-import com.fdtheroes.sgruntbot.Bot
-import com.fdtheroes.sgruntbot.utils.BotUtils
-import com.fdtheroes.sgruntbot.actions.models.ActionResponse
-import com.fdtheroes.sgruntbot.actions.models.Todos
-import com.fdtheroes.sgruntbot.actions.persistence.TodosService
+import com.fdtheroes.sgruntbot.models.ActionResponse
+import com.fdtheroes.sgruntbot.models.Todos
+import com.fdtheroes.sgruntbot.persistence.TodosService
 import com.fdtheroes.sgruntbot.scheduled.Scheduled
+import com.fdtheroes.sgruntbot.utils.BotUtils
 import org.springframework.stereotype.Service
 import java.time.DayOfWeek
 import java.time.LocalDateTime
 import java.time.temporal.TemporalAdjusters
 
 @Service
-class ScheduledTodos(
-    private val sgruntBot: Bot,
-    private val botUtils: BotUtils,
-    private val todosService: TodosService,
-) : Scheduled {
+class ScheduledTodos(private val botUtils: BotUtils, private val todosService: TodosService) : Scheduled {
     override fun firstRun() = mezzanotteVenerdiProssimo()
 
     override fun nextRun() = mezzanotteVenerdiProssimo()
@@ -27,12 +22,12 @@ class ScheduledTodos(
             getTodoOfUser(it.key, it.value)
         }
         if (result.isNotEmpty()) {
-            sgruntBot.messaggio(ActionResponse.message("<b>Utenti pigri con todos ancora aperti:</b>\n$result"))
+            botUtils.messaggio(ActionResponse.message("<b>Utenti pigri con todos ancora aperti:</b>\n$result"))
         }
     }
 
     private fun getTodoOfUser(userId: Long, todos: List<Todos>): String {
-        val utente = sgruntBot.getChatMember(userId)
+        val utente = botUtils.getChatMember(userId)
         val userLink = botUtils.getUserLink(utente)
         val todosList = todos.joinToString(separator = "\n") {
             val nr = it.id.toString().padStart(4)

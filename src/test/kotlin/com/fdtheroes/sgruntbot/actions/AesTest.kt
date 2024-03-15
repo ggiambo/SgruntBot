@@ -1,32 +1,33 @@
 package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BaseTest
-import com.fdtheroes.sgruntbot.actions.models.ActionResponseType
+import com.fdtheroes.sgruntbot.handlers.message.Aes
+import com.fdtheroes.sgruntbot.models.ActionResponseType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 internal class AesTest : BaseTest() {
 
-    val aes = Aes()
+    val aes = Aes(botUtils, botConfig)
 
     @Test
     fun testEncrypt() {
-        val ctx = actionContext("!aes mySecretKey testo segretissimo da da codificare")
-        aes.doAction(ctx)
+        val message = message("!aes mySecretKey testo segretissimo da da codificare")
+        aes.handle(message)
 
-        assertThat(ctx.actionResponses).hasSize(1)
-        assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Message)
-        assertThat(ctx.actionResponses.first().message).isEqualTo("L9dQ8mCVcA3EyHZN+X+Pi2CYZnGnRXE3ol3qSmYnkgjnfYdVGGcLraGEgVXJYsto")
+        assertThat(actionResponses).hasSize(1)
+        assertThat(actionResponses.first().type).isEqualTo(ActionResponseType.Message)
+        assertThat(actionResponses.first().message).isEqualTo("L9dQ8mCVcA3EyHZN+X+Pi2CYZnGnRXE3ol3qSmYnkgjnfYdVGGcLraGEgVXJYsto")
     }
 
     @Test
     fun testDencrypt() {
-        val ctx = actionContext("!aesd mySecretKey L9dQ8mCVcA3EyHZN+X+Pi2CYZnGnRXE3ol3qSmYnkgjnfYdVGGcLraGEgVXJYsto")
-        aes.doAction(ctx)
+         val message = message("!aesd mySecretKey L9dQ8mCVcA3EyHZN+X+Pi2CYZnGnRXE3ol3qSmYnkgjnfYdVGGcLraGEgVXJYsto")
+        aes.handle(message)
 
-        assertThat(ctx.actionResponses).hasSize(1)
-        assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Message)
-        assertThat(ctx.actionResponses.first().message).isEqualTo("testo segretissimo da da codificare")
+        assertThat(actionResponses).hasSize(1)
+        assertThat(actionResponses.first().type).isEqualTo(ActionResponseType.Message)
+        assertThat(actionResponses.first().message).isEqualTo("testo segretissimo da da codificare")
     }
 
 }

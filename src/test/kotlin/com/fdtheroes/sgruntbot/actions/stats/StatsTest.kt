@@ -2,8 +2,8 @@ package com.fdtheroes.sgruntbot.actions.stats
 
 import com.fdtheroes.sgruntbot.BaseTest
 import com.fdtheroes.sgruntbot.Users
-import com.fdtheroes.sgruntbot.actions.models.Stats
-import com.fdtheroes.sgruntbot.actions.persistence.StatsService
+import com.fdtheroes.sgruntbot.models.Stats
+import com.fdtheroes.sgruntbot.persistence.StatsService
 import com.fdtheroes.sgruntbot.utils.StatsUtil
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -21,26 +21,27 @@ internal class StatsTest : BaseTest() {
     val monthStats = listOf(
         Stats(Users.IL_VINCI.id, dummyDate, 13, id++),
         Stats(Users.F.id, dummyDate, 15, id++),
-        Stats(Users.DA_DA212.id, dummyDate, 21, id++),
+        Stats(Users.DA_DA_212.id, dummyDate, 21, id++),
     )
 
     val statsService = mock<StatsService> {
         on { getStatsThisMonth() } doReturn (monthStats)
     }
 
-    val stats = com.fdtheroes.sgruntbot.actions.Stats(
+    val stats = com.fdtheroes.sgruntbot.handlers.message.Stats(
+        botUtils,
+        botConfig,
         statsService,
         StatsUtil(statsService, botUtils),
-        botUtils
     )
 
     @Test
     fun test_positive() {
-        val ctx = actionContext("!stats")
-        stats.doAction(ctx)
+        val message = message("!stats")
+        stats.handle(message)
 
-        assertThat(ctx.actionResponses).hasSize(1)
-        val image = ImageIO.read(ctx.actionResponses.first().inputFile!!.newMediaStream)
+        assertThat(actionResponses).hasSize(1)
+        val image = ImageIO.read(actionResponses.first().inputFile!!.newMediaStream)
 
         assertThat(image.type).isEqualTo(BufferedImage.TYPE_3BYTE_BGR)
         assertThat(image.width).isEqualTo(1280)

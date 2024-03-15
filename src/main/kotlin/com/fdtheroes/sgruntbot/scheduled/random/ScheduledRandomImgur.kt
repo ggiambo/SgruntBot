@@ -1,18 +1,16 @@
 package com.fdtheroes.sgruntbot.scheduled.random
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fdtheroes.sgruntbot.Bot
 import com.fdtheroes.sgruntbot.BotConfig
+import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.utils.BotUtils
 import com.fdtheroes.sgruntbot.utils.BotUtils.Companion.length
-import com.fdtheroes.sgruntbot.actions.models.ActionResponse
 
 //@Service
 class ScheduledRandomImgur(
+    botConfig: BotConfig,
     private val botUtils: BotUtils,
     private val mapper: ObjectMapper,
-    private val sgruntBot: Bot,
-    botConfig: BotConfig,
 ) : ScheduledRandom {
 
     // fake Client-ID, is enough
@@ -32,7 +30,7 @@ class ScheduledRandomImgur(
 
         val testo = "${title}\n${link}"
 
-        sgruntBot.messaggio(ActionResponse.message(testo, false))
+        botUtils.messaggio(ActionResponse.message(testo, false))
     }
 
 }

@@ -1,43 +1,44 @@
 package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BaseTest
-import com.fdtheroes.sgruntbot.actions.models.ActionResponseType
+import com.fdtheroes.sgruntbot.handlers.message.DioPorco
+import com.fdtheroes.sgruntbot.models.ActionResponseType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 internal class DioPorcoTest : BaseTest() {
 
-    private val dioPorco = DioPorco(botConfig)
+    private val dioPorco = DioPorco(botUtils, botConfig)
 
     @Test
     fun testPositive() {
         botConfig.pignolo = true
-        val ctx = actionContext(("\tdio porco"))
-        dioPorco.doAction(ctx)
+        val message = message("\tdio porco")
+        dioPorco.handle(message)
 
-        assertThat(ctx.actionResponses).hasSize(1)
-        assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Message)
-        assertThat(ctx.actionResponses.first().message).isEqualTo("Che mi tocca sentire!")
+        assertThat(actionResponses).hasSize(1)
+        assertThat(actionResponses.first().type).isEqualTo(ActionResponseType.Message)
+        assertThat(actionResponses.first().message).isEqualTo("Che mi tocca sentire!")
     }
 
     @Test
     fun testPositive_2() {
         botConfig.pignolo = true
-        val ctx = actionContext(("dio cane\n"))
-        dioPorco.doAction(ctx)
+        val message = message("dio cane\n")
+        dioPorco.handle(message)
 
-        assertThat(ctx.actionResponses).hasSize(1)
-        assertThat(ctx.actionResponses.first().type).isEqualTo(ActionResponseType.Message)
-        assertThat(ctx.actionResponses.first().message).isEqualTo("Che mi tocca sentire!")
+        assertThat(actionResponses).hasSize(1)
+        assertThat(actionResponses.first().type).isEqualTo(ActionResponseType.Message)
+        assertThat(actionResponses.first().message).isEqualTo("Che mi tocca sentire!")
     }
 
 
     @Test
     fun testNegative() {
-        val ctx = actionContext(("condio cane "))
-        dioPorco.doAction(ctx)
+        val message = message("condio cane ")
+        dioPorco.handle(message)
 
-        assertThat(ctx.actionResponses).isEmpty()
+        assertThat(actionResponses).isEmpty()
     }
 
 }
