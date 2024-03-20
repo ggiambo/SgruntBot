@@ -10,7 +10,7 @@ import org.telegram.telegrambots.meta.api.objects.User
 import org.telegram.telegrambots.meta.api.objects.reactions.ReactionTypeEmoji
 import kotlin.random.Random.Default.nextInt
 
-@Service
+//@Service
 class ReactionHandler(private val karmaService: KarmaService, private val botUtils: BotUtils) : Handler {
 
     val emojis_plus = setOf(
