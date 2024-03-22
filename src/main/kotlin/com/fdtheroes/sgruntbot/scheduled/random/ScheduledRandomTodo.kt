@@ -2,11 +2,14 @@ package com.fdtheroes.sgruntbot.scheduled.random
 
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.persistence.TodosService
+import com.fdtheroes.sgruntbot.scheduled.Scheduled
 import com.fdtheroes.sgruntbot.utils.BotUtils
 import org.springframework.stereotype.Service
+import java.time.LocalDateTime
+import kotlin.random.Random
 
 @Service
-class ScheduledRandomTodo(private val botUtils: BotUtils, private val todosService: TodosService) : ScheduledRandom {
+class ScheduledRandomTodo(private val botUtils: BotUtils, private val todosService: TodosService) : Scheduled {
     override fun execute() {
         val todos = todosService.allTodos(true)
         if (todos.isEmpty()) {
@@ -24,4 +27,14 @@ class ScheduledRandomTodo(private val botUtils: BotUtils, private val todosServi
 
         botUtils.messaggio(ActionResponse.message("$testo1\n$testo2", false))
     }
+
+    // random tra 12 e 36 ore
+    override fun firstRun(): LocalDateTime {
+        val ore = Random.nextLong(12, 36)
+        return LocalDateTime.now().plusHours(ore)
+    }
+
+    // random tra 12 e 24 ore
+    override fun nextRun() = firstRun()
+
 }
