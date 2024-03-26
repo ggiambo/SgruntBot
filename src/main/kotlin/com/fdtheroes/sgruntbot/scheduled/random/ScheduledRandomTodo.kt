@@ -28,13 +28,13 @@ class ScheduledRandomTodo(private val botUtils: BotUtils, private val todosServi
         botUtils.messaggio(ActionResponse.message("$testo1\n$testo2", false))
     }
 
-    // random tra 12 e 36 ore
+    // random tra 24 e 36 ore
     override fun firstRun(): LocalDateTime {
-        val ore = Random.nextLong(12, 36)
+        val ore = Random.nextLong(24, 36)
         return LocalDateTime.now().plusHours(ore)
     }
 
-    // random tra 12 e 24 ore
+    // random tra 24 e 36 ore
     override fun nextRun() = firstRun()
 
 }
