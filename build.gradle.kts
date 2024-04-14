@@ -36,8 +36,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core")
     implementation("org.telegram", "telegrambots", "6.9.7.1")
     implementation("org.jsoup", "jsoup", "1.17.2")
-    implementation("org.springdoc", "springdoc-openapi-starter-common", "2.4.0")
-    implementation("org.springdoc", "springdoc-openapi-starter-webmvc-ui", "2.4.0")
+    implementation("org.springdoc", "springdoc-openapi-starter-common", "2.5.0")
+    implementation("org.springdoc", "springdoc-openapi-starter-webmvc-ui", "2.5.0")
     implementation("org.knowm.xchart", "xchart", "3.8.7")
     runtimeOnly("org.mariadb.jdbc", "mariadb-java-client")
     runtimeOnly("com.h2database", "h2")
@@ -45,7 +45,7 @@ dependencies {
     testImplementation("org.springframework.boot", "spring-boot-starter-test")
     testImplementation("org.junit.jupiter", "junit-jupiter")
     testRuntimeOnly("org.junit.platform", "junit-platform-launcher")
-    testImplementation("org.mockito.kotlin", "mockito-kotlin", "5.2.1")
+    testImplementation("org.mockito.kotlin", "mockito-kotlin", "5.3.1")
 }
 
 springBoot {
