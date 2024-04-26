@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
-@Service
+//@Service
 class Cleanup(
     private val botUtils: BotUtils,
     private val errePiGiRepository: ErrePiGiRepository,
