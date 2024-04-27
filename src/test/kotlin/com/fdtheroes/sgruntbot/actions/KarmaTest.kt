@@ -3,6 +3,7 @@ package com.fdtheroes.sgruntbot.actions
 import com.fdtheroes.sgruntbot.BaseTest
 import com.fdtheroes.sgruntbot.Users
 import com.fdtheroes.sgruntbot.handlers.message.Karma
+import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.models.ActionResponseType
 import com.fdtheroes.sgruntbot.models.Utonto
 import com.fdtheroes.sgruntbot.persistence.KarmaRepository
@@ -161,7 +162,46 @@ internal class KarmaTest : BaseTest() {
         assertThat(actionResponses[0].message).isEqualTo("SgruntBot è un bot senz'anima. Assegna il karma saggiamente")
     }
 
+    @Test
+    fun testKarmaTooManyPlus() {
+        val karmaRepository = karmaRepository()
+        val karmaService = spy(KarmaService(botUtils, karmaRepository))
+        val karma = Karma(botUtils, botConfig, karmaService, usersService(listOf()))
+
+        val replyToMessage = message("Message", user(Users.DA_DA_212))
+        karma.handle(message("+++++++++++++++", replyToMessage = replyToMessage))
+
+        // User has 11 credits but gives 15 "+"
+        val argumentCaptor = argumentCaptor<Long, Long, (Int) -> Int>()
+        verify(karmaService, times(11)).takeGiveKarma(
+            argumentCaptor.first.capture(),
+            argumentCaptor.second.capture(),
+            argumentCaptor.third.capture()
+        )
+        assertThat(argumentCaptor.first.allValues).containsOnly(42L)
+        assertThat(argumentCaptor.second.allValues).containsOnly(252800958L)
+
+        assertThat(actionResponses).hasSize(1)
+        assertThat(actionResponses.first().type).isEqualTo(ActionResponseType.Message)
+        val message = actionResponses.first().message!!
+        assertThat(message).startsWith("Karma totale di <a href=\"tg://user?id=252800958\">DA_DA_212</a>: 111")
+        if (message.contains("Karmaroulette")) {
+            assertThat(message).contains("<b>Karmaroulette</b> ! Hai vinto ")
+            assertThat(message).contains(", e ora sei a quota")
+        }
+        if (message.contains("Creditroulette")) {
+            assertThat(message).contains("<b>Creditroulette</b> ! Hai vinto")
+            assertThat(message).contains("Crediti di <a href=\"tg://user?id=42\">Pippo</a>: ")
+        } else {
+            assertThat(message).contains("Crediti di <a href=\"tg://user?id=42\">Pippo</a>: 10")
+        }
+    }
+
     private fun karmaService(): KarmaService {
+        return KarmaService(botUtils, karmaRepository())
+    }
+
+    private fun karmaRepository() : KarmaRepository {
         val karmas = listOf(
             com.fdtheroes.sgruntbot.models.Karma(
                 karma = 100,
@@ -179,7 +219,7 @@ internal class KarmaTest : BaseTest() {
                 userId = 99
             )
         )
-        val karmaRepository = mock<KarmaRepository> {
+        return mock<KarmaRepository> {
             on { getByUserId(isA()) } doAnswer { args ->
                 karmas.firstOrNull { it.userId == args.arguments.first() }
             }
@@ -191,7 +231,6 @@ internal class KarmaTest : BaseTest() {
                 args.arguments.firstOrNull() as com.fdtheroes.sgruntbot.models.Karma
             }
         }
-        return KarmaService(botUtils, karmaRepository)
     }
 
     private fun usersService(utonti: List<Utonto>): UsersService {

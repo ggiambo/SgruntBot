@@ -74,11 +74,7 @@ class Karma(
         var wonKarma = 0
         var wonCredit = 0
 
-        for (i in 1..n) {
-            if (karmaService.getKarma(donatore).karmaCredit < 1) {
-                break
-            }
-
+        for (i in 1..Math.min(n, karmaService.getKarma(donatore).karmaCredit)) {
             karmaService.takeGiveKarma(donatore, ricevente, newKarma)
 
             if (nextInt(5) == 0) { // 20%
