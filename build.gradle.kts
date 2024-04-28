@@ -31,10 +31,14 @@ dependencies {
     implementation("org.springframework.boot", "spring-boot-starter-web")
     implementation("org.springframework.boot", "spring-boot-starter-cache")
     implementation("com.fasterxml.jackson.module", "jackson-module-kotlin")
+    implementation("com.fasterxml.jackson.dataformat", "jackson-dataformat-xml")
     implementation("org.jetbrains.kotlin", "kotlin-reflect")
     implementation("org.jetbrains.kotlin", "kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core")
-    implementation("org.telegram", "telegrambots", "6.9.7.1")
+    implementation("org.telegram", "telegrambots", "6.9.7.1") {
+        // telegrambot dipende ancora da javax :(
+        exclude(group = "com.fasterxml.jackson.module", "jackson-module-jaxb-annotations")
+    }
     implementation("org.jsoup", "jsoup", "1.17.2")
     implementation("org.springdoc", "springdoc-openapi-starter-common", "2.5.0")
     implementation("org.springdoc", "springdoc-openapi-starter-webmvc-ui", "2.5.0")
