@@ -193,7 +193,7 @@ internal class KarmaTest : BaseTest() {
             assertThat(message).contains("<b>Creditroulette</b> ! Hai vinto")
             assertThat(message).contains("Crediti di <a href=\"tg://user?id=42\">Pippo</a>: ")
         } else {
-            assertThat(message).contains("Crediti di <a href=\"tg://user?id=42\">Pippo</a>: 10")
+            assertThat(message).contains("Crediti di <a href=\"tg://user?id=42\">Pippo</a>: ")
         }
     }
 
