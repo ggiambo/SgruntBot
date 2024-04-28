@@ -3,10 +3,11 @@ package com.fdtheroes.sgruntbot.handlers.message
 import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.utils.BotUtils
+import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.Message
 import kotlin.random.Random.Default.nextInt
 
-//@Service
+@Service
 class Logorroico(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils, botConfig) {
 
 
@@ -21,8 +22,7 @@ class Logorroico(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botU
         "Facciamo il gioco del silenzio, comincia tu"
     )
 
-    var lastAuthorId: Long = 0L
-    var lastAuthorCount = 0
+    private var lastAuthorCount = 0
 
     override fun handle(message: Message) {
         if (!botUtils.isMessageInChat(message)) {
@@ -30,7 +30,7 @@ class Logorroico(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botU
         }
 
         val authorId = message.from.id
-        if (lastAuthorId == 0L || lastAuthorId == authorId) {
+        if (botConfig.lastAuthor?.id == authorId) {
             lastAuthorCount++
         } else {
             lastAuthorCount = 0
@@ -41,8 +41,6 @@ class Logorroico(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botU
             lastAuthorCount = 0
             botUtils.rispondi(ActionResponse.message(risposte.random()), message)
         }
-
-        lastAuthorId = authorId
     }
 
 }
