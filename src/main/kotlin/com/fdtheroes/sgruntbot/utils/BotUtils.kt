@@ -1,5 +1,6 @@
 package com.fdtheroes.sgruntbot.utils
 
+import com.fasterxml.jackson.databind.JsonNode
 import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.models.ActionResponseType
@@ -22,6 +23,7 @@ import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 import java.time.LocalDateTime
 import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.stream.StreamSupport
 import kotlin.random.Random
@@ -54,7 +56,7 @@ class BotUtils(private val botConfig: BotConfig) : DefaultAbsSender(botConfig.de
     fun streamFromURL(
         url: String,
         params: String? = null,
-        headers: List<Pair<String, String>> = emptyList()
+        headers: List<Pair<String, String>> = emptyList(),
     ): InputStream {
         return URL(String.format(url, params))
             .openConnection(botConfig.proxy)
@@ -120,6 +122,14 @@ class BotUtils(private val botConfig: BotConfig) : DefaultAbsSender(botConfig.de
         Thread.sleep(Random.nextLong(seconds.first.toLong() * 1000, seconds.last.toLong() * 1000))
     }
 
+    fun trimString(input: String, length: Int): String {
+        if (input.length < length) {
+            return input
+        }
+        val newLength = Math.max(0, length - 3) // "..."
+        return input.take(newLength) + "..."
+    }
+
     private fun sgruntyScrive(chatId: Long, actionType: ActionType = ActionType.TYPING) {
         execute(
             SendChatAction().apply {
@@ -136,6 +146,7 @@ class BotUtils(private val botConfig: BotConfig) : DefaultAbsSender(botConfig.de
                 this.chatId = botConfig.chatId
                 this.parseMode = ParseMode.HTML
                 this.text = textmd
+                this.disableWebPagePreview = true
             }
         )
     }
@@ -148,6 +159,7 @@ class BotUtils(private val botConfig: BotConfig) : DefaultAbsSender(botConfig.de
                 this.replyToMessageId = message.messageId
                 this.parseMode = ParseMode.HTML
                 this.text = textmd
+                this.disableWebPagePreview = true
             }
         )
     }
@@ -214,6 +226,10 @@ class BotUtils(private val botConfig: BotConfig) : DefaultAbsSender(botConfig.de
 
         fun LocalDateTime.toDate(): Date {
             return Date.from(this.atZone(ZoneId.systemDefault()).toInstant())
+        }
+
+        fun JsonNode.dateTime(): LocalDateTime {
+            return LocalDateTime.parse(this.textValue(), DateTimeFormatter.ISO_OFFSET_DATE_TIME)
         }
     }
 }
