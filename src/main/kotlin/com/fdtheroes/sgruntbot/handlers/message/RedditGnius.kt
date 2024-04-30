@@ -9,7 +9,6 @@ import com.fdtheroes.sgruntbot.utils.BotUtils.Companion.dateTime
 import org.slf4j.LoggerFactory
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder
 import org.springframework.stereotype.Service
-import org.springframework.web.servlet.function.ServerRequest
 import org.telegram.telegrambots.meta.api.objects.Message
 
 @Service
@@ -23,15 +22,18 @@ class RedditGnius(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(bot
 
     override fun handle(message: Message) {
         if (regex.containsMatchIn(message.text)) {
-            val gnius = fetch()
+            val gnius = getGnius()
             if (gnius.isNotEmpty()) {
-                val gniusMessage = gnius.joinToString(separator = "\n") { gnius(it) }
-                botUtils.rispondi(ActionResponse.message(gniusMessage), message)
+                botUtils.rispondi(ActionResponse.message(gnius.joinToString("\n")), message)
             }
         }
     }
 
     override fun halp() = "<b>!gnius</b> News sul mondo GNU e altro."
+
+    fun getGnius(): List<String> {
+        return fetch().map { gnius(it) }
+    }
 
     private fun fetch(): List<Gnius> {
         val redditNews = try {

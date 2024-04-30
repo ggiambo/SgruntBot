@@ -9,7 +9,7 @@ import org.telegram.telegrambots.meta.api.objects.Update
 import java.time.LocalDateTime
 import kotlin.random.Random
 
-abstract class MessageHandler(val botUtils: BotUtils, val botConfig: BotConfig) : Handler {
+abstract class MessageHandler(protected val botUtils: BotUtils, protected val botConfig: BotConfig) : Handler {
 
     private val log = LoggerFactory.getLogger(this.javaClass)
     private val lastAuthorRegex = Regex("^!last\$", RegexOption.IGNORE_CASE)
