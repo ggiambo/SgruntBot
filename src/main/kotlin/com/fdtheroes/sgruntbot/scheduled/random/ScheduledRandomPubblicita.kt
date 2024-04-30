@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 import kotlin.random.Random
 
-@Service
+//@Service
 class ScheduledRandomPubblicita(private val botUtils: BotUtils, private val actions: List<HasHalp>) : Scheduled {
     override fun execute() {
         val randomHalp = actions.random().halp()
