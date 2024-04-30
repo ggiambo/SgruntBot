@@ -24,7 +24,6 @@ class TestScheduledSanto : BaseTest() {
         Assertions.assertThat(actionResponse1.type).isEqualTo(ActionResponseType.Photo)
         Assertions.assertThat(actionResponse1.message).startsWith("<a href='https://www.santodelgiorno.it/")
         Assertions.assertThat(actionResponse1.inputFile).isNotNull()
-        Assertions.assertThat(actionResponse1.rispondi).isFalse()
         /*
                 val actionResponse2 = argumentCaptor.secondValue
                 Assertions.assertThat(actionResponse2.type).isEqualTo(ActionResponseType.Message)

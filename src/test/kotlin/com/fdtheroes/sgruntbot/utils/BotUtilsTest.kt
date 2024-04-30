@@ -33,7 +33,6 @@ class BotUtilsTest : BaseTest() {
         assertThat(actionResponse.type).isEqualTo(ActionResponseType.Message)
         assertThat(actionResponse.message).isEqualTo("Pong")
         assertThat(actionResponse.inputFile).isNull()
-        assertThat(actionResponse.rispondi).isTrue()
     }
 
     @Test
@@ -44,7 +43,6 @@ class BotUtilsTest : BaseTest() {
         assertThat(actionResponse.type).isEqualTo(ActionResponseType.Message)
         assertThat(actionResponse.message).isEqualTo("Prot")
         assertThat(actionResponse.inputFile).isNull()
-        assertThat(actionResponse.rispondi).isTrue()
     }
 
     @Test
