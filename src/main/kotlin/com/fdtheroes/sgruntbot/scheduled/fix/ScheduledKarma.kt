@@ -10,6 +10,6 @@ class ScheduledKarma(private val botUtils: BotUtils, private val karmaService: K
 
     override fun execute() {
         val testo = karmaService.testoKarmaReport()
-        botUtils.messaggio(ActionResponse.message(testo, false))
+        botUtils.messaggio(ActionResponse.message(testo))
     }
 }

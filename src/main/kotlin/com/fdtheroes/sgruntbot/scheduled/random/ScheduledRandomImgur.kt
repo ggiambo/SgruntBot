@@ -30,7 +30,7 @@ class ScheduledRandomImgur(
 
         val testo = "${title}\n${link}"
 
-        botUtils.messaggio(ActionResponse.message(testo, false))
+        botUtils.messaggio(ActionResponse.message(testo))
     }
 
 }

@@ -34,6 +34,5 @@ class ScheduledRandomKarmaTest : BaseTest() {
         assertThat(actionResponse.message).contains("Il tuo karma è ")
         assertThat(actionResponse.message).endsWith(" di 1.")
         assertThat(actionResponse.inputFile).isNull()
-        assertThat(actionResponse.rispondi).isFalse()
     }
 }

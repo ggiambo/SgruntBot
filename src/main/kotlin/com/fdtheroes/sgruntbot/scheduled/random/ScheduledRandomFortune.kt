@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 @Service
 class ScheduledRandomFortune(private val botUtils: BotUtils, private val fortune: Fortune) : ScheduledRandom {
     override fun execute() {
-        botUtils.messaggio(ActionResponse.message(fortune.getFortune(), false))
+        botUtils.messaggio(ActionResponse.message(fortune.getFortune()))
     }
 
 }

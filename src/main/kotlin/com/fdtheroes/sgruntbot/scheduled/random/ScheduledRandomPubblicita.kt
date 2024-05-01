@@ -13,7 +13,7 @@ class ScheduledRandomPubblicita(private val botUtils: BotUtils, private val acti
     override fun execute() {
         val randomHalp = actions.random().halp()
         val messaggio = "Prova questa ficiur di Sgrunty!\n"
-        botUtils.messaggio(ActionResponse.message("$messaggio$randomHalp", false))
+        botUtils.messaggio(ActionResponse.message("$messaggio$randomHalp"))
     }
 
     // random tra 12 e 36 ore

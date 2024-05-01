@@ -13,7 +13,7 @@ class ScheduledErrePiGi(
     override fun execute() {
         val testo = errePiGiService.testoErrePiGiReport()
         if (testo != null) {
-            botUtils.messaggio(ActionResponse.message(testo, false))
+            botUtils.messaggio(ActionResponse.message(testo))
         }
         errePiGiService.reset()
     }

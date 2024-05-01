@@ -28,7 +28,7 @@ class ScheduledRandomCuloDiPapa(private val botUtils: BotUtils) : ScheduledRando
 
         val text = "${testo}\n${autore}"
 
-        botUtils.messaggio(ActionResponse.message(text, false))
+        botUtils.messaggio(ActionResponse.message(text))
     }
 
 }

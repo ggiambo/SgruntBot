@@ -16,7 +16,7 @@ class ScheduledRandomSlogan(
         val lastAuthor = botConfig.lastAuthor
         val testo = if (lastAuthor == null) "" else slogan.fetchSlogan(lastAuthor)
 
-        botUtils.messaggio(ActionResponse.message(testo, false))
+        botUtils.messaggio(ActionResponse.message(testo))
     }
 
 }

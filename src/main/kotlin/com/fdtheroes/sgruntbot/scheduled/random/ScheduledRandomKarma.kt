@@ -28,7 +28,7 @@ class ScheduledRandomKarma(
         val testo =
             "${botUtils.getUserLink(vittima)} in verità in verità ti dico: Sgrunty da, Sgrunty toglie.\nIl tuo karma è $azione di 1."
 
-        botUtils.messaggio(ActionResponse.message(testo, false))
+        botUtils.messaggio(ActionResponse.message(testo))
     }
 
 }

@@ -25,7 +25,7 @@ class ScheduledRandomTodo(private val botUtils: BotUtils, private val todosServi
         val testo1 = "Hei ${botUtils.getUserLink(user)}, non hai ancora completato il todo: '${todo.todo}'"
         val testo2 = "Muovi il culo, poi scrivi !TODO -${todo.id}"
 
-        botUtils.messaggio(ActionResponse.message("$testo1\n$testo2", false))
+        botUtils.messaggio(ActionResponse.message("$testo1\n$testo2"))
     }
 
     // random tra 24 e 36 ore

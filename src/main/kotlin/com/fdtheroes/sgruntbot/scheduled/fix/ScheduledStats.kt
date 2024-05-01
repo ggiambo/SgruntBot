@@ -20,8 +20,7 @@ class ScheduledStats(
 
     override fun execute() {
         val inputFile = statsUtil.getStats(7)
-        val actionResponse = ActionResponse.photo("", inputFile, false)
-
+        val actionResponse = ActionResponse.photo("", inputFile)
         botUtils.messaggio(actionResponse)
     }
 

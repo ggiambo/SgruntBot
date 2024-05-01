@@ -23,7 +23,7 @@ class ScheduledRoboBot(private val botUtils: BotUtils) : ScheduledRandom {
 
     override fun execute() {
         val text = risposte.random()
-        botUtils.messaggio(ActionResponse.message(text, false))
+        botUtils.messaggio(ActionResponse.message(text))
     }
 
 }

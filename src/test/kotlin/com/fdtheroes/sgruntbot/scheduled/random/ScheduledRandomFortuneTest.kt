@@ -25,6 +25,5 @@ class ScheduledRandomFortuneTest : BaseTest() {
         assertThat(actionResponse.type).isEqualTo(ActionResponseType.Message)
         assertThat(actionResponse.message).isNotEmpty()
         assertThat(actionResponse.inputFile).isNull()
-        assertThat(actionResponse.rispondi).isFalse()
     }
 }

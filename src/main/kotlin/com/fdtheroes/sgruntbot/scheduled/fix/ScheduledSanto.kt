@@ -43,7 +43,7 @@ class ScheduledSanto(
         val imageStream = botUtils.streamFromURL(urlPhoto)
         val inputPhoto = InputFile(imageStream, "santo.jpg")
 
-        botUtils.messaggio(ActionResponse.photo("<a href='$url'>$nome</a>\n$descrizione", inputPhoto, false))
+        botUtils.messaggio(ActionResponse.photo("<a href='$url'>$nome</a>\n$descrizione", inputPhoto))
     }
 
     private fun altriSanti(jsNode: JsonNode) {
@@ -63,7 +63,7 @@ class ScheduledSanto(
             }
         }
 
-        botUtils.messaggio(ActionResponse.message("<b>Altri santi</b>\n$testo", false))
+        botUtils.messaggio(ActionResponse.message("<b>Altri santi</b>\n$testo"))
     }
 
     private fun seiDiMattina(): LocalDateTime {

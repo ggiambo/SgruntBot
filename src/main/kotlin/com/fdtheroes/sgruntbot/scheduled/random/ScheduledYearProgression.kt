@@ -34,6 +34,6 @@ class ScheduledYearProgression(private val botUtils: BotUtils) : Scheduled {
 
     override fun execute() {
         val yearProgression = YearProgress.yearProgression()
-        botUtils.messaggio(ActionResponse.message(yearProgression, false))
+        botUtils.messaggio(ActionResponse.message(yearProgression))
     }
 }
