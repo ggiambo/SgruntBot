@@ -30,5 +30,6 @@ class TestScheduledStats : BaseTest() {
         Assertions.assertThat(actionResponse.message).isEqualTo("")
         Assertions.assertThat(actionResponse.inputFile).isNotNull()
         Assertions.assertThat(actionResponse.inputFile!!.mediaName).isEqualTo("stats.jpg")
+        Assertions.assertThat(actionResponse.rispondi).isFalse()
     }
 }

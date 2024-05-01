@@ -75,10 +75,18 @@ class BotUtils(private val botConfig: BotConfig) : DefaultAbsSender(botConfig.de
     }
 
     fun rispondi(actionMessage: ActionResponse, message: Message) {
-        when (actionMessage.type) {
-            ActionResponseType.Message -> rispondiMessaggio(message, actionMessage.message!!)
-            ActionResponseType.Photo -> rispondiPhoto(message, actionMessage.message!!, actionMessage.inputFile!!)
-            ActionResponseType.Audio -> rispondiAudio(message, actionMessage.inputFile!!)
+        if (actionMessage.rispondi) {
+            when (actionMessage.type) {
+                ActionResponseType.Message -> rispondiMessaggio(message, actionMessage.message!!)
+                ActionResponseType.Photo -> rispondiPhoto(message, actionMessage.message!!, actionMessage.inputFile!!)
+                ActionResponseType.Audio -> rispondiAudio(message, actionMessage.inputFile!!)
+            }
+        } else {
+            when (actionMessage.type) {
+                ActionResponseType.Message -> messaggio(actionMessage.message!!)
+                ActionResponseType.Photo -> photo(actionMessage.message!!, actionMessage.inputFile!!)
+                ActionResponseType.Audio -> audio(actionMessage.inputFile!!)
+            }
         }
     }
 

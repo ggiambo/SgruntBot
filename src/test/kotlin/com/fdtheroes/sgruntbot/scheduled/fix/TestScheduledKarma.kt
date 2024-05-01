@@ -25,5 +25,6 @@ class TestScheduledKarma : BaseTest() {
         Assertions.assertThat(actionResponse.type).isEqualTo(ActionResponseType.Message)
         Assertions.assertThat(actionResponse.message).isEqualTo("karma Service ha fatto qualcosa")
         Assertions.assertThat(actionResponse.inputFile).isNull()
+        Assertions.assertThat(actionResponse.rispondi).isFalse()
     }
 }
