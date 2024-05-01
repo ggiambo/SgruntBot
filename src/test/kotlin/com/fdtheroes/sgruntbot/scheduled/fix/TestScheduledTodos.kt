@@ -54,7 +54,7 @@ class TestScheduledTodos : BaseTest() {
         val argumentCaptor = argumentCaptor<ActionResponse>()
         verify(botUtils, times(1)).messaggio(argumentCaptor.capture())
         assertThat(argumentCaptor.allValues).hasSize(1)
-        val message = argumentCaptor.firstValue.message!!
+        val message = argumentCaptor.firstValue.message
         assertThat(message).startsWith("<b>Utenti pigri con todos ancora aperti:</b>")
         val righe = message.split("\n")
         assertThat(righe).containsOnly(

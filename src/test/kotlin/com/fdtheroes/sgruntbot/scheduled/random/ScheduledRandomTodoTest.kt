@@ -18,7 +18,7 @@ class ScheduledRandomTodoTest : BaseTest() {
 
         assertThat(actionResponses).hasSize(1)
         assertThat(actionResponses[0].type).isEqualTo(ActionResponseType.Message)
-        val (line1, line2) = actionResponses.first().message!!.split("\n")
+        val (line1, line2) = actionResponses.first().message.split("\n")
         assertThat(line1).isEqualTo("Hei <a href=\"tg://user?id=3\">Username_3</a>, non hai ancora completato il todo: 'Todo 3'")
         assertThat(line2).isEqualTo("Muovi il culo, poi scrivi !TODO -42")
     }

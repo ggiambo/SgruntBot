@@ -3,7 +3,6 @@ package com.fdtheroes.sgruntbot.actions
 import com.fdtheroes.sgruntbot.BaseTest
 import com.fdtheroes.sgruntbot.Users
 import com.fdtheroes.sgruntbot.handlers.message.Karma
-import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.models.ActionResponseType
 import com.fdtheroes.sgruntbot.models.Utonto
 import com.fdtheroes.sgruntbot.persistence.KarmaRepository
@@ -74,7 +73,7 @@ internal class KarmaTest : BaseTest() {
 
         assertThat(actionResponses).hasSize(1)
         assertThat(actionResponses.first().type).isEqualTo(ActionResponseType.Message)
-        val message = actionResponses.first().message!!
+        val message = actionResponses.first().message
         assertThat(message).startsWith("Karma totale di <a href=\"tg://user?id=252800958\">DA_DA_212</a>: 101")
         if (message.contains("Karmaroulette")) {
             assertThat(message).contains("<b>Karmaroulette</b> ! Hai vinto 1 karma, e ora sei a quota 3")
@@ -128,7 +127,7 @@ internal class KarmaTest : BaseTest() {
 
         assertThat(actionResponses).hasSize(1)
         assertThat(actionResponses.first().type).isEqualTo(ActionResponseType.Message)
-        val message = actionResponses.first().message!!
+        val message = actionResponses.first().message
         assertThat(message).startsWith("Karma totale di <a href=\"tg://user?id=252800958\">DA_DA_212</a>: 99")
         if (message.contains("Karmaroulette")) {
             assertThat(message).contains("<b>Karmaroulette</b> ! Hai perso 1 karma, e ora sei a quota 1")
@@ -183,7 +182,7 @@ internal class KarmaTest : BaseTest() {
 
         assertThat(actionResponses).hasSize(1)
         assertThat(actionResponses.first().type).isEqualTo(ActionResponseType.Message)
-        val message = actionResponses.first().message!!
+        val message = actionResponses.first().message
         assertThat(message).startsWith("Karma totale di <a href=\"tg://user?id=252800958\">DA_DA_212</a>: 111")
         if (message.contains("Karmaroulette")) {
             assertThat(message).contains("<b>Karmaroulette</b> ! Hai vinto ")

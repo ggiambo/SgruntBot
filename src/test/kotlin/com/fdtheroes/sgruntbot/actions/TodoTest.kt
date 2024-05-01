@@ -96,7 +96,7 @@ class TodoTest : BaseTest() {
 
         assertThat(actionResponses).hasSize(1)
         assertThat(actionResponses.first().message).isNotNull()
-        val lines = actionResponses.first().message!!.split("\n")
+        val lines = actionResponses.first().message.split("\n")
         assertThat(lines.length()).isEqualTo(2)
         assertThat(lines[0]).isEqualTo("<pre> 111 Username_1 'Todo corto'")
         assertThat(lines[1]).isEqualTo(" 222 Username_2 'Todo con testo molto lungo che spero ve…'</pre>")
