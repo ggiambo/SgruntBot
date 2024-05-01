@@ -42,7 +42,7 @@ class Canzone(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtil
                 log.info("canzone da ${getSize(file)}")
             }
             val audio = InputFile(file, fileName)
-            botUtils.rispondi(ActionResponse.audio(audio), message)
+            botUtils.rispondi(ActionResponse.audio(fileName, audio), message)
         }
     }
 
