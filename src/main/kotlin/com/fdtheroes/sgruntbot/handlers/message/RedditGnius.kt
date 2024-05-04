@@ -1,24 +1,22 @@
 package com.fdtheroes.sgruntbot.handlers.message
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.models.Gnius
 import com.fdtheroes.sgruntbot.utils.BotUtils
-import com.fdtheroes.sgruntbot.utils.BotUtils.Companion.dateTime
+import org.jsoup.Jsoup
 import org.slf4j.LoggerFactory
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.Message
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @Service
 class RedditGnius(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils, botConfig), HasHalp {
 
     private val regex = Regex("!gnius$", RegexOption.IGNORE_CASE)
     private val log = LoggerFactory.getLogger(this.javaClass)
-    private val xmlMapper = Jackson2ObjectMapperBuilder
-        .xml()
-        .build<ObjectMapper>()
+    private val dateTimeFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
 
     override fun handle(message: Message) {
         if (regex.containsMatchIn(message.text)) {
@@ -38,7 +36,7 @@ class RedditGnius(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(bot
     private fun fetch(): List<Gnius> {
         val redditNews = try {
             botUtils.textFromURL(
-                url = "https://old.reddit.com/r/linux+netsec+programming+technology/top/.rss",
+                url = "https://old.reddit.com/r/linux+netsec+programming+technology/top/",
                 headers = listOf(Pair("User-Agent", botConfig.botName))
             )
         } catch (e: Exception) {
@@ -46,18 +44,23 @@ class RedditGnius(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(bot
             return emptyList()
         }
 
-        return xmlMapper
-            .readTree(redditNews)["entry"]
-            .map {
+        return Jsoup.parse(redditNews)
+            .select(".thing > .entry")
+            .take(5)
+            .mapNotNull { entry ->
+
+                val dateTime = entry.select("time").attr("datetime")
+                if (dateTime.isNullOrEmpty()) {
+                    return@mapNotNull null
+                }
+                val titleLink = entry.select("a.title")
                 Gnius(
-                    updated = it["updated"].dateTime(),
-                    published = it["published"].dateTime(),
-                    title = it["title"].textValue(),
-                    link = it["link"]["href"].textValue(),
+                    published = LocalDateTime.parse(dateTime, DateTimeFormatter.ISO_OFFSET_DATE_TIME),
+                    title = titleLink.text(),
+                    link = titleLink.attr("href"),
                 )
             }
-            .sortedByDescending { it.published }
-            .take(5)
+
     }
 
     private fun gnius(gnius: Gnius): String {

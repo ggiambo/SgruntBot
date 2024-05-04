@@ -220,8 +220,5 @@ class BotUtils(private val botConfig: BotConfig) : DefaultAbsSender(botConfig.de
             return Date.from(this.atZone(ZoneId.systemDefault()).toInstant())
         }
 
-        fun JsonNode.dateTime(): LocalDateTime {
-            return LocalDateTime.parse(this.textValue(), DateTimeFormatter.ISO_OFFSET_DATE_TIME)
-        }
     }
 }
