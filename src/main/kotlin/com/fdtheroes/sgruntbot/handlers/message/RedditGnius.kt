@@ -36,7 +36,7 @@ class RedditGnius(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(bot
         val redditNews = try {
             botUtils.textFromURL(
                 url = "https://old.reddit.com/r/linux+netsec+programming+technology/top/",
-                headers = listOf(Pair("User-Agent", botConfig.botName))
+                headers = listOf(Pair("User-Agent", "Mozilla/1.0"))
             )
         } catch (e: Exception) {
             log.error("Reddit mi odia", e)
