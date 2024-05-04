@@ -16,7 +16,6 @@ class RedditGnius(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(bot
 
     private val regex = Regex("!gnius$", RegexOption.IGNORE_CASE)
     private val log = LoggerFactory.getLogger(this.javaClass)
-    private val dateTimeFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
 
     override fun handle(message: Message) {
         if (regex.containsMatchIn(message.text)) {
@@ -48,7 +47,6 @@ class RedditGnius(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(bot
             .select(".thing > .entry")
             .take(5)
             .mapNotNull { entry ->
-
                 val dateTime = entry.select("time").attr("datetime")
                 if (dateTime.isNullOrEmpty()) {
                     return@mapNotNull null
@@ -60,7 +58,6 @@ class RedditGnius(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(bot
                     link = titleLink.attr("href"),
                 )
             }
-
     }
 
     private fun gnius(gnius: Gnius): String {
