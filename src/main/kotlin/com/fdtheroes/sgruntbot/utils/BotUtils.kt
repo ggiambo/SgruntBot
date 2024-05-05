@@ -1,6 +1,5 @@
 package com.fdtheroes.sgruntbot.utils
 
-import com.fasterxml.jackson.databind.JsonNode
 import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.models.ActionResponseType
@@ -17,13 +16,15 @@ import org.telegram.telegrambots.meta.api.methods.send.SendPhoto
 import org.telegram.telegrambots.meta.api.objects.InputFile
 import org.telegram.telegrambots.meta.api.objects.Message
 import org.telegram.telegrambots.meta.api.objects.User
+import java.io.IOException
 import java.io.InputStream
-import java.net.URL
-import java.net.URLEncoder
+import java.net.*
+import java.net.http.HttpClient
+import java.net.http.HttpRequest
+import java.net.http.HttpResponse
 import java.nio.charset.StandardCharsets
 import java.time.LocalDateTime
 import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.stream.StreamSupport
 import kotlin.random.Random
@@ -57,15 +58,27 @@ class BotUtils(private val botConfig: BotConfig) : DefaultAbsSender(botConfig.de
         url: String,
         params: String? = null,
         headers: List<Pair<String, String>> = emptyList(),
+        proxy: Proxy = botConfig.proxy,
     ): InputStream {
-        return URL(String.format(url, params))
-            .openConnection(botConfig.proxy)
-            .apply { headers.forEach { setRequestProperty(it.first, it.second) } }
-            .getInputStream()
+        val req = HttpRequest.newBuilder()
+            .uri(URI(String.format(url, params)))
+            .apply { headers.forEach { header(it.first, it.second) } }
+            .build()
+        return HttpClient.newBuilder()
+            .proxy(proxySelector(proxy))
+            .build()
+            .send(req, HttpResponse.BodyHandlers.ofByteArray())
+            .body()
+            .inputStream()
     }
 
-    fun textFromURL(url: String, params: String? = null, headers: List<Pair<String, String>> = emptyList()): String {
-        return streamFromURL(url, params, headers)
+    fun textFromURL(
+        url: String,
+        params: String? = null,
+        headers: List<Pair<String, String>> = emptyList(),
+        proxy: Proxy = botConfig.proxy,
+    ): String {
+        return streamFromURL(url, params, headers, proxy)
             .readAllBytes()
             .decodeToString()
     }
@@ -198,6 +211,18 @@ class BotUtils(private val botConfig: BotConfig) : DefaultAbsSender(botConfig.de
                 this.audio = audio
             }
         )
+    }
+
+    private fun proxySelector(proxy: Proxy): ProxySelector {
+        return object : ProxySelector() {
+            override fun select(uri: URI): List<Proxy> {
+                return listOf(proxy)
+            }
+
+            override fun connectFailed(uri: URI, sa: SocketAddress, ioe: IOException?) {
+                throw RuntimeException(ioe)
+            }
+        }
     }
 
     companion object {
