@@ -46,7 +46,7 @@ class RedditGnius(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(bot
 
         return redditNews
             .select(".thing > .entry")
-            .take(5)
+            .take(10)
             .mapNotNull { entry ->
                 val dateTime = entry.select("time").attr("datetime")
                 if (dateTime.isNullOrEmpty()) {
