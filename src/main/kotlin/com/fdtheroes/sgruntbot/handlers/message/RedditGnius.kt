@@ -8,8 +8,11 @@ import org.jsoup.Jsoup
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.Message
+import java.net.InetSocketAddress
+import java.net.Proxy
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+
 
 @Service
 class RedditGnius(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils, botConfig), HasHalp {
@@ -34,16 +37,14 @@ class RedditGnius(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(bot
 
     private fun fetch(): List<Gnius> {
         val redditNews = try {
-            botUtils.textFromURL(
-                url = "https://old.reddit.com/r/linux+netsec+programming+technology/top/",
-                headers = listOf(Pair("User-Agent", "Mozilla/1.0"))
-            )
+            val torProxy = Proxy(Proxy.Type.SOCKS, InetSocketAddress("localhost", 9050))
+            Jsoup.connect("https://old.reddit.com/r/linux+netsec+programming+technology/top/").proxy(torProxy).get()
         } catch (e: Exception) {
             log.error("Reddit mi odia", e)
             return emptyList()
         }
 
-        return Jsoup.parse(redditNews)
+        return redditNews
             .select(".thing > .entry")
             .take(5)
             .mapNotNull { entry ->
