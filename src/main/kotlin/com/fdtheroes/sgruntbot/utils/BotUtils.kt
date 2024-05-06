@@ -216,6 +216,7 @@ class BotUtils(private val botConfig: BotConfig) : DefaultAbsSender(botConfig.de
     private fun proxySelector(proxy: Proxy): ProxySelector {
         return object : ProxySelector() {
             override fun select(uri: URI): List<Proxy> {
+                log.info("Proxy selected $proxy")
                 return listOf(proxy)
             }
 
