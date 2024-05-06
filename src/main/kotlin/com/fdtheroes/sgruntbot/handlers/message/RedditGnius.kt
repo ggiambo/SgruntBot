@@ -18,7 +18,6 @@ import java.time.format.DateTimeFormatter
 class RedditGnius(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils, botConfig), HasHalp {
 
     private val regex = Regex("!gnius$", RegexOption.IGNORE_CASE)
-    val torProxy = Proxy(Proxy.Type.SOCKS, InetSocketAddress("localhost", 9050))
     private val log = LoggerFactory.getLogger(this.javaClass)
 
     override fun handle(message: Message) {
@@ -38,17 +37,14 @@ class RedditGnius(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(bot
 
     private fun fetch(): List<Gnius> {
         val redditNews = try {
-            botUtils.textFromURL(
-                url = "https://old.reddit.com/r/linux+netsec+programming+technology/top/",
-                headers = listOf(Pair("User-Agent", botConfig.botName)),
-                proxy = torProxy
-            )
+            val torProxy = Proxy(Proxy.Type.SOCKS, InetSocketAddress("localhost", 9050))
+            Jsoup.connect("https://old.reddit.com/r/linux+netsec+programming+technology/top/").proxy(torProxy).get()
         } catch (e: Exception) {
             log.error("Reddit mi odia", e)
             return emptyList()
         }
 
-        return Jsoup.parse(redditNews)
+        return redditNews
             .select(".thing > .entry")
             .take(10)
             .mapNotNull { entry ->
