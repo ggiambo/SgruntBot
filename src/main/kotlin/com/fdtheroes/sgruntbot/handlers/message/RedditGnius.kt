@@ -19,6 +19,7 @@ class RedditGnius(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(bot
 
     private val regex = Regex("!gnius$", RegexOption.IGNORE_CASE)
     private val log = LoggerFactory.getLogger(this.javaClass)
+    private val torProxy = Proxy(Proxy.Type.SOCKS, InetSocketAddress("localhost", 9050))
 
     override fun handle(message: Message) {
         if (regex.containsMatchIn(message.text)) {
@@ -37,7 +38,6 @@ class RedditGnius(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(bot
 
     private fun fetch(): List<Gnius> {
         val redditNews = try {
-            val torProxy = Proxy(Proxy.Type.SOCKS, InetSocketAddress("localhost", 9050))
             Jsoup.connect("https://old.reddit.com/r/linux+netsec+programming+technology/top/").proxy(torProxy).get()
         } catch (e: Exception) {
             log.error("Reddit mi odia", e)
