@@ -48,6 +48,8 @@ class RedditGnius(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(bot
             return emptyList()
         }
 
+        log.info(redditNews)
+
         return Jsoup.parse(redditNews)
             .select(".thing > .entry")
             .take(10)
