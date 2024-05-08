@@ -38,7 +38,7 @@ class RedditGnius(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(bot
 
     private fun fetch(): List<Gnius> {
         val redditNews = try {
-            Jsoup.connect("https://old.reddit.com/r/linux+netsec+programming+technology/top/").proxy(torProxy).get()
+            Jsoup.connect("https://old.reddit.com/r/linux+netsec+programming+technology/controversial/").proxy(torProxy).get()
         } catch (e: Exception) {
             log.error("Reddit mi odia", e)
             return emptyList()
