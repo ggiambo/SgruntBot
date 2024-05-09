@@ -6,6 +6,7 @@ import com.fdtheroes.sgruntbot.models.Gnius
 import com.fdtheroes.sgruntbot.utils.BotUtils
 import org.jsoup.Jsoup
 import org.slf4j.LoggerFactory
+import org.springframework.http.HttpHeaders
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.Message
 import java.net.InetSocketAddress
@@ -38,15 +39,18 @@ class RedditGnius(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(bot
 
     private fun fetch(): List<Gnius> {
         val redditNews = try {
-            Jsoup.connect("https://old.reddit.com/r/linux+netsec+programming+technology/controversial/").proxy(torProxy).get()
+            botUtils.textFromURL(
+                url = "https://old.reddit.com/r/linux+netsec+programming+technology/top/",
+                headers = listOf(Pair(HttpHeaders.USER_AGENT, botConfig.botName)),
+                proxy = torProxy
+            )
         } catch (e: Exception) {
             log.error("Reddit mi odia", e)
             return emptyList()
         }
 
-        return redditNews
+        return Jsoup.parse(redditNews)
             .select(".thing > .entry")
-            .take(10)
             .mapNotNull { entry ->
                 val dateTime = entry.select("time").attr("datetime")
                 if (dateTime.isNullOrEmpty()) {
@@ -59,6 +63,7 @@ class RedditGnius(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(bot
                     link = titleLink.attr("href"),
                 )
             }
+            .take(10)
     }
 
     private fun gnius(gnius: Gnius): String {
