@@ -37,7 +37,4 @@ springdoc:
 
 sgruntbot:
   config:
-    chat-id: -1001103213994
-    telegram-token-file: token.txt
-    imgur-clientid-file: imgurClientId.txt
     baseRestUrl: https://giambo.ch

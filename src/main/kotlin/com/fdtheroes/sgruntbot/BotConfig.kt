@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service
 import org.telegram.telegrambots.bots.DefaultBotOptions
 import org.telegram.telegrambots.meta.api.methods.updates.AllowedUpdates
 import org.telegram.telegrambots.meta.api.objects.User
-import java.io.File
 import java.net.InetSocketAddress
 import java.net.Proxy
 import java.net.URI
@@ -13,14 +12,12 @@ import java.time.LocalDateTime
 
 @Service
 class BotConfig(
-    @Value("\${sgruntbot.config.chat-id}") val chatId: String,
-    @Value("\${sgruntbot.config.telegram-token-file}") telegramTokenFile: String,
-    @Value("\${sgruntbot.config.imgur-clientid-file}") imgUrClientIdFile: String,
+    @Value("\${CHAT_ID}") val chatId: String,
+    @Value("\${TELEGRAM_TOKEN}") val telegramToken: String,
+    @Value("\${IMGUR_CLIENT_ID}") val imgurClientId: String,
 ) {
 
     val botName = "SgruntBot"
-    val token by lazy { File(telegramTokenFile).readText().trim() }
-    val clientId by lazy { File(imgUrClientIdFile).readText().trim() }
     val defaultBotOptions by lazy { initDefaultBotOptions() }
     val proxy by lazy { initProxy(defaultBotOptions) }
 

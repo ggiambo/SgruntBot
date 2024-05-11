@@ -12,7 +12,7 @@ Il comando magico per far partire il tutto è:
 ```
 
 Se vuoi usare un proxy HTTP, usa qualcosa del tipo `-proxy http://localhost:8080`\
-Per una resa ottimale, assicurati di aver installato `fortunes-it` e l'ultimissima versione di `youtube-dl`.
+Per una resa ottimale, assicurati di aver installato `fortunes-it` e l'ultimissima versione di `yt-dlp`.
 
 Ah, ci sarebbe anche il token per imgur, un file chiamato `imgurClientId.txt`.
 

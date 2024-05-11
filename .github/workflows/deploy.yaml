@@ -33,4 +33,7 @@ jobs:
             cd ~/SgruntBot
             ./gradlew --stop
             git pull
+            export CHAT_ID=${{ secrets.CHAT_ID }}
+            export TELEGRAM_TOKEN=${{ secrets.TELEGRAM_TOKEN }}
+            export IMGUR_CLIENT_ID=${{ secrets.IMGUR_CLIENT_ID }}
             nohup ./gradlew bootRun > out.log 2>error.log &
