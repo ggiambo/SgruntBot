@@ -32,7 +32,7 @@ class SgruntBot(
 
     override fun getBotUsername() = botConfig.botName
 
-    override fun getBotToken() = botConfig.token
+    override fun getBotToken() = botConfig.telegramToken
 
     override fun getOptions() = botConfig.defaultBotOptions
 

@@ -20,7 +20,6 @@ import org.telegram.telegrambots.meta.api.objects.Message
 import org.telegram.telegrambots.meta.api.objects.User
 import java.io.InputStream
 import java.net.Proxy
-import java.net.URL
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 import java.time.LocalDateTime
@@ -30,7 +29,7 @@ import java.util.stream.StreamSupport
 import kotlin.random.Random
 
 @Service
-class BotUtils(private val botConfig: BotConfig) : DefaultAbsSender(botConfig.defaultBotOptions, botConfig.token) {
+class BotUtils(private val botConfig: BotConfig) : DefaultAbsSender(botConfig.defaultBotOptions, botConfig.telegramToken) {
 
     private val log = LoggerFactory.getLogger(this.javaClass)
 

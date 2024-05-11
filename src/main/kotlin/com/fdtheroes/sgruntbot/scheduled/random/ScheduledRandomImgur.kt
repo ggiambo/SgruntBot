@@ -14,7 +14,7 @@ class ScheduledRandomImgur(
 ) : ScheduledRandom {
 
     // fake Client-ID, is enough
-    private val headers = listOf(Pair("Authorization", "Client-ID ${botConfig.clientId}"))
+    private val headers = listOf(Pair("Authorization", "Client-ID ${botConfig.imgurClientId}"))
 
     override fun execute() {
         val viral = botUtils.textFromURL("https://api.imgur.com/3/gallery/hot/viral/0.json", headers = headers)
