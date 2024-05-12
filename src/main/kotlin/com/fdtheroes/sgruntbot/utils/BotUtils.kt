@@ -159,7 +159,7 @@ class BotUtils(private val botConfig: BotConfig) : DefaultAbsSender(botConfig.de
         sgruntyScrive(message.chatId)
         execute(
             SendMessage().apply {
-                this.chatId = message.chat.id.toString()
+                this.chatId = message.chatId.toString()
                 this.replyToMessageId = message.messageId
                 this.parseMode = ParseMode.HTML
                 this.text = textmd
