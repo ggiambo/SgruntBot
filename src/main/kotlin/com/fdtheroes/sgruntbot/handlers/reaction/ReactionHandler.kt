@@ -26,7 +26,7 @@ class ReactionHandler(
         val reactionType = update.messageReaction.newReaction
             .filterIsInstance<ReactionTypeEmoji>()
             .firstOrNull()
-        if (reactionType != null && nextInt(10) == 0) { // 10% di probabilità
+        if (reactionType != null && nextInt(5) == 0) { // 20% di probabilità
             val message = messaggio(update.messageReaction)
             botUtils.rispondi(ActionResponse.message(reactionType.emoji), message)
         }
