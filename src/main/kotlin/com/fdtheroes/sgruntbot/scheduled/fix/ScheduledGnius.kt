@@ -19,10 +19,10 @@ class ScheduledGnius(private val botUtils: BotUtils, private val redditGnius: Re
 
     override fun firstRun(): LocalDateTime {
         val hour = LocalDateTime.now().hour
-        if (hour >= 16) {
+        if (hour >= 20) {
             return oggiAlle(8).plusDays(1)  // Domani mattina
         }
-        return oggiAlle(16)
+        return oggiAlle(20)
     }
 
     override fun nextRun() = firstRun()

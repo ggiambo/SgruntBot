@@ -13,10 +13,7 @@ import org.telegram.telegrambots.meta.api.objects.reactions.ReactionTypeEmoji
 import kotlin.random.Random.Default.nextInt
 
 @Service
-class ReactionHandler(
-    private val botUtils: BotUtils,
-    private val botConfig: BotConfig,
-) : Handler {
+class ReactionHandler(private val botUtils: BotUtils) : Handler {
 
     override suspend fun handle(update: Update) {
         if (update.messageReaction == null) {
