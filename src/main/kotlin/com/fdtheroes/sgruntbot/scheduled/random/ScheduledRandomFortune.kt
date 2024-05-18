@@ -12,11 +12,23 @@ class ScheduledRandomFortune(
     private val fortune: Fortune,
     private val vocale: Vocale,
 ) : ScheduledRandom {
+
+    val citazione = Regex("^\\s+-- .+\$") // la citazione in fondo
+
     override fun execute() {
         //botUtils.messaggio(ActionResponse.message(fortune.getFortune()))
-        val fortune = fortune.getFortune()
-        val vocale = vocale.getVocale(fortune)
+        val vocale = vocale.getVocale(getTestoFortune())
         botUtils.messaggio(ActionResponse.audio("Fortune", vocale))
+    }
+
+    private fun getTestoFortune(): String {
+        val testoFortune = fortune.getFortune()
+            .replace(citazione, "")
+            .trim()
+        while (testoFortune.length > 100) {
+            return getTestoFortune()
+        }
+        return testoFortune
     }
 
 }
