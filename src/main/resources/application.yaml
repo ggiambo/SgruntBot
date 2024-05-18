@@ -17,16 +17,6 @@ spring:
       mode: always
       schema-locations: classpath:schema.sql
 
-logging:
-  level:
-    root: info
-    com.fdtheroes.sgruntbot: debug
-  file:
-    name: sgruntbot.log
-  pattern:
-    file: "%d [%thread] %-5level %logger{36} - %msg%n"
-    console:
-
 springdoc:
   swagger-ui:
     path: /sgrunty/swagger-ui.html
