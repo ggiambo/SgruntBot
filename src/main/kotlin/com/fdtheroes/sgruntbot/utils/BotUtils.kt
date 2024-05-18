@@ -55,7 +55,7 @@ class BotUtils(private val botConfig: BotConfig) : DefaultAbsSender(botConfig.de
 
     fun streamFromURL(
         url: String,
-        params: String? = null,
+        params: List<String>? = null,
         headers: List<Pair<String, String>> = emptyList(),
         proxy: Proxy = botConfig.proxy
     ): InputStream {
@@ -63,7 +63,7 @@ class BotUtils(private val botConfig: BotConfig) : DefaultAbsSender(botConfig.de
             .proxy(proxy)
             .build()
         val request = Request.Builder()
-            .url(String.format(url, params))
+            .url(String.format(url, *params.orEmpty().toTypedArray()))
             .apply { headers.forEach { header(it.first, it.second) } }
             .get()
             .build()
@@ -73,7 +73,7 @@ class BotUtils(private val botConfig: BotConfig) : DefaultAbsSender(botConfig.de
 
     fun textFromURL(
         url: String,
-        params: String? = null,
+        params: List<String>? = null,
         headers: List<Pair<String, String>> = emptyList(),
         proxy: Proxy = botConfig.proxy
     ): String {

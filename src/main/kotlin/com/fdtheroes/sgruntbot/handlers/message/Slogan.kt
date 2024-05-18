@@ -26,7 +26,7 @@ class Slogan(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils
     override fun halp() = "<b>!slogan</b> <i>testo</i> uno slogan per il testo!"
 
     fun fetchSlogan(testo: String): String {
-        val res = botUtils.textFromURL(urlSlogan, testo.urlEncode())
+        val res = botUtils.textFromURL(urlSlogan, listOf(testo.urlEncode()))
         return Regex("<a.*?>(.*)</a>").find(res)?.groupValues?.get(1).orEmpty()
     }
 
