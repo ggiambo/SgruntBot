@@ -67,7 +67,7 @@ class RedditGnius(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(bot
     }
 
     private fun gnius(gnius: Gnius): String {
-        val title = botUtils.trimString(gnius.title, 80)
+        val title = botUtils.trimString(gnius.title, 90)
         val href = "<a href='${gnius.link}'>$title</a>"
         return "\uD83D\uDCF0 - $href"
     }
