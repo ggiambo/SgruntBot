@@ -16,6 +16,11 @@ class ScheduledRandomFortune(
     val citazione = Regex("^\\s+-- .+\$") // la citazione in fondo
 
     override fun execute() {
+        botUtils.messaggio(ActionResponse.message(fortune.getFortune()))
+    }
+
+    /*
+    override fun execute() {
         //botUtils.messaggio(ActionResponse.message(fortune.getFortune()))
         val vocale = vocale.getVocale(getTestoFortune())
         botUtils.messaggio(ActionResponse.audio("Fortune", vocale))
@@ -30,5 +35,6 @@ class ScheduledRandomFortune(
         }
         return testoFortune
     }
+     */
 
 }
