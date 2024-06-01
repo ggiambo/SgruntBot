@@ -51,6 +51,7 @@ class Vocale(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils
     }
 
     override fun halp(): String {
-        return "<b>!vocale</b> <i>testo</i> Sgrunty ci parla!"
+        return "<b>!vocale</b> <i>testo</i> Sgrunty ci parla!\n" +
+                "<b>!vocalesuper</b> <i>testo</i> Sgrunty ci parla!. Da usare in una chat privata con lui."
     }
 }
