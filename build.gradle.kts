@@ -2,11 +2,11 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     application
-    kotlin("jvm") version "1.9.20"
-    kotlin("plugin.spring") version "1.9.20"
-    kotlin("plugin.jpa") version "1.9.20"
-    id("org.springframework.boot") version "3.2.5"
-    id("io.spring.dependency-management") version "1.1.4"
+    kotlin("jvm") version "2.0.0"
+    kotlin("plugin.spring") version "2.0.0"
+    kotlin("plugin.jpa") version "2.0.0"
+    id("org.springframework.boot") version "3.3.0"
+    id("io.spring.dependency-management") version "1.1.5"
     id("com.github.ben-manes.versions") version "0.51.0"
     id("com.glovoapp.semantic-versioning") version "1.1.10"
 }
@@ -42,7 +42,7 @@ dependencies {
     implementation("org.jsoup", "jsoup", "1.17.2")
     implementation("org.springdoc", "springdoc-openapi-starter-common", "2.5.0")
     implementation("org.springdoc", "springdoc-openapi-starter-webmvc-ui", "2.5.0")
-    implementation("org.knowm.xchart", "xchart", "3.8.7")
+    implementation("org.knowm.xchart", "xchart", "3.8.8")
     runtimeOnly("org.mariadb.jdbc", "mariadb-java-client")
     runtimeOnly("com.h2database", "h2")
     annotationProcessor("org.springframework.boot", "spring-boot-configuration-processor")
