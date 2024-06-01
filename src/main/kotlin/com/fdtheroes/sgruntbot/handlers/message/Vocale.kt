@@ -14,7 +14,7 @@ class Vocale(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils
     private val fileName = "LaVoceDiSgrunty.mp3"
     private val url = "https://www.voicerss.org/controls/speech.ashx?hl=it-it&v=%s&src=%s"
     private val regex = Regex(
-        "^!vocale (.*)$",
+        "^!vocale(super)? (.*)$",
         setOf(RegexOption.IGNORE_CASE, RegexOption.MULTILINE, RegexOption.DOT_MATCHES_ALL)
     )
     private val headers = listOf(
@@ -25,9 +25,17 @@ class Vocale(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils
 
     // curl 'https://www.voicerss.org/controls/speech.ashx?hl=it-it&v=Mia&src=Das%20ist%20kaum%20zum%20glauben&c=mp3&rnd=0.42' -H 'User-Agent: Sgruntbot' -H 'Referer: https://www.voicerss.org/api/demo.aspx' --output audio.mp3
     override fun handle(message: Message) {
-        val msg = regex.find(message.text)?.groupValues?.get(1)
-        if (msg != null) {
-            val laVoceDiSgrunty = getVocale(msg)
+        val groupValues = regex.find(message.text)?.groupValues
+        if (groupValues.isNullOrEmpty()) {
+            return
+        }
+        val isSuper = groupValues[1].lowercase() == "super"
+        val msg = groupValues[2]
+        val laVoceDiSgrunty = getVocale(msg)
+        if (isSuper) {
+            // parlasuper
+            botUtils.messaggio(ActionResponse.audio(fileName, laVoceDiSgrunty))
+        } else {
             botUtils.rispondi(ActionResponse.audio(fileName, laVoceDiSgrunty), message)
         }
     }
