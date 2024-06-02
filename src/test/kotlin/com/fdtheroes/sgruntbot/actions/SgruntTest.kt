@@ -13,7 +13,7 @@ internal class SgruntTest : BaseTest() {
 
     @Test
     fun testPositive() {
-         val message = message("sgrunty")
+        val message = message("sgrunty")
         sgrunt.handle(message)
 
         assertThat(actionResponses).hasSize(1)
@@ -23,7 +23,7 @@ internal class SgruntTest : BaseTest() {
 
     @Test
     fun testPositive_1() {
-         val message = message(text = "sgruntbot", from = user(id = Users.DANIELE.id))
+        val message = message(text = "sgruntbot", from = user(id = Users.DANIELE.id))
         sgrunt.handle(message)
 
         assertThat(actionResponses).hasSize(1)

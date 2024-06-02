@@ -11,7 +11,7 @@ internal class TestTest : BaseTest() {
 
     @Test
     fun testPositive() {
-         val message = message("!test")
+        val message = message("!test")
         test.handle(message)
 
         assertThat(actionResponses).hasSize(1)

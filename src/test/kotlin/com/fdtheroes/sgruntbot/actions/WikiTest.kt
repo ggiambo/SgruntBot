@@ -12,7 +12,7 @@ internal class WikiTest : BaseTest() {
 
     @Test
     fun testPositive() {
-         val message = message("!wiki poesia giambica")
+        val message = message("!wiki poesia giambica")
         wiki.handle(message)
 
         assertThat(actionResponses).hasSize(1)
@@ -24,7 +24,7 @@ internal class WikiTest : BaseTest() {
 
     @Test
     fun testPositive_accento() {
-         val message = message("!wiki fosse ardenne")
+        val message = message("!wiki fosse ardenne")
         wiki.handle(message)
 
         assertThat(actionResponses).hasSize(1)
@@ -36,7 +36,7 @@ internal class WikiTest : BaseTest() {
 
     @Test
     fun testNegative() {
-         val message = message("!wiki barzuffo")
+        val message = message("!wiki barzuffo")
         wiki.handle(message)
 
         assertThat(actionResponses).hasSize(1)

@@ -5,7 +5,6 @@ import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.utils.BotUtils
 import com.fdtheroes.sgruntbot.utils.BotUtils.Companion.length
-import org.springframework.beans.factory.annotation.Value
 
 //@Service
 class ScheduledRandomImgur(

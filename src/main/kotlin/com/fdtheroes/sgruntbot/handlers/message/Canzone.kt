@@ -21,7 +21,7 @@ class Canzone(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtil
     private val regex = Regex("!canzone (.*)$", RegexOption.IGNORE_CASE)
     private val destPath by lazy { initDestPath() }
 
-    private fun initDestPath() : Path {
+    private fun initDestPath(): Path {
         val tmpDir = System.getProperty("java.io.tmpdir")
         val path = Path(tmpDir, "songs")
         if (!path.exists()) {

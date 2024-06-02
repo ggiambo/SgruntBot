@@ -15,7 +15,7 @@ internal class ParolacceTest : BaseTest() {
     @ValueSource(strings = ["cazzone", "culona", " fica ", "stronzi", "merdah!"])
     fun testPositive(parolaccia: String) {
         botConfig.pignolo = true
-         val message = message("blah banf $parolaccia yadda yadda")
+        val message = message("blah banf $parolaccia yadda yadda")
         parolacce.handle(message)
 
         assertThat(actionResponses).hasSize(1)

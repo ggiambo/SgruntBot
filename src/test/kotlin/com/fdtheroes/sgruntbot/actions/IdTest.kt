@@ -12,7 +12,7 @@ internal class IdTest : BaseTest() {
 
     @Test
     fun testPositive() {
-         val message = message("!id")
+        val message = message("!id")
         id.handle(message)
 
         assertThat(actionResponses).hasSize(1)

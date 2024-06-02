@@ -12,7 +12,7 @@ internal class TappetoTest : BaseTest() {
 
     @Test
     fun testPositive() {
-         val message = message("!tappeto malattia e tutto il FdT")
+        val message = message("!tappeto malattia e tutto il FdT")
         tappeto.handle(message)
 
         Assertions.assertThat(actionResponses).hasSize(1)

@@ -12,7 +12,7 @@ internal class SourceTest : BaseTest() {
 
     @Test
     fun testPositive() {
-         val message = message("!source")
+        val message = message("!source")
         source.handle(message)
 
         assertThat(actionResponses).hasSize(1)

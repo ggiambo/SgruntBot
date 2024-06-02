@@ -4,7 +4,6 @@ import com.fdtheroes.sgruntbot.handlers.message.HasHalp
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.scheduled.Scheduled
 import com.fdtheroes.sgruntbot.utils.BotUtils
-import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 import kotlin.random.Random
 

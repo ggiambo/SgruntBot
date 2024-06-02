@@ -42,7 +42,7 @@ class Karma(
         message: Message,
         ricevente: Long,
         n: Int,
-        newKarma: (oldKarma: Int) -> Int
+        newKarma: (oldKarma: Int) -> Int,
     ) {
 
         val utonto = userService.getUser(ricevente)

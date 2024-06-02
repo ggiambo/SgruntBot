@@ -15,7 +15,7 @@ internal class LastTest : BaseTest() {
     @Test
     fun testPositive() {
         botConfig.lastAuthor = user(Users.F)
-         val message = message("!last")
+        val message = message("!last")
         last.handle(message)
 
         assertThat(actionResponses).hasSize(1)

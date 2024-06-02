@@ -13,7 +13,7 @@ internal class SloganTest : BaseTest() {
 
     @Test
     fun testPositive() {
-         val message = message("!slogan la cacca molle")
+        val message = message("!slogan la cacca molle")
         slogan.handle(message)
 
         assertThat(actionResponses).hasSize(1)

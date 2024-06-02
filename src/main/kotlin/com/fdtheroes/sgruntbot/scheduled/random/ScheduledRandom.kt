@@ -1,4 +1,4 @@
-package com.fdtheroes.sgruntbot.scheduled.random;
+package com.fdtheroes.sgruntbot.scheduled.random
 
 import com.fdtheroes.sgruntbot.scheduled.Scheduled
 import java.time.LocalDateTime

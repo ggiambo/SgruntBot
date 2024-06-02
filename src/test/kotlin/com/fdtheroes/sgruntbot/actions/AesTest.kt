@@ -22,7 +22,7 @@ internal class AesTest : BaseTest() {
 
     @Test
     fun testDencrypt() {
-         val message = message("!aesd mySecretKey L9dQ8mCVcA3EyHZN+X+Pi2CYZnGnRXE3ol3qSmYnkgjnfYdVGGcLraGEgVXJYsto")
+        val message = message("!aesd mySecretKey L9dQ8mCVcA3EyHZN+X+Pi2CYZnGnRXE3ol3qSmYnkgjnfYdVGGcLraGEgVXJYsto")
         aes.handle(message)
 
         assertThat(actionResponses).hasSize(1)

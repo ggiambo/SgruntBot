@@ -12,7 +12,7 @@ internal class ParlaTest : BaseTest() {
 
     @Test
     fun testPositive() {
-         val message = message("!parla questo bot è stupendo!")
+        val message = message("!parla questo bot è stupendo!")
         parla.handle(message)
 
         assertThat(actionResponses).hasSize(1)

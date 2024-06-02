@@ -12,7 +12,7 @@ internal class GoogleTest : BaseTest() {
 
     @Test
     fun testPositive() {
-         val message = message("!google Sgrunt bot")
+        val message = message("!google Sgrunt bot")
         google.handle(message)
 
         assertThat(actionResponses).hasSize(1)
