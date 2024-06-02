@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 import org.mockito.Mockito.spy
 import org.mockito.kotlin.*
 import org.telegram.telegrambots.meta.api.objects.InputFile
-import org.telegram.telegrambots.meta.api.objects.Message
+import org.telegram.telegrambots.meta.api.objects.message.Message
 import java.io.ByteArrayInputStream
 
 class VocaleTest : BaseTest() {

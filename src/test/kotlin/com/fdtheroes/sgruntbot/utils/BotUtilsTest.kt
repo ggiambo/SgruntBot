@@ -50,7 +50,7 @@ class BotUtilsTest : BaseTest() {
         val chatMember = botUtils.getChatMember(99)!!
         assertThat(chatMember.id).isEqualTo(99)
         assertThat(chatMember.userName).isEqualTo("Username_99")
-        assertThat(chatMember.firstName).isNull()
+        assertThat(chatMember.firstName).isEmpty()
         assertThat(chatMember.lastName).isNull()
     }
 

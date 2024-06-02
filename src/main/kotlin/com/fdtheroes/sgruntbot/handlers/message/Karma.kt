@@ -6,7 +6,7 @@ import com.fdtheroes.sgruntbot.persistence.KarmaService
 import com.fdtheroes.sgruntbot.persistence.UsersService
 import com.fdtheroes.sgruntbot.utils.BotUtils
 import org.springframework.stereotype.Service
-import org.telegram.telegrambots.meta.api.objects.Message
+import org.telegram.telegrambots.meta.api.objects.message.Message
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.random.Random.Default.nextInt
