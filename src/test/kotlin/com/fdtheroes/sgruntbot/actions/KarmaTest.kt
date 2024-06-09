@@ -200,7 +200,7 @@ internal class KarmaTest : BaseTest() {
         return KarmaService(botUtils, karmaRepository())
     }
 
-    private fun karmaRepository() : KarmaRepository {
+    private fun karmaRepository(): KarmaRepository {
         val karmas = listOf(
             com.fdtheroes.sgruntbot.models.Karma(
                 karma = 100,

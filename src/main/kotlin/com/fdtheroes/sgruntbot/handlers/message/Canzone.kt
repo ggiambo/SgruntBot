@@ -6,7 +6,7 @@ import com.fdtheroes.sgruntbot.utils.BotUtils
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.InputFile
-import org.telegram.telegrambots.meta.api.objects.Message
+import org.telegram.telegrambots.meta.api.objects.message.Message
 import java.io.File
 import java.nio.file.Path
 import kotlin.io.path.Path
@@ -19,14 +19,15 @@ class Canzone(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtil
 
     private val log = LoggerFactory.getLogger(this.javaClass)
     private val regex = Regex("!canzone (.*)$", RegexOption.IGNORE_CASE)
-    private val destPath: Path
+    private val destPath by lazy { initDestPath() }
 
-    init {
+    private fun initDestPath(): Path {
         val tmpDir = System.getProperty("java.io.tmpdir")
-        destPath = Path(tmpDir, "songs")
-        if (!destPath.exists()) {
-            destPath.createDirectory()
+        val path = Path(tmpDir, "songs")
+        if (!path.exists()) {
+            path.createDirectory()
         }
+        return path
     }
 
     override fun handle(message: Message) {

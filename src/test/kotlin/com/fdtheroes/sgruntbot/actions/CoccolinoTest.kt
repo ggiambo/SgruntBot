@@ -13,7 +13,7 @@ internal class CoccolinoTest : BaseTest() {
 
     @Test
     fun testPositive_1() {
-         val message = message("coccolo", from = user(id = Users.DANIELE.id))
+        val message = message("coccolo", from = user(id = Users.DANIELE.id))
         coccolino.handle(message)
 
         assertThat(actionResponses).hasSize(1)
@@ -23,7 +23,7 @@ internal class CoccolinoTest : BaseTest() {
 
     @Test
     fun testPositive_2() {
-         val message = message("coccolino", from = user(id = Users.DANIELE.id))
+        val message = message("coccolino", from = user(id = Users.DANIELE.id))
         coccolino.handle(message)
 
         assertThat(actionResponses).hasSize(1)
@@ -33,7 +33,7 @@ internal class CoccolinoTest : BaseTest() {
 
     @Test
     fun testNegative() {
-         val message = message("coccolino", from = user(id = Users.F.id))
+        val message = message("coccolino", from = user(id = Users.F.id))
         coccolino.handle(message)
 
         assertThat(actionResponses).isEmpty()

@@ -4,8 +4,8 @@ import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.handlers.Handler
 import com.fdtheroes.sgruntbot.utils.BotUtils
 import org.slf4j.LoggerFactory
-import org.telegram.telegrambots.meta.api.objects.Message
 import org.telegram.telegrambots.meta.api.objects.Update
+import org.telegram.telegrambots.meta.api.objects.message.Message
 import java.time.LocalDateTime
 import kotlin.random.Random
 

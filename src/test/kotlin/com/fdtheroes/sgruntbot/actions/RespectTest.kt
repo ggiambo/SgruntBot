@@ -13,7 +13,7 @@ internal class RespectTest : BaseTest() {
 
     @Test
     fun testPositive() {
-         val message = message(
+        val message = message(
             text = "F",
             replyToMessage = message(text = "whatever", from = user(id = Users.IL_VINCI.id, userName = "AvveFaTutti"))
         )
@@ -27,7 +27,7 @@ internal class RespectTest : BaseTest() {
 
     @Test
     fun testNegative() {
-         val message = message("F..anculo")
+        val message = message("F..anculo")
         respect.handle(message)
 
         Assertions.assertThat(actionResponses).isEmpty()

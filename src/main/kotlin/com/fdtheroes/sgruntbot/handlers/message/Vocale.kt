@@ -6,7 +6,7 @@ import com.fdtheroes.sgruntbot.utils.BotUtils
 import org.springframework.http.HttpHeaders
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.InputFile
-import org.telegram.telegrambots.meta.api.objects.Message
+import org.telegram.telegrambots.meta.api.objects.message.Message
 
 @Service
 class Vocale(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils, botConfig), HasHalp {

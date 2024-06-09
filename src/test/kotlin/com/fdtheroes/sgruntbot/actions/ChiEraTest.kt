@@ -13,7 +13,7 @@ internal class ChiEraTest : BaseTest() {
     @Test
     fun testPositive() {
         botConfig.lastSuper = user()
-         val message = message("!chiera")
+        val message = message("!chiera")
         chiEra.handle(message)
 
         assertThat(actionResponses).hasSize(1)
@@ -24,7 +24,7 @@ internal class ChiEraTest : BaseTest() {
     @Test
     fun testPositive_2() {
         botConfig.lastSuper = user(42, userName = "", firstName = "Topopippo")
-         val message = message("!chiera")
+        val message = message("!chiera")
         chiEra.handle(message)
 
         assertThat(actionResponses).hasSize(1)
@@ -35,7 +35,7 @@ internal class ChiEraTest : BaseTest() {
     @Test
     fun testNegative() {
         botConfig.lastSuper = null
-         val message = message("!chiera")
+        val message = message("!chiera")
         chiEra.handle(message)
 
         assertThat(actionResponses).hasSize(0)

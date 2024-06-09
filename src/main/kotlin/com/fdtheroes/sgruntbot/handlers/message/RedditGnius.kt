@@ -8,7 +8,7 @@ import org.jsoup.Jsoup
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpHeaders
 import org.springframework.stereotype.Service
-import org.telegram.telegrambots.meta.api.objects.Message
+import org.telegram.telegrambots.meta.api.objects.message.Message
 import java.net.InetSocketAddress
 import java.net.Proxy
 import java.time.LocalDateTime

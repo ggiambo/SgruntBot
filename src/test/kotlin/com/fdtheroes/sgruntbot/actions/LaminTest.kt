@@ -12,7 +12,7 @@ internal class LaminTest : BaseTest() {
 
     @Test
     fun testPositive() {
-         val message = message("negraccio")
+        val message = message("negraccio")
         lamin.handle(message)
 
         assertThat(actionResponses).hasSize(1)
@@ -22,7 +22,7 @@ internal class LaminTest : BaseTest() {
 
     @Test
     fun testPositive_2() {
-         val message = message("__negher++")
+        val message = message("__negher++")
         lamin.handle(message)
 
         assertThat(actionResponses).hasSize(1)
@@ -32,7 +32,7 @@ internal class LaminTest : BaseTest() {
 
     @Test
     fun testNegative() {
-         val message = message("**negrini!!")
+        val message = message("**negrini!!")
         lamin.handle(message)
 
         assertThat(actionResponses).isEmpty()

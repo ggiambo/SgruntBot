@@ -1,4 +1,4 @@
-package com.fdtheroes.sgruntbot.persistence;
+package com.fdtheroes.sgruntbot.persistence
 
 import com.fdtheroes.sgruntbot.models.Utonto
 import com.fdtheroes.sgruntbot.utils.BotUtils

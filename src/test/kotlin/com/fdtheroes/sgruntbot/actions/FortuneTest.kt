@@ -12,7 +12,7 @@ internal class FortuneTest : BaseTest() {
 
     @Test
     fun testPositive() {
-         val message = message("!fortune")
+        val message = message("!fortune")
         fortune.handle(message)
 
         assertThat(actionResponses).hasSize(1)
@@ -22,7 +22,7 @@ internal class FortuneTest : BaseTest() {
 
     @Test
     fun testPositive_2() {
-         val message = message("!quote")
+        val message = message("!quote")
         fortune.handle(message)
 
         assertThat(actionResponses).hasSize(1)

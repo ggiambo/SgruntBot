@@ -4,7 +4,7 @@ import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.utils.BotUtils
 import org.springframework.stereotype.Service
-import org.telegram.telegrambots.meta.api.objects.Message
+import org.telegram.telegrambots.meta.api.objects.message.Message
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter
 class CheOreSono(
     botUtils: BotUtils,
     botConfig: BotConfig,
-    private val nowSupplier: () -> LocalDateTime = { LocalDateTime.now() } // used for testing){}
+    private val nowSupplier: () -> LocalDateTime = { LocalDateTime.now() }, // used for testing){}
 ) : MessageHandler(botUtils, botConfig), HasHalp {
 
     private val regex = Regex("che ore sono|che ora è", setOf(RegexOption.IGNORE_CASE, RegexOption.MULTILINE))

@@ -6,7 +6,7 @@ import com.fdtheroes.sgruntbot.persistence.StatsService
 import com.fdtheroes.sgruntbot.utils.BotUtils
 import com.fdtheroes.sgruntbot.utils.StatsUtil
 import org.springframework.stereotype.Service
-import org.telegram.telegrambots.meta.api.objects.Message
+import org.telegram.telegrambots.meta.api.objects.message.Message
 
 @Service
 class Stats(

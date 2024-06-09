@@ -1,8 +1,8 @@
 package com.fdtheroes.sgruntbot
 
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.stereotype.Service
-import org.telegram.telegrambots.bots.DefaultBotOptions
+import org.springframework.context.annotation.Configuration
+import org.telegram.telegrambots.meta.TelegramUrl
 import org.telegram.telegrambots.meta.api.methods.updates.AllowedUpdates
 import org.telegram.telegrambots.meta.api.objects.User
 import java.net.InetSocketAddress
@@ -10,7 +10,8 @@ import java.net.Proxy
 import java.net.URI
 import java.time.LocalDateTime
 
-@Service
+
+@Configuration
 class BotConfig(
     @Value("\${CHAT_ID}") val chatId: String,
     @Value("\${TELEGRAM_TOKEN}") val telegramToken: String,
@@ -18,38 +19,25 @@ class BotConfig(
 ) {
 
     val botName = "SgruntBot"
-    val defaultBotOptions by lazy { initDefaultBotOptions() }
-    val proxy by lazy { initProxy(defaultBotOptions) }
+    val proxy by lazy { initProxy() }
+    val allowedUpdates = listOf(
+        AllowedUpdates.MESSAGE,
+        "message_reaction",
+    )
+    val defaultUrl = { TelegramUrl.DEFAULT_URL }
 
     var lastSuper: User? = null
     var lastAuthor: User? = null
     var pignolo: Boolean = false
     var pausedTime: LocalDateTime? = null
 
-    private fun initDefaultBotOptions(): DefaultBotOptions {
-        val defaultBotOptions = DefaultBotOptions()
-        defaultBotOptions.allowedUpdates = listOf(
-            AllowedUpdates.MESSAGE,
-            "message_reaction",
-        )
-
-        val proxy = System.getenv()["https_proxy"]
-        if (proxy.isNullOrEmpty()) {
-            return defaultBotOptions
-        }
-        val uri = URI(proxy)
-        defaultBotOptions.proxyType = DefaultBotOptions.ProxyType.HTTP
-        defaultBotOptions.proxyHost = uri.host
-        defaultBotOptions.proxyPort = uri.port
-
-        return defaultBotOptions
-    }
-
-    private fun initProxy(options: DefaultBotOptions): Proxy {
-        if (options.proxyType == DefaultBotOptions.ProxyType.NO_PROXY) {
+    private fun initProxy(): Proxy {
+        val proxyEnv = System.getenv()["https_proxy"] ?: System.getenv()["http_proxy"]
+        if (proxyEnv.isNullOrEmpty()) {
             return Proxy.NO_PROXY
         }
-        return Proxy(Proxy.Type.HTTP, InetSocketAddress(options.proxyHost, options.proxyPort))
+        val uri = URI(proxyEnv)
+        return Proxy(Proxy.Type.HTTP, InetSocketAddress(uri.host, uri.port))
     }
 
     fun reset() {

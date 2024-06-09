@@ -1,4 +1,4 @@
-package com.fdtheroes.sgruntbot.utils;
+package com.fdtheroes.sgruntbot.utils
 
 import com.fdtheroes.sgruntbot.models.Stats
 import com.fdtheroes.sgruntbot.persistence.StatsService

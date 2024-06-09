@@ -35,10 +35,8 @@ dependencies {
     implementation("org.jetbrains.kotlin", "kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core")
     implementation("com.squareup.okhttp3", "okhttp")
-    implementation("org.telegram", "telegrambots", "6.9.7.1") {
-        // telegrambot dipende ancora da javax :(
-        exclude(group = "com.fasterxml.jackson.module", "jackson-module-jaxb-annotations")
-    }
+    implementation( "org.telegram", "telegrambots-springboot-longpolling-starter", "7.2.1")
+    implementation( "org.telegram", "telegrambots-client", "7.2.1")
     implementation("org.jsoup", "jsoup", "1.17.2")
     implementation("org.springdoc", "springdoc-openapi-starter-common", "2.5.0")
     implementation("org.springdoc", "springdoc-openapi-starter-webmvc-ui", "2.5.0")

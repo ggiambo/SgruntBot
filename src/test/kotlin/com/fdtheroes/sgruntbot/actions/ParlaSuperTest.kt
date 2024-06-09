@@ -13,7 +13,7 @@ internal class ParlaSuperTest : BaseTest() {
 
     @Test
     fun testPositive() {
-         val message = message(text = "!parlaSuper questo bot è stupendo!", from = user(id = Users.IL_VINCI.id))
+        val message = message(text = "!parlaSuper questo bot è stupendo!", from = user(id = Users.IL_VINCI.id))
         parlaSuper.handle(message)
 
         assertThat(actionResponses).hasSize(1)
@@ -23,7 +23,7 @@ internal class ParlaSuperTest : BaseTest() {
 
     @Test
     fun testNegative() {
-         val message = message("!parlaSuper questo bot è stupendo!")
+        val message = message("!parlaSuper questo bot è stupendo!")
         parlaSuper.handle(message)
 
         assertThat(actionResponses).isEmpty()
