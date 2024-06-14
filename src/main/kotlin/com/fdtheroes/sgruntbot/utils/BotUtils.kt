@@ -13,6 +13,7 @@ import org.telegram.telegrambots.longpolling.util.TelegramOkHttpClientFactory.Ht
 import org.telegram.telegrambots.meta.api.methods.ActionType
 import org.telegram.telegrambots.meta.api.methods.ParseMode
 import org.telegram.telegrambots.meta.api.methods.groupadministration.GetChatMember
+import org.telegram.telegrambots.meta.api.methods.reactions.SetMessageReaction
 import org.telegram.telegrambots.meta.api.methods.send.SendAudio
 import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
@@ -20,6 +21,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendPhoto
 import org.telegram.telegrambots.meta.api.objects.InputFile
 import org.telegram.telegrambots.meta.api.objects.User
 import org.telegram.telegrambots.meta.api.objects.message.Message
+import org.telegram.telegrambots.meta.api.objects.reactions.ReactionType
 import org.telegram.telegrambots.meta.generics.TelegramClient
 import java.io.InputStream
 import java.net.Proxy
@@ -106,6 +108,17 @@ class BotUtils(private val botConfig: BotConfig) {
             ActionResponseType.Photo -> photo(actionMessage.message, actionMessage.inputFile!!)
             ActionResponseType.Audio -> audio(actionMessage.inputFile!!)
         }
+    }
+
+    fun reaction(message: Message, reactionType: ReactionType) {
+       telegramClient.execute(
+            SetMessageReaction(
+                message.chatId.toString(),
+                message.messageId,
+                listOf(reactionType),
+                true
+            )
+        )
     }
 
     fun getChatMember(userId: Long): User? {
