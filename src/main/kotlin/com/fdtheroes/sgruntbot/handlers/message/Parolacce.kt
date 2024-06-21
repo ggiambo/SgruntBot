@@ -3,9 +3,10 @@ package com.fdtheroes.sgruntbot.handlers.message
 import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.utils.BotUtils
+import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.message.Message
 
-//@Service
+@Service
 class Parolacce(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils, botConfig) {
 
     private val regex = Regex(
@@ -27,7 +28,7 @@ class Parolacce(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUt
             "Ma dai $userLink, ci sono dei bambini!",
             "Cosa mi tocca sentire! $userLink, pregherò per la tua anima",
             "$userLink vai subito a lavarti la bocca col sapone!",
-            "Gnbe gne $userLink specchio riflesso!",
+            "Gne gne $userLink specchio riflesso!",
             "Un giovanotto come $userLink che dice queste parole?!",
         ).random()
     }

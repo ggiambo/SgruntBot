@@ -11,7 +11,7 @@ import org.telegram.telegrambots.meta.api.objects.reactions.MessageReactionUpdat
 import org.telegram.telegrambots.meta.api.objects.reactions.ReactionTypeEmoji
 import kotlin.random.Random.Default.nextInt
 
-@Service
+//@Service
 class ReactionHandler(private val botUtils: BotUtils) : Handler {
 
     override suspend fun handle(update: Update) {

@@ -5,7 +5,7 @@ import com.fdtheroes.sgruntbot.persistence.KarmaService
 import com.fdtheroes.sgruntbot.utils.BotUtils
 import org.springframework.stereotype.Service
 
-@Service
+//@Service
 class ScheduledKarma(private val botUtils: BotUtils, private val karmaService: KarmaService) : ScheduledAMezzanotte {
 
     override fun execute() {
