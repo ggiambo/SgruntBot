@@ -1,4 +1,4 @@
-# SgruntBot [![Java CI with Gradle](https://github.com/ggiambo/SgruntBot/actions/workflows/gradle.yml/badge.svg)](https://github.com/ggiambo/SgruntBot/actions/workflows/gradle.yml)
+# SgruntBot
 
 Tentativo di riscrittura di Sgrunty usando un linguaggio moderno, giovane e dinamico, proprio come te!
 
