@@ -31,10 +31,12 @@ class SgruntController(
     @GetMapping("/actions")
     @Operation(summary = "Lista di tutte le azioni di Sgrunty")
     fun getActions(): List<Any> {
-        return actions.map {
+        return actions
+            .filterIsInstance<HasHalp>()
+            .map {
             object {
                 val name = it::class.simpleName
-                val halp = if (it is HasHalp) it.halp() else ""
+                val halp = it.halp()
             }
         }
     }

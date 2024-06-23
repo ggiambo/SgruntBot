@@ -16,6 +16,8 @@ spring:
     init:
       mode: always
       schema-locations: classpath:schema.sql
+  jpa:
+    open-in-view: false
 
 springdoc:
   swagger-ui:
