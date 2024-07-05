@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 import kotlin.random.Random.Default.nextLong
 
-@Service
+//@Service
 class ScheduledRandomCuloDiPapa(private val botUtils: BotUtils) : ScheduledRandom {
 
     override fun execute() {
