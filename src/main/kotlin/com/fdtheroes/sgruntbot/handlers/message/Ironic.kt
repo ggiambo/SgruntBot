@@ -16,9 +16,9 @@ class Ironic(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils
         }
     }
 
-    private fun ironic(text: String): String {
+    fun ironic(text: String): String {
         return text.uppercase().mapIndexed { index, c ->
-            if (index % 2 == 0) c.lowercaseChar()
+            if (index % 2 == 0) c.lowercaseChar() else c
         }.joinToString(
             separator = "",
             prefix = "\"",
