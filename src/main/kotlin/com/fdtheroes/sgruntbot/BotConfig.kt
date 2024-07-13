@@ -22,7 +22,7 @@ class BotConfig(
 
     val botName = "SgruntBot"
     val proxy by lazy { initProxy() }
-    val allowedUpdates = DefaultGetUpdatesGenerator(listOf(AllowedUpdates.MESSAGE, "message_reaction"))
+    val allowedUpdates = DefaultGetUpdatesGenerator(listOf(AllowedUpdates.MESSAGE, AllowedUpdates.MESSAGEREACTION))
     val defaultUrl = { TelegramUrl.DEFAULT_URL }
 
     var lastSuper: User? = null
