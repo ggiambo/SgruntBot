@@ -11,6 +11,6 @@ interface UtontiRepository : JpaRepository<Utonto, Long> {
     fun findByUserId(userId: Long): Utonto?
 
     @Transactional
-    fun deleteAllByUserIdIn(userIds: List<Long>)
+    fun deleteAllByUserIdNotIn(userIds: List<Long>): List<Utonto>
 
 }

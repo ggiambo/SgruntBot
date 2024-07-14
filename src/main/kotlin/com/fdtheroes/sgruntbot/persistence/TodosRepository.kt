@@ -12,6 +12,6 @@ interface TodosRepository : JpaRepository<Todos, Long> {
     fun findByIdAndUserIdAndOpen(id: Long, userId: Long, open: Boolean): Todos?
 
     @Transactional
-    fun deleteAllByUserIdIn(userIds: List<Long>)
+    fun deleteAllByUserIdNotIn(userIds: List<Long>): List<Todos>
 
 }

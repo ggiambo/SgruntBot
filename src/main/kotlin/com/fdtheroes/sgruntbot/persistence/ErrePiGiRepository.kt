@@ -8,5 +8,5 @@ import org.springframework.transaction.annotation.Transactional
 @Repository
 interface ErrePiGiRepository : JpaRepository<ErrePiGi, Long> {
     @Transactional
-    fun deleteAllByUserIdIn(userIds: List<Long>)
+    fun deleteAllByUserIdNotIn(userIds: List<Long>): List<ErrePiGi>
 }

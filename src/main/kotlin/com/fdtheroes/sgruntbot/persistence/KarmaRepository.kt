@@ -11,7 +11,7 @@ interface KarmaRepository : CrudRepository<Karma, Long> {
     fun getByUserId(userId: Long): Karma
 
     @Transactional
-    fun deleteAllByUserIdIn(userIds: List<Long>)
+    fun deleteAllByUserIdNotIn(userIds: List<Long>): List<Karma>
 
     companion object {
         const val dailyKarmaCredit = 5

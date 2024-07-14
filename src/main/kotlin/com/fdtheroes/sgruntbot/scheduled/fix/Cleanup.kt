@@ -4,9 +4,10 @@ import com.fdtheroes.sgruntbot.persistence.*
 import com.fdtheroes.sgruntbot.scheduled.Scheduled
 import com.fdtheroes.sgruntbot.utils.BotUtils
 import org.slf4j.LoggerFactory
+import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
-//@Service
+@Service
 class Cleanup(
     private val botUtils: BotUtils,
     private val errePiGiRepository: ErrePiGiRepository,
@@ -22,16 +23,21 @@ class Cleanup(
     override fun nextRun() = LocalDateTime.now().plusHours(6)
 
     override fun execute() {
-        val fantasmi = utontiRepository.findAll()
+        val viventi = utontiRepository.findAll()
             .map { it.userId!! }
-            .filter { botUtils.getChatMember(it) == null }
-        if (fantasmi.isNotEmpty()) {
-            log.info("Cancello i seguenti fantasmi: ${fantasmi.joinToString()}")
-            errePiGiRepository.deleteAllByUserIdIn(fantasmi)
-            karmaRepository.deleteAllByUserIdIn(fantasmi)
-            statsRepository.deleteAllByUserIdIn(fantasmi)
-            utontiRepository.deleteAllByUserIdIn(fantasmi)
-            todosRepository.deleteAllByUserIdIn(fantasmi)
+            .filter { botUtils.getChatMember(it) != null }
+        if (viventi.isNotEmpty()) {
+            log.info("I seguenti utonti sono ancora vivi: ${viventi.joinToString()}")
+            logDelete(errePiGiRepository.deleteAllByUserIdNotIn(viventi))
+            logDelete(karmaRepository.deleteAllByUserIdNotIn(viventi))
+            logDelete(statsRepository.deleteAllByUserIdNotIn(viventi))
+            logDelete(utontiRepository.deleteAllByUserIdNotIn(viventi))
+            logDelete(todosRepository.deleteAllByUserIdNotIn(viventi))
         }
+    }
+
+    private fun logDelete(entities: List<*>) {
+        log.info("Deleted: $entities")
+
     }
 }

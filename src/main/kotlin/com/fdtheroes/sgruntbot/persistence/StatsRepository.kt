@@ -12,7 +12,7 @@ interface StatsRepository : CrudRepository<Stats, Long> {
     fun findStatsByUserIdAndStatDay(userId: Long, day: LocalDate): Stats?
 
     @Transactional
-    fun deleteAllByUserIdIn(userIds: List<Long>)
+    fun deleteAllByUserIdNotIn(userIds: List<Long>): List<Stats>
 
     fun findStatsByStatDayBetween(startStatDay: LocalDate, endStatDay: LocalDate): List<Stats>
 
