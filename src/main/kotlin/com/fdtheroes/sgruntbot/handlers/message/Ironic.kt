@@ -11,7 +11,7 @@ import kotlin.random.Random
 class Ironic(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils, botConfig) {
 
     override fun handle(message: Message) {
-        if (message.text.length <= 80 && Random.nextInt(100) == 0) {
+        if (message.text.length <= 80 && Random.nextInt(150) == 0) {
             botUtils.rispondi(ActionResponse.message(ironic(message.text)), message)
         }
     }

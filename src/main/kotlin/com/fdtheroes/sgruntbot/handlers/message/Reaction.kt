@@ -86,8 +86,8 @@ class Reaction(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUti
     );
 
     override fun handle(message: Message) {
-        // 1% di probabilità
-        if (nextInt(100) == 0) {
+        // 0.5% di probabilità
+        if (nextInt(200) == 0) {
             val emoji = ReactionTypeEmoji.builder().emoji(allowedEmoji.random()).build()
             botUtils.reaction(message, emoji)
         }
