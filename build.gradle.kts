@@ -5,7 +5,7 @@ plugins {
     kotlin("jvm") version "2.0.0"
     kotlin("plugin.spring") version "2.0.0"
     kotlin("plugin.jpa") version "2.0.0"
-    id("org.springframework.boot") version "3.3.1"
+    id("org.springframework.boot") version "3.3.2"
     id("io.spring.dependency-management") version "1.1.6"
     id("com.github.ben-manes.versions") version "0.51.0"
     id("com.glovoapp.semantic-versioning") version "1.1.10"
@@ -35,8 +35,8 @@ dependencies {
     implementation("org.jetbrains.kotlin", "kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core")
     implementation("com.squareup.okhttp3", "okhttp")
-    implementation( "org.telegram", "telegrambots-longpolling", "7.7.0")
-    implementation( "org.telegram", "telegrambots-client", "7.7.0")
+    implementation( "org.telegram", "telegrambots-longpolling", "7.7.1")
+    implementation( "org.telegram", "telegrambots-client", "7.7.1")
     implementation("org.jsoup", "jsoup", "1.18.1")
     implementation("org.springdoc", "springdoc-openapi-starter-common", "2.6.0")
     implementation("org.springdoc", "springdoc-openapi-starter-webmvc-ui", "2.6.0")
