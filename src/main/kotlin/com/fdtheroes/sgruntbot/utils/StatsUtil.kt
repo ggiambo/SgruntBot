@@ -4,12 +4,16 @@ import com.fdtheroes.sgruntbot.models.Stats
 import com.fdtheroes.sgruntbot.persistence.StatsService
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.InputFile
+import java.text.DecimalFormat
+import java.text.NumberFormat
 
 @Service
 class StatsUtil(
     private val statsService: StatsService,
     private val botUtils: BotUtils,
 ) {
+
+    private val percentageFormatter = DecimalFormat("00.00")
 
     fun getStats(tipo: StatsType): InputFile {
         val stats = when (tipo) {
@@ -39,7 +43,8 @@ class StatsUtil(
             .forEach { stat ->
                 val userName = botUtils.getUserName(botUtils.getChatMember(stat.userId))
                 val percentage = getPercentage(stat.messages, totalMessages)
-                val name = "$userName $percentage%"
+                val formattedPercentage = percentageFormatter.format(percentage)
+                val name = "$userName $formattedPercentage%"
                 pieChart.addSeries(name, stat.messages)
             }
 
@@ -47,8 +52,8 @@ class StatsUtil(
         return ChartUtils.getAsInputFile(pieChart)
     }
 
-    private fun getPercentage(messages: Int, total: Int): Int {
-        return (messages * 100) / total
+    private fun getPercentage(messages: Int, total: Int): Double {
+        return (messages * 100) / total.toDouble()
     }
 
     enum class StatsType(val type: String, val desc: String) {
@@ -59,7 +64,7 @@ class StatsUtil(
         ;
 
         companion object {
-            private val byType = StatsType.values().associateBy { it.type }
+            private val byType = entries.associateBy { it.type }
             fun getByType(type: String?): StatsType {
                 val tipo = type.orEmpty().trim().lowercase()
                 if (tipo.isEmpty()) {
