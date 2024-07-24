@@ -1,104 +1,64 @@
 package com.fdtheroes.sgruntbot.handlers.message
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.utils.BotUtils
-import org.slf4j.LoggerFactory
+import com.fdtheroes.sgruntbot.utils.BotUtils.Companion.urlEncode
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.InputFile
 import org.telegram.telegrambots.meta.api.objects.message.Message
-import java.io.File
-import java.nio.file.Path
-import kotlin.io.path.Path
-import kotlin.io.path.createDirectory
-import kotlin.io.path.exists
-import kotlin.io.path.pathString
+import java.io.InputStream
+import java.net.URL
 
 @Service
-class Canzone(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils, botConfig), HasHalp {
+class Canzone(
+    botUtils: BotUtils,
+    botConfig: BotConfig,
+    val mapper: ObjectMapper,
+) : MessageHandler(botUtils, botConfig), HasHalp {
 
-    private val log = LoggerFactory.getLogger(this.javaClass)
+    private val instanceUrl by lazy { initInstanceUrl() }
     private val regex = Regex("!canzone (.*)$", RegexOption.IGNORE_CASE)
-    private val destPath by lazy { initDestPath() }
-
-    private fun initDestPath(): Path {
-        val tmpDir = System.getProperty("java.io.tmpdir")
-        val path = Path(tmpDir, "songs")
-        if (!path.exists()) {
-            path.createDirectory()
-        }
-        return path
-    }
 
     override fun handle(message: Message) {
         val canzone = regex.find(message.text)?.groupValues?.get(1)
         if (canzone != null) {
-            val fileName = fetch(canzone)
-            if (fileName == null) {
+            val titleAndVideoId = getTitleAndVideoId(canzone)
+            if (titleAndVideoId.first == null || titleAndVideoId.second == null) {
                 botUtils.rispondi(ActionResponse.message("Non ci riesco."), message)
                 return
             }
-            val file = destPath.resolve(fileName).toFile()
-            if (file.exists()) {
-                log.info("canzone da ${getSize(file)}")
-            }
-            val audio = InputFile(file, fileName)
-            botUtils.rispondi(ActionResponse.audio(fileName, audio), message)
+            val title = titleAndVideoId.first!!
+            val videoId = titleAndVideoId.second!!
+            val file = download(videoId)
+
+            val audio = InputFile(file, title)
+            botUtils.rispondi(ActionResponse.audio(title, audio), message)
         }
+
+    }
+
+    private fun download(videoId: String): InputStream {
+        val videosUrl = "$instanceUrl/api/v1/videos/$videoId"
+        val textFromURL = botUtils.textFromURL(videosUrl)
+        val url = mapper.readTree(textFromURL)["adaptiveFormats"][0]["url"].textValue()
+        val videoUrl = URL(url)
+        val downloadUrl = "${instanceUrl}${videoUrl.path}?${videoUrl.query}"
+        return botUtils.streamFromURL(downloadUrl)
+    }
+
+    private fun getTitleAndVideoId(query: String): Pair<String?, String?> {
+        val searchUrl = "$instanceUrl/api/v1/search?q=${query.urlEncode()}&type=video&region=IT&sort=relevance"
+        val textFromURL = botUtils.textFromURL(searchUrl)
+        val firstEntry = mapper.readTree(textFromURL)[0]
+        return Pair(firstEntry["title"].textValue(), firstEntry["videoId"].textValue())
+    }
+
+    private fun initInstanceUrl(): String {
+        val textFromURL = botUtils.textFromURL("https://api.invidious.io/instances.json")
+        return mapper.readTree(textFromURL)[0][1]["uri"].textValue()
     }
 
     override fun halp() = "<b>!canzone</b> <i>la tua canzone</i> cerca e scarica la tua canzone"
-
-    private fun fetch(query: String): String? {
-        val destDir = destPath.pathString
-        val processOutput = ProcessBuilder()
-            .command(
-                "sh", "-c",
-                """yt-dlp --restrict-filenames --extract-audio --audio-format mp3 --output "$destDir/%(title)s.mp3" "ytsearch1:$query" --geo-bypass-country IT 2>&1"""
-            )
-            .start()
-            .inputStream
-            .bufferedReader()
-            .readText()
-
-        return extractFilename(processOutput)
-    }
-
-    private fun extractFilename(processOutput: String): String? {
-        val destDir = destPath.pathString
-        var fileName = Regex("Destination: $destDir/(.*)")
-            .findAll(processOutput)
-            .map { it.groupValues[1] }
-            .firstOrNull()
-        if (fileName == null) {
-            fileName = Regex(" $destDir/(.*) has already been downloaded")
-                .findAll(processOutput)
-                .map { it.groupValues[1] }
-                .firstOrNull()
-        }
-
-        return fileName
-    }
-
-    private fun getSize(file: File): String {
-        val sizeInBytes = file.length()
-        if (sizeInBytes < 1024) {
-            return "$sizeInBytes bytes"
-        }
-        val sizeInKilo = sizeInBytes / 1024
-        if (sizeInKilo < 1024) {
-            return "$sizeInKilo K"
-        }
-        val sizeInMega = sizeInKilo / 1024
-        if (sizeInMega < 1024) {
-            return "$sizeInMega M"
-        }
-        val sizeInGiga = sizeInMega / 1024
-        if (sizeInGiga < 1024) {
-            return "$sizeInGiga G"
-        }
-
-        return "no, aspè, oltre 1 tera ?!?!"
-    }
-
 }

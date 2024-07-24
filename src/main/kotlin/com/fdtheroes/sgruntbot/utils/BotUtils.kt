@@ -74,8 +74,9 @@ class BotUtils(private val botConfig: BotConfig) {
         val client = OkHttpClient().newBuilder()
             .proxy(proxy)
             .build()
+        val formattedUrl = if (params.isNullOrEmpty()) url else String.format(url, *params.toTypedArray())
         val request = Request.Builder()
-            .url(String.format(url, *params.orEmpty().toTypedArray()))
+            .url(formattedUrl)
             .apply { headers.forEach { header(it.first, it.second) } }
             .get()
             .build()
