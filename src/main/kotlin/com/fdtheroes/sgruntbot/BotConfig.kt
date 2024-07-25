@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Configuration
 import org.telegram.telegrambots.longpolling.util.DefaultGetUpdatesGenerator
 import org.telegram.telegrambots.meta.TelegramUrl
 import org.telegram.telegrambots.meta.api.methods.updates.AllowedUpdates
-import org.telegram.telegrambots.meta.api.methods.updates.GetUpdates
 import org.telegram.telegrambots.meta.api.objects.User
 import java.net.InetSocketAddress
 import java.net.Proxy
