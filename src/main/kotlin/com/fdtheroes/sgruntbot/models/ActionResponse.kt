@@ -6,6 +6,7 @@ class ActionResponse(
     val type: ActionResponseType,
     val message: String,
     val inputFile: InputFile? = null,
+    val thumbnail: InputFile? = null,
 ) {
     companion object {
         fun message(message: String) =
@@ -14,8 +15,8 @@ class ActionResponse(
         fun photo(caption: String, inputFile: InputFile) =
             ActionResponse(ActionResponseType.Photo, caption, inputFile)
 
-        fun audio(filename: String, inputFile: InputFile) =
-            ActionResponse(ActionResponseType.Audio, filename, inputFile)
+        fun audio(filename: String, inputFile: InputFile, thumbnail: InputFile? = null) =
+            ActionResponse(ActionResponseType.Audio, filename, inputFile, thumbnail)
     }
 
 }

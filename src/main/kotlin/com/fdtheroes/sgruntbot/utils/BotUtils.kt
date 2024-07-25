@@ -30,6 +30,7 @@ import java.nio.charset.StandardCharsets
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.util.*
+import java.util.concurrent.TimeUnit
 import java.util.stream.StreamSupport
 import kotlin.random.Random
 
@@ -73,6 +74,9 @@ class BotUtils(private val botConfig: BotConfig) {
     ): InputStream {
         val client = OkHttpClient().newBuilder()
             .proxy(proxy)
+            .connectTimeout(10, TimeUnit.SECONDS)
+            .readTimeout(10, TimeUnit.SECONDS)
+            .writeTimeout(10, TimeUnit.SECONDS)
             .build()
         val formattedUrl = if (params.isNullOrEmpty()) url else String.format(url, *params.toTypedArray())
         val request = Request.Builder()
@@ -99,7 +103,7 @@ class BotUtils(private val botConfig: BotConfig) {
         when (actionMessage.type) {
             ActionResponseType.Message -> rispondiMessaggio(message, actionMessage.message)
             ActionResponseType.Photo -> rispondiPhoto(message, actionMessage.message, actionMessage.inputFile!!)
-            ActionResponseType.Audio -> rispondiAudio(message, actionMessage.inputFile!!)
+            ActionResponseType.Audio -> rispondiAudio(message, actionMessage.inputFile!!, actionMessage.thumbnail)
         }
     }
 
@@ -112,7 +116,7 @@ class BotUtils(private val botConfig: BotConfig) {
     }
 
     fun reaction(message: Message, reactionType: ReactionType) {
-       telegramClient.execute(
+        telegramClient.execute(
             SetMessageReaction(
                 message.chatId.toString(),
                 message.messageId,
@@ -204,11 +208,12 @@ class BotUtils(private val botConfig: BotConfig) {
         )
     }
 
-    private fun rispondiAudio(message: Message, audio: InputFile) {
+    private fun rispondiAudio(message: Message, audio: InputFile, thumbnail: InputFile? = null) {
         sgruntyScrive(message.chatId.toString(), ActionType.UPLOAD_VOICE)
         telegramClient.execute(
             SendAudio(message.chatId.toString(), audio).apply {
                 this.replyToMessageId = message.messageId
+                this.thumbnail = thumbnail
             }
         )
     }

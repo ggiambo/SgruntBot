@@ -37,7 +37,8 @@ class Cleanup(
     }
 
     private fun logDelete(entities: List<*>) {
-        log.info("Deleted: $entities")
-
+        if (entities.isNotEmpty()) {
+            log.info("Deleted: $entities")
+        }
     }
 }

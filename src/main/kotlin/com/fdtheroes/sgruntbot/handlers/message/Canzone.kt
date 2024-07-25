@@ -1,5 +1,6 @@
 package com.fdtheroes.sgruntbot.handlers.message
 
+import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.models.ActionResponse
@@ -22,33 +23,51 @@ class Canzone(
 ) : MessageHandler(botUtils, botConfig), HasHalp {
 
     private val regex = Regex("!canzone (.*)$", RegexOption.IGNORE_CASE)
+    private val log = LoggerFactory.getLogger(this.javaClass)
 
     override fun handle(message: Message) {
         val canzone = regex.find(message.text)?.groupValues?.get(1)
         if (canzone != null) {
-            val titleAndVideoId = getTitleAndVideoId(canzone)
-            if (titleAndVideoId.first == null || titleAndVideoId.second == null) {
+            val (title, videoId) = getTitleAndVideoId(canzone)
+            if (title == null || videoId == null) {
                 botUtils.rispondi(ActionResponse.message("Non ci riesco."), message)
                 return
             }
-            val title = titleAndVideoId.first!!
-            val videoId = titleAndVideoId.second!!
-            val file = download(videoId)
+            val (video, thumbnail) = videoAndThumbnail(videoId, title)
 
-            val audio = InputFile(file, title)
-            botUtils.rispondi(ActionResponse.audio(title, audio), message)
+            botUtils.rispondi(ActionResponse.audio(title, video, thumbnail), message)
         }
-
     }
 
-    private fun download(videoId: String): InputStream {
+    private fun videoAndThumbnail(videoId: String, title: String): Pair<InputFile, InputFile> {
         val instanceUrl = canzoneCache.initInstanceUrl()
         val videosUrl = "$instanceUrl/api/v1/videos/$videoId"
         val textFromURL = botUtils.textFromURL(videosUrl)
-        val url = mapper.readTree(textFromURL)["adaptiveFormats"][0]["url"].textValue()
+        val content = mapper.readTree(textFromURL)
+
+        val video = InputFile(getVideo(content), title)
+        val thumbnail = InputFile(getThumbnail(content), "thumbnail.jpg")
+
+        return Pair(video, thumbnail)
+    }
+
+    private fun getVideo(content: JsonNode): InputStream {
+        val url = content["adaptiveFormats"][0]["url"].textValue()
         val videoUrl = URL(url)
+        val instanceUrl = canzoneCache.initInstanceUrl()
         val downloadUrl = "${instanceUrl}${videoUrl.path}?${videoUrl.query}"
         return botUtils.streamFromURL(downloadUrl)
+    }
+
+    private fun getThumbnail(content: JsonNode): InputStream? {
+        val url = content["videoThumbnails"].toList().firstOrNull {
+            it["quality"].textValue() == "default"
+        }
+        log.info("Thumbnail: $url")
+        if (url == null) {
+            return null
+        }
+        return botUtils.streamFromURL(url["url"].textValue())
     }
 
     private fun getTitleAndVideoId(query: String): Pair<String?, String?> {
