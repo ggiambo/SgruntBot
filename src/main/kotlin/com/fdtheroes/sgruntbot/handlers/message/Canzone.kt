@@ -6,6 +6,7 @@ import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.utils.BotUtils
 import com.fdtheroes.sgruntbot.utils.BotUtils.Companion.urlEncode
+import kotlinx.coroutines.*
 import org.slf4j.LoggerFactory
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
@@ -23,18 +24,20 @@ class Canzone(
 ) : MessageHandler(botUtils, botConfig), HasHalp {
 
     private val regex = Regex("!canzone (.*)$", RegexOption.IGNORE_CASE)
-    private val log = LoggerFactory.getLogger(this.javaClass)
 
     override fun handle(message: Message) {
         val canzone = regex.find(message.text)?.groupValues?.get(1)
         if (canzone != null) {
+            CoroutineScope(Dispatchers.Default).launch {
+                botUtils.sgruntyScrive(botConfig.chatId)
+            }
             val (title, videoId) = getTitleAndVideoId(canzone)
             if (title == null || videoId == null) {
                 botUtils.rispondi(ActionResponse.message("Non ci riesco."), message)
                 return
             }
-            val (video, thumbnail) = videoAndThumbnail(videoId, title)
 
+            val (video, thumbnail) = videoAndThumbnail(videoId, title)
             botUtils.rispondi(ActionResponse.audio(title, video, thumbnail), message)
         }
     }
@@ -45,29 +48,36 @@ class Canzone(
         val textFromURL = botUtils.textFromURL(videosUrl)
         val content = mapper.readTree(textFromURL)
 
-        val video = InputFile(getVideo(content), title)
-        val thumbnail = InputFile(getThumbnail(content), "thumbnail.jpg")
+        val (videoInputStream, thumbnailInputStream) = runBlocking {
+            awaitAll(getVideo(content), getThumbnail(content))
+        }
+
+        val video = InputFile(videoInputStream, title)
+        val thumbnail = InputFile(thumbnailInputStream, "thumbnail.jpg")
 
         return Pair(video, thumbnail)
     }
 
-    private fun getVideo(content: JsonNode): InputStream {
+    private fun getVideo(content: JsonNode): Deferred<InputStream> {
         val url = content["adaptiveFormats"][0]["url"].textValue()
         val videoUrl = URL(url)
         val instanceUrl = canzoneCache.initInstanceUrl()
         val downloadUrl = "${instanceUrl}${videoUrl.path}?${videoUrl.query}"
-        return botUtils.streamFromURL(downloadUrl)
+        return CoroutineScope(Dispatchers.Default).async {
+            botUtils.streamFromURL(downloadUrl)
+        }
     }
 
-    private fun getThumbnail(content: JsonNode): InputStream? {
+    private fun getThumbnail(content: JsonNode): Deferred<InputStream?> {
         val url = content["videoThumbnails"].toList().firstOrNull {
             it["quality"].textValue() == "default"
         }
-        log.info("Thumbnail: $url")
         if (url == null) {
-            return null
+            return CoroutineScope(Dispatchers.Default).async { null }
         }
-        return botUtils.streamFromURL(url["url"].textValue())
+        return CoroutineScope(Dispatchers.Default).async {
+            botUtils.streamFromURL(url["url"].textValue())
+        }
     }
 
     private fun getTitleAndVideoId(query: String): Pair<String?, String?> {

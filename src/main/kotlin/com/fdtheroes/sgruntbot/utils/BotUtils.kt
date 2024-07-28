@@ -155,7 +155,7 @@ class BotUtils(private val botConfig: BotConfig) {
         return input.take(newLength) + "..."
     }
 
-    private fun sgruntyScrive(chatId: String, actionType: ActionType = ActionType.TYPING) {
+    fun sgruntyScrive(chatId: String, actionType: ActionType = ActionType.TYPING) {
         telegramClient.execute(
             SendChatAction(chatId, actionType.name)
         )

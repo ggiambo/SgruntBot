@@ -2,9 +2,7 @@ package com.fdtheroes.sgruntbot
 
 import com.fdtheroes.sgruntbot.handlers.Handler
 import jakarta.annotation.PostConstruct
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.longpolling.TelegramBotsLongPollingApplication
@@ -19,7 +17,6 @@ class SgruntBot(
 ) : LongPollingSingleThreadUpdateConsumer {
 
     private val log = LoggerFactory.getLogger(this.javaClass)
-    val coroutineScope = CoroutineScope(SupervisorJob())
 
     @PostConstruct
     fun postConstruct() {
@@ -33,10 +30,8 @@ class SgruntBot(
     }
 
     override fun consume(update: Update) {
-        coroutineScope.launch {
-            handlers.forEach {
-                it.handle(update)
-            }
+        handlers.forEach {
+            CoroutineScope(Dispatchers.Default).launch { it.handle(update) }
         }
     }
 
