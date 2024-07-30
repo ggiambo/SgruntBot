@@ -10,6 +10,7 @@ import kotlinx.coroutines.*
 import org.slf4j.LoggerFactory
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
+import org.telegram.telegrambots.meta.api.methods.ActionType
 import org.telegram.telegrambots.meta.api.objects.InputFile
 import org.telegram.telegrambots.meta.api.objects.message.Message
 import java.io.InputStream
@@ -29,7 +30,7 @@ class Canzone(
         val canzone = regex.find(message.text)?.groupValues?.get(1)
         if (canzone != null) {
             CoroutineScope(Dispatchers.Default).launch {
-                botUtils.sgruntyScrive(botConfig.chatId)
+                botUtils.sgruntyScrive(botConfig.chatId, ActionType.UPLOAD_VOICE)
             }
             val (title, videoId) = getTitleAndVideoId(canzone)
             if (title == null || videoId == null) {
