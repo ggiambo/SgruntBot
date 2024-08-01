@@ -14,53 +14,46 @@ class Wiki(botUtils: BotUtils, botConfig: BotConfig, val mapper: ObjectMapper) :
 
     private val regex = Regex("^!wiki (.*)$", RegexOption.IGNORE_CASE)
 
-    private val URL_titleAndURL = "https://it.wikipedia.org/w/api.php?action=opensearch&profile=fuzzy&search=%s"
-    private val URL_extract =
+    private val searchTitle = "https://it.wikipedia.org/w/api.php?format=json&action=query&list=search&srsearch=%s"
+    private val description =
         "https://it.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=%s"
+    private val urlByTitle = "https://it.wikipedia.org/w/index.php?title=%s"
 
     override fun handle(message: Message) {
         val query = regex.find(message.text)?.groupValues?.get(1)
         if (query != null) {
-            val titleAndURL = getTitleAndURL(query.urlEncode())
-            val title = titleAndURL.first
-            val url = titleAndURL.second
-            if (title.isNullOrEmpty() || url.isNullOrEmpty()) {
+            val title = getTitle(query.urlEncode())
+            if (title.isNullOrEmpty()) {
                 botUtils.rispondi(ActionResponse.message("Non c'è."), message)
                 return
             }
 
-            val testo = getExtract(title.urlEncode())
-            if (testo.isNullOrEmpty()) {
-                botUtils.rispondi(ActionResponse.message("Non c'è."), message)
-                return
-            }
+            val description = getDescription(title)
+            val url = String.format(urlByTitle, title)
 
-            val risposta = "$testo\n$url"
+            val risposta = "$description\n$url"
             botUtils.rispondi(ActionResponse.message(risposta), message)
         }
     }
 
     override fun halp() = "<b>!wiki</b> <i>termine da cercare</i>"
 
-    private fun getTitleAndURL(query: String): Pair<String?, String?> {
-        val testo =
-            botUtils.textFromURL(URL_titleAndURL, listOf(query))
+    private fun getTitle(query: String): String? {
+        val testo = botUtils.textFromURL(searchTitle, listOf(query))
         val jsNode = mapper.readTree(testo)
 
-        val titolo = jsNode[1][0]?.textValue()
-        val url = jsNode[3][0]?.textValue()
+        val search = jsNode["query"]["search"].firstOrNull()
+        if (search == null) {
+            return null
+        }
 
-        return Pair(titolo, url)
+        return search["title"].textValue().urlEncode()
     }
 
-    private fun getExtract(title: String): String? {
-        val testo =
-            botUtils.textFromURL(URL_extract, listOf(title))
-        val jsNode = mapper.readTree(testo)["query"]["pages"]
-            .elements()
-            .next()["extract"]
-
-        return jsNode?.textValue()
+    private fun getDescription(title: String): String {
+        val testo = botUtils.textFromURL(description, listOf(title))
+        val jsNode = mapper.readTree(testo)
+        return jsNode["query"]["pages"].first()["extract"].textValue()
     }
 
 }
