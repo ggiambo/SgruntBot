@@ -12,34 +12,38 @@ import org.telegram.telegrambots.meta.api.objects.message.Message
 class Wiki(botUtils: BotUtils, botConfig: BotConfig, val mapper: ObjectMapper) : MessageHandler(botUtils, botConfig),
     HasHalp {
 
-    private val regex = Regex("^!wiki (.*)$", RegexOption.IGNORE_CASE)
+    private val regex = Regex("^!(en)?wiki (.*)$", RegexOption.IGNORE_CASE)
 
-    private val searchTitle = "https://it.wikipedia.org/w/api.php?format=json&action=query&list=search&srsearch=%s"
+    private val searchTitle = "https://%swikipedia.org/w/api.php?format=json&action=query&list=search&srsearch=%s"
     private val description =
-        "https://it.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=%s"
-    private val urlByTitle = "https://it.wikipedia.org/w/index.php?title=%s"
+        "https://%swikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=%s"
+    private val urlByTitle = "https://%swikipedia.org/w/index.php?title=%s"
 
     override fun handle(message: Message) {
-        val query = regex.find(message.text)?.groupValues?.get(1)
-        if (query != null) {
-            val title = getTitle(query.urlEncode())
+        val groups = regex.find(message.text)?.groupValues.orEmpty()
+        if (groups.size == 3) {
+            val lingua = if (groups[1].isNotEmpty()) "en." else "it."
+
+            val query = groups[2]
+            val title = getTitle(lingua, query.urlEncode())
             if (title.isNullOrEmpty()) {
                 botUtils.rispondi(ActionResponse.message("Non c'è."), message)
                 return
             }
 
-            val description = getDescription(title)
-            val url = String.format(urlByTitle, title)
+            val description = getDescription(lingua, title)
+            val url = String.format(urlByTitle, lingua, title)
 
             val risposta = "$description\n$url"
             botUtils.rispondi(ActionResponse.message(risposta), message)
         }
     }
 
-    override fun halp() = "<b>!wiki</b> <i>termine da cercare</i>"
+    override fun halp() = "<b>!wiki</b> <i>termine da cercare</i> (<b>!enwiki</b> per cercare in inglese)"
 
-    private fun getTitle(query: String): String? {
-        val testo = botUtils.textFromURL(searchTitle, listOf(query))
+    private fun getTitle(lingua: String, query:String): String? {
+        val searchTitleUrl = String.format(searchTitle, lingua, query)
+        val testo = botUtils.textFromURL(searchTitleUrl)
         val jsNode = mapper.readTree(testo)
 
         val search = jsNode["query"]["search"].firstOrNull()
@@ -50,8 +54,9 @@ class Wiki(botUtils: BotUtils, botConfig: BotConfig, val mapper: ObjectMapper) :
         return search["title"].textValue().urlEncode()
     }
 
-    private fun getDescription(title: String): String {
-        val testo = botUtils.textFromURL(description, listOf(title))
+    private fun getDescription(lingua: String, title: String): String {
+        val descriptionUrl = String.format(description, lingua, title)
+        val testo = botUtils.textFromURL(descriptionUrl)
         val jsNode = mapper.readTree(testo)
         return jsNode["query"]["pages"].first()["extract"].textValue()
     }
