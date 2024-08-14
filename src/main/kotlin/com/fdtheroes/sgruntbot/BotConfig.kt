@@ -1,6 +1,7 @@
 package com.fdtheroes.sgruntbot
 
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.cache.annotation.EnableCaching
 import org.springframework.context.annotation.Configuration
 import org.telegram.telegrambots.longpolling.util.DefaultGetUpdatesGenerator
 import org.telegram.telegrambots.meta.TelegramUrl
@@ -13,6 +14,7 @@ import java.time.LocalDateTime
 
 
 @Configuration
+@EnableCaching
 class BotConfig(
     @Value("\${CHAT_ID}") val chatId: String,
     @Value("\${TELEGRAM_TOKEN}") val telegramToken: String,

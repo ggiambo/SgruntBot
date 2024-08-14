@@ -22,7 +22,7 @@ spring:
   cache:
     cache-names: "invidious"
     caffeine:
-      spec: "maximumSize=10, expireAfterWrite=24h"
+      spec: "expireAfterWrite=4h"
 
 springdoc:
   swagger-ui:
