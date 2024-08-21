@@ -6,6 +6,7 @@ import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.scheduled.Scheduled
 import com.fdtheroes.sgruntbot.utils.BotUtils
 import org.springframework.stereotype.Service
+import org.springframework.web.util.HtmlUtils
 import org.telegram.telegrambots.meta.api.objects.InputFile
 import java.time.LocalDateTime
 
@@ -35,8 +36,8 @@ class ScheduledSanto(
             return
         }
 
-        val nome = santo["nome"].asText()
-        val descrizione = santo["descrizione"].asText()
+        val nome = HtmlUtils.htmlUnescape(santo["nome"].asText())
+        val descrizione = HtmlUtils.htmlUnescape(santo["descrizione"].asText())
         val url = santo["permalink"].asText()
         val urlPhoto = santo["urlimmagine"].asText()
 
