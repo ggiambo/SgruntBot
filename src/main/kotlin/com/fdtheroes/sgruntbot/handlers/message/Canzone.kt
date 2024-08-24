@@ -101,7 +101,7 @@ class CanzoneCache(private val botUtils: BotUtils, private val mapper: ObjectMap
     @Cacheable("invidious")
     fun initInstanceUrl(): String {
         log.info("Fetching invidious instance url")
-        val textFromURL = botUtils.textFromURL("https://api.invidious.io/instances.json")
+        val textFromURL = botUtils.textFromURL("https://api.invidious.io/instances.json?pretty=1&sort_by=type,users")
         return mapper.readTree(textFromURL)[0][1]["uri"].textValue()
     }
 
