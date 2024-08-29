@@ -37,9 +37,12 @@ class Canzone(
                 botUtils.rispondi(ActionResponse.message("Non ci riesco."), message)
                 return
             }
-
-            val (video, thumbnail) = videoAndThumbnail(videoId, title)
-            botUtils.rispondi(ActionResponse.audio(title, video, thumbnail), message)
+            try {
+                val (video, thumbnail) = videoAndThumbnail(videoId, title)
+                botUtils.rispondi(ActionResponse.audio(title, video, thumbnail), message)
+            } catch (e: Exception) {
+                botUtils.rispondi(ActionResponse.message("Non ce la faccio: ${e.message}"), message)
+            }
         }
     }
 
