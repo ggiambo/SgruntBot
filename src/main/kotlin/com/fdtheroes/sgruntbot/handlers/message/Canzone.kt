@@ -37,19 +37,22 @@ class Canzone(
                 botUtils.rispondi(ActionResponse.message("Non ci riesco."), message)
                 return
             }
-            try {
-                val (video, thumbnail) = videoAndThumbnail(videoId, title)
-                botUtils.rispondi(ActionResponse.audio(title, video, thumbnail), message)
-            } catch (e: Exception) {
-                botUtils.rispondi(ActionResponse.message("Non ce la faccio: ${e.message}"), message)
-            }
+            val (video, thumbnail) = videoAndThumbnail(videoId, title)
+            botUtils.rispondi(ActionResponse.audio(title, video, thumbnail), message)
         }
     }
 
     private fun videoAndThumbnail(videoId: String, title: String): Pair<InputFile, InputFile> {
         val instanceUrl = canzoneCache.initInstanceUrl()
         val videosUrl = "$instanceUrl/api/v1/videos/$videoId"
-        val textFromURL = botUtils.textFromURL(videosUrl)
+
+        val textFromURL = try {
+            botUtils.textFromURL(videosUrl)
+        } catch (e: Exception) {
+            botUtils.messaggio(ActionResponse.message("Non ce la faccio leggere da ${videosUrl}: ${e.message}"))
+            throw e
+        }
+
         val content = mapper.readTree(textFromURL)
 
         val (videoInputStream, thumbnailInputStream) = runBlocking {
