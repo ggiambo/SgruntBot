@@ -108,7 +108,19 @@ class CanzoneCache(private val botUtils: BotUtils, private val mapper: ObjectMap
     fun initInstanceUrl(): String {
         log.info("Fetching invidious instance url")
         val textFromURL = botUtils.textFromURL("https://api.invidious.io/instances.json?pretty=1&sort_by=type,users")
-        return mapper.readTree(textFromURL)[0][1]["uri"].textValue()
+        val validUrls = mapper.readTree(textFromURL).firstNotNullOf {
+            val url = it[1]["uri"].textValue()
+            try {
+                log.info("Testing $url")
+                botUtils.textFromURL("$url/api/v1/videos/CK4fzjY6Elo") // test se veramente funziona
+                log.info("$url sembra OK!")
+                return@firstNotNullOf url
+            } catch (e: Exception) {
+                log.info("$url NOK: ${e.message}")
+                return@firstNotNullOf null
+            }
+        }
+        return validUrls
     }
 
 }
