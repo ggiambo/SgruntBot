@@ -21,7 +21,7 @@ class Smorfia(botUtils: BotUtils, botConfig: BotConfig, val mapper: ObjectMapper
 
     override fun handle(message: Message) {
         val numero = getNumero(message.text)
-        if (numero != null && nextInt(20) == 0) {   // 5% di probabilità
+        if (numero != null && nextInt(50) == 0) {   // 2% di probabilità
             val testoSmorfia = smorfia[numero]
             if (testoSmorfia != null) {
                 botUtils.rispondi(
