@@ -5,7 +5,6 @@ import com.fdtheroes.sgruntbot.persistence.StatsService
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.InputFile
 import java.text.DecimalFormat
-import java.text.NumberFormat
 
 @Service
 class StatsUtil(

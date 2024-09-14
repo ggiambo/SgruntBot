@@ -14,7 +14,7 @@ import org.telegram.telegrambots.meta.api.methods.ActionType
 import org.telegram.telegrambots.meta.api.objects.InputFile
 import org.telegram.telegrambots.meta.api.objects.message.Message
 import java.io.InputStream
-import java.net.URL
+import java.net.URI
 
 @Service
 class Canzone(
@@ -67,7 +67,7 @@ class Canzone(
 
     private fun getVideo(content: JsonNode): Deferred<InputStream> {
         val url = content["adaptiveFormats"][0]["url"].textValue()
-        val videoUrl = URL(url)
+        val videoUrl = URI(url)
         val instanceUrl = canzoneCache.initInstanceUrl()
         val downloadUrl = "${instanceUrl}${videoUrl.path}?${videoUrl.query}"
         return CoroutineScope(Dispatchers.Default).async {

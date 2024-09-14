@@ -20,7 +20,7 @@ class Fortune(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtil
     override fun halp() = "<b>!fortune</b> oppure <b>!quote</b> per una perla di saggezza"
 
     fun getFortune(): String {
-        return Runtime.getRuntime().exec("fortune -sa it")
+        return Runtime.getRuntime().exec(arrayOf("fortune", "-sa it"))
             .inputStream
             .reader()
             .readText()
