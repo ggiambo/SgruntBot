@@ -10,7 +10,7 @@ import kotlin.random.Random.Default.nextInt
 
 @Service
 class Smorfia(botUtils: BotUtils, botConfig: BotConfig, val mapper: ObjectMapper) :
-    MessageHandler(botUtils, botConfig) {
+    MessageHandler(botUtils, botConfig), HasHalp {
 
     private val regex = Regex("\\b(\\d{1,2})\\b", setOf(RegexOption.IGNORE_CASE, RegexOption.MULTILINE))
     private val regexRichiesta = Regex("!smorfia \\d{1,2}", setOf(RegexOption.IGNORE_CASE))
@@ -40,5 +40,7 @@ class Smorfia(botUtils: BotUtils, botConfig: BotConfig, val mapper: ObjectMapper
         }
         return null
     }
+
+    override fun halp() = "<b>!smorfia</b> <i>numero</i> inutilissima smorfia napoletana"
 
 }
