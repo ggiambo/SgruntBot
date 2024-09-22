@@ -43,7 +43,13 @@ class Canzone(
     }
 
     private fun videoAndThumbnail(videoId: String, title: String): Pair<InputFile, InputFile> {
-        val instanceUrl = canzoneCache.initInstanceUrl()
+        val instanceUrl = try {
+            canzoneCache.initInstanceUrl()
+        } catch (e: Exception) {
+            botUtils.messaggio(ActionResponse.message("Non ce la faccio a trovare un sito funzionante: ${e.message}"))
+            throw e
+        }
+
         val videosUrl = "$instanceUrl/api/v1/videos/$videoId"
 
         val textFromURL = try {
@@ -112,9 +118,12 @@ class CanzoneCache(private val botUtils: BotUtils, private val mapper: ObjectMap
             val url = it[1]["uri"].textValue()
             try {
                 log.info("Testing $url")
-                botUtils.textFromURL("$url/api/v1/videos/CK4fzjY6Elo") // test se veramente funziona
-                log.info("$url sembra OK!")
-                return@firstNotNullOf url
+                val response = botUtils.textFromURL("$url/api/v1/videos/CK4fzjY6Elo") // test se veramente funziona
+                if (response.contains("Linux su desktop è al massimo storico")) {
+                    log.info("$url sembra OK!")
+                    return@firstNotNullOf url
+                }
+                return@firstNotNullOf null
             } catch (e: Exception) {
                 log.info("$url NOK: ${e.message}")
                 return@firstNotNullOf null
