@@ -123,6 +123,7 @@ class CanzoneCache(private val botUtils: BotUtils, private val mapper: ObjectMap
                     log.info("$url sembra OK!")
                     return@firstNotNullOf url
                 }
+                log.info("$url non è OK: $response")
                 return@firstNotNullOf null
             } catch (e: Exception) {
                 log.info("$url NOK: ${e.message}")
