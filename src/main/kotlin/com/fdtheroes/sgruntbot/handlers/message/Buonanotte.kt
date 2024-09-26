@@ -27,7 +27,7 @@ class Buonanotte(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botU
     override fun handle(message: Message) {
         if (nextInt(100) == 0) {
             val now = LocalTime.now()
-            if (now > from && now < to) {
+            if (now < from && now > to) {
                 botUtils.rispondi(ActionResponse.message(buonanotte.random()), message)
             }
         }
