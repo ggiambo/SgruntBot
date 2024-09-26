@@ -5,6 +5,8 @@ import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.utils.BotUtils
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.message.Message
+import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
 import kotlin.random.Random.Default.nextInt
 
@@ -26,11 +28,17 @@ class Buonanotte(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botU
 
     override fun handle(message: Message) {
         if (nextInt(100) == 0) {
-            val now = LocalTime.now()
-            if (now < from && now > to) {
+            val now = LocalDateTime.now()
+            if (now > from() && now < to()) {
                 botUtils.rispondi(ActionResponse.message(buonanotte.random()), message)
             }
         }
     }
+
+    // le 10 di sera
+    private fun from() = LocalDate.now().atTime(22, 0)
+
+    // le 4 di domani mattina
+    private fun to() = LocalDate.now().plusDays(1).atTime(4, 0)
 
 }
