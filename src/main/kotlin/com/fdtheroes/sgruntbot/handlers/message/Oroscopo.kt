@@ -37,7 +37,7 @@ class Oroscopo(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUti
             } else {
                 segno
             }
-            val url = baseUrl.format(segnoPerUrl.apply { replaceFirstChar { it.uppercase() } })
+            val url = baseUrl.format(segnoPerUrl.replaceFirstChar { it.uppercase() })
 
             val (introduzione, amore, lavoro, benessere) = Jsoup.parse(botUtils.textFromURL(url))
                 .select("Article.oroscopo")
@@ -45,10 +45,15 @@ class Oroscopo(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUti
                 .filter { it: Element -> it.text().isNotBlank() }
 
             val testo = """
-                ${introduzione.text()}\n
-                <b>Amore e eros</b>${amore.ownText()}\n
-                <b>Lavoro e denaro</b>${lavoro.ownText()}\n
-                <b>Benessere</b>${benessere.ownText()}\n
+                <b>${segnoPerUrl.replaceFirstChar { it.uppercase() }}</b>
+                
+                ${introduzione.text()}
+                
+                <b>Amore e eros</b>${amore.ownText()}
+                
+                <b>Lavoro e denaro</b>${lavoro.ownText()}
+                
+                <b>Benessere</b>${benessere.ownText()}
             """.trimIndent()
 
             botUtils.rispondi(ActionResponse.message(testo), message)
