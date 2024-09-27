@@ -7,14 +7,10 @@ import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.message.Message
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.LocalTime
 import kotlin.random.Random.Default.nextInt
 
 @Service
 class Buonanotte(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils, botConfig) {
-
-    private val from = LocalTime.of(22, 0)
-    private val to = LocalTime.of(4, 0)
 
     private val buonanotte = listOf(
         "Hai visto che ore sono? Buonanotte!",
