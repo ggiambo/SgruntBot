@@ -23,7 +23,7 @@ class Buonanotte(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botU
     )
 
     override fun handle(message: Message) {
-        if (nextInt(100) == 0) {
+        if (nextInt(200) == 0) {
             val now = LocalDateTime.now()
             if (now > from() && now < to()) {
                 botUtils.rispondi(ActionResponse.message(buonanotte.random()), message)
@@ -31,8 +31,8 @@ class Buonanotte(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botU
         }
     }
 
-    // le 10 di sera
-    private fun from() = LocalDate.now().atTime(22, 0)
+    // le 11 di sera
+    private fun from() = LocalDate.now().atTime(23, 0)
 
     // le 4 di domani mattina
     private fun to() = LocalDate.now().plusDays(1).atTime(4, 0)
