@@ -1,123 +1,153 @@
 [
   {
     "n": 1,
-    "text": "L’Italia"
+    "text": "L’Italia",
+    "w" : ["italia", "nazione", "patria"]
   },
   {
     "n": 2,
-    "text": "‘a piccerella (la bambina)"
+    "text": "‘a piccerella (la bambina)",
+    "w" : ["bambina", "bimba", "neonata", "piccina"]
   },
   {
     "n": 3,
-    "text": "‘a gatta (la gatta)"
+    "text": "‘a gatta (la gatta)",
+    "w" : [ "gatta", "gattina" ]
   },
   {
     "n": 4,
-    "text": "‘o puorco (il maiale)"
+    "text": "‘o puorco (il maiale)",
+    "w" : [ "porco", "maiale", "suino", "maialuzzo", "porcello" ]
   },
   {
     "n": 5,
-    "text": "‘a mano (la mano)"
+    "text": "‘a mano (la mano)",
+    "w" : [ "mano", "zampa", "palmo", "palmipede", "dita" ]
   },
   {
     "n": 6,
-    "text": "chella ca guarda ‘nterra (l’organo femminile)"
+    "text": "chella ca guarda ‘nterra (l’organo femminile)",
+    "w" : [ "fica", "figa", "fregna", "orrenda fessura", "vagina", "vulva", "clitoride", "sorca", "lallera", "bernarda", "patafiocca", "topa" ]
   },
   {
     "n": 7,
-    "text": "‘o vaso (il vaso)"
+    "text": "‘o vaso (il vaso)",
+    "w" : [ "vaso" ]
   },
   {
     "n": 8,
-    "text": "‘a Maronna (la Madonna)"
+    "text": "‘a Maronna (la Madonna)",
+    "w" : [ "madonna", "maria", "maronn'" ]
   },
   {
     "n": 9,
-    "text": "‘a figliata (gruppo di figli)"
+    "text": "‘a figliata (gruppo di figli)",
+    "w" : [ "figli", "progenie", "eredi", "erede", "figlio", "figlia", "discendenza" ]
   },
   {
     "n": 10,
-    "text": "‘e fasule (i fagioli)"
+    "text": "‘e fasule (i fagioli)",
+    "w" : [ "fagioli", "borlotti", "fagiolo" ]
   },
   {
     "n": 11,
-    "text": "‘e suricille (i topolini)"
+    "text": "‘e suricille (i topolini)",
+    "w" : [ "topolino", "topolini", "sorcini" ]
   },
   {
     "n": 12,
-    "text": "‘e surdate (i soldati)"
+    "text": "‘e surdate (i soldati)",
+    "w" : [ "soldato", "militare", "vannacci", "militari", "battaglione", "esercito" ]
   },
   {
     "n": 13,
-    "text": "Sant’Antonio"
+    "text": "Sant’Antonio",
+    "w" : [ "s. antonio", "sant'antonio" ]
   },
   {
     "n": 14,
-    "text": "‘o mbriaco (l’ubriaco)"
+    "text": "‘o mbriaco (l’ubriaco)",
+    "w" : [ "ubriaco", "brillo", "mbriaco", "alticcio" ]
   },
   {
     "n": 15,
-    "text": "‘o guaglione (il ragazzo)"
+    "text": "‘o guaglione (il ragazzo)",
+    "w" : [ "ragazzo", "giovane", "giovanotto" ]
   },
   {
     "n": 16,
-    "text": "‘o culo (il deretano)"
+    "text": "‘o culo (il deretano)",
+    "w" : [ "culo", "culetto", "ano", "bucio", "posteriore", "posteriori" ]
   },
   {
     "n": 17,
-    "text": "‘a disgrazia (la disgrazia)"
+    "text": "‘a disgrazia (la disgrazia)",
+    "w" : [ "disgrazia", "catastrofe" ]
   },
   {
     "n": 18,
-    "text": "‘o sanghe (il sangue)"
+    "text": "‘o sanghe (il sangue)",
+    "w" : [ "sangue" ]
   },
   {
     "n": 19,
-    "text": "‘a resata (la risata)"
+    "text": "‘a resata (la risata)",
+    "w" : [ "ridere", "risata", "risate", "risa", "sganasciare", "sganasciarsi" ]
   },
   {
     "n": 20,
-    "text": "‘a festa (la festa)"
+    "text": "‘a festa (la festa)",
+    "w" : [ "festa", "celebrazione", "festeggiamento" ]
   },
   {
     "n": 21,
-    "text": "‘a femmena annure (la donna nuda)"
+    "text": "‘a femmena annure (la donna nuda)",
+    "w" : [ "nuda", "nudacchia", "au naturel", "spogliata" ]
   },
   {
     "n": 22,
-    "text": "‘o pazzo (il folle)"
+    "text": "‘o pazzo (il folle)",
+    "w" : [ "pazzo", "matto" ]
   },
   {
     "n": 23,
-    "text": "‘o scemo (lo stupido)"
+    "text": "‘o scemo (lo stupido)",
+    "w" : [ "scemo", "stupido", "ingenuo" ]
   },
   {
     "n": 24,
-    "text": "‘e gguardie (poliziotti, carabinieri, guardie carcerarie)"
+    "text": "‘e gguardie (poliziotti, carabinieri, guardie carcerarie)",
+    "w" : [ "guardie", "polizia", "carabinieri", "guardia", "pulotti", "pula" ]
   },
   {
     "n": 25,
-    "text": "Natale"
+    "text": "Natale",
+    "w" : [ "natale", "natalizio" ]
   },
   {
     "n": 26,
-    "text": "Nanninella (Anna)"
+    "text": "Nanninella (Anna)",
+    "w" : [ "anna" ]
   },
   {
     "n": 27,
-    "text": "‘o cantero (il vaso da Notte)"
+    "text": "‘o cantero (il vaso da Notte)",
+    "w" : [ "cantero", "vaso", "vasino", "water" ]
   },
   {
     "n": 28,
-    "text": "‘e zizze (il seno femminile)"
+    "text": "‘e zizze (il seno femminile)",
+    "w" : [ "seno", "seni", "tette", "zinne", "poppe", "puppe", "bocce" ]
   },
   {
     "n": 29,
-    "text": "‘o pate d’e criature (l’organo riproduttivo maschile)"
+    "text": "‘o pate d’e criature (l’organo riproduttivo maschile)",
+    "w" : [ "pene", "cazzo" ]
   },
   {
     "n": 30,
-    "text": "‘e palle d’o tenente (le munizioni)"
+    "text": "‘e palle d’o tenente (le munizioni)",
+    "w" : [ "proiettili", "munizioni", "colpi" ]
   },
   {
     "n": 31,
@@ -125,7 +155,8 @@
   },
   {
     "n": 32,
-    "text": "‘o capitone (l’anguilla femmina)"
+    "text": "‘o capitone (l’anguilla femmina)",
+    "w" : [ "capitone", "anguilla", "salvini" ]
   },
   {
     "n": 33,
@@ -133,11 +164,13 @@
   },
   {
     "n": 34,
-    "text": "‘a capa (la testa)"
+    "text": "‘a capa (la testa)",
+    "w" : [ "capo", "testa", "cranio", "comandante" ]
   },
   {
     "n": 35,
-    "text": "l’aucelluzzo (l’uccellino)"
+    "text": "l’aucelluzzo (l’uccellino)",
+    "w" : [ "uccello", "uccellino", "pene", "cazzo" ]
   },
   {
     "n": 36,
@@ -145,15 +178,18 @@
   },
   {
     "n": 37,
-    "text": "‘o monaco (il monaco, il frate)"
+    "text": "‘o monaco (il monaco, il frate)",
+    "w" : [ "monaco", "frate" ]
   },
   {
     "n": 38,
-    "text": "‘e mmazzate (le percosse, le botte)"
+    "text": "‘e mmazzate (le percosse, le botte)",
+    "w" : [ "picchiare", "picchiati", "picchiato", "menato", "fraccato" ]
   },
   {
     "n": 39,
-    "text": "‘a funa nganna (la corda al collo, l’impiccagione)"
+    "text": "‘a funa nganna (la corda al collo, l’impiccagione)",
+    "w" : [ "cappio", "impiccato" ]
   },
   {
     "n": 40,
@@ -161,31 +197,38 @@
   },
   {
     "n": 41,
-    "text": "‘o curtiello (il coltello)"
+    "text": "‘o curtiello (il coltello)",
+    "w" : [ "coltello", "lama", "fendente" ]
   },
   {
     "n": 42,
-    "text": "‘o cafè (il caffe)"
+    "text": "‘o cafè (il caffe)",
+    "w" : [ "caffé", "hoffmann" ]
   },
   {
     "n": 43,
-    "text": "‘onna pereta for ‘o barcone (la donna pettegola)"
+    "text": "‘onna pereta for ‘o barcone (la donna pettegola)",
+    "w" : [ "pettegola", "pettegolo", "chiacchierone", "spione" ]
   },
   {
     "n": 44,
-    "text": "‘e ccancelle (le carceri)"
+    "text": "‘e ccancelle (le carceri)",
+    "w" : [ "carcere", "penitenziario" ]
   },
   {
     "n": 45,
-    "text": "‘o vino buono (il vino gustoso)"
+    "text": "‘o vino buono (il vino gustoso)",
+    "w" : [ "vino" ]
   },
   {
     "n": 46,
-    "text": "‘e denare (i soldi)"
+    "text": "‘e denare (i soldi)",
+    "w" : [ "soldi", "denaro", "bs", "usd", "euro", "eur", "euri", "monete", "moneta" ]
   },
   {
     "n": 47,
-    "text": "‘o muorto (la persona defunta)"
+    "text": "‘o muorto (la persona defunta)",
+    "w" : [ "morto", "defunto", "estinto", "ammazzato" ]
   },
   {
     "n": 48,
@@ -193,71 +236,88 @@
   },
   {
     "n": 49,
-    "text": "‘o piezz e carne (la donna prosperosa)"
+    "text": "‘o piezz e carne (la donna prosperosa)",
+    "w" : [ "bella", "figa", "stupenda", "tettona", "ciaciona" ]
   },
   {
     "n": 50,
-    "text": "‘o ppane (il pane)"
+    "text": "‘o ppane (il pane)",
+    "w" : [ "pane", "pagnotta", "panino" ]
   },
   {
     "n": 51,
-    "text": "‘o ciardino (il giardino)"
+    "text": "‘o ciardino (il giardino)",
+    "w" : [ "giardino" ]
   },
   {
     "n": 52,
-    "text": "‘a mamma (la madre)"
+    "text": "‘a mamma (la madre)",
+    "w" : [ "mamma", "madre" ]
   },
   {
     "n": 53,
-    "text": "‘o viecchio (l’anziano)"
+    "text": "‘o viecchio (l’anziano)",
+    "w" : [ "vecchio", "anziano", "giambo" ]
   },
   {
     "n": 54,
-    "text": "‘o cappiello (il cappello)"
+    "text": "‘o cappiello (il cappello)",
+    "w" : [ "cappello", "berretto", "copricapo", "zuccotto", "fedora", "borsalino" ]
   },
   {
     "n": 55,
-    "text": "‘a museca (la musica)"
+    "text": "‘a museca (la musica)",
+    "w" : [ "musica", "rock" ]
   },
   {
     "n": 56,
-    "text": "‘a caruta (la caduta)"
+    "text": "‘a caruta (la caduta)",
+    "w" : [ "caduta", "precipitato", "caduto", "scivolato", "scivolata" ]
   },
   {
     "n": 57,
-    "text": "‘o scartellato (il gobbo)"
+    "text": "‘o scartellato (il gobbo)",
+    "w" : [ "gobbo" ]
   },
   {
     "n": 58,
-    "text": "‘o paccotto (il pacchetto)"
+    "text": "‘o paccotto (il pacchetto)",
+    "w" : [ "pacchetto", "pacco", "scatola" ]
   },
   {
     "n": 59,
-    "text": "‘e pile (i peli)"
+    "text": "‘e pile (i peli)",
+    "w" : [ "peli", "peluria", "peloso", "pelosa", "pelo" ]
   },
   {
     "n": 60,
-    "text": "‘o lamiento (il lamentarsi)"
+    "text": "‘o lamiento (il lamentarsi)",
+    "w" : [ "lamento", "piagnisteo", "piangina", "piagnucolare", "piagnucolarsi" ]
   },
   {
     "n": 61,
-    "text": "‘o cacciatore (il cacciatore)"
+    "text": "‘o cacciatore (il cacciatore)",
+    "w" : [ "cacciatore", "preda", "caccia", "fucile", "sparo" ]
   },
   {
     "n": 62,
-    "text": "‘o muorto acciso (il morto assassinato)"
+    "text": "‘o muorto acciso (il morto assassinato)",
+    "w" : [ "ammazzato", "assassinato", "assassinio", "omicidio", "femminicidio", "eccidio" ]
   },
   {
     "n": 63,
-    "text": "‘a sposa (la sposa)"
+    "text": "‘a sposa (la sposa)",
+    "w" : [ "sposa", "zita" ]
   },
   {
     "n": 64,
-    "text": "‘a sciammeria (la giacca per cerimonie)"
+    "text": "‘a sciammeria (la giacca per cerimonie)",
+    "w" : [ "abito", "giacca" ]
   },
   {
     "n": 65,
-    "text": "‘o chianto (il pianto)"
+    "text": "‘o chianto (il pianto)",
+    "w" : [ "pianto" ]
   },
   {
     "n": 66,
@@ -265,7 +325,8 @@
   },
   {
     "n": 67,
-    "text": "‘o totaro int’a chitarra (il totano nella chitarra)"
+    "text": "‘o totaro int’a chitarra (il totano nella chitarra)",
+    "w" : [ "chitarra" ]
   },
   {
     "n": 68,
@@ -273,27 +334,33 @@
   },
   {
     "n": 69,
-    "text": "sott’e ‘ncoppa (il sottosopra)"
+    "text": "sott’e ‘ncoppa (il sottosopra)",
+    "w" : [ "invertito", "sottosopra", "australia", "australiano" ]
   },
   {
     "n": 70,
-    "text": "‘o palazzo (il palazzo, la casa)"
+    "text": "‘o palazzo (il palazzo, la casa)",
+    "w" : [ "casa", "palazzo", "palazzina", "stabile", "appartamento", "villa", "loft" ]
   },
   {
     "n": 71,
-    "text": "l’omme ‘e merda (l’uomo meschino)"
+    "text": "l’omme ‘e merda (l’uomo meschino)",
+    "w" : [ "berlusconi" ]
   },
   {
     "n": 72,
-    "text": "‘a maraviglia (la meraviglia)"
+    "text": "‘a maraviglia (la meraviglia)",
+    "w" : [ "meraviglia", "stupore", "stupito", "basito", "attonito" ]
   },
   {
     "n": 73,
-    "text": "‘o spitale (l’ospedale)"
+    "text": "‘o spitale (l’ospedale)",
+    "w" : [ "ospedale", "nosocomio" ]
   },
   {
     "n": 74,
-    "text": "‘a rotta (la grotta)"
+    "text": "‘a rotta (la grotta)",
+    "w" : [ "orrenda fessura" ]
   },
   {
     "n": 75,
@@ -301,27 +368,33 @@
   },
   {
     "n": 76,
-    "text": "‘a funtana (la fontana)"
+    "text": "‘a funtana (la fontana)",
+    "w" : [ "fontana", "fontanile", "fonte" ]
   },
   {
     "n": 77,
-    "text": "‘e riavulille (i diavoletti, il diavolo)"
+    "text": "‘e riavulille (i diavoletti, il diavolo)",
+    "w" : [ "diavolo", "demonio", "demone" ]
   },
   {
     "n": 78,
-    "text": "‘a bella figliola (la prostituta)"
+    "text": "‘a bella figliola (la prostituta)",
+    "w" : [ "puttana", "mignotta", "troia", "meretrice", "prostituta" ]
   },
   {
     "n": 79,
-    "text": "‘o mariuolo (il ladro)"
+    "text": "‘o mariuolo (il ladro)",
+    "w" : [ "ladro", "furbo", "elusione", "evasione" ]
   },
   {
     "n": 80,
-    "text": "‘a vocca (la bocca)"
+    "text": "‘a vocca (la bocca)",
+    "w" : [ "bocca", "labbra" ]
   },
   {
     "n": 81,
-    "text": "‘e sciure (i fiori)"
+    "text": "‘e sciure (i fiori)",
+    "w" : [ "fiori", "fiore" ]
   },
   {
     "n": 82,
@@ -329,11 +402,13 @@
   },
   {
     "n": 83,
-    "text": "‘o maletiempo (il mal tempo)"
+    "text": "‘o maletiempo (il mal tempo)",
+    "w" : [ "piove", "pioggia", "maltempo", "temporale", "acquazzone", "bomba d'acqua" ]
   },
   {
     "n": 84,
-    "text": "‘a cchiesa (la Chiesa)"
+    "text": "‘a cchiesa (la Chiesa)",
+    "w" : [ "chiesa", "cattedrale", "duomo" ]
   },
   {
     "n": 85,
@@ -341,7 +416,8 @@
   },
   {
     "n": 86,
-    "text": "‘a puteca (il negozio)"
+    "text": "‘a puteca (il negozio)",
+    "w" : [ "negozio", "bottega", "negozietto" ]
   },
   {
     "n": 87,
@@ -353,10 +429,12 @@
   },
   {
     "n": 89,
-    "text": "‘a vecchia (la donna anziana)"
+    "text": "‘a vecchia (la donna anziana)",
+    "w" : [ "vecchia", "anziana" ]
   },
   {
     "n": 90,
-    "text": "‘a paura (la paura)"
+    "text": "‘a paura (la paura)",
+    "w" : [ "bjork" ]
   }
 ]
