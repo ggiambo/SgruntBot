@@ -83,10 +83,11 @@ class ScheduledCuloDiPapaSarru(private val botUtils: BotUtils) : Scheduled {
 
     override fun execute() {
         val giorniTrascorsi = Period.between(primoDiNovembre, LocalDate.now()).days
-        val index = giorniTrascorsi.mod(vangeloDellInfanziaSecondoSarrusofono.length().toInt())
-        val rot13String = rot13(vangeloDellInfanziaSecondoSarrusofono[index])
-
-        botUtils.messaggio(ActionResponse.message(rot13String))
+        if (giorniTrascorsi < vangeloDellInfanziaSecondoSarrusofono.length()) {
+            val index = giorniTrascorsi.mod(vangeloDellInfanziaSecondoSarrusofono.length().toInt())
+            val rot13String = rot13(vangeloDellInfanziaSecondoSarrusofono[index])
+            botUtils.messaggio(ActionResponse.message(rot13String))
+        }
     }
 
     override fun firstRun(): LocalDateTime {
