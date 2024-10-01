@@ -13,7 +13,6 @@ import kotlin.random.Random.Default.nextInt
 class LaSmorfia(botUtils: BotUtils, botConfig: BotConfig, val mapper: ObjectMapper) :
     MessageHandler(botUtils, botConfig), HasHalp {
 
-    private val regex = Regex("\\b(\\d{1,2})\\b", setOf(RegexOption.IGNORE_CASE, RegexOption.MULTILINE))
     private val regexRichiesta = Regex("!smorfia (\\d{1,2})\$", setOf(RegexOption.IGNORE_CASE))
 
     private val smorfia: List<Smorfia> by lazy {
@@ -39,9 +38,10 @@ class LaSmorfia(botUtils: BotUtils, botConfig: BotConfig, val mapper: ObjectMapp
                 )
             }
         } else if (nextInt(50) == 0) {
+            val keys = message.text.split(" ").toSet()
             val smorfie = smorfia.flatMap {
                 it.keywords.mapNotNull { keyword ->
-                    if (message.text.contains(keyword)) Pair(keyword, it) else null
+                    if (keys.contains(keyword)) Pair(keyword, it) else null
                 }
             }
             if (smorfie.isNotEmpty()) {
