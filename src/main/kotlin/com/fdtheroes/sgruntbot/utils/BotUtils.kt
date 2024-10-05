@@ -236,10 +236,6 @@ class BotUtils(private val botConfig: BotConfig) {
             return other
         }
 
-        fun String.urlEncode(): String {
-            return URLEncoder.encode(this, StandardCharsets.UTF_8)
-        }
-
         fun Iterable<*>?.length(): Long {
             return StreamSupport.stream(this?.spliterator(), false).count()
         }

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.utils.BotUtils
-import com.fdtheroes.sgruntbot.utils.BotUtils.Companion.urlEncode
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.message.Message
 
@@ -23,7 +22,7 @@ class Wiki(botUtils: BotUtils, botConfig: BotConfig, val mapper: ObjectMapper) :
             val lingua = if (groups[1].isNotEmpty()) "en." else "it."
 
             val query = groups[2]
-            val title = getTitle(lingua, query.urlEncode())
+            val title = getTitle(lingua, query)
             if (title.isNullOrEmpty()) {
                 botUtils.rispondi(ActionResponse.message("Non c'è."), message)
                 return
@@ -45,6 +44,8 @@ class Wiki(botUtils: BotUtils, botConfig: BotConfig, val mapper: ObjectMapper) :
             params = listOf(
                 "format" to "json",
                 "action" to "query",
+                "exintro" to "",
+                "explaintext" to "",
                 "list" to "search",
                 "srsearch" to query
             )
@@ -56,7 +57,7 @@ class Wiki(botUtils: BotUtils, botConfig: BotConfig, val mapper: ObjectMapper) :
             return null
         }
 
-        return search["title"].textValue().urlEncode()
+        return search["title"].textValue()
     }
 
     private fun getDescription(lingua: String, title: String): String {

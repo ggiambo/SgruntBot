@@ -3,7 +3,6 @@ package com.fdtheroes.sgruntbot.handlers.message
 import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.utils.BotUtils
-import com.fdtheroes.sgruntbot.utils.BotUtils.Companion.urlEncode
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.User
 import org.telegram.telegrambots.meta.api.objects.message.Message

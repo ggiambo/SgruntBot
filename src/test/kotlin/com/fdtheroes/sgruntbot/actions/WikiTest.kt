@@ -12,14 +12,14 @@ internal class WikiTest : BaseTest() {
 
     @Test
     fun testPositive() {
-        val message = message("!wiki poesia giambica")
+        val message = message("!wiki pOeSiA gIaMbIcA")
         wiki.handle(message)
 
         assertThat(actionResponses).hasSize(1)
         assertThat(actionResponses.first().type).isEqualTo(ActionResponseType.Message)
         assertThat(actionResponses.first().message)
             .startsWith("La poesia giambica era un tipo di poesia ")
-            .endsWith("https://it.wikipedia.org/w/index.php?title=Poesia+giambica")
+            .endsWith("https://it.wikipedia.org/w/index.php?title=Poesia giambica")
     }
 
     @Test

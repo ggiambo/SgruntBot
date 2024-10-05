@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.utils.BotUtils
-import com.fdtheroes.sgruntbot.utils.BotUtils.Companion.urlEncode
 import kotlinx.coroutines.*
 import org.slf4j.LoggerFactory
 import org.springframework.cache.annotation.Cacheable
@@ -98,7 +97,7 @@ class Canzone(
         val textFromURL = botUtils.textFromURL(
             url = "$instanceUrl/api/v1/search",
             params = listOf(
-                "q" to query.urlEncode(),
+                "q" to query,
                 "type" to "video",
                 "region" to "IT",
                 "sort" to "relevance"
