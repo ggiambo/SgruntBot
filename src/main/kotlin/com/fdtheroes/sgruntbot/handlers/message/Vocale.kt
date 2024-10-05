@@ -23,7 +23,6 @@ class Vocale(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils
     )
     private val voce = listOf("Bria", "Mia", "Pietro")
 
-    // curl 'https://www.voicerss.org/controls/speech.ashx?hl=it-it&v=Mia&src=Das%20ist%20kaum%20zum%20glauben&c=mp3&rnd=0.42' -H 'User-Agent: Sgruntbot' -H 'Referer: https://www.voicerss.org/api/demo.aspx' --output audio.mp3
     override fun handle(message: Message) {
         val groupValues = regex.find(message.text)?.groupValues
         if (groupValues.isNullOrEmpty()) {
@@ -42,9 +41,13 @@ class Vocale(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils
 
     fun getVocale(testo: String): InputFile {
         val audio = botUtils.streamFromURL(
-            url,
-            listOf(voce.random(), testo),
-            headers
+            url = url,
+            params = listOf(
+                "hl" to "it-it",
+                "v" to voce.random(),
+                "src" to testo
+            ),
+            headers = headers
         )
 
         return InputFile(audio, fileName)

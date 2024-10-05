@@ -14,9 +14,7 @@ class Wiki(botUtils: BotUtils, botConfig: BotConfig, val mapper: ObjectMapper) :
 
     private val regex = Regex("^!(en)?wiki (.*)$", RegexOption.IGNORE_CASE)
 
-    private val searchTitle = "https://%swikipedia.org/w/api.php?format=json&action=query&list=search&srsearch=%s"
-    private val description =
-        "https://%swikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=%s"
+    private val wikipediaApi = "https://%swikipedia.org/w/api.php"
     private val urlByTitle = "https://%swikipedia.org/w/index.php?title=%s"
 
     override fun handle(message: Message) {
@@ -41,9 +39,16 @@ class Wiki(botUtils: BotUtils, botConfig: BotConfig, val mapper: ObjectMapper) :
 
     override fun halp() = "<b>!wiki</b> <i>termine da cercare</i> (<b>!enwiki</b> per cercare in inglese)"
 
-    private fun getTitle(lingua: String, query:String): String? {
-        val searchTitleUrl = String.format(searchTitle, lingua, query)
-        val testo = botUtils.textFromURL(searchTitleUrl)
+    private fun getTitle(lingua: String, query: String): String? {
+        val testo = botUtils.textFromURL(
+            url = String.format(wikipediaApi, lingua),
+            params = listOf(
+                "format" to "json",
+                "action" to "query",
+                "list" to "search",
+                "srsearch" to query
+            )
+        )
         val jsNode = mapper.readTree(testo)
 
         val search = jsNode["query"]["search"].firstOrNull()
@@ -55,8 +60,18 @@ class Wiki(botUtils: BotUtils, botConfig: BotConfig, val mapper: ObjectMapper) :
     }
 
     private fun getDescription(lingua: String, title: String): String {
-        val descriptionUrl = String.format(description, lingua, title)
-        val testo = botUtils.textFromURL(descriptionUrl)
+        val testo = botUtils.textFromURL(
+            url = String.format(wikipediaApi, lingua),
+            params = listOf(
+                "format" to "json",
+                "action" to "query",
+                "prop" to "extracts",
+                "exintro" to "",
+                "explaintext" to "",
+                "redirects" to "1",
+                "titles" to title
+            )
+        )
         val jsNode = mapper.readTree(testo)
         return jsNode["query"]["pages"].first()["extract"].textValue()
     }

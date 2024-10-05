@@ -95,8 +95,15 @@ class Canzone(
 
     private fun getTitleAndVideoId(query: String): Pair<String?, String?> {
         val instanceUrl = canzoneCache.initInstanceUrl()
-        val searchUrl = "$instanceUrl/api/v1/search?q=${query.urlEncode()}&type=video&region=IT&sort=relevance"
-        val textFromURL = botUtils.textFromURL(searchUrl)
+        val textFromURL = botUtils.textFromURL(
+            url = "$instanceUrl/api/v1/search",
+            params = listOf(
+                "q" to query.urlEncode(),
+                "type" to "video",
+                "region" to "IT",
+                "sort" to "relevance"
+            )
+        )
         val firstEntry = mapper.readTree(textFromURL)[0]
         return Pair(firstEntry["title"].textValue(), firstEntry["videoId"].textValue())
     }
@@ -113,7 +120,13 @@ class CanzoneCache(private val botUtils: BotUtils, private val mapper: ObjectMap
     @Cacheable("invidious")
     fun initInstanceUrl(): String {
         log.info("Fetching invidious instance url")
-        val textFromURL = botUtils.textFromURL("https://api.invidious.io/instances.json?pretty=1&sort_by=type,users")
+        val textFromURL = botUtils.textFromURL(
+            url = "https://api.invidious.io/instances.json",
+            params = listOf(
+                "pretty" to "1",
+                "sort_by" to "type,users"
+            )
+        )
         val validUrls = mapper.readTree(textFromURL).firstNotNullOf {
             val url = it[1]["uri"].textValue()
             try {

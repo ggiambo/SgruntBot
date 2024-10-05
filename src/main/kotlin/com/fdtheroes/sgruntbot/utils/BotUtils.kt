@@ -4,6 +4,9 @@ import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.models.ActionResponseType
 import jakarta.annotation.PostConstruct
+import okhttp3.Headers
+import okhttp3.HttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.slf4j.LoggerFactory
@@ -68,7 +71,7 @@ class BotUtils(private val botConfig: BotConfig) {
 
     fun streamFromURL(
         url: String,
-        params: List<String>? = null,
+        params: List<Pair<String, String>> = emptyList(),
         headers: List<Pair<String, String>> = emptyList(),
         proxy: Proxy = botConfig.proxy,
     ): InputStream {
@@ -78,11 +81,18 @@ class BotUtils(private val botConfig: BotConfig) {
             .readTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
             .build()
-        val formattedUrl = if (params.isNullOrEmpty()) url else String.format(url, *params.toTypedArray())
         val request = Request.Builder()
-            .url(formattedUrl)
-            .apply { headers.forEach { header(it.first, it.second) } }
             .get()
+            .headers(
+                Headers.Builder().apply {
+                    headers.forEach { this.add(it.first, it.second) }
+                }.build()
+            )
+            .url(
+                url.toHttpUrl().newBuilder().apply {
+                    params.forEach { this.addQueryParameter(it.first, it.second) }
+                }.build()
+            )
             .build()
 
         return client.newCall(request).execute().body!!.byteStream()
@@ -90,7 +100,7 @@ class BotUtils(private val botConfig: BotConfig) {
 
     fun textFromURL(
         url: String,
-        params: List<String>? = null,
+        params: List<Pair<String, String>> = emptyList(),
         headers: List<Pair<String, String>> = emptyList(),
         proxy: Proxy = botConfig.proxy,
     ): String {

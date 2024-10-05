@@ -13,7 +13,7 @@ class Slogan(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils
 
     private val regex = Regex("^!slogan (.*)\$", RegexOption.IGNORE_CASE)
     private val sloganPlaceholder = "XXX-XXX-XXX"
-    private val urlSlogan = "http://www.sloganizer.net/en/outbound.php?slogan=%s"
+    private val urlSlogan = "http://www.sloganizer.net/en/outbound.php"
 
     override fun handle(message: Message) {
         val testo = regex.find(message.text)?.groupValues?.get(1)
@@ -26,7 +26,7 @@ class Slogan(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils
     override fun halp() = "<b>!slogan</b> <i>testo</i> uno slogan per il testo!"
 
     fun fetchSlogan(testo: String): String {
-        val res = botUtils.textFromURL(urlSlogan, listOf(testo.urlEncode()))
+        val res = botUtils.textFromURL(urlSlogan, listOf("slogan" to testo))
         return Regex("<a.*?>(.*)</a>").find(res)?.groupValues?.get(1).orEmpty()
     }
 
