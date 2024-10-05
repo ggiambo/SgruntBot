@@ -1,9 +1,8 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 val telegrambotsVersion = "7.10.0"
 val jsoupVersion = "1.18.1"
-val springdocVersion ="2.6.0"
+val springdocVersion = "2.6.0"
 val xchartVersion = "3.8.8"
 val mockitokotlinVersion = "5.4.0"
 
@@ -42,8 +41,8 @@ dependencies {
     implementation("org.jetbrains.kotlin", "kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core")
     implementation("com.squareup.okhttp3", "okhttp")
-    implementation( "org.telegram", "telegrambots-longpolling", telegrambotsVersion)
-    implementation( "org.telegram", "telegrambots-client", telegrambotsVersion)
+    implementation("org.telegram", "telegrambots-longpolling", telegrambotsVersion)
+    implementation("org.telegram", "telegrambots-client", telegrambotsVersion)
     implementation("org.jsoup", "jsoup", jsoupVersion)
     implementation("org.springdoc", "springdoc-openapi-starter-common", springdocVersion)
     implementation("org.springdoc", "springdoc-openapi-starter-webmvc-ui", springdocVersion)
