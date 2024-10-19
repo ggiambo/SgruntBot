@@ -15,19 +15,35 @@ import javax.imageio.ImageIO
 @Service
 class Tappeto(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils, botConfig), HasHalp {
 
-    private val regex = Regex("^!tappeto (.*)\$", RegexOption.IGNORE_CASE)
+    private val regex = Regex("^!tappeto (.+)", RegexOption.IGNORE_CASE)
 
     override fun handle(message: Message) {
-        val cosa = regex.find(message.text)?.groupValues?.get(1)
-        if (cosa != null) {
-            val chi = if (message.from.userName != null) message.from.userName else message.from.firstName
-            val tappeto = alTappeto(chi, cosa)
-            val caption = "$chi manda $cosa al tappeto!"
-            botUtils.rispondi(ActionResponse.photo(caption, tappeto), message)
+        val groupValues = regex.find(message.text)?.groupValues
+        if (groupValues == null) {
+            return
         }
+
+        val testo = groupValues[1].trim()
+        if (testo.isBlank()) {
+            return
+        }
+
+        val tokens = testo.split("->")
+        val (chi, cosa) = if (tokens.size == 2) {
+            tokens[0].trim() to tokens[1].trim()
+        } else {
+            val userName = if (message.from.userName != null) message.from.userName else message.from.firstName
+            userName to testo
+        }
+
+        val tappeto = alTappeto(chi, cosa)
+        val caption = "$chi manda $cosa al tappeto!"
+        botUtils.rispondi(ActionResponse.photo(caption, tappeto), message)
     }
 
-    override fun halp() = "<b>!tappeto</b> <i>chi o cosa</i> chi o cosa vuoi mandare al tappeto oggi?"
+    override fun halp() =
+        "<b>!tappeto</b> <i>complemento oggetto</i> chi o cosa vuoi mandare al tappeto oggi?\n" +
+        "<b>!tappeto</b> <i>soggetto -> complemento oggetto</i>"
 
     fun alTappeto(chi: String, cosa: String): InputFile {
 
