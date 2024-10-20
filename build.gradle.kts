@@ -47,6 +47,7 @@ dependencies {
     implementation("org.springdoc", "springdoc-openapi-starter-common", springdocVersion)
     implementation("org.springdoc", "springdoc-openapi-starter-webmvc-ui", springdocVersion)
     implementation("org.knowm.xchart", "xchart", xchartVersion)
+    implementation("org.eclipse.jgit:org.eclipse.jgit:7.0.0.202409031743-r")
 
     runtimeOnly("org.mariadb.jdbc", "mariadb-java-client")
     runtimeOnly("com.h2database", "h2")
