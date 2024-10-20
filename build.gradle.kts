@@ -69,6 +69,7 @@ kotlin {
         freeCompilerArgs = listOf("-Xjsr305=strict")
         jvmTarget = JvmTarget.JVM_17
     }
+    jvmToolchain(17)
 }
 
 tasks.withType<Test> {
