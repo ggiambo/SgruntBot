@@ -28,8 +28,6 @@ import org.telegram.telegrambots.meta.api.objects.reactions.ReactionType
 import org.telegram.telegrambots.meta.generics.TelegramClient
 import java.io.InputStream
 import java.net.Proxy
-import java.net.URLEncoder
-import java.nio.charset.StandardCharsets
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.util.*

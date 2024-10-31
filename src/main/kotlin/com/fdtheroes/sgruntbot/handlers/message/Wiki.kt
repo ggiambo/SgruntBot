@@ -6,6 +6,7 @@ import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.utils.BotUtils
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.message.Message
+import java.net.URLEncoder
 
 @Service
 class Wiki(botUtils: BotUtils, botConfig: BotConfig, val mapper: ObjectMapper) : MessageHandler(botUtils, botConfig),
@@ -29,7 +30,7 @@ class Wiki(botUtils: BotUtils, botConfig: BotConfig, val mapper: ObjectMapper) :
             }
 
             val description = getDescription(lingua, title)
-            val url = String.format(urlByTitle, lingua, title)
+            val url = String.format(urlByTitle, lingua, URLEncoder.encode(title, Charsets.UTF_8))
 
             val risposta = "$description\n$url"
             botUtils.rispondi(ActionResponse.message(risposta), message)
