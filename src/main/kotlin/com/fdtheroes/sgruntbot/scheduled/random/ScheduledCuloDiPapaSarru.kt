@@ -82,11 +82,9 @@ class ScheduledCuloDiPapaSarru(private val botUtils: BotUtils) : Scheduled {
     )
 
     override fun execute() {
-        val giorniTrascorsi = Period.between(primoDiNovembre, LocalDate.now()).days
-        if (giorniTrascorsi < vangeloDellInfanziaSecondoSarrusofono.length()) {
-            val index = giorniTrascorsi.mod(vangeloDellInfanziaSecondoSarrusofono.length().toInt())
-            val rot13String = rot13(vangeloDellInfanziaSecondoSarrusofono[index])
-            botUtils.messaggio(ActionResponse.message(rot13String))
+        val previous = getPrevious()
+        if (previous.isNotEmpty()) {
+            return botUtils.messaggio(ActionResponse.message(previous.last()))
         }
     }
 
@@ -106,6 +104,15 @@ class ScheduledCuloDiPapaSarru(private val botUtils: BotUtils) : Scheduled {
             return nextRun.plusDays(1)
         }
         return nextRun
+    }
+
+    fun getPrevious(): List<String> {
+        val giorniTrascorsi = Period.between(primoDiNovembre, LocalDate.now()).days
+        if (giorniTrascorsi < vangeloDellInfanziaSecondoSarrusofono.length()) {
+            val index = giorniTrascorsi.mod(vangeloDellInfanziaSecondoSarrusofono.length().toInt())
+            return vangeloDellInfanziaSecondoSarrusofono.subList(0, index + 1).map { rot13(it) }
+        }
+        return emptyList()
     }
 
     private fun rot13(inputString: String): String {
