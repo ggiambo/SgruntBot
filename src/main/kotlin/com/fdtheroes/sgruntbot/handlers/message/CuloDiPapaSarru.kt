@@ -12,7 +12,7 @@ class CuloDiPapaSarru(
     botUtils: BotUtils,
     botConfig: BotConfig,
     private val scheduledCuloDiPapaSarru: ScheduledCuloDiPapaSarru,
-) : MessageHandler(botUtils, botConfig) {
+) : MessageHandler(botUtils, botConfig), HasHalp {
 
     private val regex = Regex("^!vangelo", RegexOption.IGNORE_CASE)
 
@@ -24,4 +24,7 @@ class CuloDiPapaSarru(
             botUtils.rispondi(ActionResponse.message(results), message)
         }
     }
+
+    override fun halp() =
+        "<b>!vangelo</b> Il vangelo del CDP Sarru"
 }
