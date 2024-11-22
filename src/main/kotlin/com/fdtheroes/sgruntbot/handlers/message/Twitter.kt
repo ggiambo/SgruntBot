@@ -11,11 +11,11 @@ import kotlin.random.Random.Default.nextInt
 class Twitter(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils, botConfig) {
 
     private val risposte = listOf(
-        "In questa chat non nominiamo di Twitter",
+        "In questa chat non nominiamo Twitter",
         "Basta Elon/Twitter Spam!",
         "Twitter? Shitter!",
-        "Una persona perbene come te che va a ravanare in Twitter?",
-        "A Sgrunty non piace Twitter",
+        "Le persona perbene non vanno a ravanare in Twitter?",
+        "A Sgrunty non piace Twitter!",
     )
 
     private val regex = Regex("https://twitter.com/")
