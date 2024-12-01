@@ -4,7 +4,6 @@ import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.utils.BotUtils
 import org.jsoup.Jsoup
-import org.jsoup.nodes.Element
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.message.Message
 
@@ -12,7 +11,7 @@ import org.telegram.telegrambots.meta.api.objects.message.Message
 class Oroscopo(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils, botConfig), HasHalp {
 
     private val regex = Regex("^!oroscopo(.*)\$", RegexOption.IGNORE_CASE)
-    private val baseUrl = "https://www.oggi.it/oroscopo/oroscopo-di-oggi/%s-oggi.shtml"
+    private val baseUrl = "https://www.foxoroscopo.com/oroscopo-del-giorno-%s"
     private val segni = setOf(
         "ariete",
         "toro",
@@ -39,21 +38,28 @@ class Oroscopo(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUti
             }
             val url = baseUrl.format(segnoPerUrl.replaceFirstChar { it.uppercase() })
 
-            val (introduzione, amore, lavoro, benessere) = Jsoup.parse(botUtils.textFromURL(url))
-                .select("Article.oroscopo")
+            val (introduzione, professioneCarriera, amorePartnership, lotto) = Jsoup.parse(botUtils.textFromURL(url))
+                .select(".blog-pragraph")[0]
                 .select("p")
-                .filter { it: Element -> it.text().isNotBlank() }
+                .map { it.text() }
+                .map { it.replace("\\\'", "'") }
 
             val testo = """
                 <b>${segnoPerUrl.replaceFirstChar { it.uppercase() }}</b>
                 
-                ${introduzione.text()}
+                $introduzione
                 
-                <b>Amore e eros</b>${amore.ownText()}
+                <b>Professione e carriera</b>
                 
-                <b>Lavoro e denaro</b>${lavoro.ownText()}
+                $professioneCarriera
                 
-                <b>Benessere</b>${benessere.ownText()}
+                <b>Amore e partnership</b>
+                
+                $amorePartnership
+                
+                <b>Numeri del lotto</b>
+                
+                $lotto
             """.trimIndent()
 
             botUtils.rispondi(ActionResponse.message(testo), message)
