@@ -1,8 +1,8 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
-val telegrambotsVersion = "7.10.0"
-val jsoupVersion = "1.18.1"
-val springdocVersion = "2.6.0"
+val telegrambotsVersion = "7.11.0"
+val jsoupVersion = "1.18.2"
+val springdocVersion = "2.7.0"
 val xchartVersion = "3.8.8"
 val mockitokotlinVersion = "5.4.0"
 
@@ -11,7 +11,7 @@ plugins {
     kotlin("jvm") version "2.0.0"
     kotlin("plugin.spring") version "2.0.0"
     kotlin("plugin.jpa") version "2.0.0"
-    id("org.springframework.boot") version "3.3.5"
+    id("org.springframework.boot") version "3.4.0"
     id("io.spring.dependency-management") version "1.1.6"
     id("com.github.ben-manes.versions") version "0.51.0"
     id("com.glovoapp.semantic-versioning") version "1.1.10"
@@ -47,7 +47,7 @@ dependencies {
     implementation("org.springdoc", "springdoc-openapi-starter-common", springdocVersion)
     implementation("org.springdoc", "springdoc-openapi-starter-webmvc-ui", springdocVersion)
     implementation("org.knowm.xchart", "xchart", xchartVersion)
-    implementation("org.eclipse.jgit:org.eclipse.jgit:7.0.0.202409031743-r")
+    implementation("org.eclipse.jgit", "org.eclipse.jgit", "7.0.0.202409031743-r")
 
     runtimeOnly("org.mariadb.jdbc", "mariadb-java-client")
     runtimeOnly("com.h2database", "h2")
