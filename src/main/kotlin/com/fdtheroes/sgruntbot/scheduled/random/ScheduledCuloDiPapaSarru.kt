@@ -5,6 +5,7 @@ import com.fdtheroes.sgruntbot.scheduled.Scheduled
 import com.fdtheroes.sgruntbot.utils.BotUtils
 import com.fdtheroes.sgruntbot.utils.BotUtils.Companion.length
 import org.springframework.stereotype.Service
+import java.time.temporal.ChronoUnit
 import java.time.*
 
 @Service
@@ -107,7 +108,7 @@ class ScheduledCuloDiPapaSarru(private val botUtils: BotUtils) : Scheduled {
     }
 
     fun getPrevious(): List<String> {
-        val giorniTrascorsi = Period.between(primoDiNovembre, LocalDate.now()).days
+        val giorniTrascorsi = ChronoUnit.DAYS.between(primoDiNovembre, LocalDate.now())
         if (giorniTrascorsi < vangeloDellInfanziaSecondoSarrusofono.length()) {
             val index = giorniTrascorsi.mod(vangeloDellInfanziaSecondoSarrusofono.length().toInt())
             return vangeloDellInfanziaSecondoSarrusofono.subList(0, index + 1).map { rot13(it) }
