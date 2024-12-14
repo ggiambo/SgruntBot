@@ -18,11 +18,30 @@ class CuloDiPapaSarru(
 
     override fun handle(message: Message) {
         if (regex.containsMatchIn(message.text)) {
-            val results = scheduledCuloDiPapaSarru.getPrevious().joinToString(separator = "\n") {
-                "- $it"
+            createChunks(scheduledCuloDiPapaSarru.getPrevious()).forEach {
+                botUtils.rispondi(ActionResponse.message(it), message)
             }
-            botUtils.rispondi(ActionResponse.message(results), message)
         }
+    }
+
+    private fun createChunks(allEntries: List<String>): List<String> {
+        val chunks = mutableListOf<String>()
+        var currentChunk = StringBuilder()
+
+        for (entry in allEntries) {
+            val entryWithBullet = "- $entry\n"
+            if (currentChunk.length + entryWithBullet.length > 4096) {
+                chunks.add(currentChunk.toString())
+                currentChunk = StringBuilder()
+            }
+            currentChunk.append(entryWithBullet)
+        }
+
+        if (currentChunk.isNotEmpty()) {
+            chunks.add(currentChunk.toString())
+        }
+
+        return chunks
     }
 
     override fun halp() =
