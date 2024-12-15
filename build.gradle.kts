@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 
 val telegrambotsVersion = "7.11.0"
 val jsoupVersion = "1.18.2"
@@ -75,4 +76,8 @@ kotlin {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.getByName<BootBuildImage>("bootBuildImage") {
+    imageName = "sgruntbot:${project.version}"
 }
