@@ -1,0 +1,7 @@
+spring:
+  datasource:
+    url: jdbc:mariadb://mariadb:3306/sgrunt
+
+logging:
+  structured.format.file: ecs
+  file.name: log.json

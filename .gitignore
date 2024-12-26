@@ -6,3 +6,4 @@
 token*.txt
 chatId.txt
 .gradle
+docker/sgrunt_db

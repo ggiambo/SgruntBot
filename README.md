@@ -23,10 +23,32 @@ E un utente "sgrunt" con password "sgrunt" con accesso a un database che si chia
 
 ```mariadb
 create user 'sgrunt'@localhost identified by 'sgrunt';
-grant all privileges on sgrunt.* to 'sgrunt'@localhost identified by 'sgrunt';
+grant all privileges on sgrunt.* to 'sgrunt'@'%' identified by 'sgrunt';
 flush privileges;
 ```
+
+Vedi anche il file `docker/ìnit.sql`
 
 ## API
 
 Non sono il massimo, ma forse possono piacerti le [REST API](http://localhost:8081/sgrunty/swagger-ui/index.html)
+
+## Docker! Container! Blah&Banf!
+1. Crea un file `docker/.env`:
+    ```
+    CHAT_ID=-676046724
+    TELEGRAM_TOKEN=contenuto di token.txt
+    IMGUR_CLIENT_ID=Dummy
+    SPRING_PROFILES_ACTIVE=docker
+    ```
+1. Builda sgrunty
+    ```shell
+    ./gradlew bootBuildImage
+    ```
+1. Lancia sgrunty in tutta la sua magnificenza
+    ```shell
+   cd docker
+    docker compose up
+    ```
+   
+Il database sarà accessibile sulla porta 3307

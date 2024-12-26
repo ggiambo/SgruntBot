@@ -1,0 +1,27 @@
+services:
+    sgrunty:
+        image: sgruntbot:2.0.56
+        env_file:
+            - ./.env
+        depends_on:
+            mariadb:
+                condition: service_healthy
+
+    mariadb:
+        image: mariadb
+        environment:
+            MYSQL_ROOT_PASSWORD: sgrunt
+            MYSQL_USER: sgrunt
+            MYSQL_PASSWORD: sgrunt
+            MYSQL_DATABASE: sgrunt
+        healthcheck:
+            test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+            start_period: 10s
+            interval: 10s
+            timeout: 5s
+            retries: 3
+        volumes:
+            - ./sgrunt_db/:/var/lib/mysql
+            - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+        ports:
+            - "127.0.0.1:3307:3306"
