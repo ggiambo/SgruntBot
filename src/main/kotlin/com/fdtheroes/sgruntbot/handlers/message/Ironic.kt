@@ -12,7 +12,9 @@ class Ironic(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils
 
     override fun handle(message: Message) {
         if (message.text.length <= 50 && Random.nextInt(200) == 0) {
-            botUtils.rispondi(ActionResponse.message(ironic(message.text)), message)
+            if (!message.text.startsWith("!")) {
+                botUtils.rispondi(ActionResponse.message(ironic(message.text)), message)
+            }
         }
     }
 
