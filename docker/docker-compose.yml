@@ -1,6 +1,6 @@
 services:
     sgrunty:
-        image: sgruntbot:2.0.56
+        image: sgruntbot:2.0.58
         env_file:
             - ./.env
         depends_on:
