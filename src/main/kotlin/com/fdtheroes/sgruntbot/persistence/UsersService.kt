@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.User
 import java.time.LocalDate
 import java.time.Period
+import java.time.temporal.ChronoUnit
 
 @Service
 class UsersService(
@@ -33,8 +34,8 @@ class UsersService(
                 )
             )
         }
-        val delta = Period.between(utonto.updated, LocalDate.now())
-        if (delta.days >= 3) {
+        val delta = ChronoUnit.DAYS.between(utonto.updated, LocalDate.now())
+        if (delta >= 3) {
             utonto.firstName = user.firstName
             utonto.firstName = user.firstName
             utonto.lastName = user.lastName

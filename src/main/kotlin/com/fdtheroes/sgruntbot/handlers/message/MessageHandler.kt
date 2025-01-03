@@ -39,6 +39,10 @@ abstract class MessageHandler(protected val botUtils: BotUtils, protected val bo
 
         botConfig.pignolo = Random.nextInt(100) > 90
 
+        if (botUtils.getChatMember(message.from.id) == null) {
+            return
+        }
+
         handle(update.message)
     }
 

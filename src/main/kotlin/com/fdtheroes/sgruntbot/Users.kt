@@ -12,7 +12,7 @@ enum class Users(val id: Long, val compleanno: Compleanno? = null) {
     DA_DA_212(252800958, Compleanno(6, AUGUST)),
     F(259607683, Compleanno(5, APRIL)),
     GGIAMBO(353708759, Compleanno(9, APRIL)),
-    MALUCAPERDIDA(1475337828, Compleanno(12, AUGUST)),
+    // MALUCAPERDIDA(1475337828, Compleanno(12, AUGUST)),
     BLAH_BANF_BOT(2097709389),
     ALE(5770928065, Compleanno(25, NOVEMBER)),
     GENGIVA_BOT(6383648928),

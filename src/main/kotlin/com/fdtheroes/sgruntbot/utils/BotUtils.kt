@@ -5,7 +5,6 @@ import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.models.ActionResponseType
 import jakarta.annotation.PostConstruct
 import okhttp3.Headers
-import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -23,6 +22,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto
 import org.telegram.telegrambots.meta.api.objects.InputFile
 import org.telegram.telegrambots.meta.api.objects.User
+import org.telegram.telegrambots.meta.api.objects.chatmember.MemberStatus
 import org.telegram.telegrambots.meta.api.objects.message.Message
 import org.telegram.telegrambots.meta.api.objects.reactions.ReactionType
 import org.telegram.telegrambots.meta.generics.TelegramClient
@@ -145,7 +145,10 @@ class BotUtils(private val botConfig: BotConfig) {
         if (chatMember == null) {
             return null
         }
-        if (chatMember.status == "kicked") {
+        if (chatMember.status == MemberStatus.KICKED) {
+            return null
+        }
+        if (chatMember.status == MemberStatus.LEFT) {
             return null
         }
         return chatMember.user
