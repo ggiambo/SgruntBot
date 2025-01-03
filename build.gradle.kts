@@ -6,6 +6,7 @@ val jsoupVersion = "1.18.3"
 val springdocVersion = "2.7.0"
 val xchartVersion = "3.8.8"
 val mockitokotlinVersion = "5.4.0"
+val jgitVersion = "7.1.0.202411261347-r"
 
 plugins {
     application
@@ -13,7 +14,7 @@ plugins {
     kotlin("plugin.spring") version "2.0.0"
     kotlin("plugin.jpa") version "2.0.0"
     id("org.springframework.boot") version "3.4.1"
-    id("io.spring.dependency-management") version "1.1.6"
+    id("io.spring.dependency-management") version "1.1.7"
     id("com.github.ben-manes.versions") version "0.51.0"
     id("com.glovoapp.semantic-versioning") version "1.1.10"
 }
@@ -48,7 +49,7 @@ dependencies {
     implementation("org.springdoc", "springdoc-openapi-starter-common", springdocVersion)
     implementation("org.springdoc", "springdoc-openapi-starter-webmvc-ui", springdocVersion)
     implementation("org.knowm.xchart", "xchart", xchartVersion)
-    implementation("org.eclipse.jgit", "org.eclipse.jgit", "7.0.0.202409031743-r")
+    implementation("org.eclipse.jgit", "org.eclipse.jgit", jgitVersion)
 
     runtimeOnly("org.mariadb.jdbc", "mariadb-java-client")
     runtimeOnly("com.h2database", "h2")
