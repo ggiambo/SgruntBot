@@ -11,7 +11,7 @@ import java.util.*
 
 @Service
 class Compleanni(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils, botConfig), HasHalp {
-    val dataCompleanno = DateTimeFormatter.ofPattern("dd LLLL", Locale.ITALIAN)
+    val dataCompleanno : DateTimeFormatter = DateTimeFormatter.ofPattern("dd LLLL", Locale.ITALIAN)
     private val regex = Regex("^!compleanni", RegexOption.IGNORE_CASE)
 
     override fun handle(message: Message) {

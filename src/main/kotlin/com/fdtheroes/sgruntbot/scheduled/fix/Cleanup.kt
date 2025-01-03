@@ -18,9 +18,9 @@ class Cleanup(
 ) : Scheduled {
 
     private val log = LoggerFactory.getLogger(this.javaClass)
-    override fun firstRun() = LocalDateTime.now()
+    override fun firstRun(): LocalDateTime = LocalDateTime.now()
 
-    override fun nextRun() = LocalDateTime.now().plusHours(6)
+    override fun nextRun(): LocalDateTime = LocalDateTime.now().plusHours(6)
 
     override fun execute() {
         val viventi = utontiRepository.findAll()

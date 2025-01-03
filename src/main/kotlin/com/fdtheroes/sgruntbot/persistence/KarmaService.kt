@@ -46,7 +46,7 @@ class KarmaService(
         repo.save(karma).karma
     }
 
-    fun getKarmas() = repo.findAll()
+    fun getKarmas(): Iterable<Karma> = repo.findAll()
 
     fun testoKarmaReport(): String {
         val karmas = repo.findAll()
