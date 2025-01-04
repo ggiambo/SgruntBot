@@ -74,6 +74,10 @@ class Canzone(
         val url = content["adaptiveFormats"][0]["url"].textValue()
         val videoUrl = URI(url)
         val instanceUrl = canzoneCache.initInstanceUrl()
+        if (instanceUrl == null) {
+            botUtils.messaggio(ActionResponse.message("Nessun sito funzionante"))
+            throw Exception("Nessun sito funzionante")
+        }
         val downloadUrl = "${instanceUrl}${videoUrl.path}?${videoUrl.query}"
         return CoroutineScope(Dispatchers.Default).async {
             botUtils.streamFromURL(downloadUrl)
@@ -94,6 +98,10 @@ class Canzone(
 
     private fun getTitleAndVideoId(query: String): Pair<String?, String?> {
         val instanceUrl = canzoneCache.initInstanceUrl()
+        if (instanceUrl == null) {
+            botUtils.messaggio(ActionResponse.message("Nessun sito funzionante"))
+            throw Exception("Nessun sito funzionante")
+        }
         val textFromURL = botUtils.textFromURL(
             url = "$instanceUrl/api/v1/search",
             params = listOf(
@@ -117,7 +125,7 @@ class CanzoneCache(private val botUtils: BotUtils, private val mapper: ObjectMap
     private val log = LoggerFactory.getLogger(this.javaClass)
 
     @Cacheable("invidious")
-    fun initInstanceUrl(): String {
+    fun initInstanceUrl(): String? {
         log.info("Fetching invidious instance url")
         val textFromURL = botUtils.textFromURL(
             url = "https://api.invidious.io/instances.json",
@@ -126,23 +134,24 @@ class CanzoneCache(private val botUtils: BotUtils, private val mapper: ObjectMap
                 "sort_by" to "type,users"
             )
         )
-        val validUrls = mapper.readTree(textFromURL).firstNotNullOf {
+        val validUrls = mapper.readTree(textFromURL).mapNotNull {
             val url = it[1]["uri"].textValue()
             try {
                 log.info("Testing $url")
                 val response = botUtils.textFromURL("$url/api/v1/videos/CK4fzjY6Elo") // test se veramente funziona
                 if (response.contains("Linux su desktop è al massimo storico")) {
                     log.info("$url sembra OK!")
-                    return@firstNotNullOf url
+                    return@mapNotNull url
                 }
                 log.info("$url non è OK: $response")
-                return@firstNotNullOf null
+                return@mapNotNull null
             } catch (e: Exception) {
                 log.info("$url NOK: ${e.message}")
-                return@firstNotNullOf null
+                return@mapNotNull null
             }
         }
-        return validUrls
+
+        return validUrls.firstOrNull()
     }
 
 }
