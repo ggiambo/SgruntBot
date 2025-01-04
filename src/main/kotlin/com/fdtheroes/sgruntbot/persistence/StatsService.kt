@@ -61,7 +61,7 @@ class StatsService(private val statsRepository: StatsRepository) {
                 val userId = entry.key
                 val statsByUser = entry.value
                 statsByUser.fold(Stats(userId = userId, messages = 0)) { sum, element ->
-                    sum.messages = sum.messages + element.messages
+                    sum.messages += element.messages
                     sum
                 }
             }

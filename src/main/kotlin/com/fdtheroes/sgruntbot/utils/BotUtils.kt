@@ -33,6 +33,7 @@ import java.time.ZoneId
 import java.util.*
 import java.util.concurrent.TimeUnit
 import java.util.stream.StreamSupport
+import kotlin.math.max
 import kotlin.random.Random
 
 @Service
@@ -162,7 +163,7 @@ class BotUtils(private val botConfig: BotConfig) {
         if (input.length < length) {
             return input
         }
-        val newLength = Math.max(0, length - 3) // "..."
+        val newLength = max(0, length - 3) // "..."
         return input.take(newLength) + "..."
     }
 

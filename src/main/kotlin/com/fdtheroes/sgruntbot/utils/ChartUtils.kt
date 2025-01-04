@@ -35,7 +35,7 @@ object ChartUtils {
     }
 
 
-    val seriesColors = arrayOf(
+    private val seriesColors = arrayOf(
         colorFromString("#a6cee3"),
         colorFromString("#1f78b4"),
         colorFromString("#b2df8a"),

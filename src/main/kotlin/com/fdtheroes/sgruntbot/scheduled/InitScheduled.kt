@@ -20,7 +20,7 @@ class InitScheduled(private val scheduled: List<Scheduled>) {
         scheduled.forEach {
             val firstRun = it.firstRun()
             log.info("Prima esecuzione di ${it.javaClass.simpleName} il $firstRun")
-            nextScheduled.put(it::class, firstRun)
+            nextScheduled[it::class] = firstRun
             Timer().schedule(timerTask { executeAndReschedule(it) }, firstRun.toDate())
         }
     }
@@ -30,7 +30,7 @@ class InitScheduled(private val scheduled: List<Scheduled>) {
         scheduled.execute()
         val nextRun = scheduled.nextRun()
         log.info("Prossima esecuzione di ${scheduled.javaClass.simpleName} il $nextRun")
-        nextScheduled.put(scheduled::class, nextRun)
+        nextScheduled[scheduled::class] = nextRun
         Timer().schedule(timerTask { executeAndReschedule(scheduled) }, nextRun.toDate())
     }
 

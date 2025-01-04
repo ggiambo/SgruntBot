@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.message.Message
 import kotlin.math.abs
 import kotlin.math.max
+import kotlin.math.min
 import kotlin.random.Random.Default.nextInt
 
 @Service
@@ -74,7 +75,7 @@ class Karma(
         var wonKarma = 0
         var wonCredit = 0
 
-        for (i in 1..Math.min(n, karmaService.getKarma(donatore).karmaCredit)) {
+        for (i in 1..min(n, karmaService.getKarma(donatore).karmaCredit)) {
             karmaService.takeGiveKarma(donatore, ricevente, newKarma)
 
             if (nextInt(5) == 0) { // 20%

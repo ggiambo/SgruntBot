@@ -3,7 +3,6 @@ package com.fdtheroes.sgruntbot.handlers.reaction
 import com.fdtheroes.sgruntbot.handlers.Handler
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.utils.BotUtils
-import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.chat.Chat
 import org.telegram.telegrambots.meta.api.objects.Update
 import org.telegram.telegrambots.meta.api.objects.message.Message

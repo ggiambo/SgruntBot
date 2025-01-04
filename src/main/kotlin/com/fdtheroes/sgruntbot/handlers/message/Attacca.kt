@@ -17,11 +17,10 @@ class Attacca(
 
     override fun handle(message: Message) {
         if (message.text == "!attacca") {
-            val testo: String
-            if (message.replyToMessage == null) {
-                testo = "E chi vorresti mai attaccare, grullo?"
+            val testo = if (message.replyToMessage == null) {
+                "E chi vorresti mai attaccare, grullo?"
             } else {
-                testo = errePiGiService.attacca(message.from, message.replyToMessage.from)
+                errePiGiService.attacca(message.from, message.replyToMessage.from)
             }
             botUtils.rispondi(ActionResponse.message(testo), message)
         }

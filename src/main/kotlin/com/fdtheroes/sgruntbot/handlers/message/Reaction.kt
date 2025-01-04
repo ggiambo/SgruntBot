@@ -83,7 +83,7 @@ class Reaction(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUti
         "🤷",
         "🤷‍♀",
         "😡"
-    );
+    )
 
     override fun handle(message: Message) {
         // 0.5% di probabilità

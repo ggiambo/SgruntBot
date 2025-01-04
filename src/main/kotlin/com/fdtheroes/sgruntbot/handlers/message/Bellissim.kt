@@ -10,7 +10,7 @@ class Bellissim(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUt
 
     private val regex = Regex("bellissim", RegexOption.IGNORE_CASE)
 
-    val risposte = listOf(
+    private val risposte = listOf(
         "IO sono bellissimo! .... anzi stupendo! fantastico! eccezionale!",
         "IO sono bellissimo! .... vabbé, facciamo a turni.",
         "IO sono bellissimo! .... quasi bello come Giambo <3",

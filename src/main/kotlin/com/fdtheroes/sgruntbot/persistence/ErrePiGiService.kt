@@ -5,6 +5,7 @@ import com.fdtheroes.sgruntbot.models.ErrePiGi
 import com.fdtheroes.sgruntbot.utils.BotUtils
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.User
+import kotlin.math.max
 import kotlin.random.Random.Default.nextInt
 
 @Service
@@ -117,11 +118,11 @@ class ErrePiGiService(private val botUtils: BotUtils, private val errePiGiReposi
         val attaccantiIds = getAttaccantiIds(difensoreErrePiGi).toMutableList()
 
         val puntiFeritaAttaccante = nextInt(5)
-        attaccanteErrePiGi.hp = Math.max(attaccanteErrePiGi.hp - puntiFeritaAttaccante, 0)
+        attaccanteErrePiGi.hp = max(attaccanteErrePiGi.hp - puntiFeritaAttaccante, 0)
         attaccantiIds.add(attaccanteErrePiGi.userId!!)
 
         val puntiFeritaDifensore = nextInt(5)
-        difensoreErrePiGi.hp = Math.max(difensoreErrePiGi.hp - puntiFeritaDifensore, 0)
+        difensoreErrePiGi.hp = max(difensoreErrePiGi.hp - puntiFeritaDifensore, 0)
         difensoreErrePiGi.attaccantiIds = attaccantiIds.joinToString(separator = ",")
 
         errePiGiRepository.save(attaccanteErrePiGi)

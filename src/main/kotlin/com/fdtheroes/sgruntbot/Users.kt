@@ -28,7 +28,7 @@ enum class Users(val id: Long, val compleanno: Compleanno? = null) {
     }
 }
 
-class Compleanno(val giorno: Int, val mese: Month) : Comparable<Compleanno> {
+class Compleanno(private val giorno: Int, private val mese: Month) : Comparable<Compleanno> {
     override fun compareTo(other: Compleanno): Int {
         val meseCompare = mese.compareTo(other.mese)
         if (meseCompare != 0) {

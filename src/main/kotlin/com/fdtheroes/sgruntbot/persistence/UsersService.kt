@@ -5,7 +5,6 @@ import com.fdtheroes.sgruntbot.utils.BotUtils
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.User
 import java.time.LocalDate
-import java.time.Period
 import java.time.temporal.ChronoUnit
 
 @Service
