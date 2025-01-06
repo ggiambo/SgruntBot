@@ -1,13 +1,13 @@
 package com.fdtheroes.sgruntbot.actions
 
 import com.fdtheroes.sgruntbot.BaseTest
-import com.fdtheroes.sgruntbot.handlers.message.Canzone_Old
+import com.fdtheroes.sgruntbot.handlers.message.CanzoneYtDlp
 import com.fdtheroes.sgruntbot.models.ActionResponseType
 import org.assertj.core.api.Assertions.assertThat
 
 internal class CanzoneTest : BaseTest() {
 
-    private val canzone = Canzone_Old(botUtils, botConfig)
+    private val canzone = CanzoneYtDlp(botUtils, botConfig)
 
     //@Test
     fun testPositive() {

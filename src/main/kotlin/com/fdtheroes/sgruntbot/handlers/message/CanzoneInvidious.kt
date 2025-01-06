@@ -15,8 +15,8 @@ import org.telegram.telegrambots.meta.api.objects.message.Message
 import java.io.InputStream
 import java.net.URI
 
-@Service
-class Canzone(
+//@Service
+class CanzoneInvidious(
     botUtils: BotUtils,
     botConfig: BotConfig,
     private val mapper: ObjectMapper,

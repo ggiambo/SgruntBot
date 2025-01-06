@@ -4,6 +4,7 @@ import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.utils.BotUtils
 import org.slf4j.LoggerFactory
+import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.InputFile
 import org.telegram.telegrambots.meta.api.objects.message.Message
 import java.io.File
@@ -13,12 +14,13 @@ import kotlin.io.path.createDirectory
 import kotlin.io.path.exists
 import kotlin.io.path.pathString
 
-//@Service
-class Canzone_Old(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils, botConfig), HasHalp {
+@Service
+class CanzoneYtDlp(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils, botConfig), HasHalp {
 
     private val log = LoggerFactory.getLogger(this.javaClass)
     private val regex = Regex("!canzone (.*)$", RegexOption.IGNORE_CASE)
     private val destPath by lazy { initDestPath() }
+    private val proxy = "http://198.98.49.55:8118"
 
     private fun initDestPath(): Path {
         val tmpDir = System.getProperty("java.io.tmpdir")
@@ -53,7 +55,7 @@ class Canzone_Old(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(bot
         val processOutput = ProcessBuilder()
             .command(
                 "sh", "-c",
-                """yt-dlp --restrict-filenames --extract-audio --audio-format mp3 --output "$destDir/%(title)s.mp3" "ytsearch1:$query" --geo-bypass-country IT 2>&1"""
+                """yt-dlp --restrict-filenames --proxy $proxy --extract-audio --audio-format mp3 --output "$destDir/%(title)s.mp3" "ytsearch1:$query" --geo-bypass-country IT 2>&1"""
             )
             .start()
             .inputStream
