@@ -18,7 +18,7 @@ class CuloDiPapaSarru(
 
     override fun handle(message: Message) {
         if (regex.containsMatchIn(message.text)) {
-            createChunks(scheduledCuloDiPapaSarru.getPrevious()).forEach {
+            createChunks(scheduledCuloDiPapaSarru.getAll()).forEach {
                 botUtils.rispondi(ActionResponse.message(it), message)
             }
         }

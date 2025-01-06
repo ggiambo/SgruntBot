@@ -116,6 +116,8 @@ class ScheduledCuloDiPapaSarru(private val botUtils: BotUtils) : Scheduled {
         return emptyList()
     }
 
+    fun getAll() = vangeloDellInfanziaSecondoSarrusofono.map { rot13(it) }
+
     private fun rot13(inputString: String): String {
         return inputString.map {
             when (it) {
