@@ -67,7 +67,7 @@ class CanzoneYtDlp(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(bo
 
     private fun extractFilename(processOutput: String): String? {
         val destDir = destPath.pathString
-        var fileName = Regex("Destination: $destDir/(.*)")
+        var fileName = Regex("Destination: $destDir/(.+\\.mp3)")
             .findAll(processOutput)
             .map { it.groupValues[1] }
             .firstOrNull()
