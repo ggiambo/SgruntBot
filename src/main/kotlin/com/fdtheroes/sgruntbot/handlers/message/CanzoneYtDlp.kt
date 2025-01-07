@@ -18,9 +18,9 @@ import kotlin.io.path.pathString
 class CanzoneYtDlp(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils, botConfig), HasHalp {
 
     private val log = LoggerFactory.getLogger(this.javaClass)
-    private val regex = Regex("!canzone (.*)$", RegexOption.IGNORE_CASE)
+    private val regex = Regex("^!canzone (.*)$", RegexOption.IGNORE_CASE)
     private val destPath by lazy { initDestPath() }
-    private val proxy = "http://198.98.49.55:8118"
+    private val suoraProxy = "http://198.98.49.55:8118"
 
     private fun initDestPath(): Path {
         val tmpDir = System.getProperty("java.io.tmpdir")
@@ -55,7 +55,7 @@ class CanzoneYtDlp(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(bo
         val processOutput = ProcessBuilder()
             .command(
                 "sh", "-c",
-                """yt-dlp --restrict-filenames --proxy $proxy --extract-audio --audio-format mp3 --output "$destDir/%(title)s.mp3" "ytsearch1:$query" --geo-bypass-country IT 2>&1"""
+                """yt-dlp --restrict-filenames --proxy $suoraProxy --extract-audio --audio-format mp3 --output "$destDir/%(title)s.mp3" "ytsearch1:$query" --geo-bypass-country IT 2>&1"""
             )
             .start()
             .inputStream
