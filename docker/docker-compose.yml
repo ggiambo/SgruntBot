@@ -1,8 +1,11 @@
 services:
     sgrunty:
-        image: sgruntbot:2.0.58
-        env_file:
-            - ./.env
+        image: sgruntbot:latest
+        environment:
+            CHAT_ID: -676046724
+            TELEGRAM_TOKEN: PUT_YOUR_TOKEN_HERE
+            IMGUR_CLIENT_ID: Dummy
+            spring_profiles_active: docker
         depends_on:
             mariadb:
                 condition: service_healthy
@@ -22,6 +25,5 @@ services:
             retries: 3
         volumes:
             - ./sgrunt_db/:/var/lib/mysql
-            - ./init.sql:/docker-entrypoint-initdb.d/init.sql
         ports:
             - "127.0.0.1:3307:3306"

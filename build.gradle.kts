@@ -81,4 +81,5 @@ tasks.withType<Test> {
 
 tasks.getByName<BootBuildImage>("bootBuildImage") {
     imageName = "sgruntbot:${project.version}"
+    tags.add("sgruntbot:latest")
 }
