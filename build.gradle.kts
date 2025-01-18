@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 
-val telegrambotsVersion = "8.0.0"
+val telegrambotsVersion = "8.2.0"
 val jsoupVersion = "1.18.3"
 val springdocVersion = "2.7.0"
 val xchartVersion = "3.8.8"

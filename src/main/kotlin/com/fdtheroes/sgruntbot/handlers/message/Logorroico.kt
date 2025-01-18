@@ -38,7 +38,7 @@ class Logorroico(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botU
         }
 
         // dal settimo messaggio di seguito, probabilità 20% di essere logorroico
-        if (lastAuthorCount >= 7 && nextInt(5) == 0) {
+        if (lastAuthorCount >= 10 && nextInt(5) == 0) {
             lastAuthorCount = 0
             botUtils.rispondi(ActionResponse.message(risposte.random()), message)
         }
