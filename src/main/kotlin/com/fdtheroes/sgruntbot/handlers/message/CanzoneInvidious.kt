@@ -75,8 +75,7 @@ class CanzoneInvidious(
         val videoUrl = URI(url)
         val instanceUrl = canzoneCache.initInstanceUrl()
         if (instanceUrl == null) {
-            botUtils.messaggio(ActionResponse.message("Nessun sito funzionante"))
-            throw Exception("Nessun sito funzionante")
+            nessunSitoFunzionante()
         }
         val downloadUrl = "${instanceUrl}${videoUrl.path}?${videoUrl.query}"
         return CoroutineScope(Dispatchers.Default).async {
@@ -99,8 +98,7 @@ class CanzoneInvidious(
     private fun getTitleAndVideoId(query: String): Pair<String?, String?> {
         val instanceUrl = canzoneCache.initInstanceUrl()
         if (instanceUrl == null) {
-            botUtils.messaggio(ActionResponse.message("Nessun sito funzionante"))
-            throw Exception("Nessun sito funzionante")
+            nessunSitoFunzionante()
         }
         val textFromURL = botUtils.textFromURL(
             url = "$instanceUrl/api/v1/search",
@@ -116,6 +114,11 @@ class CanzoneInvidious(
     }
 
     override fun halp() = "<b>!canzone</b> <i>la tua canzone</i> cerca e scarica la tua canzone"
+
+    private fun nessunSitoFunzionante() {
+        botUtils.messaggio(ActionResponse.message("Nessun sito funzionante"))
+        throw Exception("Nessun sito funzionante")
+    }
 
 }
 

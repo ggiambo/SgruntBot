@@ -25,7 +25,6 @@ class ScheduledSanto(
         val jsNode = mapper.readTree(santi)
 
         santoDiDefault(jsNode)
-        //altriSanti(jsNode)
     }
 
     private fun santoDiDefault(jsNode: JsonNode) {
@@ -45,26 +44,6 @@ class ScheduledSanto(
         val inputPhoto = InputFile(imageStream, "santo.jpg")
 
         botUtils.messaggio(ActionResponse.photo("<a href='$url'>$nome</a>\n$descrizione", inputPhoto))
-    }
-
-    private fun altriSanti(jsNode: JsonNode) {
-        val santi = jsNode.filter { it["default"].asInt() == 0 }
-
-        if (santi.isEmpty()) {
-            return
-        }
-
-        val testo = santi.joinToString(separator = "\n") {
-            val nome = it["nome"].asText()
-            val tipologia = it["tipologia"].asText()
-            if (tipologia.isNotEmpty()) {
-                "$nome ($tipologia)"
-            } else {
-                nome
-            }
-        }
-
-        botUtils.messaggio(ActionResponse.message("<b>Altri santi</b>\n$testo"))
     }
 
     private fun seiDiMattina(): LocalDateTime {

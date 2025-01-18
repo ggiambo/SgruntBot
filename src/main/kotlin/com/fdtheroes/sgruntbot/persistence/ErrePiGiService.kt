@@ -79,7 +79,7 @@ class ErrePiGiService(private val botUtils: BotUtils, private val errePiGiReposi
             return "Seu gode della protezione di Sgrunty. Seu non si può attaccare. Vergognati per averci solamente provato."
         }
 
-        val attaccantiIds = getAttaccantiIds(difensoreErrePiGi).toMutableList()
+        val attaccantiIds = getAttaccantiIds(difensoreErrePiGi)
         if (attaccantiIds.contains(attaccante.id)) {
             return "Oggi hai già attaccato $difensoreName.\nAspetta fino a domani per riprovare."
         }
