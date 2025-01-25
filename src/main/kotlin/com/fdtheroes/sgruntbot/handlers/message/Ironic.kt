@@ -10,8 +10,10 @@ import kotlin.random.Random
 @Service
 class Ironic(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils, botConfig) {
 
+    private val lunghezzaMessaggio = IntRange(10, 50)
+
     override fun handle(message: Message) {
-        if (message.text.length <= 50 && Random.nextInt(200) == 0) {
+        if (lunghezzaMessaggio.contains(message.text.length) && Random.nextInt(200) == 0) {
             if (!message.text.startsWith("!")) {
                 botUtils.rispondi(ActionResponse.message(ironic(message.text)), message)
             }

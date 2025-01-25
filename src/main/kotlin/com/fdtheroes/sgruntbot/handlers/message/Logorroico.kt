@@ -10,7 +10,6 @@ import kotlin.random.Random.Default.nextInt
 @Service
 class Logorroico(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils, botConfig) {
 
-
     private val risposte = listOf(
         "Per oggi ci hai annoiato abbastanza",
         "Ma quanto cazzo scrivi?",
