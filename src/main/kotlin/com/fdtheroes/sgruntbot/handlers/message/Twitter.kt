@@ -14,7 +14,7 @@ class Twitter(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtil
         "In questa chat non nominiamo Twitter",
         "Basta Elon/Twitter Spam!",
         "Twitter? Shitter!",
-        "Le persona perbene non vanno a ravanare in Twitter?",
+        "Le persona perbene non vanno a ravanare in Twitter",
         "A Sgrunty non piace Twitter!",
     )
 
