@@ -3,7 +3,7 @@ import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 
 val telegrambotsVersion = "8.2.0"
 val jsoupVersion = "1.18.3"
-val springdocVersion = "2.8.4"
+val springdocVersion = "2.8.5"
 val xchartVersion = "3.8.8"
 val mockitokotlinVersion = "5.4.0"
 val jgitVersion = "7.1.0.202411261347-r"
