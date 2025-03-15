@@ -40,7 +40,7 @@ class RedditGnius(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(bot
     private fun fetch(): List<Gnius> {
         val redditNews = try {
             botUtils.textFromURL(
-                url = "https://old.reddit.com/r/linux+netsec+programming+technology/top/",
+                url = "https://old.reddit.com/r/linux+netsec+programming+technology+privacy/top/",
                 headers = listOf(Pair(HttpHeaders.USER_AGENT, botConfig.botName)),
                 proxy = torProxy
             )
