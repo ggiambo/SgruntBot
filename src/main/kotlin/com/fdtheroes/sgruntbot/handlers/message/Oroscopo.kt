@@ -12,12 +12,13 @@ import org.telegram.telegrambots.meta.api.objects.message.Message
 class Oroscopo(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils, botConfig), HasHalp {
 
     private val regex = Regex("^!oroscopo(.*)\$", RegexOption.IGNORE_CASE)
+    private val llm = LLM()
 
     override fun handle(message: Message) {
         if (regex.matches(message.text)) {
             val segno = regex.find(message.text)?.groupValues?.get(1)?.trim()?.lowercase()
             
-            val testo = getHoroscope(segno!!)
+            val testo = llm.getHoroscope(segno!!)
 
             botUtils.rispondi(ActionResponse.message(testo), message)
         }

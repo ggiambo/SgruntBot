@@ -112,9 +112,8 @@ fun getSignNameWithPreposition(sign: Int, preposition: String): String {
     return "$adjustedP$signName"
 }
 
-fun getPlanetPositionInstant(planet: Int, hour: Double): PlanetPosition {
+fun getPlanetPositionInstant(planet: Int, hour: Double, currentDate: LocalDate = LocalDate.now()): PlanetPosition {
     val sw = SwissEph()
-    val currentDate = LocalDate.now()
     val julianDay = SweDate.getJulDay(currentDate.year, currentDate.monthValue, currentDate.dayOfMonth, hour)
     val sunPosition = DoubleArray(6)
     val errorMsg = StringBuffer()
