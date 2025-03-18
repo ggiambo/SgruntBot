@@ -21,22 +21,9 @@ class LLM {
         val isDebugMode = input.startsWith(debugPrefix)
         val signInput = if (isDebugMode) input.removePrefix(debugPrefix).trim() else input
 
-        val zodiacSign = when (signInput.lowercase()) {
-            "ariete" -> 0
-            "toro" -> 1
-            "gemelli" -> 2
-            "cancro" -> 3
-            "leone" -> 4
-            "vergine" -> 5
-            "bilancia" -> 6
-            "scorpione" -> 7
-            "sagittario" -> 8
-            "capricorno" -> 9
-            "acquario" -> 10
-            "pesci" -> 11
-            else -> {
-                return "Invalid sign name."
-            }
+        val zodiacSign = Sign.byNome(signInput)
+        if (zodiacSign == null) {
+            return "Invalid sign name."
         }
 
         val horoscopeParams = getHoroscopeParams(zodiacSign)
@@ -44,10 +31,7 @@ class LLM {
             horoscopeParams.toStringInItalian()
         } else {
             val prompt = "Sei un astrologo, produci un oroscopo per ${
-                getSignNameWithPreposition(
-                    zodiacSign,
-                    ""
-                )
+                    zodiacSign.getSignNameWithPreposition("")
             } in un breve paragrafo nello stile di Branko. Di seguito una lista di parametri rilevanti per l'oroscopo di oggi di questo segno. Non citare pianeti che non sono nella lista.\n${horoscopeParams.toStringInItalian()}"
             callLLM(prompt)
         }

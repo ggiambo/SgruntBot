@@ -1,42 +1,40 @@
 package com.fdtheroes.sgruntbot.handlers.message.oroscopo
 
-import swisseph.*
+import swisseph.SweConst
+import swisseph.SweDate
+import swisseph.SwissEph
 import java.time.LocalDate
 
 data class HoroscopeParams(
-    val sign: Int,
+    val sign: Sign,
     val planets: List<PlanetPosition>,
     val conjunctions: List<List<PlanetPosition>>,
-    val oppositions: List<List<PlanetPosition>>
+    val oppositions: List<List<PlanetPosition>>,
 ) {
     fun toStringInItalian(): String {
         val sb = StringBuilder()
 
         planets.forEach { planet ->
             sb.append("- ${planet.planet.nome} ")
-            if (planet.planet == Planet.MOON) {
+            if (planet.planet == Planet.LUNA) {
                 sb.append("${planet.moonPhase} ")
             }
             when {
-                sign != -1 && planet.enteringSign == sign -> sb.append(
+                planet.enteringSign == sign -> sb.append(
                     "sta entrando ${
-                        getSignNameWithPreposition(
-                            planet.enteringSign,
+                        planet.enteringSign.getSignNameWithPreposition(
                             "in"
                         )
                     }"
                 )
 
-                sign != -1 && planet.leavingSign == sign -> sb.append(
+                planet.leavingSign == sign -> sb.append(
                     "sta uscendo da ${
-                        getSignNameWithPreposition(
-                            planet.leavingSign,
-                            "da"
-                        )
+                        planet.leavingSign.getSignNameWithPreposition("da")
                     }"
                 )
 
-                else -> sb.append("è ${getSignNameWithPreposition(planet.sign, "in")}")
+                else -> sb.append("è ${planet.sign.getSignNameWithPreposition("in")}")
             }
             if (planet.retrograde) {
                 sb.append(" in stazione retrograda")
@@ -56,7 +54,7 @@ data class HoroscopeParams(
             sb.append("- ${planetA.planet.nome} è in opposizione con ${planetB.planet.nome}\n")
         }
 
-        if (planets.size == 0) {
+        if (planets.isEmpty()) {
             sb.append("- Non sono presenti pianeti nel segno")
         }
 
@@ -66,50 +64,17 @@ data class HoroscopeParams(
 
 class PlanetPosition(
     val longitude: Double,
-    val sign: Int,
+    val sign: Sign,
     val longitudeIntoSign: Double,
     val planet: Planet,
-    var retrograde: Boolean = false,
-    var enteringSign: Int = -1,
-    var leavingSign: Int = -1,
-    var moonPhase: String? = null // New field for moon phase
+    val retrograde: Boolean = false,
+    val enteringSign: Sign? = null,
+    val leavingSign: Sign? = null,
+    val moonPhase: String? = null, // New field for moon phase
 ) {
-    fun hasSign(sign: Int): Boolean {
+    fun hasSign(sign: Sign): Boolean {
         return this.sign == sign || enteringSign == sign || leavingSign == sign
     }
-}
-
-data class SignInfo(val signName: String, val article: String, val inn: String, val da: String)
-
-fun getSignNameWithPreposition(sign: Int, preposition: String): String {
-    val tup = when (sign) {
-        0 -> SignInfo("Ariete", "l'", "nell'", "dall'")
-        1 -> SignInfo("Toro", "il", "nel", "dal")
-        2 -> SignInfo("Gemelli", "i", "nei", "dai")
-        3 -> SignInfo("Cancro", "il", "nel", "dal")
-        4 -> SignInfo("Leone", "il", "nel", "dal")
-        5 -> SignInfo("Vergine", "la", "nella", "dalla")
-        6 -> SignInfo("Bilancia", "la", "nella", "dalla")
-        7 -> SignInfo("Scorpione", "lo", "nello", "dallo")
-        8 -> SignInfo("Sagittario", "il", "nel", "dal")
-        9 -> SignInfo("Capricorno", "il", "nel", "dal")
-        10 -> SignInfo("Acquario", "l'", "nell'", "dall'")
-        11 -> SignInfo("Pesci", "i", "nei", "dai")
-        else -> SignInfo("Sconosciuto", "", "", "")
-    }
-
-    val (signName, article, inn, da) = tup
-
-    val p = when (preposition) {
-        "" -> article
-        "in" -> inn
-        "da" -> da
-        else -> ""
-    }
-
-    val adjustedP = if (!p.endsWith("'")) "$p " else p
-
-    return "$adjustedP$signName"
 }
 
 private fun getPlanetPositionInstant(planet: Planet, hour: Double, currentDate: LocalDate): PlanetPosition {
@@ -125,8 +90,8 @@ private fun getPlanetPositionInstant(planet: Planet, hour: Double, currentDate: 
     }
 
     val longitude = sunPosition[0]
-    val sign = (longitude / 30).toInt() // 30 degrees per zodiac sign
-    return PlanetPosition(longitude, sign, longitude % 30, planet)
+    val sign = Sign.byIndex((longitude / 30).toInt()) // 30 degrees per zodiac sign
+    return PlanetPosition(longitude, sign!!, longitude % 30, planet)
 }
 
 private fun getPlanetPosition(planet: Planet, currentDate: LocalDate): PlanetPosition {
@@ -135,10 +100,10 @@ private fun getPlanetPosition(planet: Planet, currentDate: LocalDate): PlanetPos
     val positionAtEnd = getPlanetPositionInstant(planet, 23.9, currentDate)
 
     val retrograde = positionAtEnd.longitude < positionAtStart.longitude
-    val enteringSign = if (positionAtEnd.sign != positionAtStart.sign) positionAtEnd.sign else -1
-    val leavingSign = if (positionAtEnd.sign != positionAtStart.sign) positionAtStart.sign else -1
+    val enteringSign = if (positionAtEnd.sign != positionAtStart.sign) positionAtEnd.sign else null
+    val leavingSign = if (positionAtEnd.sign != positionAtStart.sign) positionAtStart.sign else null
 
-    val moonPhase = if (planet == Planet.MOON) {
+    val moonPhase = if (planet == Planet.LUNA) {
         getMoonPhaseString(currentDate) // Calculate moon phase if the planet is the moon
     } else {
         null
@@ -160,21 +125,20 @@ private fun getPlanetsPosition(currentDate: LocalDate): Array<PlanetPosition> {
     return Planet.entries.map { getPlanetPosition(it, currentDate) }.toTypedArray()
 }
 
-fun getHoroscopeParams(sign: Int, currentDate: LocalDate = LocalDate.now()): HoroscopeParams {
+fun getHoroscopeParams(sign: Sign, currentDate: LocalDate = LocalDate.now()): HoroscopeParams {
     val allPlanets = getPlanetsPosition(currentDate)
     val conjunctions = mutableListOf<List<PlanetPosition>>()
     val oppositions = mutableListOf<List<PlanetPosition>>()
 
     for (i in allPlanets.indices) {
         val planetA = allPlanets[i]
-        if ((sign != -1) && !planetA.hasSign(sign)) {
+        if (!planetA.hasSign(sign)) {
             continue
         }
         for (j in i + 1 until allPlanets.size) {
             val planetB = allPlanets[j]
 
             if (Math.abs(planetA.longitude - planetB.longitude) <= 1) {
-                //println("conjunction ${planetName(planetA.planet)} ${planetA.longitude} ${planetName(planetB.planet)} ${planetB.longitude}")
                 conjunctions.add(listOf(planetA, planetB))
             }
             val longitudeDifference = Math.abs((planetA.longitude - planetB.longitude + 360) % 360)
@@ -184,10 +148,7 @@ fun getHoroscopeParams(sign: Int, currentDate: LocalDate = LocalDate.now()): Hor
         }
     }
 
-    val signPlanets = when (sign) {
-        -1 -> allPlanets.toList()
-        else -> allPlanets.filter { it.sign == sign }.toList()
-    }
+    val signPlanets = allPlanets.filter { it.sign == sign }.toList()
     return HoroscopeParams(sign, signPlanets, conjunctions, oppositions) // sign is set to -1 as it's not used
 }
 
