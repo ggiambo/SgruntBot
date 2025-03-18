@@ -1,5 +1,7 @@
 package com.fdtheroes.sgruntbot.handlers.message
 
+import com.fdtheroes.sgruntbot.handlers.message.oroscopo.Planet
+import com.fdtheroes.sgruntbot.handlers.message.oroscopo.getHoroscopeParams
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
@@ -18,7 +20,7 @@ class ParamsTest {
         assertThat(planetPosition1.longitude).isEqualTo(109.25254393157307)
         assertThat(planetPosition1.sign).isEqualTo(3)
         assertThat(planetPosition1.longitudeIntoSign).isEqualTo(19.252543931573072)
-        assertThat(planetPosition1.planet).isEqualTo(0)
+        assertThat(planetPosition1.planet).isEqualTo(Planet.SUN)
         assertThat(planetPosition1.retrograde).isEqualTo(false)
         assertThat(planetPosition1.enteringSign).isEqualTo(-1)
         assertThat(planetPosition1.leavingSign).isEqualTo(-1)
@@ -28,7 +30,7 @@ class ParamsTest {
         assertThat(planetPosition2.longitude).isEqualTo(119.62553851704686)
         assertThat(planetPosition2.sign).isEqualTo(3)
         assertThat(planetPosition2.longitudeIntoSign).isEqualTo(29.625538517046863)
-        assertThat(planetPosition2.planet).isEqualTo(3)
+        assertThat(planetPosition2.planet).isEqualTo(Planet.VENUS)
         assertThat(planetPosition2.retrograde).isEqualTo(false)
         assertThat(planetPosition2.enteringSign).isEqualTo(4)
         assertThat(planetPosition2.leavingSign).isEqualTo(3)
@@ -56,7 +58,7 @@ class ParamsTest {
         assertThat(conjuctionPlanetPosition1.longitude).isEqualTo(188.81831146242044)
         assertThat(conjuctionPlanetPosition1.sign).isEqualTo(6)
         assertThat(conjuctionPlanetPosition1.longitudeIntoSign).isEqualTo(8.81831146242044)
-        assertThat(conjuctionPlanetPosition1.planet).isEqualTo(1)
+        assertThat(conjuctionPlanetPosition1.planet).isEqualTo(Planet.MOON)
         assertThat(conjuctionPlanetPosition1.retrograde).isEqualTo(false)
         assertThat(conjuctionPlanetPosition1.enteringSign).isEqualTo(-1)
         assertThat(conjuctionPlanetPosition1.leavingSign).isEqualTo(-1)
@@ -66,7 +68,7 @@ class ParamsTest {
         assertThat(conjuctionPlanetPosition2.longitude).isEqualTo(188.15087135886387)
         assertThat(conjuctionPlanetPosition2.sign).isEqualTo(6)
         assertThat(conjuctionPlanetPosition2.longitudeIntoSign).isEqualTo(8.150871358863867)
-        assertThat(conjuctionPlanetPosition2.planet).isEqualTo(3)
+        assertThat(conjuctionPlanetPosition2.planet).isEqualTo(Planet.VENUS)
         assertThat(conjuctionPlanetPosition2.retrograde).isFalse()
         assertThat(conjuctionPlanetPosition2.enteringSign).isEqualTo(-1)
         assertThat(conjuctionPlanetPosition2.leavingSign).isEqualTo(-1)
@@ -77,7 +79,7 @@ class ParamsTest {
         assertThat(planetPosition1.longitude).isEqualTo(188.81831146242044)
         assertThat(planetPosition1.sign).isEqualTo(6)
         assertThat(planetPosition1.longitudeIntoSign).isEqualTo(8.81831146242044)
-        assertThat(planetPosition1.planet).isEqualTo(1)
+        assertThat(planetPosition1.planet).isEqualTo(Planet.MOON)
         assertThat(planetPosition1.retrograde).isFalse()
         assertThat(planetPosition1.enteringSign).isEqualTo(-1)
         assertThat(planetPosition1.leavingSign).isEqualTo(-1)
@@ -87,7 +89,7 @@ class ParamsTest {
         assertThat(planetPosition2.longitude).isEqualTo(188.15087135886387)
         assertThat(planetPosition2.sign).isEqualTo(6)
         assertThat(planetPosition2.longitudeIntoSign).isEqualTo(8.150871358863867)
-        assertThat(planetPosition2.planet).isEqualTo(3)
+        assertThat(planetPosition2.planet).isEqualTo(Planet.VENUS)
         assertThat(planetPosition2.retrograde).isEqualTo(false)
         assertThat(planetPosition2.enteringSign).isEqualTo(-1)
         assertThat(planetPosition2.leavingSign).isEqualTo(-1)
@@ -116,7 +118,7 @@ class ParamsTest {
         assertThat(oppositionPlanetPosition1.longitude).isEqualTo(202.79133178108123)
         assertThat(oppositionPlanetPosition1.sign).isEqualTo(6)
         assertThat(oppositionPlanetPosition1.longitudeIntoSign).isEqualTo(22.791331781081226)
-        assertThat(oppositionPlanetPosition1.planet).isEqualTo(0)
+        assertThat(oppositionPlanetPosition1.planet).isEqualTo(Planet.SUN)
         assertThat(oppositionPlanetPosition1.retrograde).isEqualTo(false)
         assertThat(oppositionPlanetPosition1.enteringSign).isEqualTo(-1)
         assertThat(oppositionPlanetPosition1.leavingSign).isEqualTo(-1)
@@ -126,7 +128,7 @@ class ParamsTest {
         assertThat(oppositionPlanetPosition2.longitude).isEqualTo(22.47443106598022)
         assertThat(oppositionPlanetPosition2.sign).isEqualTo(0)
         assertThat(oppositionPlanetPosition2.longitudeIntoSign).isEqualTo(22.47443106598022)
-        assertThat(oppositionPlanetPosition2.planet).isEqualTo(1)
+        assertThat(oppositionPlanetPosition2.planet).isEqualTo(Planet.MOON)
         assertThat(oppositionPlanetPosition2.retrograde).isFalse()
         assertThat(oppositionPlanetPosition2.enteringSign).isEqualTo(-1)
         assertThat(oppositionPlanetPosition2.leavingSign).isEqualTo(-1)
@@ -136,7 +138,7 @@ class ParamsTest {
         assertThat(planetPosition.longitude).isEqualTo(202.79133178108123)
         assertThat(planetPosition.sign).isEqualTo(6)
         assertThat(planetPosition.longitudeIntoSign).isEqualTo(22.791331781081226)
-        assertThat(planetPosition.planet).isEqualTo(0)
+        assertThat(planetPosition.planet).isEqualTo(Planet.SUN)
         assertThat(planetPosition.retrograde).isFalse()
         assertThat(planetPosition.enteringSign).isEqualTo(-1)
         assertThat(planetPosition.leavingSign).isEqualTo(-1)

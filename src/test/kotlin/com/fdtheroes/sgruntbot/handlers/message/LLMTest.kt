@@ -1,5 +1,6 @@
 package com.fdtheroes.sgruntbot.handlers.message
 
+import com.fdtheroes.sgruntbot.handlers.message.oroscopo.LLM
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.*

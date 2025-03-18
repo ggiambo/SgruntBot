@@ -1,10 +1,10 @@
-package com.fdtheroes.sgruntbot.handlers.message
+package com.fdtheroes.sgruntbot.handlers.message.oroscopo
 
 import com.fdtheroes.sgruntbot.BotConfig
+import com.fdtheroes.sgruntbot.handlers.message.HasHalp
+import com.fdtheroes.sgruntbot.handlers.message.MessageHandler
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.utils.BotUtils
-import org.jsoup.Jsoup
-import org.jsoup.nodes.Element
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.message.Message
 

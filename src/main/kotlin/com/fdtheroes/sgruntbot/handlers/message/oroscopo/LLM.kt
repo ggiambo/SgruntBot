@@ -1,4 +1,4 @@
-package com.fdtheroes.sgruntbot.handlers.message
+package com.fdtheroes.sgruntbot.handlers.message.oroscopo
 
 import dev.langchain4j.model.openai.OpenAiChatModel
 import dev.langchain4j.model.googleai.GoogleAiGeminiChatModel

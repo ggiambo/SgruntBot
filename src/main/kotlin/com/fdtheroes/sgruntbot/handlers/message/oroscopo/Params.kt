@@ -1,4 +1,4 @@
-package com.fdtheroes.sgruntbot.handlers.message
+package com.fdtheroes.sgruntbot.handlers.message.oroscopo
 
 import swisseph.*
 import java.time.LocalDate
@@ -13,8 +13,8 @@ data class HoroscopeParams(
         val sb = StringBuilder()
 
         planets.forEach { planet ->
-            sb.append("- ${planetName(planet.planet)} ")
-            if (planet.planet == SweConst.SE_MOON) {
+            sb.append("- ${planet.planet.nome} ")
+            if (planet.planet == Planet.MOON) {
                 sb.append("${planet.moonPhase} ")
             }
             when {
@@ -47,13 +47,13 @@ data class HoroscopeParams(
         conjunctions.forEach { conjunction ->
             val planetA = conjunction[0]
             val planetB = conjunction[1]
-            sb.append("- ${planetName(planetA.planet)} è in congiunzione con ${planetName(planetB.planet)}\n")
+            sb.append("- ${planetA.planet.nome} è in congiunzione con ${planetB.planet.nome}\n")
         }
 
         oppositions.forEach { opposition ->
             val planetA = opposition[0]
             val planetB = opposition[1]
-            sb.append("- ${planetName(planetA.planet)} è in opposizione con ${planetName(planetB.planet)}\n")
+            sb.append("- ${planetA.planet.nome} è in opposizione con ${planetB.planet.nome}\n")
         }
 
         if (planets.size == 0) {
@@ -68,7 +68,7 @@ class PlanetPosition(
     val longitude: Double,
     val sign: Int,
     val longitudeIntoSign: Double,
-    val planet: Int,
+    val planet: Planet,
     var retrograde: Boolean = false,
     var enteringSign: Int = -1,
     var leavingSign: Int = -1,
@@ -76,22 +76,6 @@ class PlanetPosition(
 ) {
     fun hasSign(sign: Int): Boolean {
         return this.sign == sign || enteringSign == sign || leavingSign == sign
-    }
-}
-
-private fun planetName(planet: Int): String {
-    return when (planet) {
-        SweConst.SE_SUN -> "Il sole"
-        SweConst.SE_MOON -> "La luna"
-        SweConst.SE_MERCURY -> "Mercurio"
-        SweConst.SE_VENUS -> "Venere"
-        SweConst.SE_MARS -> "Marte"
-        SweConst.SE_JUPITER -> "Giove"
-        SweConst.SE_SATURN -> "Saturno"
-        SweConst.SE_URANUS -> "Urano"
-        SweConst.SE_NEPTUNE -> "Nettuno"
-        SweConst.SE_PLUTO -> "Plutone"
-        else -> "Sconosciuto"
     }
 }
 
@@ -128,13 +112,13 @@ fun getSignNameWithPreposition(sign: Int, preposition: String): String {
     return "$adjustedP$signName"
 }
 
-private fun getPlanetPositionInstant(planet: Int, hour: Double, currentDate: LocalDate): PlanetPosition {
+private fun getPlanetPositionInstant(planet: Planet, hour: Double, currentDate: LocalDate): PlanetPosition {
     val sw = SwissEph()
     val julianDay = SweDate.getJulDay(currentDate.year, currentDate.monthValue, currentDate.dayOfMonth, hour)
     val sunPosition = DoubleArray(6)
     val errorMsg = StringBuffer()
     val returnFlag =
-        sw.swe_calc(julianDay, planet, SweConst.SEFLG_SWIEPH + SweConst.SEFLG_EQUATORIAL, sunPosition, errorMsg)
+        sw.swe_calc(julianDay, planet.index, SweConst.SEFLG_SWIEPH + SweConst.SEFLG_EQUATORIAL, sunPosition, errorMsg)
 
     if (returnFlag < 0) {
         throw Exception("Error: ${errorMsg.toString()}")
@@ -145,7 +129,7 @@ private fun getPlanetPositionInstant(planet: Int, hour: Double, currentDate: Loc
     return PlanetPosition(longitude, sign, longitude % 30, planet)
 }
 
-private fun getPlanetPosition(planet: Int, currentDate: LocalDate): PlanetPosition {
+private fun getPlanetPosition(planet: Planet, currentDate: LocalDate): PlanetPosition {
     val positionAtStart = getPlanetPositionInstant(planet, 0.0, currentDate)
     val positionAtNoon = getPlanetPositionInstant(planet, 12.0, currentDate)
     val positionAtEnd = getPlanetPositionInstant(planet, 23.9, currentDate)
@@ -154,7 +138,7 @@ private fun getPlanetPosition(planet: Int, currentDate: LocalDate): PlanetPositi
     val enteringSign = if (positionAtEnd.sign != positionAtStart.sign) positionAtEnd.sign else -1
     val leavingSign = if (positionAtEnd.sign != positionAtStart.sign) positionAtStart.sign else -1
 
-    val moonPhase = if (planet == SweConst.SE_MOON) {
+    val moonPhase = if (planet == Planet.MOON) {
         getMoonPhaseString(currentDate) // Calculate moon phase if the planet is the moon
     } else {
         null
@@ -173,11 +157,7 @@ private fun getPlanetPosition(planet: Int, currentDate: LocalDate): PlanetPositi
 }
 
 private fun getPlanetsPosition(currentDate: LocalDate): Array<PlanetPosition> {
-    val planets = listOf(
-        SweConst.SE_SUN, SweConst.SE_MOON, SweConst.SE_MERCURY, SweConst.SE_VENUS, SweConst.SE_MARS,
-        SweConst.SE_JUPITER, SweConst.SE_SATURN, SweConst.SE_URANUS, SweConst.SE_NEPTUNE, SweConst.SE_PLUTO
-    )
-    return planets.map { getPlanetPosition(it, currentDate) }.toTypedArray()
+    return Planet.entries.map { getPlanetPosition(it, currentDate) }.toTypedArray()
 }
 
 fun getHoroscopeParams(sign: Int, currentDate: LocalDate = LocalDate.now()): HoroscopeParams {
