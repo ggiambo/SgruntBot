@@ -1,4 +1,4 @@
-package com.fdtheroes.sgruntbot.handlers.message
+package com.fdtheroes.sgruntbot.handlers.message.horoscope
 
 import com.fdtheroes.sgruntbot.handlers.message.oroscopo.Planet
 import com.fdtheroes.sgruntbot.handlers.message.oroscopo.Sign
