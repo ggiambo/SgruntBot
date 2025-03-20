@@ -20,7 +20,7 @@ spring:
     open-in-view: false
 
   cache:
-    cache-names: "invidious"
+    cache-names: "invidious, horoscopeCache"
     caffeine:
       spec: "expireAfterWrite=4h"
 

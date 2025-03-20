@@ -1,11 +1,10 @@
-package com.fdtheroes.sgruntbot.handlers.message.horoscope
+package com.fdtheroes.sgruntbot.handlers.message.oroscopo
 
-import com.fdtheroes.sgruntbot.handlers.message.oroscopo.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
 
-class ParamsTest {
+class HoroscopeUtilsTest {
 
     private val horoscopeUtils = HoroscopeUtils(PlanetUtils(MoonUtils()))
 

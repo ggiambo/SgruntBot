@@ -13,7 +13,7 @@ class LLM(@Value("\${GEMINI_API_KEY}") geminiApiKey: String, private val horosco
         .modelName("gemini-2.0-flash")
         .build()
 
-    @Cacheable(cacheNames = ["HoroscopeCache"], keyGenerator = "HoroscopeKeyGenerator")
+    @Cacheable(cacheNames = ["horoscopeCache"], keyGenerator = "HoroscopeKeyGenerator")
     fun getHoroscope(zodiacSign: Sign): String {
 
         val horoscopeParams = horoscopeUtils.getHoroscopeParams(zodiacSign)
