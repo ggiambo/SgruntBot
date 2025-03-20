@@ -17,7 +17,7 @@ class LLM(@Value("\${GEMINI_API_KEY}") geminiApiKey: String, private val horosco
     fun getHoroscope(zodiacSign: Sign): String {
 
         val horoscopeParams = horoscopeUtils.getHoroscopeParams(zodiacSign)
-        val signNameWithPreposition = zodiacSign.getSignNameWithPreposition("")
+        val signNameWithPreposition = zodiacSign.description()
         val horoscopeString = horoscopeUtils.toStringInItalian(horoscopeParams)
 
         val prompt =

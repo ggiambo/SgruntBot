@@ -1,11 +1,13 @@
 package com.fdtheroes.sgruntbot.handlers.message.oroscopo
 
+import com.fdtheroes.sgruntbot.handlers.message.oroscopo.Planet.Movement.*
+
 enum class Sign(
     val index: Int,
     val nome: String,
     val articolo: String,
-    val nel: String,
-    val dal: String,
+    val entra: String,
+    val esce: String,
 ) {
     ARIETE(0, "Ariete", "l'", "nell'", "dall'"),
     TORO(1, "Toro", "il", "nel", "dal"),
@@ -21,15 +23,29 @@ enum class Sign(
     PESCI(11, "Pesci", "i", "nei", "dai"),
     ;
 
-    fun getSignNameWithPreposition(preposition: String) : String {
-        val p = when (preposition) {
-            "" -> articolo
-            "in" -> nel
-            "da" -> dal
-            else -> ""
+    fun description() = "$articolo$nome"
+
+    fun entering() : String {
+        return "${adjust(entra)}$nome"
+    }
+
+    fun leaving() : String {
+        return "${adjust(esce)}$nome"
+    }
+
+    fun isIn() = entering()
+
+    private fun adjust(movement: String) : String {
+        return if (movement.endsWith("'")) movement else "$movement "
+    }
+
+    fun getSignNameWithPreposition(movement: Planet.Movement) : String {
+        val p = when (movement) {
+            ENTERING, IN -> entra
+            LEAVING -> esce
         }
 
-        val adjustedP = if (!p.endsWith("'")) "$p " else p
+        val adjustedP = if (p.endsWith("'")) p else "$p "
 
         return "$adjustedP$nome"
     }

@@ -40,20 +40,12 @@ class HoroscopeUtils(private val planetUtils: PlanetUtils) {
             }
             when {
                 planet.enteringSign == horoscopeParams.sign -> sb.append(
-                    "sta entrando ${
-                        planet.enteringSign.getSignNameWithPreposition(
-                            "in"
-                        )
-                    }"
+                    "sta entrando ${planet.enteringSign.entering()}"
                 )
-
                 planet.leavingSign == horoscopeParams.sign -> sb.append(
-                    "sta uscendo da ${
-                        planet.leavingSign.getSignNameWithPreposition("da")
-                    }"
+                    "sta uscendo da ${planet.leavingSign.leaving()}"
                 )
-
-                else -> sb.append("è ${planet.sign.getSignNameWithPreposition("in")}")
+                else -> sb.append("è ${planet.sign.isIn()}")
             }
             if (planet.retrograde) {
                 sb.append(" in stazione retrograda")

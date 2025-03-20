@@ -11,4 +11,11 @@ enum class Planet(val index: Int, val nome: String) {
     URANO(7, "Urano"),
     NETTUNO(8, "Nettuno"),
     PLUTONE(9, "Plutone"),
+    ;
+
+    enum class Movement {
+        ENTERING,
+        LEAVING,
+        IN,
+    }
 }
