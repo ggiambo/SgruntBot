@@ -50,6 +50,10 @@ dependencies {
     implementation("org.springdoc", "springdoc-openapi-starter-webmvc-ui", springdocVersion)
     implementation("org.knowm.xchart", "xchart", xchartVersion)
     implementation("org.eclipse.jgit", "org.eclipse.jgit", jgitVersion)
+    implementation(files("libs/swisseph-2.01.00-02.jar"))
+    implementation("dev.langchain4j:langchain4j:1.0.0-beta2")
+    implementation("dev.langchain4j:langchain4j-open-ai:1.0.0-beta2")
+    implementation("dev.langchain4j:langchain4j-google-ai-gemini:1.0.0-beta2")
 
     runtimeOnly("org.mariadb.jdbc", "mariadb-java-client")
     runtimeOnly("com.h2database", "h2")
