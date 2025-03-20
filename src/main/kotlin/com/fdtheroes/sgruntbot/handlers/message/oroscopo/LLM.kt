@@ -6,7 +6,7 @@ import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 
 @Service
-class LLM(@Value("\${GEMINI_API_KEY}") geminiApiKey: String) {
+class LLM(@Value("\${GEMINI_API_KEY}") geminiApiKey: String, private val horoscopeUtils: HoroscopeUtils) {
 
     private val model = GoogleAiGeminiChatModel.builder()
         .apiKey(geminiApiKey)
@@ -16,9 +16,9 @@ class LLM(@Value("\${GEMINI_API_KEY}") geminiApiKey: String) {
     @Cacheable(cacheNames = ["HoroscopeCache"], keyGenerator = "HoroscopeKeyGenerator")
     fun getHoroscope(zodiacSign: Sign): String {
 
-        val horoscopeParams = getHoroscopeParams(zodiacSign)
+        val horoscopeParams = horoscopeUtils.getHoroscopeParams(zodiacSign)
         val signNameWithPreposition = zodiacSign.getSignNameWithPreposition("")
-        val horoscopeString = horoscopeParams.toStringInItalian()
+        val horoscopeString = horoscopeUtils.toStringInItalian(horoscopeParams)
 
         val prompt =
             "Sei un astrologo, produci un oroscopo per $signNameWithPreposition in un breve paragrafo nello stile di Branko. Di seguito una lista di parametri rilevanti per l'oroscopo di oggi di questo segno. Non citare pianeti che non sono nella lista.\n$horoscopeString"
