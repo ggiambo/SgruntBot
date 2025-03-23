@@ -1,9 +1,9 @@
 package com.fdtheroes.sgruntbot.handlers.message.oroscopo
 
+import de.thmac.swisseph.SweConst
+import de.thmac.swisseph.SweDate
+import de.thmac.swisseph.SwissEph
 import org.springframework.stereotype.Component
-import swisseph.SweConst
-import swisseph.SweDate
-import swisseph.SwissEph
 import java.time.LocalDate
 
 @Component
