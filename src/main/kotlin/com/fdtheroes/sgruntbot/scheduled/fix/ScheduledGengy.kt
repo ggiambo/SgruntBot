@@ -17,7 +17,7 @@ class ScheduledGengy(private val botUtils: BotUtils) : Scheduled {
 
     override fun execute() {
         val gengy = botUtils.getUserLink(botUtils.getChatMember(Users.F.id))
-        val testo = "\uD83D\uDEAC $gengy, quante sigarette hai fumato oggi?"
+        val testo = "\uD83D\uDEAC $gengy, quante sigarette hai fumato <b>nelle ultime 24 ore</b>?"
         botUtils.messaggio(ActionResponse.message(testo))
     }
 
