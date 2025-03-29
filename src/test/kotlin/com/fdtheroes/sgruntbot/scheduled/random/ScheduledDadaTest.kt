@@ -38,6 +38,6 @@ class ScheduledDadaTest : BaseTest() {
         val response = actionResponses.first()
         assertThat(response.type).isEqualTo(ActionResponseType.Message)
         assertThat(response.message).startsWith("Hola <a href=\"tg://user?id=252800958\">Username_252800958</a> sono le ")
-        assertThat(response.message).endsWith(", il momento giusto per ejectare Naghmeh 🚀 !")
+        assertThat(response.message).contains("Naghmeh")
     }
 }

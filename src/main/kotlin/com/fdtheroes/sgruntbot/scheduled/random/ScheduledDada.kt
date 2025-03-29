@@ -16,6 +16,14 @@ import kotlin.random.Random.Default.nextInt
 @Service
 class ScheduledDada(private val botUtils: BotUtils) : Scheduled {
 
+    private val frasi = listOf(
+        "il momento giusto per ejectare Naghmeh \uD83D\uDE80!",
+        "e Naghmeh dov'è?",
+        "le ore passano dolci in compagnia di Naghmeh \uD83E\uDD9F",
+        "pausa-valigie per Naghmeh \uD83E\uDDF3!",
+        "è giunta l'ora per allargare la famiglia di Naghmeh \uD83E\uDDD5\uD83C\uDFFC",
+    )
+
     private val timeFormatter = DateTimeFormatter
         .ofLocalizedTime(FormatStyle.SHORT)
         .withLocale(Locale.ITALIAN)
@@ -33,7 +41,7 @@ class ScheduledDada(private val botUtils: BotUtils) : Scheduled {
     override fun execute() {
         val dada = botUtils.getUserLink(botUtils.getChatMember(Users.DA_DA_212.id))
         val now = LocalTime.now().format(timeFormatter)
-        val testo = "Hola $dada sono le $now, il momento giusto per ejectare Naghmeh \uD83D\uDE80 !"
+        val testo = "Hola $dada sono le $now, ${frasi.random()}"
         botUtils.messaggio(ActionResponse.message(testo))
     }
 

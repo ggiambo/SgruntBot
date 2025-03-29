@@ -3,16 +3,18 @@ import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 
 val telegrambotsVersion = "8.2.0"
 val jsoupVersion = "1.19.1"
-val springdocVersion = "2.8.5"
+val springdocVersion = "2.8.6"
 val xchartVersion = "3.8.8"
 val mockitokotlinVersion = "5.4.0"
 val jgitVersion = "7.2.0.202503040940-r"
+val swissephVersion = "6000e46cf8"
+val langchain4jVersion = "1.0.0-beta2"
 
 plugins {
     application
-    kotlin("jvm") version "2.0.0"
-    kotlin("plugin.spring") version "2.0.0"
-    kotlin("plugin.jpa") version "2.0.0"
+    kotlin("jvm") version "2.1.20"
+    kotlin("plugin.spring") version "2.1.20"
+    kotlin("plugin.jpa") version "2.1.20"
     id("org.springframework.boot") version "3.4.4"
     id("io.spring.dependency-management") version "1.1.7"
     id("com.github.ben-manes.versions") version "0.52.0"
@@ -51,8 +53,8 @@ dependencies {
     implementation("org.springdoc", "springdoc-openapi-starter-webmvc-ui", springdocVersion)
     implementation("org.knowm.xchart", "xchart", xchartVersion)
     implementation("org.eclipse.jgit", "org.eclipse.jgit", jgitVersion)
-    implementation("com.github.krishnact:swisseph:6000e46cf8")
-    implementation("dev.langchain4j", "langchain4j-google-ai-gemini", "1.0.0-beta2")
+    implementation("com.github.krishnact", "swisseph", swissephVersion)
+    implementation("dev.langchain4j", "langchain4j-google-ai-gemini", langchain4jVersion)
 
     runtimeOnly("org.mariadb.jdbc", "mariadb-java-client")
     runtimeOnly("com.h2database", "h2")
