@@ -1,4 +1,4 @@
-package com.fdtheroes.sgruntbot.scheduled.fix
+package com.fdtheroes.sgruntbot.scheduled.random
 
 import com.fdtheroes.sgruntbot.Users
 import com.fdtheroes.sgruntbot.models.ActionResponse
@@ -7,28 +7,30 @@ import com.fdtheroes.sgruntbot.utils.BotUtils
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.time.LocalDateTime
+import kotlin.random.Random.Default.nextLong
 
 @Service
 class ScheduledGengy(private val botUtils: BotUtils) : Scheduled {
 
-    override fun firstRun() = noveDiSera()
+    override fun firstRun() = traLeSeiELeSette()
 
-    override fun nextRun() = noveDiSera()
+    override fun nextRun() = traLeSeiELeSette()
 
     override fun execute() {
         val gengy = botUtils.getUserLink(botUtils.getChatMember(Users.F.id))
-        val testo = "\uD83D\uDEAC $gengy, quante sigarette hai fumato <b>nelle ultime 24 ore</b>?"
+        val testo = "\uD83D\uDEAC $gengy, quante sigarette hai fumato ieri?"
         botUtils.messaggio(ActionResponse.message(testo))
     }
 
-    private fun noveDiSera(): LocalDateTime {
-        val noveDiSera = LocalDate.now()
+    private fun traLeSeiELeSette(): LocalDateTime {
+        val traLeSeiELeSette = LocalDate.now()
             .atStartOfDay()
-            .withHour(21)
+            .withHour(6)
+            .plusMinutes(nextLong(0, 60))
 
-        if (noveDiSera.isBefore(LocalDateTime.now())) {
-            return noveDiSera.plusDays(1)
+        if (traLeSeiELeSette.isBefore(LocalDateTime.now())) {
+            return traLeSeiELeSette.plusDays(1)
         }
-        return noveDiSera
+        return traLeSeiELeSette
     }
 }
