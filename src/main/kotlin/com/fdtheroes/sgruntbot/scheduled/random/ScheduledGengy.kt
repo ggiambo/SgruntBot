@@ -4,6 +4,7 @@ import com.fdtheroes.sgruntbot.Users
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.scheduled.Scheduled
 import com.fdtheroes.sgruntbot.utils.BotUtils
+import com.fdtheroes.sgruntbot.utils.BotUtils.Companion.isToday
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -28,7 +29,7 @@ class ScheduledGengy(private val botUtils: BotUtils) : Scheduled {
             .withHour(6)
             .plusMinutes(nextLong(0, 60))
 
-        if (traLeSeiELeSette.isBefore(LocalDateTime.now())) {
+        if (traLeSeiELeSette.isToday()) {
             return traLeSeiELeSette.plusDays(1)
         }
         return traLeSeiELeSette

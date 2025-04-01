@@ -246,5 +246,9 @@ class BotUtils(private val botConfig: BotConfig) {
             return Date.from(this.atZone(ZoneId.systemDefault()).toInstant())
         }
 
+        fun LocalDateTime.isToday() : Boolean {
+            return this.toLocalDate() == LocalDateTime.now().toLocalDate()
+        }
+
     }
 }
