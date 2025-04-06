@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter
 class CheOreSono(
     botUtils: BotUtils,
     botConfig: BotConfig,
-    private val nowSupplier: () -> LocalDateTime, // used for testing)
+    private val nowSupplier: () -> LocalDateTime, // used for testing
 ) : MessageHandler(botUtils, botConfig), HasHalp {
 
     private val regex = Regex("che ore sono|che ora è", setOf(RegexOption.IGNORE_CASE, RegexOption.MULTILINE))

@@ -5,11 +5,16 @@ import de.thmac.swisseph.SweDate
 import de.thmac.swisseph.SwissEph
 import org.springframework.stereotype.Service
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 @Service
-class PlanetUtils(private val moonUtils: MoonUtils) {
+class PlanetUtils(
+    private val moonUtils: MoonUtils,
+    private val nowSupplier: () -> LocalDateTime, // used for testing
+) {
 
-    fun getPlanetPosition(planet: Planet, currentDate: LocalDate): PlanetPosition {
+    fun getPlanetPosition(planet: Planet): PlanetPosition {
+        val currentDate = nowSupplier().toLocalDate()
         val positionAtStart = getPlanetPositionInstant(planet, 0.0, currentDate)
         val positionAtNoon = getPlanetPositionInstant(planet, 12.0, currentDate)
         val positionAtEnd = getPlanetPositionInstant(planet, 23.9, currentDate)

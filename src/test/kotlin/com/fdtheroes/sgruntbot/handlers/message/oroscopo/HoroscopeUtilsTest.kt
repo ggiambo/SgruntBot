@@ -2,15 +2,21 @@ package com.fdtheroes.sgruntbot.handlers.message.oroscopo
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.whenever
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 class HoroscopeUtilsTest {
 
-    private val horoscopeUtils = HoroscopeUtils(PlanetUtils(MoonUtils()))
+    private val nowSupplier = mock<() -> LocalDateTime>()
+    private val horoscopeUtils = HoroscopeUtils(PlanetUtils(MoonUtils(), nowSupplier))
 
     @Test
     fun testGetHoroscopeParams_due_pianeti() {
-        val horoscopeParams = horoscopeUtils.getHoroscopeParams(Sign.CANCRO, LocalDate.of(2024, 7, 9))
+        whenever(nowSupplier()) doReturn LocalDate.of(2024, 7, 9).atStartOfDay()
+        val horoscopeParams = horoscopeUtils.getHoroscopeParams(Sign.CANCRO)
         assertThat(horoscopeParams.sign).isEqualTo(Sign.CANCRO)
         assertThat(horoscopeParams.planets).hasSize(2)
         assertThat(horoscopeParams.conjunctions).isEmpty()
@@ -36,16 +42,19 @@ class HoroscopeUtilsTest {
         assertThat(planetPosition2.leavingSign).isEqualTo(Sign.CANCRO)
         assertThat(planetPosition2.moonPhase).isEqualTo(null)
 
-        assertThat(horoscopeUtils.toStringInItalian(horoscopeParams)).isEqualTo("""
+        assertThat(horoscopeUtils.toStringInItalian(horoscopeParams)).isEqualTo(
+            """
               - Il sole è nel Cancro
               - Venere sta uscendo da dal Cancro
               
-        """.trimIndent())
+        """.trimIndent()
+        )
     }
 
     @Test
     fun testGetHoroscopeParams_congiunzione() {
-        val horoscopeParams = horoscopeUtils.getHoroscopeParams(Sign.BILANCIA, LocalDate.of(2024, 9, 5))
+        whenever(nowSupplier()) doReturn LocalDate.of(2024, 9, 5).atStartOfDay()
+        val horoscopeParams = horoscopeUtils.getHoroscopeParams(Sign.BILANCIA)
         assertThat(horoscopeParams.sign).isEqualTo(Sign.BILANCIA)
         assertThat(horoscopeParams.planets).hasSize(2)
         assertThat(horoscopeParams.oppositions).isEmpty()
@@ -95,17 +104,20 @@ class HoroscopeUtilsTest {
         assertThat(planetPosition2.leavingSign).isNull()
         assertThat(planetPosition2.moonPhase).isEqualTo(null)
 
-        assertThat(horoscopeUtils.toStringInItalian(horoscopeParams)).isEqualTo("""
+        assertThat(horoscopeUtils.toStringInItalian(horoscopeParams)).isEqualTo(
+            """
                 - La luna crescente è nella Bilancia
                 - Venere è nella Bilancia
                 - La luna è in congiunzione con Venere
                 
-                """.trimIndent())
+                """.trimIndent()
+        )
     }
 
     @Test
     fun testGetHoroscopeParams_opposizione() {
-        val horoscopeParams = horoscopeUtils.getHoroscopeParams(Sign.BILANCIA, LocalDate.of(2024, 10, 17))
+        whenever(nowSupplier()) doReturn LocalDate.of(2024, 10, 17).atStartOfDay()
+        val horoscopeParams = horoscopeUtils.getHoroscopeParams(Sign.BILANCIA)
         assertThat(horoscopeParams.sign).isEqualTo(Sign.BILANCIA)
         assertThat(horoscopeParams.planets).hasSize(1)
         assertThat(horoscopeParams.oppositions).hasSize(1)
@@ -144,10 +156,12 @@ class HoroscopeUtilsTest {
         assertThat(planetPosition.leavingSign).isNull()
         assertThat(planetPosition.moonPhase).isNull()
 
-        assertThat(horoscopeUtils.toStringInItalian(horoscopeParams)).isEqualTo("""
+        assertThat(horoscopeUtils.toStringInItalian(horoscopeParams)).isEqualTo(
+            """
             - Il sole è nella Bilancia
             - Il sole è in opposizione con La luna
   
-        """.trimIndent())
+        """.trimIndent()
+        )
     }
 }

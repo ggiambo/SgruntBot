@@ -1,14 +1,13 @@
 package com.fdtheroes.sgruntbot.handlers.message.oroscopo
 
 import org.springframework.stereotype.Service
-import java.time.LocalDate
 import kotlin.math.abs
 
 @Service
 class HoroscopeUtils(private val planetUtils: PlanetUtils) {
 
-    fun getHoroscopeParams(sign: Sign, currentDate: LocalDate = LocalDate.now()): HoroscopeParams {
-        val allPlanets = Planet.entries.map { planetUtils.getPlanetPosition(it, currentDate) }
+    fun getHoroscopeParams(sign: Sign): HoroscopeParams {
+        val allPlanets = Planet.entries.map { planetUtils.getPlanetPosition(it) }
         val conjunctions = mutableListOf<List<PlanetPosition>>()
         val oppositions = mutableListOf<List<PlanetPosition>>()
 
@@ -42,9 +41,11 @@ class HoroscopeUtils(private val planetUtils: PlanetUtils) {
                 planet.enteringSign == horoscopeParams.sign -> sb.append(
                     "sta entrando ${planet.enteringSign.entering()}"
                 )
+
                 planet.leavingSign == horoscopeParams.sign -> sb.append(
                     "sta uscendo da ${planet.leavingSign.leaving()}"
                 )
+
                 else -> sb.append("è ${planet.sign.isIn()}")
             }
             if (planet.retrograde) {
