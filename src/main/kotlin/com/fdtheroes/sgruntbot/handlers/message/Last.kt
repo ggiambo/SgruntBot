@@ -7,14 +7,14 @@ import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.message.Message
 
 @Service
-class Last(botUtils: BotUtils, botConfig: BotConfig, private val slogan: Slogan) : MessageHandler(botUtils, botConfig),
+class Last(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils, botConfig),
     HasHalp {
 
     private val regex = Regex("^!last\$", RegexOption.IGNORE_CASE)
 
     override fun handle(message: Message) {
         if (regex.matches(message.text) && botConfig.lastAuthor != null) {
-            botUtils.rispondi(ActionResponse.message(slogan.fetchSlogan(botConfig.lastAuthor!!)), message)
+            botUtils.rispondi(ActionResponse.message(botUtils.getUserLink(botConfig.lastAuthor)), message)
         }
     }
 

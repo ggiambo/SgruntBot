@@ -3,14 +3,13 @@ package com.fdtheroes.sgruntbot.actions
 import com.fdtheroes.sgruntbot.BaseTest
 import com.fdtheroes.sgruntbot.Users
 import com.fdtheroes.sgruntbot.handlers.message.Last
-import com.fdtheroes.sgruntbot.handlers.message.Slogan
 import com.fdtheroes.sgruntbot.models.ActionResponseType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 internal class LastTest : BaseTest() {
 
-    private val last = Last(botUtils, botConfig, Slogan(botUtils, botConfig))
+    private val last = Last(botUtils, botConfig)
 
     @Test
     fun testPositive() {
