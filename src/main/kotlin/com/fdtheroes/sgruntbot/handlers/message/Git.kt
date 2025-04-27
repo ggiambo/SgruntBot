@@ -3,17 +3,15 @@ package com.fdtheroes.sgruntbot.handlers.message
 import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.utils.BotUtils
-import org.eclipse.jgit.api.Git
+import com.fdtheroes.sgruntbot.utils.GitUtils
 import org.springframework.stereotype.Service
 import org.springframework.web.util.HtmlUtils
 import org.telegram.telegrambots.meta.api.objects.message.Message
-import java.io.File
-import java.time.LocalDateTime
-import java.time.ZoneOffset
 
 
 @Service
-class Git(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils, botConfig), HasHalp {
+class Git(private val gitUtils: GitUtils, botUtils: BotUtils, botConfig: BotConfig) :
+    MessageHandler(botUtils, botConfig), HasHalp {
 
     private val regex = Regex("!git (\\d+)", RegexOption.IGNORE_CASE)
 
@@ -24,14 +22,7 @@ class Git(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils, b
         }
 
         val commits = groupValues[1].toInt()
-        val messages = Git.open(File("."))
-            .log()
-            .setMaxCount(commits)
-            .call()
-            .map {
-                val commitTime = LocalDateTime.ofEpochSecond(it.commitTime.toLong(), 0, ZoneOffset.UTC)
-                "${commitTime}: ${it.fullMessage}"
-            }
+        val messages = gitUtils.getLatestCommitMessages(commits)
 
         createChunks(messages).forEach {
             botUtils.rispondi(ActionResponse.message(it), message)
@@ -47,7 +38,7 @@ class Git(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils, b
                 chunks.add(currentChunk.toString())
                 currentChunk = StringBuilder()
             }
-            
+
             currentChunk.append(entry)
         }
 
