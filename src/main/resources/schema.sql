@@ -43,7 +43,6 @@ create table if not exists utonti
         unique (user_id)
 );
 
-
 create table if not exists todos
 (
     id      int     not null auto_increment,
@@ -54,4 +53,13 @@ create table if not exists todos
     primary key (id),
     constraint id_uindex
         unique (id)
+);
+
+create table if not exists nvps
+(
+    name  varchar(255) not null,
+    value text         not null,
+    primary key (name),
+    constraint id_uindex
+        unique (name)
 );
