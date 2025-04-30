@@ -15,6 +15,7 @@ class HackerNews(botUtils: BotUtils, botConfig: BotConfig, private val mapper: O
 
     override fun handle(message: Message) {
         if (regex.containsMatchIn(message.text)) {
+            botUtils.sgruntyScrive(message.chatId.toString())
             val topStories = botUtils.textFromURL("https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty")
             val messageContent = mapper.readTree(topStories)
                 .take(10)

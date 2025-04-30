@@ -53,7 +53,7 @@ class RedditGnius(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(bot
             .select(".thing > .entry")
             .mapNotNull { entry ->
                 val dateTime = entry.select("time").attr("datetime")
-                if (dateTime.isNullOrEmpty()) {
+                if (dateTime.isEmpty()) {
                     return@mapNotNull null
                 }
                 val titleLink = entry.select("a.title")
