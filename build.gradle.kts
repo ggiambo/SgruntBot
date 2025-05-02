@@ -1,21 +1,21 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 
-val telegrambotsVersion = "8.2.0"
-val jsoupVersion = "1.19.1"
+val telegrambotsVersion = "8.3.0"
+val jsoupVersion = "1.20.1"
 val springdocVersion = "2.8.6"
 val xchartVersion = "3.8.8"
 val mockitokotlinVersion = "5.4.0"
 val jgitVersion = "7.2.0.202503040940-r"
 val swissephVersion = "6000e46cf8"
-val langchain4jVersion = "1.0.0-beta2"
+val langchain4jVersion = "1.0.0-beta4"
 
 plugins {
     application
     kotlin("jvm") version "2.1.20"
     kotlin("plugin.spring") version "2.1.20"
     kotlin("plugin.jpa") version "2.1.20"
-    id("org.springframework.boot") version "3.4.4"
+    id("org.springframework.boot") version "3.4.5"
     id("io.spring.dependency-management") version "1.1.7"
     id("com.github.ben-manes.versions") version "0.52.0"
     id("com.glovoapp.semantic-versioning") version "1.1.10"
