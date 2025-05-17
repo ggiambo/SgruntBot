@@ -3,12 +3,12 @@ import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 
 val telegrambotsVersion = "8.3.0"
 val jsoupVersion = "1.20.1"
-val springdocVersion = "2.8.6"
+val springdocVersion = "2.8.8"
 val xchartVersion = "3.8.8"
 val mockitokotlinVersion = "5.4.0"
-val jgitVersion = "7.2.0.202503040940-r"
+val jgitVersion = "7.2.1.202505142326-r"
 val swissephVersion = "6000e46cf8"
-val langchain4jVersion = "1.0.0-beta4"
+val langchain4jVersion = "1.0.0-beta5"
 
 plugins {
     application
@@ -77,7 +77,7 @@ kotlin {
         freeCompilerArgs = listOf("-Xjsr305=strict")
         jvmTarget = JvmTarget.JVM_17
     }
-    jvmToolchain(17)
+//    jvmToolchain(17)
 }
 
 tasks.withType<Test> {
