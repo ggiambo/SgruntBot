@@ -13,12 +13,12 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: 'gradle'
+          cache: 'maven'
       - name: Increase Patch version
-        run: ./gradlew incrementSemanticVersion --patch
+        run: ./mvnw -B release:update-versions
       - name: Commit & Push changes
         run: |
-          SGRUNT_VERSION=$(cat version.properties | grep ^version | awk -F'=' '{print $2}')
+          SGRUNT_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout)
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git commit -a -m "Update PATCH Version to ${SGRUNT_VERSION} [skip actions]"
@@ -31,10 +31,15 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ~/SgruntBot
-            ./gradlew --stop
+            # stop sgrunty
+            kill `cat proc.pid`
+            # build
             git pull
             export CHAT_ID=${{ secrets.CHAT_ID }}
             export TELEGRAM_TOKEN=${{ secrets.TELEGRAM_TOKEN }}
             export IMGUR_CLIENT_ID=${{ secrets.IMGUR_CLIENT_ID }}
             export GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
-            nohup ./gradlew bootRun > out.log 2>error.log &
+            ./mvnw clean spring-boot:build-info package
+            # start
+            nohup java -jar target/sgruntbot-${SGRUNT_VERSION}.jar out.log 2>error.log &
+            echo $! > proc.pid
