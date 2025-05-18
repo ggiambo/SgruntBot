@@ -16,7 +16,7 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: 'gradle'
+          cache: 'maven'
       - name: Install fortune
         run: |
           sudo apt-get update
@@ -26,5 +26,5 @@ jobs:
         run: |
           sudo curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp
           sudo chmod a+rx /usr/local/bin/yt-dlp
-      - name: Build with Gradle
-        run: ./gradlew build --no-daemon
+      - name: Build with maven
+        run: ./mvnw clean install
