@@ -33,7 +33,11 @@ class SgruntBot(
             botConfig.allowedUpdates,
             this
         )
-        publishNewVersionInfo()
+        try {
+            publishNewVersionInfo()
+        } catch (e: Exception) {
+            log.error("Errore durante la pubblicazione delle novità: ${e.message}", e)
+        }
         log.info("Sono partito!")
     }
 
