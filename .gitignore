@@ -1,9 +1,11 @@
 /target/
 /out/
 /build/
+/runConfig/
 .idea
 *.iml
 token*.txt
 chatId.txt
+sgruntbot*.log
 .gradle
 docker/sgrunt_db
