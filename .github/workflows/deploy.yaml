@@ -8,22 +8,32 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4.1.6
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4.2.1
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: 'maven'
       - name: Increase Patch version
-        run: ./mvnw build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.nextIncrementalVersion}
+        run: |
+          ./mvnw build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.nextIncrementalVersion}
+          SGRUNT_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout)
+          echo "SGRUNT_VERSION=${SGRUNT_VERSION}" >> $GITHUB_ENV
+
       - name: Commit & Push changes
         run: |
-          SGRUNT_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout)
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git commit -a -m "Update PATCH Version to ${SGRUNT_VERSION} [skip actions]"
+          git commit -a -m "Update PATCH Version to ${{ env.SGRUNT_VERSION }} [skip actions]"
           git push
-      - name: Pull, build and restart SgruntBot
+
+      - name: Build locally
+        run: ./mvnw clean spring-boot:build-info package -DskipTests
+
+      - name: Copy to destination
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          source: "./target/sgruntbot-${{ env.SGRUNT_VERSION }}.jar"
+          target: "~/Sgruntbot/"
+
+      - name: Restart Sgrunty
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -31,15 +41,12 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ~/SgruntBot
-            # build
-            git pull
+            # stop Sgrunty
+            kill `cat proc.pid` 2>/dev/null
+            # start Sgrunty
             export CHAT_ID=${{ secrets.CHAT_ID }}
             export TELEGRAM_TOKEN=${{ secrets.TELEGRAM_TOKEN }}
             export IMGUR_CLIENT_ID=${{ secrets.IMGUR_CLIENT_ID }}
             export GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
-            ./mvnw clean spring-boot:build-info package -DskipTests
-            # stop sgrunty
-            kill `cat proc.pid` 2>/dev/null
-            # start
-            nohup java -jar target/sgruntbot-${SGRUNT_VERSION}.jar out.log 2>error.log &
+            nohup java -jar sgruntbot-${{ env.SGRUNT_VERSION }}.jar out.log 2>error.log &
             echo $! > proc.pid
