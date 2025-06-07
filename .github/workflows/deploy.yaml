@@ -25,28 +25,20 @@ jobs:
         run: ./mvnw clean spring-boot:build-info package -DskipTests
 
       - name: Copy to destination
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          source: "./target/sgruntbot-${{ env.SGRUNT_VERSION }}.jar"
-          target: "~/Sgruntbot/"
+        run: |
+          mkdir -v -m 700 $HOME/.ssh
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} > $HOME/.ssh/known_hosts
+          echo "${{ secrets.SSH_KEY }}" > $HOME/.ssh/id_rsa
+          chmod 400 $HOME/.ssh/id_rsa
+          scp ./target/sgruntbot-${{ env.SGRUNT_VERSION }}.jar ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:~/SgruntBot/
 
       - name: Restart Sgrunty
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            cd ~/SgruntBot
-            # stop Sgrunty
-            kill `cat proc.pid` 2>/dev/null
-            # start Sgrunty
-            export CHAT_ID=${{ secrets.CHAT_ID }}
-            export TELEGRAM_TOKEN=${{ secrets.TELEGRAM_TOKEN }}
-            export IMGUR_CLIENT_ID=${{ secrets.IMGUR_CLIENT_ID }}
-            export GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
-            nohup java -jar sgruntbot-${{ env.SGRUNT_VERSION }}.jar out.log 2>error.log &
-            echo $! > proc.pid
+        run: |
+          ssh ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} 'cd ~/SgruntBot;\
+            kill $(cat proc.pid) 2>/dev/null;\
+            export CHAT_ID=${{ secrets.CHAT_ID }};\
+            export TELEGRAM_TOKEN=${{ secrets.TELEGRAM_TOKEN }};\
+            export IMGUR_CLIENT_ID=${{ secrets.IMGUR_CLIENT_ID }};\
+            export GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }};\
+            nohup java -jar sgruntbot-${{ env.SGRUNT_VERSION }}.jar 2>error.log &;\
+            echo $! > proc.pid'
