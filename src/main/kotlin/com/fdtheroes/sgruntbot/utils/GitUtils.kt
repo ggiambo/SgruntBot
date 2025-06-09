@@ -2,42 +2,45 @@ package com.fdtheroes.sgruntbot.utils
 
 import com.fdtheroes.sgruntbot.models.NameValuePair
 import com.fdtheroes.sgruntbot.persistence.NameValuePairRepository
-import org.eclipse.jgit.api.Git
-import org.eclipse.jgit.lib.ObjectId
-import org.eclipse.jgit.revwalk.RevCommit
+import org.kohsuke.github.GHCommit
+import org.kohsuke.github.GitHubBuilder
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
-import java.io.File
 import java.time.LocalDateTime
-import java.time.ZoneOffset
+import java.time.ZoneId
 import kotlin.jvm.optionals.getOrElse
 
 @Service
-class GitUtils(private val nameValuePairRepository: NameValuePairRepository) {
+class GitUtils(
+    @Value("\${GH_TOKEN}") private val gitHubToken: String,
+    private val nameValuePairRepository: NameValuePairRepository,
+) {
 
-    private val repository = Git.open(File("."))
+    private val repository = GitHubBuilder()
+        .withOAuthToken(gitHubToken)
+        .build()
+        .getRepository("ggiambo/SgruntBot")
+
     private val runningVersionHash by lazy {
         repository
-            .log()
-            .setMaxCount(1)
-            .call()
-            .first().id.name
+            .listCommits()
+            .iterator()
+            .next()
+            .shA1
     }
 
-    fun getDeltaFromLatestDeployment(): Iterable<RevCommit> {
-        return repository
-            .log()
-            .addRange(ObjectId.fromString(getLatestDeployedHash()), ObjectId.fromString(runningVersionHash))
-            .call()
+    fun getDeltaFromLatestDeployment(): Iterable<GHCommit> {
+        val latestDeployedHash = getLatestDeployedHash()
+        return repository.listCommits().takeWhile { it.shA1 != latestDeployedHash }
     }
 
     fun getLatestCommitMessages(nrOfCommits: Int): List<String> {
-        return Git.open(File("."))
-            .log()
-            .setMaxCount(nrOfCommits)
-            .call()
+        return repository
+            .listCommits()
+            .take(nrOfCommits)
             .map {
-                val commitTime = LocalDateTime.ofEpochSecond(it.commitTime.toLong(), 0, ZoneOffset.UTC)
-                "${commitTime}: ${it.fullMessage}"
+                val commitTime = LocalDateTime.ofInstant(it.commitDate.toInstant(), ZoneId.systemDefault())
+                "${commitTime}: ${it.commitShortInfo.message}"
             }
     }
 

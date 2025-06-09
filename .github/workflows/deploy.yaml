@@ -40,5 +40,6 @@ jobs:
             export TELEGRAM_TOKEN=${{ secrets.TELEGRAM_TOKEN }};\
             export IMGUR_CLIENT_ID=${{ secrets.IMGUR_CLIENT_ID }};\
             export GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }};\
+            export GH_TOKEN=${{ secrets.GH_TOKEN }};\
             nohup java -jar sgruntbot-${{ env.SGRUNT_VERSION }}.jar 2>error.log &;\
             echo $! > proc.pid'

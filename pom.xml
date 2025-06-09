@@ -27,7 +27,8 @@
         <springdoc.version>2.8.8</springdoc.version>
         <xchart.version>3.8.8</xchart.version>
         <mockitokotlin.version>5.4.0</mockitokotlin.version>
-        <jgit.version>7.2.1.202505142326-r</jgit.version>
+        <gitHubApi.version>1.327</gitHubApi.version><dependency>
+    </dependency>
         <swisseph.version>6000e46cf8</swisseph.version>
         <langchain4j.version>1.0.0-beta5</langchain4j.version>
     </properties>
@@ -110,9 +111,9 @@
             <version>${xchart.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.eclipse.jgit</groupId>
-            <artifactId>org.eclipse.jgit</artifactId>
-            <version>${jgit.version}</version>
+            <groupId>org.kohsuke</groupId>
+            <artifactId>github-api</artifactId>
+            <version>${gitHubApi.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.krishnact</groupId>
@@ -160,9 +161,9 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <image>
-                        <name>sgruntbot:${project.version}</name>
+                        <name>ggiambo/sgruntbot:${project.version}</name>
                         <tags>
-                            <tag>latest</tag>
+                            <tag>ggiambo/sgruntbot:latest</tag>
                         </tags>
                     </image>
                 </configuration>

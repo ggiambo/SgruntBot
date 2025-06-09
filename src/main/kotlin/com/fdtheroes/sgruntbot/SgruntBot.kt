@@ -48,17 +48,18 @@ class SgruntBot(
     }
 
     private fun publishNewVersionInfo() {
-        val deltaMessages = gitUtils.getDeltaFromLatestDeployment()
-            .filter { !it.shortMessage.endsWith("[skip actions]") }
-            .map { "- ${it.shortMessage}" }
-            .joinToString(separator = "\n")
+        val deltaMessages = gitUtils.getDeltaFromLatestDeployment().take(10)
+            .filter { it.committer.login != "github-actions[bot]" }
+            .map { it.commitShortInfo.message }
+            .map { it.split('\n').first() }
+            .joinToString(separator = "\n") { "- $it" }
+
+        gitUtils.updateDeployedHash()
 
         if (deltaMessages.isNotEmpty()) {
             val message = "Sono partito!\nEcco le novità:\n$deltaMessages"
             botUtils.messaggio(ActionResponse.message(message))
         }
-
-        gitUtils.updateDeployedHash()
     }
 
 }
