@@ -34,12 +34,14 @@ jobs:
 
       - name: Restart Sgrunty
         run: |
-          ssh ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} 'cd ~/SgruntBot;\
-            kill $(cat proc.pid) 2>/dev/null;\
-            export CHAT_ID=${{ secrets.CHAT_ID }};\
-            export TELEGRAM_TOKEN=${{ secrets.TELEGRAM_TOKEN }};\
-            export IMGUR_CLIENT_ID=${{ secrets.IMGUR_CLIENT_ID }};\
-            export GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }};\
-            export GH_TOKEN=${{ secrets.GH_TOKEN }};\
-            nohup java -jar sgruntbot-${{ env.SGRUNT_VERSION }}.jar 2>error.log &;\
-            echo $! > proc.pid'
+          ssh ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} << EOF
+          cd ~/SgruntBot
+          pkill -F proc.pid
+          export CHAT_ID=${{ secrets.CHAT_ID }}
+          export TELEGRAM_TOKEN=${{ secrets.TELEGRAM_TOKEN }}
+          export IMGUR_CLIENT_ID=${{ secrets.IMGUR_CLIENT_ID }}
+          export GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
+          export GH_TOKEN=${{ secrets.GH_TOKEN }}
+          nohup java -jar sgruntbot-${{ env.SGRUNT_VERSION }}.jar 2>error.log &
+          echo \$! > proc.pid
+          EOF
