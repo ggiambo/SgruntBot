@@ -10,7 +10,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import kotlin.random.Random.Default.nextLong
 
-@Service
+//@Service
 class ScheduledGengy(private val botUtils: BotUtils) : Scheduled {
 
     override fun firstRun() = traLeSeiELeSette()
