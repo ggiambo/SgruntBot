@@ -1,5 +1,6 @@
 package com.fdtheroes.sgruntbot.utils
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.models.ActionResponseType
@@ -8,6 +9,7 @@ import okhttp3.Headers
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.RequestBody.Companion.toRequestBody
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.client.okhttp.OkHttpTelegramClient
@@ -37,7 +39,7 @@ import kotlin.math.max
 import kotlin.random.Random
 
 @Service
-class BotUtils(private val botConfig: BotConfig) {
+class BotUtils(private val botConfig: BotConfig, private val objectMapper: ObjectMapper) {
 
     private val log = LoggerFactory.getLogger(this.javaClass)
     private lateinit var telegramClient: TelegramClient
@@ -71,6 +73,7 @@ class BotUtils(private val botConfig: BotConfig) {
     fun streamFromURL(
         url: String,
         params: List<Pair<String, String>> = emptyList(),
+        body: Any? = null,
         headers: List<Pair<String, String>> = emptyList(),
         proxy: Proxy = botConfig.proxy,
     ): InputStream {
@@ -80,8 +83,11 @@ class BotUtils(private val botConfig: BotConfig) {
             .readTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
             .build()
-        val request = Request.Builder()
-            .get()
+        val request = if (body == null) {
+            Request.Builder().get()
+        } else {
+            Request.Builder().post(objectMapper.writeValueAsBytes(body).toRequestBody())
+        }
             .headers(
                 Headers.Builder().apply {
                     headers.forEach { this.add(it.first, it.second) }
@@ -100,10 +106,11 @@ class BotUtils(private val botConfig: BotConfig) {
     fun textFromURL(
         url: String,
         params: List<Pair<String, String>> = emptyList(),
+        body: Any? = null,
         headers: List<Pair<String, String>> = emptyList(),
         proxy: Proxy = botConfig.proxy,
     ): String {
-        return streamFromURL(url, params, headers, proxy)
+        return streamFromURL(url, params, body, headers, proxy)
             .readAllBytes()
             .decodeToString()
     }
