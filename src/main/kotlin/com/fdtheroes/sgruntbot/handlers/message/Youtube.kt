@@ -31,8 +31,7 @@ class Youtube(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtil
 
     private fun fetch(query: String): String? {
         val command =
-            //"""yt-dlp --get-id --proxy $suoraProxy "ytsearch1:$query" --geo-bypass-country IT 2>&1"""
-            """yt-dlp --get-id "ytsearch1:$query" --geo-bypass-country IT 2>&1"""
+            """yt-dlp --get-id --proxy $suoraProxy "ytsearch1:$query" --geo-bypass-country IT 2>&1"""
         log.info(command)
         return ProcessBuilder()
             .command("sh", "-c", command)
