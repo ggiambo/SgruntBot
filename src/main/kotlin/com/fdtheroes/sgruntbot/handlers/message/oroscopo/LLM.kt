@@ -5,6 +5,8 @@ import com.fdtheroes.sgruntbot.utils.BotUtils
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
+import java.net.InetSocketAddress
+import java.net.Proxy
 
 @Service
 class LLM(
@@ -13,6 +15,8 @@ class LLM(
     private val botUtils: BotUtils,
     private val objectMapper: ObjectMapper,
 ) {
+
+    private val suoraProxy = Proxy(Proxy.Type.HTTP, InetSocketAddress("198.98.49.55", 8118))
 
     private val headers = listOf(
         "x-goog-api-key" to geminiApiKey,
@@ -33,7 +37,8 @@ class LLM(
         val response = botUtils.textFromURL(
             url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent",
             headers = headers,
-            body = request
+            body = request,
+            proxy = suoraProxy
         )
 
         return objectMapper.readTree(response)["candidates"].first()["content"]["parts"].first()["text"].asText()
