@@ -20,9 +20,9 @@ class TestScheduledErrePiGi : BaseTest() {
     fun scheduledErrePiGiTest() {
         scheduledErrePiGi.execute()
 
-        val argumentCaptor = argumentCaptor<ActionResponse>()
-        verify(botUtils, times(1)).messaggio(argumentCaptor.capture())
-        val actionResponse = argumentCaptor.firstValue
+        val argumentCaptor = argumentCaptor<ActionResponse, Boolean>()
+        verify(botUtils, times(1)).messaggio(argumentCaptor.first.capture(), any())
+        val actionResponse = argumentCaptor.first.firstValue
         Assertions.assertThat(actionResponse.type).isEqualTo(ActionResponseType.Message)
         Assertions.assertThat(actionResponse.message).isEqualTo("ErrePiGi ha fattto qualcosa")
         Assertions.assertThat(actionResponse.inputFile).isNull()

@@ -44,12 +44,12 @@ open class BaseTest {
         doAnswer {
             val actionResponse = it.arguments.first() as ActionResponse
             _actionResponses.add(actionResponse)
-        }.whenever(botUtils).rispondi(any(), any())
+        }.whenever(botUtils).rispondi(any(), any(), any())
 
         doAnswer {
             val actionResponse = it.arguments.first() as ActionResponse
             _actionResponses.add(actionResponse)
-        }.whenever(botUtils).messaggio(any())
+        }.whenever(botUtils).messaggio(any(), any())
     }
 
     fun message(

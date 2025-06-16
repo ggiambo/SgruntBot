@@ -25,9 +25,9 @@ class ScheduledRandomKarmaTest : BaseTest() {
         botConfig.lastAuthor = user(Users.SHDX_T)
         randomKarma.execute()
 
-        val argumentCaptor = argumentCaptor<ActionResponse>()
-        verify(botUtils, times(1)).messaggio(argumentCaptor.capture())
-        val actionResponse = argumentCaptor.firstValue
+        val argumentCaptor = argumentCaptor<ActionResponse, Boolean>()
+        verify(botUtils, times(1)).messaggio(argumentCaptor.first.capture(), any())
+        val actionResponse = argumentCaptor.first.firstValue
         assertThat(actionResponse.type).isEqualTo(ActionResponseType.Message)
         assertThat(actionResponse.message).startsWith("<a href=\"tg://user?id=")
         assertThat(actionResponse.message).contains(" in verità in verità ti dico: Sgrunty da, Sgrunty toglie.\n")

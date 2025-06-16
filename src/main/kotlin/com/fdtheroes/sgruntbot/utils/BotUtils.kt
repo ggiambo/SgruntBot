@@ -108,17 +108,17 @@ class BotUtils(private val botConfig: BotConfig) {
             .decodeToString()
     }
 
-    fun rispondi(actionMessage: ActionResponse, message: Message) {
+    fun rispondi(actionMessage: ActionResponse, message: Message, disableWebPagePreview: Boolean = true) {
         when (actionMessage.type) {
-            ActionResponseType.Message -> rispondiMessaggio(message, actionMessage.message)
+            ActionResponseType.Message -> rispondiMessaggio(message, actionMessage.message, disableWebPagePreview)
             ActionResponseType.Photo -> rispondiPhoto(message, actionMessage.message, actionMessage.inputFile!!)
             ActionResponseType.Audio -> rispondiAudio(message, actionMessage.inputFile!!, actionMessage.thumbnail)
         }
     }
 
-    fun messaggio(actionMessage: ActionResponse) {
+    fun messaggio(actionMessage: ActionResponse, disableWebPagePreview: Boolean = true) {
         when (actionMessage.type) {
-            ActionResponseType.Message -> messaggio(actionMessage.message)
+            ActionResponseType.Message -> messaggio(actionMessage.message, disableWebPagePreview)
             ActionResponseType.Photo -> photo(actionMessage.message, actionMessage.inputFile!!)
             ActionResponseType.Audio -> audio(actionMessage.inputFile!!)
         }
@@ -173,22 +173,22 @@ class BotUtils(private val botConfig: BotConfig) {
         )
     }
 
-    private fun messaggio(text: String) {
+    private fun messaggio(text: String, disableWebPagePreview: Boolean) {
         telegramClient.execute(
             SendMessage(botConfig.chatId, text).apply {
                 this.parseMode = ParseMode.HTML
-                this.disableWebPagePreview = true
+                this.disableWebPagePreview = disableWebPagePreview
             }
         )
     }
 
-    private fun rispondiMessaggio(message: Message, text: String) {
+    private fun rispondiMessaggio(message: Message, text: String, disableWebPagePreview: Boolean) {
         sgruntyScrive(message.chatId.toString())
         telegramClient.execute(
             SendMessage(message.chatId.toString(), text).apply {
                 this.replyToMessageId = message.messageId
                 this.parseMode = ParseMode.HTML
-                this.disableWebPagePreview = true
+                this.disableWebPagePreview = disableWebPagePreview
             }
         )
     }

@@ -25,9 +25,9 @@ class ScheduledRandomFortuneVocaleTest : BaseTest() {
     fun testRandomFortune() {
         randomFortune.execute()
 
-        val argumentCaptor = argumentCaptor<ActionResponse>()
-        verify(botUtils, times(1)).messaggio(argumentCaptor.capture())
-        val actionResponse = argumentCaptor.firstValue
+        val argumentCaptor = argumentCaptor<ActionResponse, Boolean>()
+        verify(botUtils, times(1)).messaggio(argumentCaptor.first.capture(), any())
+        val actionResponse = argumentCaptor.first.firstValue
         assertThat(actionResponse.type).isEqualTo(ActionResponseType.Audio)
         assertThat(actionResponse.message).isNotEmpty()
         assertThat(actionResponse.inputFile).isNotNull()

@@ -5,6 +5,7 @@ import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.models.ActionResponseType
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
+import org.mockito.kotlin.any
 import org.mockito.kotlin.argumentCaptor
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
@@ -18,9 +19,9 @@ class TestScheduledSanto : BaseTest() {
     fun scheduledSantoTest() {
         scheduledSanto.execute()
 
-        val argumentCaptor = argumentCaptor<ActionResponse>()
-        verify(botUtils, times(1)).messaggio(argumentCaptor.capture())
-        val actionResponse1 = argumentCaptor.firstValue
+        val argumentCaptor = argumentCaptor<ActionResponse, Boolean>()
+        verify(botUtils, times(1)).messaggio(argumentCaptor.first.capture(), any())
+        val actionResponse1 = argumentCaptor.first.firstValue
         Assertions.assertThat(actionResponse1.type).isEqualTo(ActionResponseType.Photo)
         Assertions.assertThat(actionResponse1.message).startsWith("<a href='https://www.santodelgiorno.it/")
         Assertions.assertThat(actionResponse1.inputFile).isNotNull()

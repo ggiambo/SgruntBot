@@ -5,6 +5,7 @@ import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.models.ActionResponseType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.mockito.kotlin.any
 import org.mockito.kotlin.argumentCaptor
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
@@ -17,9 +18,9 @@ class ScheduledRandomCuloDiPapaTest : BaseTest() {
     fun testRandomCuloDiPapa() {
         randomCuloDiPapa.execute()
 
-        val argumentCaptor = argumentCaptor<ActionResponse>()
-        verify(botUtils, times(1)).messaggio(argumentCaptor.capture())
-        val actionResponse = argumentCaptor.firstValue
+        val argumentCaptor = argumentCaptor<ActionResponse, Boolean>()
+        verify(botUtils, times(1)).messaggio(argumentCaptor.first.capture(), any())
+        val actionResponse = argumentCaptor.first.firstValue
         assertThat(actionResponse.type).isEqualTo(ActionResponseType.Message)
         assertThat(actionResponse.message).isNotEmpty()
         assertThat(actionResponse.inputFile).isNull()

@@ -7,6 +7,7 @@ import com.fdtheroes.sgruntbot.persistence.StatsService
 import com.fdtheroes.sgruntbot.utils.StatsUtil
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
+import org.mockito.kotlin.any
 import org.mockito.kotlin.argumentCaptor
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.times
@@ -23,9 +24,9 @@ class TestScheduledStats : BaseTest() {
     fun scheduledStatsTest() {
         scheduledStats.execute()
 
-        val argumentCaptor = argumentCaptor<ActionResponse>()
-        verify(botUtils, times(1)).messaggio(argumentCaptor.capture())
-        val actionResponse = argumentCaptor.firstValue
+        val argumentCaptor = argumentCaptor<ActionResponse, Boolean>()
+        verify(botUtils, times(1)).messaggio(argumentCaptor.first.capture(), any())
+        val actionResponse = argumentCaptor.first.firstValue
         Assertions.assertThat(actionResponse.type).isEqualTo(ActionResponseType.Photo)
         Assertions.assertThat(actionResponse.message).isEqualTo("")
         Assertions.assertThat(actionResponse.inputFile).isNotNull()

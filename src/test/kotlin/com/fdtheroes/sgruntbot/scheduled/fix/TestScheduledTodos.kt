@@ -34,7 +34,7 @@ class TestScheduledTodos : BaseTest() {
         val scheduledTodos = ScheduledTodos(botUtils, mock())
         scheduledTodos.execute()
 
-        verify(botUtils, times(0)).messaggio(isA())
+        verify(botUtils, times(0)).messaggio(isA(), isA())
     }
 
     @Test
@@ -52,8 +52,7 @@ class TestScheduledTodos : BaseTest() {
         scheduledTodos.execute()
 
         val argumentCaptor = argumentCaptor<ActionResponse>()
-        verify(botUtils, times(1)).messaggio(argumentCaptor.capture())
-        assertThat(argumentCaptor.allValues).hasSize(1)
+        verify(botUtils, times(1)).messaggio(argumentCaptor.capture(), any())
         val message = argumentCaptor.firstValue.message
         assertThat(message).startsWith("<b>Utenti pigri con todos ancora aperti:</b>")
         val righe = message.split("\n")

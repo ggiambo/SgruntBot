@@ -51,10 +51,11 @@ class VocaleTest : BaseTest() {
         assertThat(actionResponse.inputFile!!.isNew).isTrue()
         assertThat(actionResponse.message).isEqualTo("LaVoceDiSgrunty.mp3")
 
-        val argumentCaptor = argumentCaptor<ActionResponse, Message>()
+        val argumentCaptor = argumentCaptor<ActionResponse, Message, Boolean>()
         verify(botUtils, times(1)).rispondi(
             argumentCaptor.first.capture(),
             argumentCaptor.second.capture(),
+            any()
         )
         val response = argumentCaptor.first.firstValue
         assertThat(response).isEqualTo(actionResponse)
@@ -79,11 +80,12 @@ class VocaleTest : BaseTest() {
         assertThat(actionResponse.inputFile!!.isNew).isTrue()
         assertThat(actionResponse.message).isEqualTo("LaVoceDiSgrunty.mp3")
 
-        val argumentCaptor = argumentCaptor<ActionResponse>()
+        val argumentCaptor = argumentCaptor<ActionResponse, Boolean>()
         verify(botUtils, times(1)).messaggio(
-            argumentCaptor.capture(),
+            argumentCaptor.first.capture(),
+            argumentCaptor.second.capture(),
         )
-        val response = argumentCaptor.firstValue
+        val response = argumentCaptor.first.firstValue
         assertThat(response).isEqualTo(actionResponse)
     }
 }

@@ -23,7 +23,7 @@ class Youtube(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtil
                 return
             }
             val youtubeLink = "https://www.youtube.com/watch?v=$id"
-            botUtils.rispondi(ActionResponse.message(youtubeLink), message)
+            botUtils.rispondi(ActionResponse.message(youtubeLink), message, false)
         }
     }
 
