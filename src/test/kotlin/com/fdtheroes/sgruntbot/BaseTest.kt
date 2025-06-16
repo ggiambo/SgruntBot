@@ -30,8 +30,8 @@ open class BaseTest {
         imgurClientId = "dummyToken.txt",
     )
 
-    val botUtils = spy(BotUtils(botConfig))
     val mapper = ObjectMapper()
+    val botUtils = spy(BotUtils(botConfig, mapper))
 
     // per qualche oscura ragione, dev'essere qui e non in "spy" (Il metodo originale viene chiamato!)
     init {
