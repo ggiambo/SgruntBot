@@ -19,7 +19,7 @@ class Utonti(
     override fun handle(message: Message) {
         if (regex.matches(message.text)) {
             val utonti = usersService.getAllUsers()
-                .joinToString(separator = "\n") { "- ${it.id}: ${botUtils.getUserName(it)}" }
+                .joinToString(separator = "\n") { "- <code>${it.id}</code>: ${botUtils.getUserLink(it)}" }
             botUtils.rispondi(ActionResponse.message("Utonti di questa ciat:\n${utonti}"), message)
         }
         usersService.checkAndUpdate(message.from)

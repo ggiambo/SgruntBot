@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.message.Message
 import kotlin.random.Random.Default.nextInt
 
-@Service
+//@Service
 class Cazzate(
     botUtils: BotUtils,
     botConfig: BotConfig,

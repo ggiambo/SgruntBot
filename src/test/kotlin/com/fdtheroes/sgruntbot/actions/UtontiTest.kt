@@ -32,8 +32,8 @@ class UtontiTest : BaseTest() {
         assertThat(actionResponses).hasSize(1)
         assertThat(actionResponses.first().type).isEqualTo(ActionResponseType.Message)
         assertThat(actionResponses.first().message).startsWith("Utonti di questa ciat")
-        assertThat(actionResponses.first().message).contains("42: Pippo")
-        assertThat(actionResponses.first().message).contains("104278889: IL_VINCI")
+        assertThat(actionResponses.first().message).contains("<code>42</code>: <a href=\"tg://user?id=42\">Pippo</a>")
+        assertThat(actionResponses.first().message).contains("<code>104278889</code>: <a href=\"tg://user?id=104278889\">IL_VINCI</a>")
 
     }
 
