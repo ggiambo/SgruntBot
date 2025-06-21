@@ -162,10 +162,6 @@ class BotUtils(private val botConfig: BotConfig, private val objectMapper: Objec
         return chatMember.user
     }
 
-    fun sleep(seconds: IntRange) {
-        Thread.sleep(Random.nextLong(seconds.first.toLong() * 1000, seconds.last.toLong() * 1000))
-    }
-
     fun trimString(input: String, length: Int): String {
         if (input.length < length) {
             return input
