@@ -29,7 +29,7 @@
         <xchart.version>3.8.8</xchart.version>
         <mockitokotlin.version>5.4.0</mockitokotlin.version>
         <gitHubApi.version>1.327</gitHubApi.version>
-        <swisseph.version>6000e46cf8</swisseph.version>
+        <swisseph.version>4975aa604b</swisseph.version>
     </properties>
 
     <dependencies>
