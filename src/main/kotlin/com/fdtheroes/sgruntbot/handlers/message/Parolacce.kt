@@ -29,7 +29,7 @@ class Parolacce(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUt
             "Cosa mi tocca sentire! $userLink, pregherò per la tua anima",
             "$userLink vai subito a lavarti la bocca col sapone!",
             "Gne gne $userLink specchio riflesso!",
-            "Un giovanotto come $userLink che dice queste parole?!",
+            "Una persona per bene come $userLink che dice queste parole?!",
         ).random()
     }
 }
