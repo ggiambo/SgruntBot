@@ -9,7 +9,7 @@ enum class Users(val id: Long, val compleanno: Compleanno? = null) {
     DANIELE(32657811, Compleanno(13, FEBRUARY)),
     SHDX_T(68714652, Compleanno(11, JULY)),
     IL_VINCI(104278889, Compleanno(24, AUGUST)),
-    ALLEGRA_SOLITUDINE(250965179, Compleanno(12, AUGUST)),
+    //ALLEGRA_SOLITUDINE(250965179, Compleanno(12, AUGUST)),
     DA_DA_212(252800958, Compleanno(6, AUGUST)),
     F(259607683, Compleanno(5, APRIL)),
     GGIAMBO(353708759, Compleanno(9, APRIL)),
