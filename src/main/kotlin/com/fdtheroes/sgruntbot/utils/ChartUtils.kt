@@ -2,7 +2,6 @@ package com.fdtheroes.sgruntbot.utils
 
 import org.knowm.xchart.BitmapEncoder
 import org.knowm.xchart.PieChart
-import org.knowm.xchart.XYChart
 import org.knowm.xchart.internal.chartpart.Chart
 import org.knowm.xchart.style.PieStyler
 import org.knowm.xchart.style.theme.GGPlot2Theme
@@ -15,6 +14,11 @@ import javax.imageio.ImageIO
 
 object ChartUtils {
 
+    val chartFont = Font.createFont(
+        Font.TRUETYPE_FONT,
+        this.javaClass.getResourceAsStream("/UbuntuSans[wdth,wght].ttf")
+    ).deriveFont(14f)
+
     fun pieChart(chartTitle: String): PieChart {
         return PieChart(1280, 1024).apply {
             this.title = chartTitle
@@ -22,8 +26,8 @@ object ChartUtils {
             this.styler.seriesColors = seriesColors
             this.styler.labelType = PieStyler.LabelType.Value
             this.styler.setSliceBorderWidth(5.0)
-            this.styler.chartTitleFont = Font("Ubuntu Regular", Font.PLAIN, 14)
-            this.styler.legendFont = Font("Ubuntu Regular", Font.PLAIN, 14)
+            this.styler.chartTitleFont = chartFont
+            this.styler.legendFont = chartFont
         }
     }
 
