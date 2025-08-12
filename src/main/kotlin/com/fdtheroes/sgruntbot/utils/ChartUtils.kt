@@ -8,21 +8,12 @@ import org.knowm.xchart.style.PieStyler
 import org.knowm.xchart.style.theme.GGPlot2Theme
 import org.telegram.telegrambots.meta.api.objects.InputFile
 import java.awt.Color
+import java.awt.Font
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import javax.imageio.ImageIO
 
 object ChartUtils {
-
-    fun xyChart(chartTitle: String): XYChart {
-        return XYChart(1280, 1024).apply {
-            this.title = chartTitle
-            this.styler.theme = GGPlot2Theme()
-            this.styler.seriesColors = seriesColors
-            this.styler.isToolTipsEnabled = false
-            this.styler.datePattern = "d"
-        }
-    }
 
     fun pieChart(chartTitle: String): PieChart {
         return PieChart(1280, 1024).apply {
@@ -31,6 +22,8 @@ object ChartUtils {
             this.styler.seriesColors = seriesColors
             this.styler.labelType = PieStyler.LabelType.Value
             this.styler.setSliceBorderWidth(5.0)
+            this.styler.chartTitleFont = Font("Ubuntu Regular", Font.PLAIN, 14)
+            this.styler.legendFont = Font("Ubuntu Regular", Font.PLAIN, 14)
         }
     }
 
