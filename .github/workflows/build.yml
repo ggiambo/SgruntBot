@@ -33,4 +33,4 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
       - name: Build with maven
-        run: ./mvnw clean install
+        run: ./mvnw -B clean install
