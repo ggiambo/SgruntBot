@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test
 import org.mockito.kotlin.any
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
+import org.slf4j.LoggerFactory
 import java.io.ByteArrayInputStream
 import java.io.File
 import java.time.LocalDate
@@ -17,6 +18,8 @@ import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 
 class StatsUtilTest : BaseTest() {
+
+    private val log = LoggerFactory.getLogger(this.javaClass)
 
     private val statsService = StatsService(
         mock<StatsRepository> {
@@ -38,8 +41,8 @@ class StatsUtilTest : BaseTest() {
         val actualOut = statsOut.readAllBytes()
         val expectedOut = stats.newMediaStream.readAllBytes()
 
-        println(Base64.encode(actualOut))
-        println(Base64.encode(expectedOut))
+        log.info(Base64.encode(actualOut))
+        log.info(Base64.encode(expectedOut))
 
         Assertions.assertThat(actualOut).isEqualTo(expectedOut)
     }
