@@ -10,8 +10,11 @@ import org.junit.jupiter.api.Test
 import org.mockito.kotlin.any
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
+import java.io.ByteArrayInputStream
 import java.io.File
 import java.time.LocalDate
+import kotlin.io.encoding.Base64
+import kotlin.io.encoding.ExperimentalEncodingApi
 
 class StatsUtilTest : BaseTest() {
 
@@ -23,12 +26,22 @@ class StatsUtilTest : BaseTest() {
 
     private val statsUtil = StatsUtil(statsService, botUtils)
 
+    @OptIn(ExperimentalEncodingApi::class)
     @Test
     fun getStats() {
         val stats = statsUtil.getStats(42)
         val statsOut = this.javaClass.getResourceAsStream("/statsOut.png")
 
-        Assertions.assertThat(statsOut.readAllBytes()).isEqualTo(stats.newMediaStream.readAllBytes())
+        //val out = stats.newMediaStream.readAllBytes()
+        //File("src/test/resources/_statsOut.png").writeBytes(out)
+
+        val actualOut = statsOut.readAllBytes()
+        val expectedOut = stats.newMediaStream.readAllBytes()
+
+        println(Base64.encode(actualOut))
+        println(Base64.encode(expectedOut))
+
+        Assertions.assertThat(actualOut).isEqualTo(expectedOut)
     }
 
     private fun stats(): List<Stats> {
