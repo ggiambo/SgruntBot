@@ -36,7 +36,6 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import java.util.stream.StreamSupport
 import kotlin.math.max
-import kotlin.random.Random
 
 @Service
 class BotUtils(private val botConfig: BotConfig, private val objectMapper: ObjectMapper) {

@@ -16,6 +16,7 @@ class Wiki(botUtils: BotUtils, botConfig: BotConfig, val mapper: ObjectMapper) :
 
     private val wikipediaApi = "https://%swikipedia.org/w/api.php"
     private val urlByTitle = "https://%swikipedia.org/w/index.php?title=%s"
+    private val wikipediaHeaders = listOf("user-agent" to "SgruntBot/1.0")
 
     override fun handle(message: Message) {
         val groups = regex.find(message.text)?.groupValues.orEmpty()
@@ -49,7 +50,8 @@ class Wiki(botUtils: BotUtils, botConfig: BotConfig, val mapper: ObjectMapper) :
                 "explaintext" to "",
                 "list" to "search",
                 "srsearch" to query
-            )
+            ),
+            headers = wikipediaHeaders
         )
         val jsNode = mapper.readTree(testo)
 
@@ -72,7 +74,8 @@ class Wiki(botUtils: BotUtils, botConfig: BotConfig, val mapper: ObjectMapper) :
                 "explaintext" to "",
                 "redirects" to "1",
                 "titles" to title
-            )
+            ),
+            headers = wikipediaHeaders
         )
         val jsNode = mapper.readTree(testo)
         return jsNode["query"]["pages"].first()["extract"].textValue()
