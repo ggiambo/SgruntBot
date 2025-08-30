@@ -17,9 +17,9 @@ import java.time.LocalDateTime
 @Configuration
 @EnableCaching
 class BotConfig(
-    @Value("\${CHAT_ID}") val chatId: String,
-    @Value("\${TELEGRAM_TOKEN}") val telegramToken: String,
-    @Value("\${IMGUR_CLIENT_ID}") val imgurClientId: String,
+    @param:Value("\${CHAT_ID}") val chatId: String,
+    @param:Value("\${TELEGRAM_TOKEN}") val telegramToken: String,
+    @param:Value("\${IMGUR_CLIENT_ID}") val imgurClientId: String,
 ) {
 
     val botName = "SgruntBot"
