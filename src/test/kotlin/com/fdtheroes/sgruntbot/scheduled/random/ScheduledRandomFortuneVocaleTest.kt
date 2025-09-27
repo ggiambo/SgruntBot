@@ -12,8 +12,10 @@ import org.telegram.telegrambots.meta.api.objects.InputFile
 
 class ScheduledRandomFortuneVocaleTest : BaseTest() {
 
-    private val fortune = spy(Fortune(botUtils, botConfig)) {
-        on { getFortune() } doReturn "Fake fortune, just for testing"
+    private val fortune = object : Fortune(botUtils, botConfig) {
+        override fun getFortune(): String {
+            return "Fake fortune, just for testing"
+        }
     }
     private val vocale = mock<Vocale> {
         on { getVocale(any()) } doReturn InputFile(

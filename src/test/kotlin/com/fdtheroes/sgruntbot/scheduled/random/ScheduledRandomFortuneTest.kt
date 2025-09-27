@@ -8,15 +8,15 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.any
 import org.mockito.kotlin.argumentCaptor
-import org.mockito.kotlin.doReturn
-import org.mockito.kotlin.spy
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 
 class ScheduledRandomFortuneTest : BaseTest() {
 
-    private val fortune = spy(Fortune(botUtils, botConfig)) {
-        on { getFortune() } doReturn "Fake fortune, just for testing"
+    private val fortune = object : Fortune(botUtils, botConfig) {
+        override fun getFortune(): String {
+            return "Fake fortune, just for testing"
+        }
     }
     private val randomFortune = ScheduledRandomFortune(botUtils, fortune)
 
