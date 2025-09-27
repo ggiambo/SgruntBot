@@ -28,7 +28,7 @@
         <springdoc.version>2.8.13</springdoc.version>
         <xchart.version>3.8.8</xchart.version>
         <mockitokotlin.version>5.4.0</mockitokotlin.version>
-        <gitHubApi.version>1.327</gitHubApi.version>
+        <gitHubApi.version>1.330</gitHubApi.version>
         <swisseph.version>4975aa604b</swisseph.version>
     </properties>
 
