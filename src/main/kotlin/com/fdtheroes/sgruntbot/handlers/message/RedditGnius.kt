@@ -21,6 +21,7 @@ class RedditGnius(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(bot
     private val regex = Regex("!gnius$", RegexOption.IGNORE_CASE)
     private val log = LoggerFactory.getLogger(this.javaClass)
     private val torProxy = Proxy(Proxy.Type.SOCKS, InetSocketAddress("localhost", 9050))
+    private val defaultSubreddits = arrayOf("linux", "netsec", "programming", "technology", "privacy")
 
     override fun handle(message: Message) {
         if (regex.containsMatchIn(message.text)) {
@@ -33,14 +34,19 @@ class RedditGnius(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(bot
 
     override fun halp() = "<b>!gnius</b> News sul mondo GNU e altro."
 
-    fun getGnius(): List<String> {
-        return fetch().map { gnius(it) }
+    fun getGnius(vararg subReddits: String): List<String> {
+        val gnius = if (subReddits.isEmpty()) {
+            fetch(defaultSubreddits.joinToString(separator = "+"))
+        } else {
+            fetch(subReddits.joinToString(separator = "+"))
+        }
+        return gnius.map { gnius(it) }
     }
 
-    private fun fetch(): List<Gnius> {
+    private fun fetch(listOfSubreddits: String): List<Gnius> {
         val redditNews = try {
             botUtils.textFromURL(
-                url = "https://old.reddit.com/r/linux+netsec+programming+technology+privacy/top/",
+                url = "https://old.reddit.com/r/$listOfSubreddits/top/",
                 headers = listOf(Pair(HttpHeaders.USER_AGENT, botConfig.botName)),
                 proxy = torProxy
             )

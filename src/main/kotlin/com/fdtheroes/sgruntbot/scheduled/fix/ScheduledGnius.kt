@@ -11,7 +11,12 @@ import java.time.LocalDateTime
 class ScheduledGnius(private val botUtils: BotUtils, private val redditGnius: RedditGnius) : Scheduled {
 
     override fun execute() {
-        val gnius = redditGnius.getGnius()
+        val newsSera = LocalDateTime.now().hour == 20
+        val gnius = if (newsSera) {
+            redditGnius.getGnius("anime_titties", "worldnews")
+        } else {
+            redditGnius.getGnius()
+        }
         if (gnius.isNotEmpty()) {
             botUtils.messaggio(ActionResponse.message(gnius.joinToString(separator = "\n")))
         }
