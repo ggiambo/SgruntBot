@@ -1,10 +1,10 @@
 package com.fdtheroes.sgruntbot.handlers.message.oroscopo
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.fdtheroes.sgruntbot.utils.BotUtils
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
+import tools.jackson.databind.json.JsonMapper
 import java.net.InetSocketAddress
 import java.net.Proxy
 
@@ -13,7 +13,7 @@ class LLM(
     @Value("\${GEMINI_API_KEY}") geminiApiKey: String,
     private val horoscopeUtils: HoroscopeUtils,
     private val botUtils: BotUtils,
-    private val objectMapper: ObjectMapper,
+    private val jsonMapper: JsonMapper,
 ) {
 
     private val suoraProxy = Proxy(Proxy.Type.HTTP, InetSocketAddress("198.98.49.55", 8118))
@@ -41,7 +41,7 @@ class LLM(
             proxy = suoraProxy
         )
 
-        return objectMapper.readTree(response)["candidates"].first()["content"]["parts"].first()["text"].asText()
+        return jsonMapper.readTree(response)["candidates"].first()["content"]["parts"].first()["text"].asString()
     }
 
 }

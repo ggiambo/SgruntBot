@@ -1,26 +1,26 @@
 package com.fdtheroes.sgruntbot.handlers.message
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.utils.BotUtils
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.message.Message
+import tools.jackson.databind.json.JsonMapper
 import kotlin.random.Random.Default.nextInt
 
 @Service
-class LaSmorfia(botUtils: BotUtils, botConfig: BotConfig, private val mapper: ObjectMapper) :
+class LaSmorfia(botUtils: BotUtils, botConfig: BotConfig, private val jsonMapper: JsonMapper) :
     MessageHandler(botUtils, botConfig), HasHalp {
 
     private val regexRichiesta = Regex("!smorfia (\\d{1,2})\$", setOf(RegexOption.IGNORE_CASE))
 
     private val smorfia: Map<Int, Smorfia> by lazy {
-        mapper.readTree(this::class.java.getResourceAsStream("/smorfia.json"))
+        jsonMapper.readTree(this::class.java.getResourceAsStream("/smorfia.json"))
             .map {
                 Smorfia(
-                    numero = it["n"].asText().toInt(),
-                    text = it["text"].asText(),
-                    keywords = it["w"]?.map { keyword -> keyword.asText() }.orEmpty(),
+                    numero = it["n"].asString().toInt(),
+                    text = it["text"].asString(),
+                    keywords = it["w"]?.map { keyword -> keyword.asString() }.orEmpty(),
                 )
             }
             .associateBy { it.numero }

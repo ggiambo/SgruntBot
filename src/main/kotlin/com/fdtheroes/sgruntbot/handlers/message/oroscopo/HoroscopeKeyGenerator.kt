@@ -7,7 +7,7 @@ import java.time.LocalDate
 
 @Component("HoroscopeKeyGenerator")
 class HoroscopeKeyGenerator : KeyGenerator {
-    override fun generate(target: Any, method: Method, vararg params: Any): Any {
+    override fun generate(target: Any, method: Method, vararg params: Any?): Any {
         val segno = params.first()
         return "${LocalDate.now()}_$segno"
     }

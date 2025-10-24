@@ -1,15 +1,15 @@
 package com.fdtheroes.sgruntbot.handlers.message
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.utils.BotUtils
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.message.Message
+import tools.jackson.databind.json.JsonMapper
 import java.net.URLEncoder
 
 @Service
-class Wiki(botUtils: BotUtils, botConfig: BotConfig, val mapper: ObjectMapper) : MessageHandler(botUtils, botConfig),
+class Wiki(botUtils: BotUtils, botConfig: BotConfig, val jsonMapper: JsonMapper) : MessageHandler(botUtils, botConfig),
     HasHalp {
 
     private val regex = Regex("^!(en)?wiki (.*)$", RegexOption.IGNORE_CASE)
@@ -53,14 +53,14 @@ class Wiki(botUtils: BotUtils, botConfig: BotConfig, val mapper: ObjectMapper) :
             ),
             headers = wikipediaHeaders
         )
-        val jsNode = mapper.readTree(testo)
+        val jsNode = jsonMapper.readTree(testo)
 
         val search = jsNode["query"]["search"].firstOrNull()
         if (search == null) {
             return null
         }
 
-        return search["title"].textValue()
+        return search["title"].asString()
     }
 
     private fun getDescription(lingua: String, title: String): String {
@@ -77,8 +77,8 @@ class Wiki(botUtils: BotUtils, botConfig: BotConfig, val mapper: ObjectMapper) :
             ),
             headers = wikipediaHeaders
         )
-        val jsNode = mapper.readTree(testo)
-        return jsNode["query"]["pages"].first()["extract"].textValue()
+        val jsNode = jsonMapper.readTree(testo)
+        return jsNode["query"]["pages"].first()["extract"].asString()
     }
 
 }
