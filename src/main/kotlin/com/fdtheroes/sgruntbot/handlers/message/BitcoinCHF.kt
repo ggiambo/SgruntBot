@@ -1,15 +1,15 @@
 package com.fdtheroes.sgruntbot.handlers.message
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.utils.BotUtils
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.message.Message
+import tools.jackson.databind.json.JsonMapper
 
 @Service
-class BitcoinCHF(botUtils: BotUtils, botConfig: BotConfig, mapper: ObjectMapper) :
-    Bitcoin(botUtils, botConfig, mapper) {
+class BitcoinCHF(botUtils: BotUtils, botConfig: BotConfig, jsonMapper: JsonMapper) :
+    Bitcoin(botUtils, botConfig, jsonMapper) {
 
     private val regex = Regex("^!btcc\$", RegexOption.IGNORE_CASE)
 
