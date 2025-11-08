@@ -10,7 +10,7 @@ import org.telegram.telegrambots.meta.api.objects.message.Message
 class Last(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils, botConfig),
     HasHalp {
 
-    private val regex = Regex("^!last\$", RegexOption.IGNORE_CASE)
+    private val regex = Regex("^!last$", RegexOption.IGNORE_CASE)
 
     override fun handle(message: Message) {
         if (regex.matches(message.text) && botConfig.lastAuthor != null) {

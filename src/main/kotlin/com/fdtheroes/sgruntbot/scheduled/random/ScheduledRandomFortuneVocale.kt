@@ -12,7 +12,7 @@ class ScheduledRandomFortuneVocale(
     private val vocale: Vocale,
 ) : ScheduledRandom {
 
-    private val citazione = Regex("^\\s+-- .+\$") // la citazione in fondo
+    private val citazione = Regex("^\\s+-- .+$") // la citazione in fondo
 
     override fun execute() {
         val vocale = vocale.getVocale(getTestoFortune())

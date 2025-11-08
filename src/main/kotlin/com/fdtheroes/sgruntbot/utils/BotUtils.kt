@@ -99,7 +99,7 @@ class BotUtils(private val botConfig: BotConfig, private val jsonMapper: JsonMap
             )
             .build()
 
-        return client.newCall(request).execute().body!!.byteStream()
+        return client.newCall(request).execute().body.byteStream()
     }
 
     fun textFromURL(

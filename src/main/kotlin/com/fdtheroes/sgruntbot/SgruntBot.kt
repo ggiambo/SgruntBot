@@ -26,7 +26,7 @@ class SgruntBot(
 ) : LongPollingSingleThreadUpdateConsumer {
 
     private val log = LoggerFactory.getLogger(this.javaClass)
-    private val lastAuthorRegex = Regex("^!last\$", RegexOption.IGNORE_CASE)
+    private val lastAuthorRegex = Regex("^!last$", RegexOption.IGNORE_CASE)
 
     @PostConstruct
     fun postConstruct() {
