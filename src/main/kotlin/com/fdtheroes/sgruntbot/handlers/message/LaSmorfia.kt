@@ -12,7 +12,7 @@ import kotlin.random.Random.Default.nextInt
 class LaSmorfia(botUtils: BotUtils, botConfig: BotConfig, private val jsonMapper: JsonMapper) :
     MessageHandler(botUtils, botConfig), HasHalp {
 
-    private val regexRichiesta = Regex("!smorfia (\\d{1,2})\$", setOf(RegexOption.IGNORE_CASE))
+    private val regexRichiesta = Regex("!smorfia (\\d{1,2})$", setOf(RegexOption.IGNORE_CASE))
 
     private val smorfia: Map<Int, Smorfia> by lazy {
         jsonMapper.readTree(this::class.java.getResourceAsStream("/smorfia.json"))

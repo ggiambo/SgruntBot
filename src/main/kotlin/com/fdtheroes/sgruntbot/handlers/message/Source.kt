@@ -9,7 +9,7 @@ import org.telegram.telegrambots.meta.api.objects.message.Message
 @Service
 class Source(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils, botConfig), HasHalp {
 
-    private val regex = Regex("^!source\$", RegexOption.IGNORE_CASE)
+    private val regex = Regex("^!source$", RegexOption.IGNORE_CASE)
 
     override fun handle(message: Message) {
         if (regex.containsMatchIn(message.text)) {

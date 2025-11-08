@@ -15,7 +15,7 @@ class Oroscopo(
     private val llm: LLM
 ) : MessageHandler(botUtils, botConfig), HasHalp {
 
-    private val regex = Regex("^!oroscopo(.*)\$", RegexOption.IGNORE_CASE)
+    private val regex = Regex("^!oroscopo(.*)$", RegexOption.IGNORE_CASE)
 
     override fun handle(message: Message) {
         if (regex.matches(message.text)) {

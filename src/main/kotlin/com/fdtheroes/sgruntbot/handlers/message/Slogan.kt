@@ -11,7 +11,7 @@ import java.net.URLDecoder
 @Service
 class Slogan(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils, botConfig), HasHalp {
 
-    private val regex = Regex("^!slogan (.*)\$", RegexOption.IGNORE_CASE)
+    private val regex = Regex("^!slogan (.*)$", RegexOption.IGNORE_CASE)
     private val sloganPlaceholder = "XXX-XXX-XXX"
     private val urlSlogan = "https://getsocio.com/tools/slogan-generator/generate"
 

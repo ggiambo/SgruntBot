@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class Rest(
-    @param:Value("\${sgruntbot.config.baseRestUrl}") private val baseRestUrl: String,
-    @param:Value("\${springdoc.swagger-ui.path}") private val swaggerUrl: String,
+    @param:Value($$"${sgruntbot.config.baseRestUrl}") private val baseRestUrl: String,
+    @param:Value($$"${springdoc.swagger-ui.path}") private val swaggerUrl: String,
 ) : HasHalp {
 
     override fun halp() = "<b>${baseRestUrl}${swaggerUrl}</b> per una descrizione dei metodi dell'interfaccia REST"

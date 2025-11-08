@@ -10,7 +10,7 @@ import java.net.Proxy
 
 @Service
 class LLM(
-    @Value("\${GEMINI_API_KEY}") geminiApiKey: String,
+    @Value($$"${GEMINI_API_KEY}") geminiApiKey: String,
     private val horoscopeUtils: HoroscopeUtils,
     private val botUtils: BotUtils,
     private val jsonMapper: JsonMapper,

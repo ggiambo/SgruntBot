@@ -16,7 +16,7 @@ class Stats(
     private val statsUtil: StatsUtil,
 ) : MessageHandler(botUtils, botConfig), HasHalp {
 
-    private val regex = Regex("^!stats(.*)\$", RegexOption.IGNORE_CASE)
+    private val regex = Regex("^!stats(.*)$", RegexOption.IGNORE_CASE)
 
     override fun handle(message: Message) {
         if (!botUtils.isMessageInChat(message)) {

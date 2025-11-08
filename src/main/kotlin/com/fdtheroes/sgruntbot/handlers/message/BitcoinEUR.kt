@@ -11,7 +11,7 @@ import tools.jackson.databind.json.JsonMapper
 class BitcoinEUR(botUtils: BotUtils, botConfig: BotConfig, jsonMapper: JsonMapper) :
     Bitcoin(botUtils, botConfig, jsonMapper) {
 
-    private val regex = Regex("^!btce\$", RegexOption.IGNORE_CASE)
+    private val regex = Regex("^!btce$", RegexOption.IGNORE_CASE)
 
     override fun handle(message: Message) {
         if (regex.containsMatchIn(message.text)) {

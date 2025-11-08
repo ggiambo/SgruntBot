@@ -12,7 +12,7 @@ import kotlin.jvm.optionals.getOrElse
 
 @Service
 class GitUtils(
-    @param:Value("\${GH_TOKEN}") private val gitHubToken: String,
+    @param:Value($$"${GH_TOKEN}") private val gitHubToken: String,
     private val nameValuePairRepository: NameValuePairRepository,
 ) {
 
