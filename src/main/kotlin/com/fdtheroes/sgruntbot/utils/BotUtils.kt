@@ -1,6 +1,5 @@
 package com.fdtheroes.sgruntbot.utils
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.models.ActionResponseType
@@ -28,6 +27,7 @@ import org.telegram.telegrambots.meta.api.objects.chatmember.MemberStatus
 import org.telegram.telegrambots.meta.api.objects.message.Message
 import org.telegram.telegrambots.meta.api.objects.reactions.ReactionType
 import org.telegram.telegrambots.meta.generics.TelegramClient
+import tools.jackson.databind.json.JsonMapper
 import java.io.InputStream
 import java.net.Proxy
 import java.time.LocalDateTime
@@ -38,7 +38,7 @@ import java.util.stream.StreamSupport
 import kotlin.math.max
 
 @Service
-class BotUtils(private val botConfig: BotConfig, private val objectMapper: ObjectMapper) {
+class BotUtils(private val botConfig: BotConfig, private val jsonMapper: JsonMapper) {
 
     private val log = LoggerFactory.getLogger(this.javaClass)
     private lateinit var telegramClient: TelegramClient
@@ -85,7 +85,7 @@ class BotUtils(private val botConfig: BotConfig, private val objectMapper: Objec
         val request = if (body == null) {
             Request.Builder().get()
         } else {
-            Request.Builder().post(objectMapper.writeValueAsBytes(body).toRequestBody())
+            Request.Builder().post(jsonMapper.writeValueAsBytes(body).toRequestBody())
         }
             .headers(
                 Headers.Builder().apply {
@@ -99,7 +99,7 @@ class BotUtils(private val botConfig: BotConfig, private val objectMapper: Objec
             )
             .build()
 
-        return client.newCall(request).execute().body!!.byteStream()
+        return client.newCall(request).execute().body.byteStream()
     }
 
     fun textFromURL(

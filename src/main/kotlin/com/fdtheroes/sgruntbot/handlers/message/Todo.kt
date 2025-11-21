@@ -15,9 +15,9 @@ class Todo(
     private val todosService: TodosService,
 ) : MessageHandler(botUtils, botConfig), HasHalp {
 
-    private val regex_todo_add = Regex("^!TODO (.+)\$", RegexOption.IGNORE_CASE)
-    private val regex_todo_done = Regex("^!TODO (-\\d{1,6})\$", RegexOption.IGNORE_CASE)
-    private val regex_todos = Regex("^!TODOS\$", RegexOption.IGNORE_CASE)
+    private val regex_todo_add = Regex("^!TODO (.+)$", RegexOption.IGNORE_CASE)
+    private val regex_todo_done = Regex("^!TODO (-\\d{1,6})$", RegexOption.IGNORE_CASE)
+    private val regex_todos = Regex("^!TODOS$", RegexOption.IGNORE_CASE)
 
     override fun handle(message: Message) {
         val userId = message.from.id
