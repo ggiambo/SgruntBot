@@ -4,9 +4,12 @@ import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.persistence.KarmaService
 import com.fdtheroes.sgruntbot.persistence.UsersService
 import com.fdtheroes.sgruntbot.utils.BotUtils
+import com.fdtheroes.sgruntbot.utils.Disabled
+import org.springframework.stereotype.Service
 import kotlin.random.Random.Default.nextBoolean
 
-//@Service
+@Service
+@Disabled
 class ScheduledRandomKarma(
     private val usersService: UsersService,
     private val karmaService: KarmaService,

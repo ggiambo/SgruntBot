@@ -5,12 +5,14 @@ import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.scheduled.Scheduled
 import com.fdtheroes.sgruntbot.utils.BotUtils
 import com.fdtheroes.sgruntbot.utils.BotUtils.Companion.isToday
+import com.fdtheroes.sgruntbot.utils.Disabled
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.time.LocalDateTime
 import kotlin.random.Random.Default.nextLong
 
-//@Service
+@Service
+@Disabled
 class ScheduledGengy(private val botUtils: BotUtils) : Scheduled {
 
     override fun firstRun() = traLeSeiELeSette()

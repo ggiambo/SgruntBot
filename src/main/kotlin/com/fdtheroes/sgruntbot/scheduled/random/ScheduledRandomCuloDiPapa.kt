@@ -2,11 +2,14 @@ package com.fdtheroes.sgruntbot.scheduled.random
 
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.utils.BotUtils
+import com.fdtheroes.sgruntbot.utils.Disabled
 import org.jsoup.Jsoup
+import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 import kotlin.random.Random.Default.nextLong
 
-//@Service
+@Service
+@Disabled
 class ScheduledRandomCuloDiPapa(private val botUtils: BotUtils) : ScheduledRandom {
 
     override fun execute() {

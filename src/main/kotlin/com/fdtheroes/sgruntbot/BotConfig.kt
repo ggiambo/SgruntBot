@@ -1,10 +1,10 @@
 package com.fdtheroes.sgruntbot
 
-
- import org.springframework.beans.factory.annotation.Value
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.cache.annotation.EnableCaching
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.stereotype.Component
 import org.telegram.telegrambots.longpolling.util.DefaultGetUpdatesGenerator
 import org.telegram.telegrambots.meta.TelegramUrl
 import org.telegram.telegrambots.meta.api.methods.updates.AllowedUpdates
@@ -14,9 +14,7 @@ import java.net.Proxy
 import java.net.URI
 import java.time.LocalDateTime
 
-
-@Configuration
-@EnableCaching
+@Component
 class BotConfig(
     @param:Value($$"${CHAT_ID}") val chatId: String,
     @param:Value($$"${TELEGRAM_TOKEN}") val telegramToken: String,

@@ -2,6 +2,8 @@ package com.fdtheroes.sgruntbot.scheduled.random
 
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.utils.BotUtils
+import com.fdtheroes.sgruntbot.utils.Disabled
+import org.springframework.stereotype.Service
 
 /**
  * [Why doesn't my bot see messages from other bots?](https://core.telegram.org/bots/faq#why-doesn-39t-my-bot-see-messages-from-other-bots)
@@ -9,7 +11,8 @@ import com.fdtheroes.sgruntbot.utils.BotUtils
  * Bots talking to each other could potentially get stuck in unwelcome loops. To avoid this, we decided that bots will
  * not be able to see messages from other bots regardless of mode.
  */
-//@Service
+@Service
+@Disabled
 class ScheduledRoboBot(private val botUtils: BotUtils) : ScheduledRandom {
 
     private val risposte = listOf(

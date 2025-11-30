@@ -4,10 +4,12 @@ import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.utils.BotUtils
 import com.fdtheroes.sgruntbot.utils.BotUtils.Companion.length
+import com.fdtheroes.sgruntbot.utils.Disabled
 import org.springframework.stereotype.Service
 import tools.jackson.databind.json.JsonMapper
 
-//@Service
+@Service
+@Disabled
 class ScheduledRandomImgur(
     botConfig: BotConfig,
     private val botUtils: BotUtils,

@@ -3,8 +3,11 @@ package com.fdtheroes.sgruntbot.scheduled.random
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.persistence.ErrePiGiService
 import com.fdtheroes.sgruntbot.utils.BotUtils
+import com.fdtheroes.sgruntbot.utils.Disabled
+import org.springframework.stereotype.Service
 
-//@Service
+@Service
+@Disabled
 class ScheduledErrePiGiSgrunty(
     private val botUtils: BotUtils,
     private val errePiGiService: ErrePiGiService,

@@ -5,9 +5,12 @@ import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.persistence.ErrePiGiService
 import com.fdtheroes.sgruntbot.persistence.UsersService
 import com.fdtheroes.sgruntbot.utils.BotUtils
+import com.fdtheroes.sgruntbot.utils.Disabled
+import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.message.Message
 
-//@Service
+@Service
+@Disabled
 class Attacca(
     botUtils: BotUtils,
     botConfig: BotConfig,

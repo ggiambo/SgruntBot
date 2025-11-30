@@ -4,11 +4,13 @@ import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.persistence.KarmaService
 import com.fdtheroes.sgruntbot.utils.BotUtils
+import com.fdtheroes.sgruntbot.utils.Disabled
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.message.Message
 import kotlin.random.Random.Default.nextInt
 
-//@Service
+@Service
+@Disabled
 class Cazzate(
     botUtils: BotUtils,
     botConfig: BotConfig,

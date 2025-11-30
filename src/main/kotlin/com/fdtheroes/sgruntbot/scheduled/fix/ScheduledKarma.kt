@@ -3,8 +3,11 @@ package com.fdtheroes.sgruntbot.scheduled.fix
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.persistence.KarmaService
 import com.fdtheroes.sgruntbot.utils.BotUtils
+import com.fdtheroes.sgruntbot.utils.Disabled
+import org.springframework.stereotype.Service
 
-//@Service
+@Service
+@Disabled
 class ScheduledKarma(private val botUtils: BotUtils, private val karmaService: KarmaService) : ScheduledAMezzanotte {
 
     override fun execute() {
