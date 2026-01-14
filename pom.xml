@@ -27,7 +27,7 @@
         <jsoup.version>1.22.1</jsoup.version>
         <springdoc.version>3.0.1</springdoc.version>
         <xchart.version>3.8.8</xchart.version>
-        <mockitokotlin.version>6.1.0</mockitokotlin.version>
+        <mockitokotlin.version>6.2.0</mockitokotlin.version>
         <gitHubApi.version>1.330</gitHubApi.version>
         <swisseph.version>4975aa604b</swisseph.version>
         <okhttp3.version>5.3.2</okhttp3.version>
