@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 
 internal class SloganTest : BaseTest() {
 
-    private val slogan = Slogan(botUtils, botConfig)
+    private val slogan = Slogan(botUtils, botConfig, mapper)
 
     @Test
     fun testPositive() {
