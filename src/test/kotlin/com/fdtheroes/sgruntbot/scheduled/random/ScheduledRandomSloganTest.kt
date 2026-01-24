@@ -14,7 +14,7 @@ import org.mockito.kotlin.verify
 
 class ScheduledRandomSloganTest : BaseTest() {
 
-    private val slogan = Slogan(botUtils, botConfig)
+    private val slogan = Slogan(botUtils, botConfig ,mapper)
     private val randomSlogan = ScheduledRandomSlogan(botUtils, botConfig, slogan)
 
     @Test
