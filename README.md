@@ -32,7 +32,7 @@ Vedi anche il file `src/main/resources/schema.sql`
 
 ## API
 
-Non sono il massimo, ma forse possono piacerti le [REST API](http://localhost:8081/sgrunty/swagger-ui/index.html)
+Non sono il massimo, ma forse possono piacerti le [REST API](http://localhost:8081/sgrunty/swagger-ui/index.html) (o [qui](https://giambo.ch/sgrunty/swagger-ui/index.html))
 
 ## Docker! Container! Blah&Banf!
 
