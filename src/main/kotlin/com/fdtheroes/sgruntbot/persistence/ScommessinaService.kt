@@ -41,4 +41,8 @@ class ScommessinaService(private val scommessinaRepository: ScommessinaRepositor
 
         rispondi("Hai accettato la scommessa, mò son cazzi tuoi!")
     }
+
+    fun getScommesse(userId: Long): List<Scommessina> {
+        return scommessinaRepository.findAllByUserId(userId)
+    }
 }

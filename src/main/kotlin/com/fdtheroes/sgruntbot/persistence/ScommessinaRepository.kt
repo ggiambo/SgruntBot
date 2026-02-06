@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository
 @Repository
 interface ScommessinaRepository : JpaRepository<Scommessina, Int> {
     fun findScommessinaByMessageId(messageId: Int): Scommessina?
+    fun findAllByUserId(userId: Long): List<Scommessina>
 }

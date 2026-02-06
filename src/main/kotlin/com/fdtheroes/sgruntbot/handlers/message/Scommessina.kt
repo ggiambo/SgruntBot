@@ -30,9 +30,8 @@ class Scommessina(botUtils: BotUtils, botConfig: BotConfig, private val scommess
             return
         }
 
-        botUtils.rispondi(ActionResponse.message("Qualcosa è andato storto, riprova e controlla"), message)
+        listScommesse(message)
     }
-
 
     private fun createScommessima(message: Message, termini: String) {
         scommessinaService.createScommessina(message, termini)
@@ -47,7 +46,30 @@ class Scommessina(botUtils: BotUtils, botConfig: BotConfig, private val scommess
         scommessinaService.addPartecipant(message, rispondi)
     }
 
+    private fun listScommesse(message: Message) {
+        val scommesse = scommessinaService.getScommesse(message.from.id)
+        if (scommesse.isEmpty()) {
+            botUtils.rispondi(ActionResponse.message("Non hai scommesse aperte."), message)
+            return
+        }
+        val getPartecipanti = { partecipantsUserId: List<Long> ->
+            if (partecipantsUserId.isEmpty()) {
+                "Nessuno"
+            } else {
+                partecipantsUserId.joinToString(", ") {
+                    botUtils.getUserLink(botUtils.getChatMember(it))
+                }
+            }
+        }
+        val risposta = scommesse.joinToString(
+            separator = "\n",
+            prefix = "<b>Tue scommesse aperte</b>\n"
+        ) { "- <i>${it.content}</i>\nPartecipanti: ${getPartecipanti(it.partecipantsUserId)}" }
+        botUtils.rispondi(ActionResponse.message(risposta), message)
+    }
+
     override fun halp(): String {
-        return "<b>!scommessina</b> <i>termini della scommessa</i> crea una nuova scommessina."
+        return "<b>!scommessina</b> <i>termini della scommessa</i> crea una nuova scommessina.\n" +
+                "<b>!scommessina</b> mostra le tue scommesse"
     }
 }
