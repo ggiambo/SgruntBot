@@ -3,6 +3,7 @@ package com.fdtheroes.sgruntbot.persistence
 import com.fdtheroes.sgruntbot.models.Scommessina
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.message.Message
+import java.time.LocalDate
 
 @Service
 class ScommessinaService(private val scommessinaRepository: ScommessinaRepository) {
@@ -42,7 +43,19 @@ class ScommessinaService(private val scommessinaRepository: ScommessinaRepositor
         rispondi("Hai accettato la scommessa, mò son cazzi tuoi!")
     }
 
-    fun getScommesse(userId: Long): List<Scommessina> {
+    fun getByUserId(userId: Long): List<Scommessina> {
         return scommessinaRepository.findAllByUserId(userId)
     }
+
+    fun getWillExpireInThreeDays(): List<Scommessina> {
+        val dueSettimaneFa = LocalDate.now().minusDays(14)
+        return scommessinaRepository.findAllByCreatedBetween(dueSettimaneFa, dueSettimaneFa.plusDays(3))
+    }
+
+    fun getExpired(): List<Scommessina> {
+        val dueSettimaneFa = LocalDate.now().minusDays(14)
+        return scommessinaRepository.findAllByCreatedBefore(dueSettimaneFa)
+    }
+
+    fun deleteById(scommessinaId: Long) = scommessinaRepository.deleteById(scommessinaId)
 }

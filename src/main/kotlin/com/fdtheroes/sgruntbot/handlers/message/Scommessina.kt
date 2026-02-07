@@ -47,7 +47,7 @@ class Scommessina(botUtils: BotUtils, botConfig: BotConfig, private val scommess
     }
 
     private fun listScommesse(message: Message) {
-        val scommesse = scommessinaService.getScommesse(message.from.id)
+        val scommesse = scommessinaService.getByUserId(message.from.id)
         if (scommesse.isEmpty()) {
             botUtils.rispondi(ActionResponse.message("Non hai scommesse aperte."), message)
             return
