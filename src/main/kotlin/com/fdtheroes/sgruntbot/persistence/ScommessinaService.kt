@@ -30,14 +30,14 @@ class ScommessinaService(private val scommessinaRepository: ScommessinaRepositor
             return
         }
 
-        val partecipantsUserId = scommessina.partecipantsUserId.toMutableList()
-        if (partecipantsUserId.contains(message.from.id)) {
+        val participantsUserId = scommessina.participantsUserId.toMutableList()
+        if (participantsUserId.contains(message.from.id)) {
             rispondi("Hai già accettato, vuoi farti del male due volte 😖?")
             return
         }
 
-        partecipantsUserId.add(message.from.id)
-        scommessina.partecipantsUserId = partecipantsUserId
+        participantsUserId.add(message.from.id)
+        scommessina.participantsUserId = participantsUserId
         scommessinaRepository.save(scommessina)
 
         rispondi("Hai accettato la scommessa, mò son cazzi tuoi!")
@@ -47,14 +47,15 @@ class ScommessinaService(private val scommessinaRepository: ScommessinaRepositor
         return scommessinaRepository.findAllByUserId(userId)
     }
 
-    fun getWillExpireInThreeDays(): List<Scommessina> {
+    fun getNoParticipantsAndWillExpireInThreeDays(): List<Scommessina> {
         val dueSettimaneFa = LocalDate.now().minusDays(14)
-        return scommessinaRepository.findAllByCreatedBetween(dueSettimaneFa, dueSettimaneFa.plusDays(3))
+        return scommessinaRepository
+            .findAllByCreatedBetweenAndParticipantsUserIdIsEmpty(dueSettimaneFa, dueSettimaneFa.plusDays(3))
     }
 
-    fun getExpired(): List<Scommessina> {
+    fun getNoParticipantsAndExpired(): List<Scommessina> {
         val dueSettimaneFa = LocalDate.now().minusDays(14)
-        return scommessinaRepository.findAllByCreatedBefore(dueSettimaneFa)
+        return scommessinaRepository.findAllByCreatedBeforeAndParticipantsUserIdIsEmpty(dueSettimaneFa)
     }
 
     fun deleteById(scommessinaId: Long) = scommessinaRepository.deleteById(scommessinaId)

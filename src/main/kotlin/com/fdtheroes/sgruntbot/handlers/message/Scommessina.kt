@@ -61,10 +61,10 @@ class Scommessina(botUtils: BotUtils, botConfig: BotConfig, private val scommess
     }
 
     private fun getScommessaText(scommessina: com.fdtheroes.sgruntbot.models.Scommessina): String {
-        val partecipanti = if (scommessina.partecipantsUserId.isEmpty()) {
+        val partecipanti = if (scommessina.participantsUserId.isEmpty()) {
             "Nessuno"
         } else {
-            scommessina.partecipantsUserId.joinToString(", ") {
+            scommessina.participantsUserId.joinToString(", ") {
                 botUtils.getUserLink(botUtils.getChatMember(it))
             }
         }

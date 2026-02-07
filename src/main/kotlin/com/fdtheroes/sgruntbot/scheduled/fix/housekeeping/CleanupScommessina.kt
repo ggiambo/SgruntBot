@@ -18,12 +18,12 @@ class CleanupScommessina(
     }
 
     private fun checkWillExpireScommessine() =
-        scommessinaService.getWillExpireInThreeDays()
+        scommessinaService.getNoParticipantsAndWillExpireInThreeDays()
             .groupBy { it.userId }
             .forEach { messageWillExpire(it.value) }
 
     private fun deleteExpiredScommessine() =
-        scommessinaService.getExpired()
+        scommessinaService.getNoParticipantsAndExpired()
             .groupBy { it.userId }
             .forEach { messageDeleteExpired(it.value) }
 

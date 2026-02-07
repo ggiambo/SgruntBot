@@ -9,6 +9,6 @@ import java.time.LocalDate
 interface ScommessinaRepository : JpaRepository<Scommessina, Long> {
     fun findScommessinaByMessageId(messageId: Int): Scommessina?
     fun findAllByUserId(userId: Long): List<Scommessina>
-    fun findAllByCreatedBefore(date: LocalDate): List<Scommessina>
-    fun findAllByCreatedBetween(fromDate: LocalDate, toDate: LocalDate): List<Scommessina>
+    fun findAllByCreatedBeforeAndParticipantsUserIdIsEmpty(date: LocalDate): List<Scommessina>
+    fun findAllByCreatedBetweenAndParticipantsUserIdIsEmpty(fromDate: LocalDate, toDate: LocalDate): List<Scommessina>
 }

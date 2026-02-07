@@ -13,6 +13,6 @@ data class Scommessina(
     var content: String,
     var created: LocalDate = LocalDate.now(),
     @Column(name = "message_id") var messageId: Int,
-    @Column(name = "partecipants_user_id") var partecipantsUserId : List<Long> = emptyList(),
+    @Column(name = "participants_user_id") var participantsUserId : List<Long> = emptyList(),
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) var id: Long? = null,
 )

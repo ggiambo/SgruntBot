@@ -33,7 +33,7 @@ internal class ScommessinaTest : BaseTest() {
             assertThat(firstValue.content).isEqualTo("domani sorge il sole")
             assertThat(firstValue.created).isEqualTo(LocalDate.now())
             assertThat(firstValue.messageId).isEqualTo(1111)
-            assertThat(firstValue.partecipantsUserId).isEmpty()
+            assertThat(firstValue.participantsUserId).isEmpty()
         }
 
         assertThat(actionResponses).hasSize(1)
@@ -97,7 +97,7 @@ internal class ScommessinaTest : BaseTest() {
                 userId = 42,
                 content = "domani sorge il sole",
                 messageId = message.messageId,
-                partecipantsUserId = listOf(99)
+                participantsUserId = listOf(99)
             )
         }
 
@@ -136,7 +136,7 @@ internal class ScommessinaTest : BaseTest() {
             assertThat(firstValue.content).isEqualTo("domani sorge il sole")
             assertThat(firstValue.created).isEqualTo(LocalDate.now())
             assertThat(firstValue.messageId).isEqualTo(1111)
-            assertThat(firstValue.partecipantsUserId).containsOnly(99)
+            assertThat(firstValue.participantsUserId).containsOnly(99)
         }
     }
 
