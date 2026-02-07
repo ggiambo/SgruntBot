@@ -6,6 +6,7 @@ import com.fdtheroes.sgruntbot.persistence.ScommessinaService
 import com.fdtheroes.sgruntbot.utils.BotUtils
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.message.Message
+import kotlin.math.abs
 
 @Service
 class Scommessina(botUtils: BotUtils, botConfig: BotConfig, private val scommessinaService: ScommessinaService) :
@@ -52,20 +53,25 @@ class Scommessina(botUtils: BotUtils, botConfig: BotConfig, private val scommess
             botUtils.rispondi(ActionResponse.message("Non hai scommesse aperte."), message)
             return
         }
-        val getPartecipanti = { partecipantsUserId: List<Long> ->
-            if (partecipantsUserId.isEmpty()) {
-                "Nessuno"
-            } else {
-                partecipantsUserId.joinToString(", ") {
-                    botUtils.getUserLink(botUtils.getChatMember(it))
-                }
-            }
-        }
+
         val risposta = scommesse.joinToString(
             separator = "\n",
             prefix = "<b>Tue scommesse aperte</b>\n"
-        ) { "- <i>${it.content}</i>\nPartecipanti: ${getPartecipanti(it.partecipantsUserId)}" }
+        ) { getScommessaText(it) }
         botUtils.rispondi(ActionResponse.message(risposta), message)
+    }
+
+    private fun getScommessaText(scommessina: com.fdtheroes.sgruntbot.models.Scommessina): String {
+        val partecipanti = if (scommessina.partecipantsUserId.isEmpty()) {
+            "Nessuno"
+        } else {
+            scommessina.partecipantsUserId.joinToString(", ") {
+                botUtils.getUserLink(botUtils.getChatMember(it))
+            }
+        }
+
+        val href = "https://t.me/c/${abs(botConfig.chatId.toLong())}/${scommessina.messageId}"
+        return "- <a href='$href'><i>${scommessina.content}</i></a>\nPartecipanti: $partecipanti"
     }
 
     override fun halp(): String {
