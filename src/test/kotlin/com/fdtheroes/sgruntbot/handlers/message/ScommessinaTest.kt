@@ -140,4 +140,47 @@ internal class ScommessinaTest : BaseTest() {
         }
     }
 
+    @Test
+    @DisplayName("Nessuna scommessa aperta")
+    fun handle_lista_nessuna() {
+        val messageLista = message("!scommessina").apply {
+            from = user(42)
+            messageId = 2222
+        }
+
+        scommessina.handle(messageLista)
+
+        argumentCaptor<Long>().apply {
+            verify(scommessinaRepository, times(1)).findAllByUserId(capture())
+            assertThat(firstValue).isEqualTo(42)
+        }
+        assertThat(actionResponses.size).isEqualTo(1)
+        assertThat(actionResponses.first().message).isEqualTo("Non hai scommesse aperte.")
+    }
+
+    @Test
+    @DisplayName("Lista scommesse aperte")
+    fun handle_lista() {
+        val messageLista = message("!scommessina").apply {
+            from = user(42)
+            messageId = 2222
+        }
+        whenever { scommessinaRepository.findAllByUserId(any()) } doAnswer {
+            listOf(Scommessina(userId = 42, content = "domani sorge il sole", messageId = message.messageId))
+        }
+
+        scommessina.handle(messageLista)
+
+        argumentCaptor<Long>().apply {
+            verify(scommessinaRepository, times(1)).findAllByUserId(capture())
+            assertThat(firstValue).isEqualTo(42)
+        }
+        assertThat(actionResponses.size).isEqualTo(1)
+        assertThat(actionResponses.first().message).isEqualTo(
+            "<b>Tue scommesse aperte</b>\n" +
+                    "- <a href='https://t.me/c/9999/1111'><i>domani sorge il sole</i></a>\n" +
+                    "Partecipanti: Nessuno"
+        )
+    }
+
 }

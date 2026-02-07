@@ -6,7 +6,6 @@ import com.fdtheroes.sgruntbot.persistence.ScommessinaService
 import com.fdtheroes.sgruntbot.utils.BotUtils
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.message.Message
-import kotlin.math.abs
 
 @Service
 class Scommessina(botUtils: BotUtils, botConfig: BotConfig, private val scommessinaService: ScommessinaService) :
@@ -70,7 +69,8 @@ class Scommessina(botUtils: BotUtils, botConfig: BotConfig, private val scommess
             }
         }
 
-        val href = "https://t.me/c/${abs(botConfig.chatId.toLong())}/${scommessina.messageId}"
+        val chatId = botConfig.chatId.removePrefix("-").removePrefix("100") // abs, group chat prefix
+        val href = "https://t.me/c/$chatId/${scommessina.messageId}"
         return "- <a href='$href'><i>${scommessina.content}</i></a>\nPartecipanti: $partecipanti"
     }
 
