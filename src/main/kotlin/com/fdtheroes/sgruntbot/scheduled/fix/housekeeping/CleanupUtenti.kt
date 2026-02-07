@@ -1,28 +1,27 @@
-package com.fdtheroes.sgruntbot.scheduled.fix
+package com.fdtheroes.sgruntbot.scheduled.fix.housekeeping
 
-import com.fdtheroes.sgruntbot.persistence.*
-import com.fdtheroes.sgruntbot.scheduled.Scheduled
+import com.fdtheroes.sgruntbot.persistence.ErrePiGiRepository
+import com.fdtheroes.sgruntbot.persistence.KarmaRepository
+import com.fdtheroes.sgruntbot.persistence.StatsRepository
+import com.fdtheroes.sgruntbot.persistence.TodosRepository
+import com.fdtheroes.sgruntbot.persistence.UtontiRepository
 import com.fdtheroes.sgruntbot.utils.BotUtils
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
-import java.time.LocalDateTime
 
 @Service
-class Cleanup(
+class CleanupUtenti(
     private val botUtils: BotUtils,
     private val errePiGiRepository: ErrePiGiRepository,
     private val karmaRepository: KarmaRepository,
     private val statsRepository: StatsRepository,
     private val utontiRepository: UtontiRepository,
     private val todosRepository: TodosRepository,
-) : Scheduled {
+) : Cleanup {
 
     private val log = LoggerFactory.getLogger(this.javaClass)
-    override fun firstRun(): LocalDateTime = LocalDateTime.now()
 
-    override fun nextRun(): LocalDateTime = LocalDateTime.now().plusHours(6)
-
-    override fun execute() {
+    override fun doCleanup() {
         val viventi = utontiRepository.findAll()
             .map { it.userId!! }
             .filter { botUtils.getChatMember(it) != null }
