@@ -20,11 +20,6 @@ spring:
     open-in-view: false
     hibernate.ddl-auto: update
 
-  cache:
-    cache-names: "invidious, horoscopeCache"
-    caffeine:
-      spec: "expireAfterWrite=4h"
-
 springdoc:
   swagger-ui:
     path: /sgrunty/swagger-ui.html

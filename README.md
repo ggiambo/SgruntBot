@@ -8,7 +8,6 @@ Frena campione! Prima devi settare qualche env-variable:
 - CHAT_ID: Lo dice il nome, è l'ID della chat nella quale Sgrunty elagirà le sue perle di saggezza
 - TELEGRAM_TOKEN: Questo è il token del tuo bot, L'hai creato usando Botfather, ricordi?
 - IMGUR_CLIENT_ID: Credo non sia necessario. Settalo come vuoi probabilmente funziona lo stesso
-- GEMINI_API_KEY: Lo dice il nome. Usato per l'Oroscopo. Ma fa schifo, mi sa che lo rimuovo.
 - GH_TOKEN: Il tuo token per GitHub. Basta che abbia l'accesso Readonly.
 
 E devi pure avere mariadb che gira locale, con un database "sgrunt", un utente "sgrunt" con la password "sgrunt". Facile, no?
