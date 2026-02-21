@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service
 import tools.jackson.databind.json.JsonMapper
 
 @Service
-@Disabled
 class ScheduledRandomImgur(
     botConfig: BotConfig,
     private val botUtils: BotUtils,

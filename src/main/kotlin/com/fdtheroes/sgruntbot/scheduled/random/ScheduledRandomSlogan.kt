@@ -4,9 +4,11 @@ import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.handlers.message.Slogan
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.utils.BotUtils
+import com.fdtheroes.sgruntbot.utils.Disabled
 import org.springframework.stereotype.Service
 
 @Service
+@Disabled
 class ScheduledRandomSlogan(
     private val botUtils: BotUtils,
     private val botConfig: BotConfig,
