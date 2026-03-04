@@ -8,6 +8,7 @@ import com.fdtheroes.sgruntbot.utils.Disabled
 import org.springframework.stereotype.Service
 import tools.jackson.databind.json.JsonMapper
 
+@Disabled
 @Service
 class ScheduledRandomImgur(
     botConfig: BotConfig,
