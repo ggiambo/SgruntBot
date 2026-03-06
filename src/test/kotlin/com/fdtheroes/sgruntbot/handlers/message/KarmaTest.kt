@@ -225,7 +225,7 @@ internal class KarmaTest : BaseTest() {
                 Optional.ofNullable(karmas.firstOrNull { it.userId == args.arguments.first() })
             }
             on { findAll() } doReturn karmas
-            onGeneric { save(isA()) } doAnswer { args ->
+            on { save(isA<com.fdtheroes.sgruntbot.models.Karma>()) } doAnswer { args ->
                 args.arguments.firstOrNull() as com.fdtheroes.sgruntbot.models.Karma
             }
         }

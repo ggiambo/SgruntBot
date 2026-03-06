@@ -11,7 +11,7 @@ import org.mockito.kotlin.*
 class TestScheduledErrePiGi : BaseTest() {
 
     private val errePiGiService = mock<ErrePiGiService> {
-        onGeneric { testoErrePiGiReport() } doReturn "ErrePiGi ha fattto qualcosa"
+        on { testoErrePiGiReport() } doReturn "ErrePiGi ha fattto qualcosa"
     }
 
     private val scheduledErrePiGi = ScheduledErrePiGi(botUtils, errePiGiService)
