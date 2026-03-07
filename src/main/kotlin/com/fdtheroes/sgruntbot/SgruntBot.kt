@@ -79,11 +79,7 @@ class SgruntBot(
 
         botConfig.pignolo = Random.nextInt(100) > 90
 
-        if (botUtils.getChatMember(message.from.id) == null) {
-            return false
-        }
-
-        return true
+        return botUtils.getChatMember(message.from.id) != null
     }
 
     private fun publishNewVersionInfo() {

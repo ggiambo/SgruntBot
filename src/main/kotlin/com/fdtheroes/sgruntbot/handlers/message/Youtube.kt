@@ -29,7 +29,7 @@ class Youtube(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtil
 
     override fun halp() = "<b>!canzone</b> <i>la tua canzone</i> cerca e scarica la tua canzone"
 
-    private fun fetch(query: String): String? {
+    private fun fetch(query: String): String {
         val command =
             """yt-dlp --get-id --proxy $suoraProxy "ytsearch1:$query" --geo-bypass-country IT 2>&1"""
         log.info(command)
