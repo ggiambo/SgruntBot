@@ -15,25 +15,27 @@ class Todo(
     private val todosService: TodosService,
 ) : MessageHandler(botUtils, botConfig), HasHalp {
 
-    private val regex_todo_add = Regex("^!TODO (.+)$", RegexOption.IGNORE_CASE)
-    private val regex_todo_done = Regex("^!TODO (-\\d{1,6})$", RegexOption.IGNORE_CASE)
-    private val regex_todos = Regex("^!TODOS$", RegexOption.IGNORE_CASE)
+    private val messageLength = 40
+
+    private val regexTodoAdd = Regex("^!TODO (.+)$", RegexOption.IGNORE_CASE)
+    private val regexTodoDone = Regex("^!TODO (-\\d{1,6})$", RegexOption.IGNORE_CASE)
+    private val regexTodos = Regex("^!TODOS$", RegexOption.IGNORE_CASE)
 
     override fun handle(message: Message) {
         val userId = message.from.id
         var risposta: String? = null
         when {
-            regex_todo_done.matches(message.text) -> { // precedenza!
-                val argomento = regex_todo_done.find(message.text)?.groupValues?.get(1)!!
+            regexTodoDone.matches(message.text) -> { // precedenza!
+                val argomento = regexTodoDone.find(message.text)?.groupValues?.get(1)!!
                 risposta = messaggioTodoChiuso(userId, abs(argomento.toLong()))
             }
 
-            regex_todo_add.matches(message.text) -> {
-                val argomento = regex_todo_add.find(message.text)?.groupValues?.get(1)!!
+            regexTodoAdd.matches(message.text) -> {
+                val argomento = regexTodoAdd.find(message.text)?.groupValues?.get(1)!!
                 risposta = messaggioTodoAggiunto(userId, argomento)
             }
 
-            regex_todos.matches(message.text) -> {
+            regexTodos.matches(message.text) -> {
                 risposta = messaggioListaTodos()
             }
         }
@@ -64,19 +66,19 @@ class Todo(
         return todos.joinToString(separator = "\n", prefix = "<pre>", postfix = "</pre>") {
             val nr = it.id.toString().padStart(4)
             val chi = botUtils.getUserName(botUtils.getChatMember(it.userId)).padStart(8)
-            val todo = truncate(it.todo, 40)
+            val todo = truncate(it.todo)
             "$nr $chi '$todo'"
         }
     }
 
-    private fun truncate(message: String, length: Int): String {
-        if (message.length < length) {
+    private fun truncate(message: String): String {
+        if (message.length < messageLength) {
             return message
         }
-        if (length < 1) {
+        if (messageLength < 1) {
             return message
         }
-        return message.take(length - 1) + '\u2026'
+        return message.take(messageLength - 1) + '\u2026'
     }
 
     override fun halp(): String {

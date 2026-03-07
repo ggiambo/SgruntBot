@@ -16,7 +16,7 @@ internal class SourceTest : BaseTest() {
 
         assertThat(actionResponses).hasSize(1)
         assertThat(actionResponses.first().type).isEqualTo(ActionResponseType.Message)
-        assertThat(actionResponses.first().message).isEqualTo("http://github.com/ggiambo/SgruntBot")
+        assertThat(actionResponses.first().message).isEqualTo("https://github.com/ggiambo/SgruntBot")
     }
 
 }

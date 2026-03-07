@@ -2,8 +2,6 @@ package com.fdtheroes.sgruntbot.persistence
 
 import com.fdtheroes.sgruntbot.BaseTest
 import com.fdtheroes.sgruntbot.models.ErrePiGi
-import com.fdtheroes.sgruntbot.persistence.ErrePiGiRepository
-import com.fdtheroes.sgruntbot.persistence.ErrePiGiService
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test

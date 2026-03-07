@@ -13,7 +13,7 @@ class Source(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils
 
     override fun handle(message: Message) {
         if (regex.containsMatchIn(message.text)) {
-            botUtils.rispondi(ActionResponse.message("http://github.com/ggiambo/SgruntBot"), message)
+            botUtils.rispondi(ActionResponse.message("https://github.com/ggiambo/SgruntBot"), message)
         }
     }
 

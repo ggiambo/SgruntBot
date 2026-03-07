@@ -18,10 +18,6 @@ class Youtube(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtil
         val canzone = regex.find(message.text)?.groupValues?.get(1)
         if (canzone != null) {
             val id = fetch(canzone)
-            if (id == null) {
-                botUtils.rispondi(ActionResponse.message("Non ci riesco."), message)
-                return
-            }
             val youtubeLink = "https://www.youtube.com/watch?v=$id"
             botUtils.rispondi(ActionResponse.message(youtubeLink), message, false)
         }

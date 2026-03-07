@@ -87,7 +87,7 @@ class SgruntController(
 
     @GetMapping("/stats/{date}")
     @Operation(summary = "Statistiche a partire da una certa data (YYYY-MM-DD)")
-    fun getKarma(@PathVariable("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) date: LocalDate = LocalDate.now()): List<Any> {
+    fun getKarma(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) date: LocalDate = LocalDate.now()): List<Any> {
         return statsService.getStatsFromDate(date)
             .map {
                 object {

@@ -14,16 +14,6 @@ import javax.imageio.ImageIO
 
 object ChartUtils {
 
-    fun xyChart(chartTitle: String): XYChart {
-        return XYChart(1280, 1024).apply {
-            this.title = chartTitle
-            this.styler.theme = GGPlot2Theme()
-            this.styler.seriesColors = seriesColors
-            this.styler.isToolTipsEnabled = false
-            this.styler.datePattern = "d"
-        }
-    }
-
     fun pieChart(chartTitle: String): PieChart {
         return PieChart(1280, 1024).apply {
             this.title = chartTitle

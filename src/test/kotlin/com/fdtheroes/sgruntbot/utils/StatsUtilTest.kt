@@ -6,12 +6,9 @@ import com.fdtheroes.sgruntbot.persistence.StatsRepository
 import com.fdtheroes.sgruntbot.persistence.StatsService
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
-
 import org.mockito.kotlin.any
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
-import org.springframework.test.context.ActiveProfiles
-import java.io.File
 import java.time.LocalDate
 
 class StatsUtilTest : BaseTest() {
