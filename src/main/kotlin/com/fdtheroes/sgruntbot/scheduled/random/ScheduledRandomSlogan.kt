@@ -19,7 +19,7 @@ class ScheduledRandomSlogan(
 ) : ScheduledRandom {
 
     override fun execute() {
-        val lastAuthorId = nameValuePairRepository.findByIdOrNull(NameValuePair.NameValuePairName.LAST_AUTHOR)?.value
+        val lastAuthorId = nameValuePairRepository.getValue(NameValuePair.NameValuePairName.LAST_AUTHOR)
         val testo = if (lastAuthorId == null) "" else {
             val lastAuthor = botUtils.getChatMember(lastAuthorId.toLong())
             slogan.fetchSlogan(lastAuthor!!)

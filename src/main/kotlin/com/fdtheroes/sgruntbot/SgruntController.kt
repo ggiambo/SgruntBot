@@ -48,7 +48,7 @@ class SgruntController(
     @GetMapping("/lastAuthor")
     @Operation(summary = "Ultimo autore che ha scritto una boiata")
     fun getLastAuthor(): Any? {
-        val lastAuthorId = nameValuePairRepository.findByIdOrNull(NameValuePair.NameValuePairName.LAST_AUTHOR)?.value
+        val lastAuthorId = nameValuePairRepository.getValue(NameValuePair.NameValuePairName.LAST_AUTHOR)
         if (lastAuthorId == null) {
             return null
         }
@@ -61,7 +61,7 @@ class SgruntController(
     @GetMapping("/lastSuper")
     @Operation(summary = "Ultimo autore che ha fatto dire a Sgrunty una boiata")
     fun getLastSuper(): Any? {
-        val lastSuperId = nameValuePairRepository.findByIdOrNull(NameValuePair.NameValuePairName.LAST_SUPER)?.value
+        val lastSuperId = nameValuePairRepository.getValue(NameValuePair.NameValuePairName.LAST_SUPER)
         if (lastSuperId == null) {
             return null
         }
@@ -69,12 +69,6 @@ class SgruntController(
             val userId = lastSuperId
             val userName = botUtils.getUserName(botUtils.getChatMember(lastSuperId.toLong()))
         }
-    }
-
-    @GetMapping("/pignolo")
-    @Operation(summary = "Sgrunty è in modalità pignolo?")
-    fun isPignolo(): Boolean {
-        return botConfig.pignolo
     }
 
     @GetMapping("/pausedTime")

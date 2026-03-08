@@ -25,7 +25,7 @@ class ChiEra(
     )
 
     override fun handle(message: Message) {
-        val lastSuperId = nameValuePairRepository.findByIdOrNull(NameValuePair.NameValuePairName.LAST_SUPER)?.value
+        val lastSuperId = nameValuePairRepository.getValue(NameValuePair.NameValuePairName.LAST_SUPER)
         if (regex.containsMatchIn(message.text) && lastSuperId != null) {
             val user = if (nextInt(2) == 0) {
                 usersService.getAllUsers().random()

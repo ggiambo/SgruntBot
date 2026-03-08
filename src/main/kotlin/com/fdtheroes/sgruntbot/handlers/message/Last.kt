@@ -20,7 +20,7 @@ class Last(
     private val regex = Regex("^!last$", RegexOption.IGNORE_CASE)
 
     override fun handle(message: Message) {
-        val lastAuthorId = nameValuePairRepository.findByIdOrNull(NameValuePair.NameValuePairName.LAST_AUTHOR)?.value
+        val lastAuthorId = nameValuePairRepository.getValue(NameValuePair.NameValuePairName.LAST_AUTHOR)
         if (regex.matches(message.text) && lastAuthorId != null) {
             val lastAuthor = botUtils.getChatMember(lastAuthorId.toLong())
             botUtils.rispondi(ActionResponse.message(botUtils.getUserLink(lastAuthor)), message)

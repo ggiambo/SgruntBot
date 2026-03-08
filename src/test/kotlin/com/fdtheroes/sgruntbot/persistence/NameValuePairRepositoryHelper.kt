@@ -2,9 +2,10 @@ package com.fdtheroes.sgruntbot.persistence
 
 import com.fdtheroes.sgruntbot.models.NameValuePair
 import org.mockito.kotlin.any
+import org.mockito.kotlin.callRealMethod
 import org.mockito.kotlin.doAnswer
 import org.mockito.kotlin.mock
-import java.util.Optional
+import java.util.*
 
 class NameValuePairRepositoryHelper {
 
@@ -19,6 +20,7 @@ class NameValuePairRepositoryHelper {
             val value = it.component1<NameValuePair.NameValuePairName>()
             Optional.ofNullable(repository[value])
         }
+        on { getValue(any()) }.callRealMethod()
     }
 
     fun nameValuePairRepository() = mockNameValuePairRepository
