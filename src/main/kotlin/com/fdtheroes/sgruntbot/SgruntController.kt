@@ -4,11 +4,14 @@ package com.fdtheroes.sgruntbot
 import com.fdtheroes.sgruntbot.handlers.Handler
 import com.fdtheroes.sgruntbot.handlers.message.HasHalp
 import com.fdtheroes.sgruntbot.models.Karma
+import com.fdtheroes.sgruntbot.models.NameValuePair
 import com.fdtheroes.sgruntbot.persistence.KarmaService
+import com.fdtheroes.sgruntbot.persistence.NameValuePairRepository
 import com.fdtheroes.sgruntbot.persistence.StatsService
 import com.fdtheroes.sgruntbot.scheduled.InitScheduled
 import com.fdtheroes.sgruntbot.utils.BotUtils
 import io.swagger.v3.oas.annotations.Operation
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -24,6 +27,7 @@ class SgruntController(
     private val actions: List<Handler>,
     private val karmaService: KarmaService,
     private val statsService: StatsService,
+    private val nameValuePairRepository: NameValuePairRepository,
     private val botConfig: BotConfig,
     private val initScheduled: InitScheduled,
 ) {
@@ -44,26 +48,26 @@ class SgruntController(
     @GetMapping("/lastAuthor")
     @Operation(summary = "Ultimo autore che ha scritto una boiata")
     fun getLastAuthor(): Any? {
-        val lastAuthorId = botConfig.lastAuthor?.id
+        val lastAuthorId = nameValuePairRepository.findByIdOrNull(NameValuePair.NameValuePairName.LAST_AUTHOR)?.value
         if (lastAuthorId == null) {
             return null
         }
         return object {
             val userId = lastAuthorId
-            val userName = botUtils.getUserName(botUtils.getChatMember(lastAuthorId))
+            val userName = botUtils.getUserName(botUtils.getChatMember(lastAuthorId.toLong()))
         }
     }
 
     @GetMapping("/lastSuper")
     @Operation(summary = "Ultimo autore che ha fatto dire a Sgrunty una boiata")
     fun getLastSuper(): Any? {
-        val lastSuperId = botConfig.lastSuper?.id
+        val lastSuperId = nameValuePairRepository.findByIdOrNull(NameValuePair.NameValuePairName.LAST_SUPER)?.value
         if (lastSuperId == null) {
             return null
         }
         return object {
             val userId = lastSuperId
-            val userName = botUtils.getUserName(botUtils.getChatMember(lastSuperId))
+            val userName = botUtils.getUserName(botUtils.getChatMember(lastSuperId.toLong()))
         }
     }
 

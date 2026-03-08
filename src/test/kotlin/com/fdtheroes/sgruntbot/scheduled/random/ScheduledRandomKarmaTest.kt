@@ -4,6 +4,8 @@ import com.fdtheroes.sgruntbot.BaseTest
 import com.fdtheroes.sgruntbot.Users
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.models.ActionResponseType
+import com.fdtheroes.sgruntbot.models.NameValuePair
+import com.fdtheroes.sgruntbot.persistence.NameValuePairRepositoryHelper
 import com.fdtheroes.sgruntbot.persistence.UsersService
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -22,7 +24,6 @@ class ScheduledRandomKarmaTest : BaseTest() {
 
     @Test
     fun testRandomKarma() {
-        botConfig.lastAuthor = user(Users.SHDX_T)
         randomKarma.execute()
 
         val argumentCaptor = argumentCaptor<ActionResponse, Boolean>()

@@ -2,6 +2,8 @@ package com.fdtheroes.sgruntbot
 
 import com.fdtheroes.sgruntbot.handlers.Handler
 import com.fdtheroes.sgruntbot.models.ActionResponse
+import com.fdtheroes.sgruntbot.models.NameValuePair
+import com.fdtheroes.sgruntbot.persistence.NameValuePairRepository
 import com.fdtheroes.sgruntbot.utils.BotUtils
 import com.fdtheroes.sgruntbot.utils.GitUtils
 import jakarta.annotation.PostConstruct
@@ -23,6 +25,7 @@ class SgruntBot(
     private val handlers: List<Handler>,
     private val botUtils: BotUtils,
     private val gitUtils: GitUtils,
+    private val nameValuePairRepository: NameValuePairRepository,
 ) : LongPollingSingleThreadUpdateConsumer {
 
     private val log = LoggerFactory.getLogger(this.javaClass)
@@ -74,7 +77,12 @@ class SgruntBot(
         }
 
         if (!lastAuthorRegex.containsMatchIn(message.text) && botUtils.isMessageInChat(message)) {
-            botConfig.lastAuthor = message.from
+            nameValuePairRepository.save(
+                NameValuePair(
+                    name = NameValuePair.NameValuePairName.LAST_AUTHOR,
+                    value = message.from.id.toString()
+                )
+            )
         }
 
         botConfig.pignolo = Random.nextInt(100) > 90

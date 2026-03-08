@@ -24,8 +24,6 @@ class BotConfig(
     val allowedUpdates = DefaultGetUpdatesGenerator(listOf(AllowedUpdates.MESSAGE, AllowedUpdates.MESSAGEREACTION))
     val defaultUrl = { TelegramUrl.DEFAULT_URL }
 
-    var lastSuper: User? = null
-    var lastAuthor: User? = null
     var pignolo: Boolean = false
     var pausedTime: LocalDateTime? = null
 
@@ -38,9 +36,8 @@ class BotConfig(
         return Proxy(Proxy.Type.HTTP, InetSocketAddress(uri.host, uri.port))
     }
 
+    // usato solo nei test!
     fun reset() {
-        lastSuper = null
-        lastAuthor = null
         pignolo = false
         pausedTime = null
     }

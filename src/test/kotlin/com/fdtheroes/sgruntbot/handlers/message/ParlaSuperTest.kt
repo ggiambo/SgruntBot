@@ -3,12 +3,14 @@ package com.fdtheroes.sgruntbot.handlers.message
 import com.fdtheroes.sgruntbot.BaseTest
 import com.fdtheroes.sgruntbot.Users
 import com.fdtheroes.sgruntbot.models.ActionResponseType
+import com.fdtheroes.sgruntbot.persistence.NameValuePairRepositoryHelper
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 internal class ParlaSuperTest : BaseTest() {
 
-    private val parlaSuper = ParlaSuper(botUtils, botConfig)
+    private val repository = NameValuePairRepositoryHelper()
+    private val parlaSuper = ParlaSuper(repository.nameValuePairRepository(), botUtils, botConfig)
 
     @Test
     fun testPositive() {

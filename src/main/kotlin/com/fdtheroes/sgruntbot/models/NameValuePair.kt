@@ -9,5 +9,7 @@ data class NameValuePair(
 ) {
     enum class NameValuePairName {
         GIT_HASH,
+        LAST_SUPER,
+        LAST_AUTHOR,
     }
 }
