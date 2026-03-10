@@ -14,6 +14,7 @@ class Git(private val gitUtils: GitUtils, botUtils: BotUtils, botConfig: BotConf
     MessageHandler(botUtils, botConfig), HasHalp {
 
     private val regex = Regex("!git (\\d+)", RegexOption.IGNORE_CASE)
+    private val pullRequestReference = Regex("\\(#\\d+\\)")
 
     override fun handle(message: Message) {
         val groupValues = regex.find(message.text)?.groupValues
@@ -39,7 +40,7 @@ class Git(private val gitUtils: GitUtils, botUtils: BotUtils, botConfig: BotConf
                 currentChunk = StringBuilder()
             }
 
-            currentChunk.append(entry)
+            currentChunk.append(formatEntry(entry))
         }
 
         if (currentChunk.isNotEmpty()) {
@@ -47,6 +48,12 @@ class Git(private val gitUtils: GitUtils, botUtils: BotUtils, botConfig: BotConf
         }
 
         return chunks
+    }
+
+    private fun formatEntry(entry: String): String {
+        // remove reference to PR
+        val cleanedUp = entry.replace(pullRequestReference, "")
+        return " $cleanedUp\n"
     }
 
     override fun halp() = "<b>!git <i>numero</i></b>: Mostra gli ultimi <i>numero</i> commit"

@@ -5,9 +5,11 @@ import com.fdtheroes.sgruntbot.persistence.NameValuePairRepository
 import org.kohsuke.github.GHCommit
 import org.kohsuke.github.GitHubBuilder
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.boot.autoconfigure.web.format.DateTimeFormatters
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import kotlin.jvm.optionals.getOrElse
 
 @Service
@@ -15,6 +17,8 @@ class GitUtils(
     @param:Value($$"${GH_TOKEN}") private val gitHubToken: String,
     private val nameValuePairRepository: NameValuePairRepository,
 ) {
+
+    private val dateFormat = DateTimeFormatter.ofPattern("YYYY.MM.dd HH:mm")
 
     private val repository = GitHubBuilder()
         .withOAuthToken(gitHubToken)
@@ -40,7 +44,8 @@ class GitUtils(
             .take(nrOfCommits)
             .map {
                 val commitTime = LocalDateTime.ofInstant(it.commitDate.toInstant(), ZoneId.systemDefault())
-                "${commitTime}: ${it.commitShortInfo.message}"
+                val message = it.commitShortInfo.message.lines().first()
+                "${dateFormat.format(commitTime)}: $message"
             }
     }
 
