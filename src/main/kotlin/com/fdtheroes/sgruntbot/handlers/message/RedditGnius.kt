@@ -15,13 +15,11 @@ import java.net.Proxy
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-@Disabled("Reddit non e' utilizzabile dal serverino Hetzner :(")
 @Service
 class RedditGnius(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils, botConfig), HasHalp {
 
     private val regex = Regex("!gnius$", RegexOption.IGNORE_CASE)
     private val log = LoggerFactory.getLogger(this.javaClass)
-    private val torProxy = Proxy(Proxy.Type.SOCKS, InetSocketAddress("localhost", 9050))
     private val defaultSubreddits = arrayOf("linux", "netsec", "programming", "technology", "privacy")
 
     override fun handle(message: Message) {
@@ -49,7 +47,7 @@ class RedditGnius(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(bot
             botUtils.textFromURL(
                 url = "https://old.reddit.com/r/$listOfSubreddits/top/",
                 headers = listOf(Pair(HttpHeaders.USER_AGENT, botConfig.botName)),
-                proxy = torProxy
+                proxy = botConfig.suoraProxy
             )
         } catch (e: Exception) {
             log.error("Reddit mi odia", e)

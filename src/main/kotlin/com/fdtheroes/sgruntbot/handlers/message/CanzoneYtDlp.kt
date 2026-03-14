@@ -20,7 +20,7 @@ class CanzoneYtDlp(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(bo
     private val log = LoggerFactory.getLogger(this.javaClass)
     private val regex = Regex("^!canzone (.*)$", RegexOption.IGNORE_CASE)
     private val destPath by lazy { initDestPath() }
-    private val suoraProxy = "http://198.98.49.55:8118"
+    private val suoraProxy = "http://${botConfig.suoraProxyAddress.hostString}:${botConfig.suoraProxyAddress.port}"
 
     private fun initDestPath(): Path {
         val tmpDir = System.getProperty("java.io.tmpdir")
