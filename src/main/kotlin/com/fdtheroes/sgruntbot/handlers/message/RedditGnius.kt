@@ -4,6 +4,7 @@ import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.models.Gnius
 import com.fdtheroes.sgruntbot.utils.BotUtils
+import com.fdtheroes.sgruntbot.utils.Disabled
 import org.jsoup.Jsoup
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpHeaders
@@ -14,7 +15,7 @@ import java.net.Proxy
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-
+@Disabled("Reddit non e' utilizzabile dal serverino Hetzner :(")
 @Service
 class RedditGnius(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils, botConfig), HasHalp {
 
