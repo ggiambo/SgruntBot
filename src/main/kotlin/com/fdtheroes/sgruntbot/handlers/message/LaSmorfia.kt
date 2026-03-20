@@ -16,11 +16,12 @@ class LaSmorfia(botUtils: BotUtils, botConfig: BotConfig, private val jsonMapper
 
     private val smorfia: Map<Int, Smorfia> by lazy {
         jsonMapper.readTree(this::class.java.getResourceAsStream("/smorfia.json"))
+            .toList()
             .map {
                 Smorfia(
                     numero = it["n"].asString().toInt(),
                     text = it["text"].asString(),
-                    keywords = it["w"]?.map { keyword -> keyword.asString() }.orEmpty(),
+                    keywords = it["w"]?.toList().orEmpty().map { keyword -> keyword.asString() },
                 )
             }
             .associateBy { it.numero }
