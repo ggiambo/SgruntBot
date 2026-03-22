@@ -15,9 +15,15 @@ class ScheduledSanto(
     private val jsonMapper: JsonMapper,
 ) : Scheduled {
 
-    override fun firstRun() = seiDiMattina()
+    override fun firstRun(): LocalDateTime {
+        val run = oggiAlle(6)
+        if (run < LocalDateTime.now()) {
+            return run.plusDays(1)
+        }
+        return run
+    }
 
-    override fun nextRun() = seiDiMattina()
+    override fun nextRun() = firstRun()
 
     override fun execute() {
         val santi = botUtils.textFromURL("https://www.santodelgiorno.it/santi.json")
@@ -43,16 +49,6 @@ class ScheduledSanto(
         val inputPhoto = InputFile(imageStream, "santo.jpg")
 
         botUtils.messaggio(ActionResponse.photo("<a href='$url'>$nome</a>\n$descrizione", inputPhoto))
-    }
-
-    private fun seiDiMattina(): LocalDateTime {
-        val seiDiMattina = LocalDateTime.now()
-            .withHour(6)
-            .withMinute(0)
-            .withSecond(0)
-            .withNano(0)
-
-        return seiDiMattina.plusDays(1)
     }
 
 }

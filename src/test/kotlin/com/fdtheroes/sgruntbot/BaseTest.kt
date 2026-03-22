@@ -50,6 +50,10 @@ open class BaseTest {
             val actionResponse = args.component1<ActionResponse>()
             _actionResponses.add(actionResponse)
         }.whenever(botUtils).messaggio(any(), any())
+
+        doAnswer {
+
+        }.whenever(botUtils).sgruntyScrive(any(), any())
     }
 
     fun message(

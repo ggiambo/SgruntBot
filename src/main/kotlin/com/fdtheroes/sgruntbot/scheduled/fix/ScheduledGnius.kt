@@ -23,20 +23,21 @@ class ScheduledGnius(private val botUtils: BotUtils, private val redditGnius: Re
     }
 
     override fun firstRun(): LocalDateTime {
-        val hour = LocalDateTime.now().hour
-        if (hour >= 20) {
-            return oggiAlle(8).plusDays(1)  // Domani mattina
+        val now = LocalDateTime.now()
+
+        val runMattina = oggiAlle(8)
+        if (now < runMattina) {
+            return runMattina
         }
-        return oggiAlle(20)
+
+        val runSera = oggiAlle(20)
+        if (now < runSera) {
+            return runSera
+        }
+
+        return runMattina.plusDays(1)  // Domani mattina alle 8
     }
 
     override fun nextRun() = firstRun()
 
-    private fun oggiAlle(ore: Int): LocalDateTime {
-        return LocalDateTime.now()
-            .withHour(ore)
-            .withMinute(0)
-            .withSecond(0)
-            .withNano(0)
-    }
 }

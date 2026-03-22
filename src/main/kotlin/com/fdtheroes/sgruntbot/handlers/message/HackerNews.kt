@@ -16,14 +16,18 @@ class HackerNews(botUtils: BotUtils, botConfig: BotConfig, private val jsonMappe
     override fun handle(message: Message) {
         if (regex.containsMatchIn(message.text)) {
             botUtils.sgruntyScrive(message.chatId.toString())
-            val topStories = botUtils.textFromURL("https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty")
-            val messageContent = jsonMapper.readTree(topStories)
-                .take(10)
-                .joinToString(separator = "\n", prefix = "Hacker News Top Stories:\n") {
-                    fetchStory(it.asInt())
-                }
+            val messageContent = getMessageContent()
             botUtils.rispondi(ActionResponse.message(messageContent), message)
         }
+    }
+
+    fun getMessageContent(): String {
+        val topStories = botUtils.textFromURL("https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty")
+        return jsonMapper.readTree(topStories)
+            .take(10)
+            .joinToString(separator = "\n", prefix = "Hacker News Top Stories:\n") {
+                fetchStory(it.asInt())
+            }
     }
 
     private fun fetchStory(id: Int): String {

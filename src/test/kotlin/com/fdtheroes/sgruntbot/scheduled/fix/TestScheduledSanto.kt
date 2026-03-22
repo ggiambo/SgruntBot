@@ -48,6 +48,9 @@ class TestScheduledSanto : BaseTest() {
         Assertions.assertThat(firstRun.nano).isEqualTo(0)
     }
 
+    /**
+     * Test farlocco che funziona solo se eseguito dopo le 6 di mattina
+     */
     @Test
     fun testNextRun() {
         val tomorrow = LocalDateTime.now().plusDays(1)
