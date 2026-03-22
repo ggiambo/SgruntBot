@@ -29,7 +29,7 @@ class KarmaServiceTest : BaseTest() {
         on { findById(eq(99)) } doReturn Optional.of(karma)
         on { getByUserId(eq(199)) } doReturn oldKarma
         on { findById(eq(199)) } doReturn Optional.of(oldKarma)
-        on { save(isA<Karma>()) } doAnswer { it.arguments.firstOrNull() as Karma }
+        on { save(isA<Karma>()) } doAnswer { args -> args.component1<Karma>() }
     }
 
     private val karmaService: KarmaService = KarmaService(botUtils, karmaRepository)

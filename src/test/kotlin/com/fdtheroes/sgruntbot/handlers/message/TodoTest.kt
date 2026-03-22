@@ -17,8 +17,8 @@ class TodoTest : BaseTest() {
             open = true,
             id = 99
         )
-        on { closeTodo(isA(), isA()) } doAnswer {
-            it.arguments[1] == 42L
+        on { closeTodo(isA(), isA()) } doAnswer { args ->
+            args.component2<Long>() == 42L
         }
         on { allTodos(isA()) } doReturn listOf(
             Todos(

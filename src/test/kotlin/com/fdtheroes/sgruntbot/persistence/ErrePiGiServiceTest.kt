@@ -12,9 +12,8 @@ class ErrePiGiServiceTest : BaseTest() {
 
     private val errePiGiRepository: ErrePiGiRepository = mock {
         on { findAll() } doReturn status()
-        on { findById(isA()) } doAnswer {
-            val id = it.arguments.first() as Long
-            Optional.of(status().first { it.userId == id })
+        on { findById(isA()) } doAnswer { args ->
+            Optional.of(status().first { it.userId == args.component1() })
         }
     }
     private val errePiGiService = ErrePiGiService(botUtils, errePiGiRepository)

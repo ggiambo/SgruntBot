@@ -11,13 +11,13 @@ class NameValuePairRepositoryHelper {
 
     private val repository = mutableMapOf<NameValuePair.NameValuePairName, NameValuePair>()
     private val mockNameValuePairRepository = mock<NameValuePairRepository> {
-        on { save(any<NameValuePair>()) } doAnswer {
-            val entity = it.component1<NameValuePair>()
+        on { save(any<NameValuePair>()) } doAnswer { args ->
+            val entity = args.component1<NameValuePair>()
             repository[entity.name] = entity
             entity
         }
-        on { findById(any<NameValuePair.NameValuePairName>()) } doAnswer {
-            val value = it.component1<NameValuePair.NameValuePairName>()
+        on { findById(any<NameValuePair.NameValuePairName>()) } doAnswer { args ->
+            val value = args.component1<NameValuePair.NameValuePairName>()
             Optional.ofNullable(repository[value])
         }
         on { getValue(any()) }.callRealMethod()

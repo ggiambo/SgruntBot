@@ -5,7 +5,6 @@ import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.models.ActionResponseType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.spy
 import org.mockito.kotlin.*
 import org.telegram.telegrambots.meta.api.objects.InputFile
 import org.telegram.telegrambots.meta.api.objects.message.Message

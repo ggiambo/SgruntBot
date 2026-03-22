@@ -17,8 +17,8 @@ internal class ScommessinaTest : BaseTest() {
     }
 
     private val scommessinaRepository = mock<ScommessinaRepository> {
-        on { save(isA<Scommessina>()) } doAnswer {
-            it.arguments.first() as Scommessina
+        on { save(isA<Scommessina>()) } doAnswer { args ->
+            args.component1()
         }
     }
     private val scommessina = Scommessina(botUtils, botConfig, ScommessinaService(scommessinaRepository))
@@ -69,9 +69,9 @@ internal class ScommessinaTest : BaseTest() {
             messageId = 2222
             replyToMessage = message
         }
-        whenever { scommessinaRepository.findScommessinaByMessageId(message.messageId) } doAnswer {
-            Scommessina(userId = 42, content = "domani sorge il sole", messageId = message.messageId)
-        }
+        whenever { scommessinaRepository.findScommessinaByMessageId(message.messageId) } doReturn (
+                Scommessina(userId = 42, content = "domani sorge il sole", messageId = message.messageId)
+                )
 
         scommessina.handle(messageAccetta)
 
@@ -92,14 +92,14 @@ internal class ScommessinaTest : BaseTest() {
             messageId = 2222
             replyToMessage = message
         }
-        whenever { scommessinaRepository.findScommessinaByMessageId(message.messageId) } doAnswer {
-            Scommessina(
-                userId = 42,
-                content = "domani sorge il sole",
-                messageId = message.messageId,
-                participantsUserId = listOf(99)
-            )
-        }
+        whenever { scommessinaRepository.findScommessinaByMessageId(message.messageId) } doReturn (
+                Scommessina(
+                    userId = 42,
+                    content = "domani sorge il sole",
+                    messageId = message.messageId,
+                    participantsUserId = listOf(99)
+                )
+                )
 
         scommessina.handle(messageAccetta)
 
@@ -119,9 +119,9 @@ internal class ScommessinaTest : BaseTest() {
             messageId = 2222
             replyToMessage = message
         }
-        whenever { scommessinaRepository.findScommessinaByMessageId(message.messageId) } doAnswer {
-            Scommessina(userId = 42, content = "domani sorge il sole", messageId = message.messageId)
-        }
+        whenever { scommessinaRepository.findScommessinaByMessageId(message.messageId) } doReturn (
+                Scommessina(userId = 42, content = "domani sorge il sole", messageId = message.messageId)
+                )
 
         scommessina.handle(messageAccetta)
 
@@ -165,9 +165,9 @@ internal class ScommessinaTest : BaseTest() {
             from = user(42)
             messageId = 2222
         }
-        whenever { scommessinaRepository.findAllByUserId(any()) } doAnswer {
-            listOf(Scommessina(userId = 42, content = "domani sorge il sole", messageId = message.messageId))
-        }
+        whenever { scommessinaRepository.findAllByUserId(any()) } doReturn (
+                listOf(Scommessina(userId = 42, content = "domani sorge il sole", messageId = message.messageId))
+                )
 
         scommessina.handle(messageLista)
 

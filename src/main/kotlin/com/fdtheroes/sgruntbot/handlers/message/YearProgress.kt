@@ -6,6 +6,7 @@ import com.fdtheroes.sgruntbot.utils.BotUtils
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.message.Message
 import java.time.LocalDateTime
+import kotlin.math.roundToInt
 
 @Service
 class YearProgress(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils, botConfig), HasHalp {
@@ -27,8 +28,8 @@ class YearProgress(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(bo
         private const val CALENDAR_CHAR = "\uD83D\uDCC5"
         fun yearProgression(): String {
             val percent = LocalDateTime.now().dayOfYear.toFloat() / 365
-            val completedPercent = Math.round(percent * 100)
-            val completedBar = COMPLETED_CHAR.repeat(Math.round(percent * BAR_LENGTH))
+            val completedPercent = (percent * 100).roundToInt()
+            val completedBar = COMPLETED_CHAR.repeat((percent * BAR_LENGTH).roundToInt())
             val notCompletedBar = NOT_COMPLETED_CHAR.repeat(BAR_LENGTH - completedBar.length)
             val progress = "$completedBar$notCompletedBar $completedPercent%"
             return "Year Progress $CALENDAR_CHAR\n$progress"

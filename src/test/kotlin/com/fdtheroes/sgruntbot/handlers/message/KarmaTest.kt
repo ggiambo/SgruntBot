@@ -219,23 +219,22 @@ internal class KarmaTest : BaseTest() {
         )
         return mock<KarmaRepository> {
             on { getByUserId(isA()) } doAnswer { args ->
-                karmas.firstOrNull { it.userId == args.arguments.first() }
+                karmas.firstOrNull { it.userId == args.component1() }
             }
             on { findById(isA()) } doAnswer { args ->
-                Optional.ofNullable(karmas.firstOrNull { it.userId == args.arguments.first() })
+                Optional.ofNullable(karmas.firstOrNull { it.userId == args.component1() })
             }
             on { findAll() } doReturn karmas
             on { save(isA<com.fdtheroes.sgruntbot.models.Karma>()) } doAnswer { args ->
-                args.arguments.firstOrNull() as com.fdtheroes.sgruntbot.models.Karma
+                args.component1<com.fdtheroes.sgruntbot.models.Karma>()
             }
         }
     }
 
     private fun usersService(utonti: List<Utonto>): UsersService {
         return mock<UsersService> {
-            on { getUser(isA()) } doAnswer { params ->
-                val userId = params.arguments.first() as Long
-                utonti.firstOrNull { it.userId == userId }
+            on { getUser(isA()) } doAnswer { args ->
+                utonti.firstOrNull { it.userId == args.component1() }
             }
         }
     }

@@ -91,7 +91,8 @@ class SgruntBot(
     }
 
     private fun publishNewVersionInfo() {
-        val deltaMessages = gitUtils.getDeltaFromLatestDeployment().take(10)
+        val deltaMessages = gitUtils.getDeltaFromLatestDeployment().asSequence()
+            .take(10)
             .filter { it.committer.login != "github-actions[bot]" }
             .map { it.commitShortInfo.message }
             .map { it.split('\n').first() }

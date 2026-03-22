@@ -35,19 +35,19 @@ open class BaseTest {
 
     // per qualche oscura ragione, dev'essere qui e non in "spy" (Il metodo originale viene chiamato!)
     init {
-        doAnswer {
-            User(it.arguments.first() as Long, "", false).apply {
+        doAnswer { args ->
+            User(args.component1(), "", false).apply {
                 this.userName = "Username_$id"
             }
         }.whenever(botUtils).getChatMember(any())
 
-        doAnswer {
-            val actionResponse = it.arguments.first() as ActionResponse
+        doAnswer { args ->
+            val actionResponse = args.component1<ActionResponse>()
             _actionResponses.add(actionResponse)
         }.whenever(botUtils).rispondi(any(), any(), any())
 
-        doAnswer {
-            val actionResponse = it.arguments.first() as ActionResponse
+        doAnswer { args ->
+            val actionResponse = args.component1<ActionResponse>()
             _actionResponses.add(actionResponse)
         }.whenever(botUtils).messaggio(any(), any())
     }
