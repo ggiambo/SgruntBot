@@ -43,7 +43,7 @@ class Tappeto(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtil
 
     override fun halp() =
         "<b>!tappeto</b> <i>complemento oggetto</i> chi o cosa vuoi mandare al tappeto oggi?\n" +
-        "<b>!tappeto</b> <i>soggetto -> complemento oggetto</i>"
+                "<b>!tappeto</b> <i>soggetto -> complemento oggetto</i>"
 
     fun alTappeto(chi: String, cosa: String): InputFile {
 

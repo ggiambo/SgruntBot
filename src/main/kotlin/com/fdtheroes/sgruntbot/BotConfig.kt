@@ -8,7 +8,6 @@ import org.telegram.telegrambots.meta.TelegramUrl
 import org.telegram.telegrambots.meta.api.methods.updates.AllowedUpdates
 import java.net.InetSocketAddress
 import java.net.Proxy
-import java.net.SocketAddress
 import java.net.URI
 import java.time.LocalDateTime
 

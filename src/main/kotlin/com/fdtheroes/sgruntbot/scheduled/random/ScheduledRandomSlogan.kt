@@ -1,13 +1,11 @@
 package com.fdtheroes.sgruntbot.scheduled.random
 
-import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.handlers.message.Slogan
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.models.NameValuePair
 import com.fdtheroes.sgruntbot.persistence.NameValuePairRepository
 import com.fdtheroes.sgruntbot.utils.BotUtils
 import com.fdtheroes.sgruntbot.utils.Disabled
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service

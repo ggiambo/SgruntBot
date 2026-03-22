@@ -2,7 +2,6 @@ package com.fdtheroes.sgruntbot.utils
 
 import org.knowm.xchart.BitmapEncoder
 import org.knowm.xchart.PieChart
-import org.knowm.xchart.XYChart
 import org.knowm.xchart.internal.chartpart.Chart
 import org.knowm.xchart.style.PieStyler
 import org.knowm.xchart.style.theme.GGPlot2Theme

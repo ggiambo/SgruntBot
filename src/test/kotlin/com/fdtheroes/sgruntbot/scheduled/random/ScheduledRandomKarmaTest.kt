@@ -1,11 +1,8 @@
 package com.fdtheroes.sgruntbot.scheduled.random
 
 import com.fdtheroes.sgruntbot.BaseTest
-import com.fdtheroes.sgruntbot.Users
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.models.ActionResponseType
-import com.fdtheroes.sgruntbot.models.NameValuePair
-import com.fdtheroes.sgruntbot.persistence.NameValuePairRepositoryHelper
 import com.fdtheroes.sgruntbot.persistence.UsersService
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

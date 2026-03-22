@@ -5,7 +5,6 @@ import com.fdtheroes.sgruntbot.persistence.NameValuePairRepository
 import org.kohsuke.github.GHCommit
 import org.kohsuke.github.GitHubBuilder
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.boot.autoconfigure.web.format.DateTimeFormatters
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 import java.time.ZoneId

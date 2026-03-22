@@ -13,7 +13,7 @@ import org.telegram.telegrambots.meta.api.objects.message.Message
 class ParlaSuper(
     private val nameValuePairRepository: NameValuePairRepository,
     botUtils: BotUtils,
-    botConfig: BotConfig
+    botConfig: BotConfig,
 ) : MessageHandler(botUtils, botConfig), HasHalp {
 
     private val regex = Regex(

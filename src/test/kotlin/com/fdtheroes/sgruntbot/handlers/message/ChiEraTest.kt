@@ -3,20 +3,22 @@ package com.fdtheroes.sgruntbot.handlers.message
 import com.fdtheroes.sgruntbot.BaseTest
 import com.fdtheroes.sgruntbot.models.ActionResponseType
 import com.fdtheroes.sgruntbot.models.NameValuePair
-import com.fdtheroes.sgruntbot.persistence.NameValuePairRepository
 import com.fdtheroes.sgruntbot.persistence.NameValuePairRepositoryHelper
 import com.fdtheroes.sgruntbot.persistence.UsersService
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.kotlin.*
+import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.whenever
 
 internal class ChiEraTest : BaseTest() {
 
     private val usersService = mock<UsersService>()
 
     private val nameValuePairRepositoryHelper = NameValuePairRepositoryHelper()
-    private val chiEra = ChiEra(usersService, nameValuePairRepositoryHelper.nameValuePairRepository(), botUtils, botConfig)
+    private val chiEra =
+        ChiEra(usersService, nameValuePairRepositoryHelper.nameValuePairRepository(), botUtils, botConfig)
 
     @BeforeEach
     fun init() {

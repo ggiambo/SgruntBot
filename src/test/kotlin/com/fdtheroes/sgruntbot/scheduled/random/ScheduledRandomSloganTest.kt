@@ -16,13 +16,13 @@ import org.mockito.kotlin.verify
 
 class ScheduledRandomSloganTest : BaseTest() {
 
-    private val slogan = Slogan(botUtils, botConfig ,mapper)
+    private val slogan = Slogan(botUtils, botConfig, mapper)
     private val nameValuePairRepository = NameValuePairRepositoryHelper().nameValuePairRepository()
     private val randomSlogan = ScheduledRandomSlogan(botUtils, nameValuePairRepository, slogan)
 
     @Test
     fun testdRandomSlogan() {
-        val user =  user(Users.SHDX_T)
+        val user = user(Users.SHDX_T)
         val lastAuthor = NameValuePair(NameValuePair.NameValuePairName.LAST_AUTHOR, user.id.toString())
         nameValuePairRepository.save(lastAuthor)
         randomSlogan.execute()

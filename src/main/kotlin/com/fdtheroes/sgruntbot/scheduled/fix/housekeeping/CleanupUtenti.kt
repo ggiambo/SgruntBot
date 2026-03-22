@@ -1,10 +1,6 @@
 package com.fdtheroes.sgruntbot.scheduled.fix.housekeeping
 
-import com.fdtheroes.sgruntbot.persistence.ErrePiGiRepository
-import com.fdtheroes.sgruntbot.persistence.KarmaRepository
-import com.fdtheroes.sgruntbot.persistence.StatsRepository
-import com.fdtheroes.sgruntbot.persistence.TodosRepository
-import com.fdtheroes.sgruntbot.persistence.UtontiRepository
+import com.fdtheroes.sgruntbot.persistence.*
 import com.fdtheroes.sgruntbot.utils.BotUtils
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service

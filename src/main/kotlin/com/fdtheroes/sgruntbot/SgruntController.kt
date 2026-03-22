@@ -11,7 +11,6 @@ import com.fdtheroes.sgruntbot.persistence.StatsService
 import com.fdtheroes.sgruntbot.scheduled.InitScheduled
 import com.fdtheroes.sgruntbot.utils.BotUtils
 import io.swagger.v3.oas.annotations.Operation
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -38,11 +37,11 @@ class SgruntController(
         return actions
             .filterIsInstance<HasHalp>()
             .map {
-            object {
-                val name = it::class.simpleName
-                val halp = it.halp()
+                object {
+                    val name = it::class.simpleName
+                    val halp = it.halp()
+                }
             }
-        }
     }
 
     @GetMapping("/lastAuthor")
