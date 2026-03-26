@@ -7,7 +7,6 @@ import org.jsoup.Jsoup
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.message.Message
 import tools.jackson.databind.json.JsonMapper
-import java.io.File
 
 @Service
 class LobsteRs(botUtils: BotUtils, botConfig: BotConfig, private val jsonMapper: JsonMapper) :
@@ -24,13 +23,13 @@ class LobsteRs(botUtils: BotUtils, botConfig: BotConfig, private val jsonMapper:
     }
 
     fun getMessageContent(): String {
-        return Jsoup.parse(File("lobsters.html"))
+        return Jsoup.parse(botUtils.textFromURL("https://lobste.rs"))
             .select(".details a.u-url")
             .take(10)
             .joinToString(
                 separator = "\n",
                 prefix = "Lobste.rs Top 10 Stories:\n"
-            ) { "\uD83E\uDD9E <a href=\"${it.text()}\">${it.attr("href")}</a>" }
+            ) { "\uD83E\uDD9E <a href=\"${it.attr("href")}\">${it.text()}</a>" }
     }
 
     override fun halp() = "<b>!lr</b> Top 10 Lobste.rs Stories"
