@@ -12,7 +12,7 @@ import org.telegram.telegrambots.meta.api.objects.message.Message
 class Vocale(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils, botConfig), HasHalp {
 
     private val fileName = "LaVoceDiSgrunty.mp3"
-    private val url = "https://www.voicerss.org/controls/speech.ashx?hl=it-it&v=%s&src=%s"
+    private val url = "https://www.voicerss.org/controls/speech.ashx"
     private val regex = Regex(
         "^!vocale(super)? (.*)$",
         setOf(RegexOption.IGNORE_CASE, RegexOption.MULTILINE, RegexOption.DOT_MATCHES_ALL)
