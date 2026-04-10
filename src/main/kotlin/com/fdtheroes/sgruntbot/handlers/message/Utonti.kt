@@ -28,5 +28,5 @@ class Utonti(
         }
     }
 
-    override fun halp() = "<b>!utonti</b> lista degli IDs degli utonti che hanno partecipato a questa ciat"
+    override fun halp() = "<b>!utonti</b> lista degli IDs degli utonti che partecipano a questa ciat"
 }
