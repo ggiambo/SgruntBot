@@ -26,5 +26,5 @@ class Compleanni(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botU
     }
 
     override fun halp() =
-        "<b>!compleanni</b> Tutti i cimpleanni conosciuti"
+        "<b>!compleanni</b> Tutti i compleanni conosciuti"
 }
