@@ -52,11 +52,22 @@ class CanzoneYtDlp(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(bo
 
     private fun fetch(query: String): String? {
         val destDir = destPath.pathString
-        val command =
-            """yt-dlp --restrict-filenames --proxy $suoraProxy --extract-audio --audio-format mp3 --output "$destDir/%(title)s.mp3" "ytsearch1:$query" --geo-bypass-country IT 2>&1"""
-        log.info(command)
         val processOutput = ProcessBuilder()
-            .command("sh", "-c", command)
+            .command(
+                "yt-dlp",
+                "--restrict-filenames",
+                "--proxy",
+                suoraProxy,
+                "--extract-audio",
+                "--audio-format",
+                "mp3",
+                "--output",
+                "$destDir/%(title)s.mp3",
+                "ytsearch1:\"$query\"",
+                "--geo-bypass-country",
+                "IT"
+            )
+            .redirectError(ProcessBuilder.Redirect.INHERIT)
             .start()
             .inputStream
             .bufferedReader()

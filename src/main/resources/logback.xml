@@ -40,4 +40,10 @@
         <appender-ref ref="Console"/>
     </logger>
 
+    <!-- LOG "java.lang.ProcessBuilder" at TRACE level -->
+    <logger name="java.lang.ProcessBuilder" level="trace" additivity="false">
+        <appender-ref ref="RollingFile"/>
+        <appender-ref ref="Console"/>
+    </logger>
+
 </configuration>
