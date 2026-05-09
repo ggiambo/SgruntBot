@@ -21,7 +21,7 @@ class Youtube(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtil
         }
     }
 
-    override fun halp() = "<b>!canzone</b> <i>la tua canzone</i> cerca e scarica la tua canzone"
+    override fun halp() = "<b>!yt</b> <i>il tuo video</i> cerca il tuo video su youtube"
 
     private fun fetch(query: String): String {
         return ProcessBuilder()
