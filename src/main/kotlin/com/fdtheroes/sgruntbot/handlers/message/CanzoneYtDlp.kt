@@ -62,7 +62,7 @@ class CanzoneYtDlp(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(bo
                 "--audio-format",
                 "mp3",
                 "--output",
-                "\"$destDir/%(title)s.mp3\"",
+                "$destDir/%(title)s.mp3",
                 "ytsearch1:\"$query\"",
                 "--geo-bypass-country",
                 "IT"
