@@ -10,7 +10,7 @@ import org.telegram.telegrambots.meta.api.objects.message.Message
 class Youtube(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils, botConfig), HasHalp {
 
     private val regex = Regex("^!yt (.*)$", RegexOption.IGNORE_CASE)
-    private val suoraProxy = "http://198.98.49.55:8118"
+    private val suoraProxy = "http://${botConfig.suoraProxyAddress.hostString}:${botConfig.suoraProxyAddress.port}"
 
     override fun handle(message: Message) {
         val canzone = regex.find(message.text)?.groupValues?.get(1)
