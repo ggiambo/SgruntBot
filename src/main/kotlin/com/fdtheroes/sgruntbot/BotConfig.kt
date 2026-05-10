@@ -20,7 +20,7 @@ class BotConfig(
 
     val botName = "SgruntBot"
     val proxy by lazy { initProxy() }
-    val suoraProxyAddress = InetSocketAddress("198.98.49.55", 8118)
+    val suoraProxyAddress = InetSocketAddress("179.237.67.178", 8118)
     val suoraProxy = Proxy(Proxy.Type.HTTP, suoraProxyAddress)
     val allowedUpdates = DefaultGetUpdatesGenerator(listOf(AllowedUpdates.MESSAGE, AllowedUpdates.MESSAGEREACTION))
     val defaultUrl = { TelegramUrl.DEFAULT_URL }
