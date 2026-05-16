@@ -19,7 +19,7 @@ class ScheduledStats(
     override fun nextRun() = mezzanotteDomenicaProssima()
 
     override fun execute() {
-        val inputFile = statsUtil.getStats(7)
+        val inputFile = statsUtil.getWeeklyEvolution()
         val actionResponse = ActionResponse.photo("", inputFile)
         botUtils.messaggio(actionResponse)
     }

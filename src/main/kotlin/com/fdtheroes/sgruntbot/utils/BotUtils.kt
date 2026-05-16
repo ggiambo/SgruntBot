@@ -30,6 +30,7 @@ import org.telegram.telegrambots.meta.generics.TelegramClient
 import tools.jackson.databind.json.JsonMapper
 import java.io.InputStream
 import java.net.Proxy
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.util.*
@@ -245,6 +246,10 @@ class BotUtils(private val botConfig: BotConfig, private val jsonMapper: JsonMap
 
         fun LocalDateTime.toDate(): Date {
             return Date.from(this.atZone(ZoneId.systemDefault()).toInstant())
+        }
+
+        fun LocalDate.toDate(): Date {
+            return this.atStartOfDay().toDate()
         }
 
         fun LocalDateTime.isToday(): Boolean {

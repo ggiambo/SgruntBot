@@ -2,9 +2,14 @@ package com.fdtheroes.sgruntbot.utils
 
 import com.fdtheroes.sgruntbot.models.Stats
 import com.fdtheroes.sgruntbot.persistence.StatsService
+import com.fdtheroes.sgruntbot.utils.BotUtils.Companion.toDate
+import org.knowm.xchart.XYChart
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.InputFile
 import java.text.DecimalFormat
+import java.time.LocalDate
+import java.util.*
+import kotlin.collections.map
 
 @Service
 class StatsUtil(
@@ -27,6 +32,23 @@ class StatsUtil(
     fun getStats(days: Long): InputFile {
         val stats = statsService.getStatsLastDays(days)
         return getStatsInputFile(stats, "Logorroici degli ultimi $days giorni")
+    }
+
+    fun getWeeklyEvolution(): InputFile {
+        val sevenDaysAgo = LocalDate.now().minusDays(7)
+        val stats = statsService.getStatsFromDate(sevenDaysAgo).map {
+            Pair(it.statDay.toDate(), it.messages)
+        }
+
+        val chart = XYChart(1280, 1024).apply {
+            this.title = "Andamento settimanale"
+            this.xAxisTitle = "Ultima settimana"
+            this.addSeries("Messaggi totali", stats.map { it.first }, stats.map { it.second })
+            this.styler.locale = Locale.ITALIAN
+            this.styler.datePattern = "dd MMMM"
+        }
+
+        return ChartUtils.getAsInputFile(chart)
     }
 
     private fun getStatsInputFile(
