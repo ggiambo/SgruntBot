@@ -50,7 +50,7 @@ class Tappeto(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtil
         val image = ImageIO.read(this::class.java.getResourceAsStream("/tappeto.jpg"))
 
         val graphics = image.graphics
-        graphics.font = Font("Arial", Font.BOLD, 22)
+        graphics.font = Font(Font.DIALOG, Font.BOLD, 22)
 
         graphics.color = Color.LIGHT_GRAY
         graphics.drawString(chi, 200, 130)
