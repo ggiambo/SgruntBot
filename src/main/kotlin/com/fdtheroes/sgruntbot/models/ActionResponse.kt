@@ -15,8 +15,11 @@ class ActionResponse(
         fun photo(caption: String, inputFile: InputFile) =
             ActionResponse(ActionResponseType.Photo, caption, inputFile)
 
-        fun audio(filename: String, inputFile: InputFile, thumbnail: InputFile? = null) =
-            ActionResponse(ActionResponseType.Audio, filename, inputFile, thumbnail)
+        fun audio(message: String, inputFile: InputFile, thumbnail: InputFile? = null) =
+            ActionResponse(ActionResponseType.Audio, message, inputFile, thumbnail)
+
+        fun document(message: String, inputFile: InputFile) =
+            ActionResponse(ActionResponseType.Document, message, inputFile)
     }
 
 }

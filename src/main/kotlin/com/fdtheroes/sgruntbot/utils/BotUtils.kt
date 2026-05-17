@@ -17,10 +17,7 @@ import org.telegram.telegrambots.meta.api.methods.ActionType
 import org.telegram.telegrambots.meta.api.methods.ParseMode
 import org.telegram.telegrambots.meta.api.methods.groupadministration.GetChatMember
 import org.telegram.telegrambots.meta.api.methods.reactions.SetMessageReaction
-import org.telegram.telegrambots.meta.api.methods.send.SendAudio
-import org.telegram.telegrambots.meta.api.methods.send.SendChatAction
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage
-import org.telegram.telegrambots.meta.api.methods.send.SendPhoto
+import org.telegram.telegrambots.meta.api.methods.send.*
 import org.telegram.telegrambots.meta.api.objects.InputFile
 import org.telegram.telegrambots.meta.api.objects.User
 import org.telegram.telegrambots.meta.api.objects.chatmember.MemberStatus
@@ -120,6 +117,7 @@ class BotUtils(private val botConfig: BotConfig, private val jsonMapper: JsonMap
             ActionResponseType.Message -> rispondiMessaggio(message, actionMessage.message, disableWebPagePreview)
             ActionResponseType.Photo -> rispondiPhoto(message, actionMessage.message, actionMessage.inputFile!!)
             ActionResponseType.Audio -> rispondiAudio(message, actionMessage.inputFile!!, actionMessage.thumbnail)
+            ActionResponseType.Document -> rispondiDocument(message, actionMessage.inputFile!!)
         }
     }
 
@@ -128,6 +126,7 @@ class BotUtils(private val botConfig: BotConfig, private val jsonMapper: JsonMap
             ActionResponseType.Message -> messaggio(actionMessage.message, disableWebPagePreview)
             ActionResponseType.Photo -> photo(actionMessage.message, actionMessage.inputFile!!)
             ActionResponseType.Audio -> audio(actionMessage.inputFile!!)
+            ActionResponseType.Document -> document(actionMessage.inputFile!!)
         }
     }
 
@@ -222,10 +221,26 @@ class BotUtils(private val botConfig: BotConfig, private val jsonMapper: JsonMap
         )
     }
 
+    private fun document(document: InputFile) {
+        telegramClient.execute(
+            SendDocument(botConfig.chatId, document)
+        )
+    }
+
     private fun rispondiAudio(message: Message, audio: InputFile, thumbnail: InputFile? = null) {
         sgruntyScrive(message.chatId.toString(), ActionType.UPLOAD_VOICE)
         telegramClient.execute(
             SendAudio(message.chatId.toString(), audio).apply {
+                this.replyToMessageId = message.messageId
+                this.thumbnail = thumbnail
+            }
+        )
+    }
+
+    private fun rispondiDocument(message: Message, document: InputFile, thumbnail: InputFile? = null) {
+        sgruntyScrive(message.chatId.toString(), ActionType.UPLOAD_DOCUMENT)
+        telegramClient.execute(
+            SendDocument(message.chatId.toString(), document).apply {
                 this.replyToMessageId = message.messageId
                 this.thumbnail = thumbnail
             }
