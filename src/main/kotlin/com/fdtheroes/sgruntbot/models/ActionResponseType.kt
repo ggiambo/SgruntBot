@@ -4,4 +4,5 @@ enum class ActionResponseType {
     Message,
     Photo,
     Audio,
+    Document,
 }
