@@ -5,7 +5,7 @@ import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.models.NameValuePair
 import com.fdtheroes.sgruntbot.persistence.NameValuePairRepository
 import com.fdtheroes.sgruntbot.utils.BotUtils
-import com.fdtheroes.sgruntbot.utils.GitUtils
+import com.fdtheroes.sgruntbot.utils.IGitUtils
 import jakarta.annotation.PostConstruct
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,7 +24,7 @@ class SgruntBot(
     private val botConfig: BotConfig,
     private val handlers: List<Handler>,
     private val botUtils: BotUtils,
-    private val gitUtils: GitUtils,
+    private val gitUtils: IGitUtils,
     private val nameValuePairRepository: NameValuePairRepository,
 ) : LongPollingSingleThreadUpdateConsumer {
 
