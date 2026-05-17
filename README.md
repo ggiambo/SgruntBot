@@ -39,10 +39,13 @@ Non sono il massimo, ma forse possono piacerti le [REST API](http://localhost:80
 ```shell
 ./mvnw clean install
 ```
-1. Lancia sgrunty in tutta la sua magnificenza
+2. Copia il jar nella directory docker
 ```shell
-cd docker
-docker compose up
+cp target/sgruntbot-*.jar docker/
+```
+3. Lancia sgrunty in tutta la sua magnificenza
+```shell
+docker compose -f docker/docker-compose.yml up --build
 ```
    
 Il database sarà accessibile sulla porta 3307

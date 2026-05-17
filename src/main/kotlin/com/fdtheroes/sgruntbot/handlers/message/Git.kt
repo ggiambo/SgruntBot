@@ -3,14 +3,13 @@ package com.fdtheroes.sgruntbot.handlers.message
 import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.utils.BotUtils
-import com.fdtheroes.sgruntbot.utils.GitUtils
+import com.fdtheroes.sgruntbot.utils.IGitUtils
 import org.springframework.stereotype.Service
 import org.springframework.web.util.HtmlUtils
 import org.telegram.telegrambots.meta.api.objects.message.Message
 
-
 @Service
-class Git(private val gitUtils: GitUtils, botUtils: BotUtils, botConfig: BotConfig) :
+class Git(private val gitUtils: IGitUtils, botUtils: BotUtils, botConfig: BotConfig) :
     MessageHandler(botUtils, botConfig), HasHalp {
 
     private val regex = Regex("!git (\\d+)", RegexOption.IGNORE_CASE)

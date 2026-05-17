@@ -9,6 +9,14 @@ services:
         depends_on:
             mariadb:
                 condition: service_healthy
+        build:
+            dockerfile_inline: |
+                FROM debian:bookworm-slim
+                COPY sgruntbot-2.0.140.jar ./sgruntbot.jar
+                RUN apt update && apt install wget libfreetype6 fontconfig fonts-unfonts-core fonts-arphic-ukai fonts-arphic-uming -y
+                RUN wget https://download.oracle.com/java/21/latest/jdk-21_linux-x64_bin.deb
+                RUN dpkg -i jdk-21_linux-x64_bin.deb
+                CMD ["java", "-jar", "./sgruntbot.jar"]
 
     mariadb:
         image: mariadb
