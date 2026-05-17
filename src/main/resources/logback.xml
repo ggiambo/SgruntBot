@@ -11,14 +11,14 @@
 
     <springProfile name="!docker">
         <appender name="RollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
-            <file>./sgruntbot.log</file>
+            <file>./logs/sgruntbot.log</file>
             <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
                 <Pattern>%d %p %C{1} [%t] %m%n</Pattern>
             </encoder>
 
             <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
                 <!-- rollover daily and when the file reaches 10 MegaBytes -->
-                <fileNamePattern>./sgruntbot-%d{yyyy-MM-dd}.%i.log
+                <fileNamePattern>./logs/sgruntbot-%d{yyyy-MM-dd}.%i.log
                 </fileNamePattern>
                 <timeBasedFileNamingAndTriggeringPolicy
                         class="ch.qos.logback.core.rolling.SizeAndTimeBasedFileNamingAndTriggeringPolicy">
