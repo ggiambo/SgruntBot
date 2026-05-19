@@ -86,12 +86,8 @@ class StatsUtil(
 
         companion object {
             private val byType = entries.associateBy { it.type }
-            fun getByType(type: String?): StatsType {
-                val tipo = type.orEmpty().trim().lowercase()
-                if (tipo.isEmpty()) {
-                    return GIORNO
-                }
-                return byType.getValue(tipo)
+            fun getByType(type: String): StatsType? {
+                return byType[type]
             }
         }
     }

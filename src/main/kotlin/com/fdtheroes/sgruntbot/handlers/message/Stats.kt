@@ -16,7 +16,9 @@ class Stats(
     private val statsUtil: StatsUtil,
 ) : MessageHandler(botUtils, botConfig), HasHalp {
 
-    private val regex = Regex("^!stats(.*)$", RegexOption.IGNORE_CASE)
+    private val regex = Regex("^!stats (.+)$", RegexOption.IGNORE_CASE)
+
+    val rispondiHelp = { message: Message -> botUtils.rispondi(ActionResponse.message(halp()), message) }
 
     override fun handle(message: Message) {
         if (!botUtils.isMessageInChat(message)) {
@@ -29,11 +31,19 @@ class Stats(
 
         statsService.increaseStats(message.from.id)
 
-        if (regex.matches(message.text)) {
-            val tipo = StatsUtil.StatsType.getByType(regex.find(message.text)?.groupValues?.get(1))
-            val inputFile = statsUtil.getStats(tipo)
-            botUtils.rispondi(ActionResponse.photo("", inputFile), message)
+        val matchResult = regex.find(message.text)
+        if (matchResult == null) {
+            return
         }
+
+        val tipo = matchResult.groupValues[1].trim().lowercase()
+        val statsType = StatsUtil.StatsType.getByType(tipo)
+        if (statsType == null) {
+            return rispondiHelp(message)
+        }
+
+        val inputFile = statsUtil.getStats(statsType)
+        botUtils.rispondi(ActionResponse.photo("", inputFile), message)
     }
 
     override fun halp() = """
