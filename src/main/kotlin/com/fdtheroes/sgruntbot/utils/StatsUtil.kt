@@ -9,7 +9,6 @@ import org.telegram.telegrambots.meta.api.objects.InputFile
 import java.text.DecimalFormat
 import java.time.LocalDate
 import java.util.*
-import kotlin.collections.map
 
 @Service
 class StatsUtil(
@@ -35,15 +34,16 @@ class StatsUtil(
     }
 
     fun getWeeklyEvolution(): InputFile {
-        val sevenDaysAgo = LocalDate.now().minusDays(7)
-        val stats = statsService.getStatsFromDate(sevenDaysAgo).map {
-            Pair(it.statDay.toDate(), it.messages)
+        val sevenDaysAgo = LocalDate.now().minusDays(6)
+        val statsByDay = statsService.getStatsFromDate(sevenDaysAgo).groupBy { it.statDay }
+        val stats = statsByDay.map { (day, statsOfDay) ->
+            statsOfDay.fold(Pair(day, 0)) { acc, next -> Pair(day, acc.second + next.messages) }
         }
 
         val chart = XYChart(1280, 1024).apply {
             this.title = "Andamento settimanale"
             this.xAxisTitle = "Ultima settimana"
-            this.addSeries("Messaggi totali", stats.map { it.first }, stats.map { it.second })
+            this.addSeries("Messaggi totali", stats.map { it.first.toDate() }, stats.map { it.second })
             this.styler.locale = Locale.ITALIAN
             this.styler.datePattern = "dd MMMM"
         }
@@ -86,12 +86,8 @@ class StatsUtil(
 
         companion object {
             private val byType = entries.associateBy { it.type }
-            fun getByType(type: String?): StatsType {
-                val tipo = type.orEmpty().trim().lowercase()
-                if (tipo.isEmpty()) {
-                    return GIORNO
-                }
-                return byType.getValue(tipo)
+            fun getByType(type: String): StatsType? {
+                return byType[type]
             }
         }
     }

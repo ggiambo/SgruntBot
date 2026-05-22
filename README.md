@@ -39,7 +39,7 @@ Non sono il massimo, ma forse possono piacerti le [REST API](http://localhost:80
 ```shell
 ./mvnw clean install
 ```
-2. Copia il jar nella directory docer
+2. Copia il jar nella directory docker
 ```shell
 cp target/sgruntbot-*.jar docker/
 ```
