@@ -9,7 +9,7 @@ import org.telegram.telegrambots.meta.api.objects.message.Message
 @Service
 class Fortune(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils, botConfig), HasHalp {
 
-    private val regex = Regex("^!(fortune|quote)", RegexOption.IGNORE_CASE)
+    private val regex = Regex("^!fortune$", RegexOption.IGNORE_CASE)
 
     override fun handle(message: Message) {
         if (regex.containsMatchIn(message.text)) {
@@ -17,7 +17,7 @@ class Fortune(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtil
         }
     }
 
-    override fun halp() = "<b>!fortune</b> oppure <b>!quote</b> per una perla di saggezza"
+    override fun halp() = "<b>!fortune</b> per una perla di saggezza"
 
     fun getFortune(): String {
         return Runtime.getRuntime().exec(arrayOf("fortune"))

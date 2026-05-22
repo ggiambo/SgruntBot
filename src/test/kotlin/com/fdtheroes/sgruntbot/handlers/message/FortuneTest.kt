@@ -28,8 +28,6 @@ internal class FortuneTest : BaseTest() {
         val message = message("!quote")
         fortune.handle(message)
 
-        assertThat(actionResponses).hasSize(1)
-        assertThat(actionResponses.first().type).isEqualTo(ActionResponseType.Message)
-        assertThat(actionResponses.first().message).isNotEmpty
+        assertThat(actionResponses).isEmpty()
     }
 }
