@@ -5,12 +5,12 @@ import com.fdtheroes.sgruntbot.Users
 import com.fdtheroes.sgruntbot.models.ActionResponseType
 import com.fdtheroes.sgruntbot.models.Stats
 import com.fdtheroes.sgruntbot.persistence.StatsService
+import com.fdtheroes.sgruntbot.utils.PieChartUtils
 import com.fdtheroes.sgruntbot.utils.StatsUtil
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
-import java.awt.TrayIcon
 import java.awt.image.BufferedImage
 import java.time.LocalDate
 import javax.imageio.ImageIO
@@ -34,7 +34,7 @@ internal class StatsTest : BaseTest() {
         botUtils,
         botConfig,
         statsService,
-        StatsUtil(statsService, botUtils),
+        StatsUtil(statsService, PieChartUtils(botUtils)),
     )
 
     @Test
@@ -45,9 +45,9 @@ internal class StatsTest : BaseTest() {
         assertThat(actionResponses).hasSize(1)
         val image = ImageIO.read(actionResponses.first().inputFile!!.newMediaStream)
 
-        assertThat(image.type).isEqualTo(BufferedImage.TYPE_3BYTE_BGR)
-        assertThat(image.width).isEqualTo(1280)
-        assertThat(image.height).isEqualTo(1024)
+        assertThat(image.type).isEqualTo(BufferedImage.TYPE_4BYTE_ABGR)
+        assertThat(image.width).isEqualTo(1024)
+        assertThat(image.height).isEqualTo(768)
     }
 
     @Test
@@ -58,9 +58,9 @@ internal class StatsTest : BaseTest() {
         assertThat(actionResponses).hasSize(1)
         val image = ImageIO.read(actionResponses.first().inputFile!!.newMediaStream)
 
-        assertThat(image.type).isEqualTo(BufferedImage.TYPE_3BYTE_BGR)
-        assertThat(image.width).isEqualTo(1280)
-        assertThat(image.height).isEqualTo(1024)
+        assertThat(image.type).isEqualTo(BufferedImage.TYPE_4BYTE_ABGR)
+        assertThat(image.width).isEqualTo(1024)
+        assertThat(image.height).isEqualTo(768)
     }
 
     @Test

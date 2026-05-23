@@ -1,22 +1,24 @@
 package com.fdtheroes.sgruntbot.utils
 
-import com.fdtheroes.sgruntbot.models.Stats
 import com.fdtheroes.sgruntbot.persistence.StatsService
 import com.fdtheroes.sgruntbot.utils.BotUtils.Companion.toDate
+import org.jfree.chart.ChartUtils
+import org.jfree.chart.JFreeChart
+import org.knowm.xchart.BitmapEncoder
 import org.knowm.xchart.XYChart
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.InputFile
-import java.text.DecimalFormat
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
 import java.time.LocalDate
 import java.util.*
+import javax.imageio.ImageIO
 
 @Service
 class StatsUtil(
     private val statsService: StatsService,
-    private val botUtils: BotUtils,
+    private val pieChartUtils: PieChartUtils,
 ) {
-
-    private val percentageFormatter = DecimalFormat("00.00")
 
     fun getStats(tipo: StatsType): InputFile {
         val stats = when (tipo) {
@@ -25,12 +27,8 @@ class StatsUtil(
             StatsType.MESE -> statsService.getStatsThisMonth()
             StatsType.ANNO -> statsService.getStatsThisYear()
         }
-        return getStatsInputFile(stats, "Logorroici di ${tipo.desc}")
-    }
-
-    fun getStats(days: Long): InputFile {
-        val stats = statsService.getStatsLastDays(days)
-        return getStatsInputFile(stats, "Logorroici degli ultimi $days giorni")
+        val chart = pieChartUtils.pieChart(stats, "Logorroici di ${tipo.desc}")
+        return chartToInputFile(chart)
     }
 
     fun getWeeklyEvolution(): InputFile {
@@ -48,33 +46,17 @@ class StatsUtil(
             this.styler.datePattern = "dd MMMM"
         }
 
-        return ChartUtils.getAsInputFile(chart)
+        val image = BitmapEncoder.getBufferedImage(chart)
+        val os = ByteArrayOutputStream()
+        ImageIO.write(image, "png", os)
+        return InputFile(ByteArrayInputStream(os.toByteArray()), "stats.jpg")
     }
 
-    private fun getStatsInputFile(
-        stats: List<Stats>,
-        chartTitle: String,
-    ): InputFile {
-        val totalMessages = stats.sumOf { it.messages }
-        val pieChart = ChartUtils.pieChart(chartTitle)
-        pieChart.seriesMap.clear()
-        stats
-            .sortedBy { it.messages }
-            .asReversed()
-            .forEach { stat ->
-                val userName = botUtils.getUserName(botUtils.getChatMember(stat.userId))
-                val percentage = getPercentage(stat.messages, totalMessages)
-                val formattedPercentage = percentageFormatter.format(percentage)
-                val name = "$userName $formattedPercentage%"
-                pieChart.addSeries(name, stat.messages)
-            }
-
-
-        return ChartUtils.getAsInputFile(pieChart)
-    }
-
-    private fun getPercentage(messages: Int, total: Int): Double {
-        return (messages * 100) / total.toDouble()
+    private fun chartToInputFile(chart: JFreeChart): InputFile {
+        return ByteArrayOutputStream().use {
+            ChartUtils.writeChartAsPNG(it, chart, 1024, 768)
+            InputFile(ByteArrayInputStream(it.toByteArray()), "stats.jpg")
+        }
     }
 
     enum class StatsType(val type: String, val desc: String) {

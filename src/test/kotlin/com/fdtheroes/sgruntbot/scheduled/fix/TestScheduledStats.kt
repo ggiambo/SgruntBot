@@ -5,6 +5,7 @@ import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.models.ActionResponseType
 import com.fdtheroes.sgruntbot.models.Stats
 import com.fdtheroes.sgruntbot.persistence.StatsService
+import com.fdtheroes.sgruntbot.utils.PieChartUtils
 import com.fdtheroes.sgruntbot.utils.StatsUtil
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
@@ -27,7 +28,7 @@ class TestScheduledStats : BaseTest() {
             }
         }
     }
-    private val scheduledStats = ScheduledStats(botUtils, StatsUtil(statsService, botUtils))
+    private val scheduledStats = ScheduledStats(botUtils, StatsUtil(statsService, PieChartUtils(botUtils)))
 
     @Test
     fun scheduledStatsTest() {
