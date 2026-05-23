@@ -7,6 +7,7 @@ import com.fdtheroes.sgruntbot.models.Stats
 import com.fdtheroes.sgruntbot.persistence.StatsService
 import com.fdtheroes.sgruntbot.utils.PieChartUtils
 import com.fdtheroes.sgruntbot.utils.StatsUtil
+import com.fdtheroes.sgruntbot.utils.XYChartUtils
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.doReturn
@@ -34,7 +35,7 @@ internal class StatsTest : BaseTest() {
         botUtils,
         botConfig,
         statsService,
-        StatsUtil(statsService, PieChartUtils(botUtils)),
+        StatsUtil(statsService, PieChartUtils(botUtils), XYChartUtils()),
     )
 
     @Test

@@ -7,6 +7,7 @@ import com.fdtheroes.sgruntbot.models.Stats
 import com.fdtheroes.sgruntbot.persistence.StatsService
 import com.fdtheroes.sgruntbot.utils.PieChartUtils
 import com.fdtheroes.sgruntbot.utils.StatsUtil
+import com.fdtheroes.sgruntbot.utils.XYChartUtils
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.*
@@ -28,7 +29,7 @@ class TestScheduledStats : BaseTest() {
             }
         }
     }
-    private val scheduledStats = ScheduledStats(botUtils, StatsUtil(statsService, PieChartUtils(botUtils)))
+    private val scheduledStats = ScheduledStats(botUtils, StatsUtil(statsService, PieChartUtils(botUtils), XYChartUtils()))
 
     @Test
     fun scheduledStatsTest() {

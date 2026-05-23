@@ -42,11 +42,6 @@ class StatsService(private val statsRepository: StatsRepository) {
         return aggregate(statsRepository.findStatsByStatDayBetween(beginOfMonth, LocalDate.now()))
     }
 
-    fun getStatsLastDays(days: Long): List<Stats> {
-        val startStatDay = LocalDate.now().minusDays(days)
-        return aggregate(statsRepository.findStatsByStatDayBetween(startStatDay, LocalDate.now()))
-    }
-
     fun getStatsThisYear(): List<Stats> {
         val beginOfYear = LocalDate.now().withDayOfYear(1)
         return aggregate(statsRepository.findStatsByStatDayBetween(beginOfYear, LocalDate.now()))
