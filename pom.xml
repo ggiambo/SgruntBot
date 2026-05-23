@@ -20,7 +20,7 @@
         <telegrambots.version>9.6.0</telegrambots.version>
         <jsoup.version>1.22.2</jsoup.version>
         <springdoc.version>3.0.3</springdoc.version>
-        <xchart.version>3.9.0</xchart.version>
+        <xchart.version>4.0.0</xchart.version>
         <jfreechart.version>1.5.6</jfreechart.version>
         <mockitokotlin.version>6.3.0</mockitokotlin.version>
         <gitHubApi.version>1.330</gitHubApi.version>
