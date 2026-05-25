@@ -1,40 +1,35 @@
-package com.fdtheroes.sgruntbot.utils
+package com.fdtheroes.sgruntbot.utils.charts
 
 import com.fdtheroes.sgruntbot.models.Stats
+import com.fdtheroes.sgruntbot.utils.BotUtils
 import org.jfree.chart.ChartFactory
-import org.jfree.chart.ChartUtils
 import org.jfree.chart.JFreeChart
 import org.jfree.chart.labels.StandardPieSectionLabelGenerator
 import org.jfree.chart.plot.PiePlot
-import org.jfree.chart.ui.RectangleEdge
 import org.jfree.data.general.DefaultPieDataset
 import org.springframework.stereotype.Service
-import org.telegram.telegrambots.meta.api.objects.InputFile
 import java.awt.Color
-import java.io.ByteArrayInputStream
-import java.io.ByteArrayOutputStream
 
 @Service
-class PieChartUtils(private val botUtils: BotUtils) {
+class PieChartGenerator(private val botUtils: BotUtils) {
 
-    fun pieChart(stats: List<Stats>, title: String): JFreeChart {
+    fun getChart(stats: List<Stats>, title: String): JFreeChart {
         val pieChart = ChartFactory.createPieChart(title, createDataset(stats), true, true, false).apply {
-            this.legend.position = RectangleEdge.RIGHT
+            this.legend.visible = false
         }
 
         (pieChart.plot as PiePlot<*>).apply {
             this.dataset.keys.forEachIndexed { index, key ->
                 this.setSectionPaint(key, seriesColors[index % seriesColors.size])
             }
-            this.labelGenerator = StandardPieSectionLabelGenerator("{1}")
-            this.legendLabelGenerator = StandardPieSectionLabelGenerator("{0} {2}")
+            this.labelGenerator = StandardPieSectionLabelGenerator("{0}: {1} ({2})")
         }
 
         return pieChart
     }
 
     private fun createDataset(stats: List<Stats>): DefaultPieDataset<String> {
-        val getUserName = { stats: Stats -> botUtils.getChatMember(stats.userId)?.userName ?: stats.userId.toString() }
+        val getUserName = { stats: Stats -> botUtils.getUserName(botUtils.getChatMember(stats.userId)) }
         return DefaultPieDataset<String>().apply {
             stats.forEachIndexed { index, stat ->
                 this.insertValue(index, getUserName(stat), stat.messages)

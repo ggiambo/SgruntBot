@@ -5,9 +5,9 @@ import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.models.ActionResponseType
 import com.fdtheroes.sgruntbot.models.Stats
 import com.fdtheroes.sgruntbot.persistence.StatsService
-import com.fdtheroes.sgruntbot.utils.PieChartUtils
-import com.fdtheroes.sgruntbot.utils.StatsUtil
-import com.fdtheroes.sgruntbot.utils.XYChartUtils
+import com.fdtheroes.sgruntbot.utils.charts.PieChartGenerator
+import com.fdtheroes.sgruntbot.utils.charts.StatsChartGenerator
+import com.fdtheroes.sgruntbot.utils.charts.WeeklyEvolutionChartGenerator
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.*
@@ -29,7 +29,7 @@ class TestScheduledStats : BaseTest() {
             }
         }
     }
-    private val scheduledStats = ScheduledStats(botUtils, StatsUtil(statsService, PieChartUtils(botUtils), XYChartUtils()))
+    private val scheduledStats = ScheduledStats(botUtils, StatsChartGenerator(statsService, PieChartGenerator(botUtils), WeeklyEvolutionChartGenerator()))
 
     @Test
     fun scheduledStatsTest() {
@@ -41,6 +41,6 @@ class TestScheduledStats : BaseTest() {
         Assertions.assertThat(actionResponse.type).isEqualTo(ActionResponseType.Photo)
         Assertions.assertThat(actionResponse.message).isEqualTo("")
         Assertions.assertThat(actionResponse.inputFile).isNotNull()
-        Assertions.assertThat(actionResponse.inputFile!!.mediaName).isEqualTo("stats.jpg")
+        Assertions.assertThat(actionResponse.inputFile!!.mediaName).isEqualTo("stats.png")
     }
 }

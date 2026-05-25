@@ -4,7 +4,7 @@ import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.persistence.StatsService
 import com.fdtheroes.sgruntbot.utils.BotUtils
-import com.fdtheroes.sgruntbot.utils.StatsUtil
+import com.fdtheroes.sgruntbot.utils.charts.StatsChartGenerator
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.message.Message
 
@@ -13,7 +13,7 @@ class Stats(
     botUtils: BotUtils,
     botConfig: BotConfig,
     private val statsService: StatsService,
-    private val statsUtil: StatsUtil,
+    private val statsChartGenerator: StatsChartGenerator,
 ) : MessageHandler(botUtils, botConfig), HasHalp {
 
     private val regex = Regex("^!stats (.+)$", RegexOption.IGNORE_CASE)
@@ -37,12 +37,12 @@ class Stats(
         }
 
         val tipo = matchResult.groupValues[1].trim().lowercase()
-        val statsType = StatsUtil.StatsType.getByType(tipo)
+        val statsType = StatsChartGenerator.StatsType.getByType(tipo)
         if (statsType == null) {
             return rispondiHelp(message)
         }
 
-        val inputFile = statsUtil.getStats(statsType)
+        val inputFile = statsChartGenerator.getPieChart(statsType)
         botUtils.rispondi(ActionResponse.photo("", inputFile), message)
     }
 

@@ -1,4 +1,4 @@
-package com.fdtheroes.sgruntbot.utils
+package com.fdtheroes.sgruntbot.utils.charts
 
 import com.fdtheroes.sgruntbot.models.Stats
 import org.jfree.chart.ChartFactory
@@ -14,34 +14,37 @@ import org.jfree.data.time.TimeSeries
 import org.jfree.data.time.TimeSeriesCollection
 import org.jfree.data.xy.XYDataset
 import org.springframework.stereotype.Service
+import java.awt.BasicStroke
 import java.awt.Color
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.*
 
 @Service
-class XYChartUtils {
+class WeeklyEvolutionChartGenerator {
 
-    fun xyChart(stats: List<Stats>): JFreeChart {
+    fun getChart(stats: List<Stats>): JFreeChart {
         val xyChart =
-            ChartFactory.createTimeSeriesChart("Andamento settimanale", "Ultima settimana", "", createDataset(stats))
+            ChartFactory.createTimeSeriesChart("Andamento settimanale", "", "Messaggi", createDataset(stats))
                 .apply {
-                    this.legend.position = RectangleEdge.RIGHT
+                    this.legend.visible = false
                     this.backgroundPaint = Color.lightGray
                 }
 
         (xyChart.plot as XYPlot).apply {
             (this.domainAxis as DateAxis).apply {
-                this.dateFormatOverride = SimpleDateFormat("dd LLLL", Locale.ITALIAN)
+                this.dateFormatOverride = SimpleDateFormat("EEEE", Locale.ITALIAN)
                 this.tickUnit = DateTickUnit(DateTickUnitType.DAY, 1)
             }
             (this.renderer as XYLineAndShapeRenderer).apply {
-                this.defaultShapesVisible = true
+                this.setSeriesStroke(0, BasicStroke(12f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND))
+                this.drawSeriesLineAsPath = true
             }
             this.backgroundPaint = Color.white
             this.rangeGridlinePaint = Color.lightGray
             this.domainGridlinePaint = Color.lightGray
         }
+
         return xyChart
     }
 

@@ -1,4 +1,4 @@
-package com.fdtheroes.sgruntbot.utils
+package com.fdtheroes.sgruntbot.utils.charts
 
 import com.fdtheroes.sgruntbot.models.Stats
 import com.fdtheroes.sgruntbot.persistence.StatsService
@@ -11,24 +11,24 @@ import java.io.ByteArrayOutputStream
 import java.time.LocalDate
 
 @Service
-class StatsUtil(
+class StatsChartGenerator(
     private val statsService: StatsService,
-    private val pieChartUtils: PieChartUtils,
-    private val xyChartUtils: XYChartUtils,
+    private val pieChartGenerator: PieChartGenerator,
+    private val weeklyEvolutionChartGenerator: WeeklyEvolutionChartGenerator,
 ) {
 
-    fun getStats(tipo: StatsType): InputFile {
+    fun getPieChart(tipo: StatsType): InputFile {
         val stats = when (tipo) {
             StatsType.GIORNO -> statsService.getStatsToday()
             StatsType.SETTIMANA -> statsService.getStatsThisWeek()
             StatsType.MESE -> statsService.getStatsThisMonth()
             StatsType.ANNO -> statsService.getStatsThisYear()
         }
-        val chart = pieChartUtils.pieChart(stats, "Logorroici di ${tipo.desc}")
+        val chart = pieChartGenerator.getChart(stats, "Logorroici di ${tipo.desc}")
         return chartToInputFile(chart)
     }
 
-    fun getWeeklyEvolution(): InputFile {
+    fun getWeeklyEvolutionChart(): InputFile {
         val sevenDaysAgo = LocalDate.now().minusDays(6)
         val stats = statsService.getStatsFromDate(sevenDaysAgo)
             .groupBy { it.statDay }
@@ -39,14 +39,14 @@ class StatsUtil(
                 }
             }.values.toList()
 
-        val chart = xyChartUtils.xyChart(stats)
+        val chart = weeklyEvolutionChartGenerator.getChart(stats)
         return chartToInputFile(chart)
     }
 
     private fun chartToInputFile(chart: JFreeChart): InputFile {
         return ByteArrayOutputStream().use {
             ChartUtils.writeChartAsPNG(it, chart, 1024, 768)
-            InputFile(ByteArrayInputStream(it.toByteArray()), "stats.jpg")
+            InputFile(ByteArrayInputStream(it.toByteArray()), "stats.png")
         }
     }
 
