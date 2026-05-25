@@ -16,6 +16,7 @@ class PieChartGenerator(private val botUtils: BotUtils) {
     fun getChart(stats: List<Stats>, title: String): JFreeChart {
         val pieChart = ChartFactory.createPieChart(title, createDataset(stats), true, true, false).apply {
             this.legend.visible = false
+            this.title.font = this.title.font.deriveFont(35f)
         }
 
         (pieChart.plot as PiePlot<*>).apply {
@@ -23,6 +24,7 @@ class PieChartGenerator(private val botUtils: BotUtils) {
                 this.setSectionPaint(key, seriesColors[index % seriesColors.size])
             }
             this.labelGenerator = StandardPieSectionLabelGenerator("{0}: {1} ({2})")
+            this.labelFont = this.labelFont.deriveFont(20f)
         }
 
         return pieChart
