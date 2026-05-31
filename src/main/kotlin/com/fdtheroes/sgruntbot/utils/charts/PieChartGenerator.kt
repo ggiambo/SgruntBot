@@ -2,10 +2,9 @@ package com.fdtheroes.sgruntbot.utils.charts
 
 import com.fdtheroes.sgruntbot.models.Stats
 import com.fdtheroes.sgruntbot.utils.BotUtils
-import org.jfree.chart.ChartFactory
+import com.giambonini.MixedLabelPiePlot
 import org.jfree.chart.JFreeChart
 import org.jfree.chart.labels.StandardPieSectionLabelGenerator
-import org.jfree.chart.plot.PiePlot
 import org.jfree.chart.ui.RectangleEdge
 import org.jfree.chart.ui.RectangleInsets
 import org.jfree.data.general.DefaultPieDataset
@@ -16,24 +15,25 @@ import java.awt.Color
 class PieChartGenerator(private val botUtils: BotUtils) {
 
     fun getChart(stats: List<Stats>, title: String): JFreeChart {
-        val pieChart = ChartFactory.createPieChart(title, createDataset(stats), true, true, false).apply {
-            this.title.font = this.title.font.deriveFont(35f)
-            this.legend.position = RectangleEdge.RIGHT
-            this.legend.itemFont = this.legend.itemFont.deriveFont(20f)
-            this.legend.padding = RectangleInsets(0.0,10.0,0.0,20.0)
-            this.legend.itemLabelPadding = RectangleInsets(0.0,10.0,5.0,10.0)
-        }
-
-        (pieChart.plot as PiePlot<*>).apply {
+        val dataset = createDataset(stats.sortedBy { it.messages })
+        val piePlot = MixedLabelPiePlot<String>(dataset, 0.05).apply {
             this.simpleLabels = true
             this.sectionOutlinesVisible = false
             this.isCircular = true
-            this.dataset.keys.forEachIndexed { index, key ->
+            dataset.keys.forEachIndexed { index, key ->
                 this.setSectionPaint(key, seriesColors[index % seriesColors.size])
             }
             this.labelGenerator = StandardPieSectionLabelGenerator("{2} ({1})")
             this.legendLabelGenerator = StandardPieSectionLabelGenerator("{0}")
             this.labelFont = this.labelFont.deriveFont(20f)
+        }
+
+        val pieChart = JFreeChart(title, piePlot).apply {
+            this.title.font = this.title.font.deriveFont(35f)
+            this.legend.position = RectangleEdge.RIGHT
+            this.legend.itemFont = this.legend.itemFont.deriveFont(20f)
+            this.legend.padding = RectangleInsets(0.0,10.0,0.0,20.0)
+            this.legend.itemLabelPadding = RectangleInsets(0.0,10.0,5.0,10.0)
         }
 
         return pieChart
