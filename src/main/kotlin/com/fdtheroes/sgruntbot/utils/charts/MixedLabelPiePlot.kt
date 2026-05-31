@@ -1,4 +1,4 @@
-package com.giambonini
+package com.fdtheroes.sgruntbot.utils.charts
 
 import org.jfree.chart.plot.PiePlot
 import org.jfree.chart.plot.PiePlotState

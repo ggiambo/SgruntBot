@@ -2,7 +2,6 @@ package com.fdtheroes.sgruntbot.utils.charts
 
 import com.fdtheroes.sgruntbot.models.Stats
 import com.fdtheroes.sgruntbot.utils.BotUtils
-import com.giambonini.MixedLabelPiePlot
 import org.jfree.chart.JFreeChart
 import org.jfree.chart.labels.StandardPieSectionLabelGenerator
 import org.jfree.chart.ui.RectangleEdge
@@ -32,8 +31,8 @@ class PieChartGenerator(private val botUtils: BotUtils) {
             this.title.font = this.title.font.deriveFont(35f)
             this.legend.position = RectangleEdge.RIGHT
             this.legend.itemFont = this.legend.itemFont.deriveFont(20f)
-            this.legend.padding = RectangleInsets(0.0,10.0,0.0,20.0)
-            this.legend.itemLabelPadding = RectangleInsets(0.0,10.0,5.0,10.0)
+            this.legend.padding = RectangleInsets(0.0, 10.0, 0.0, 20.0)
+            this.legend.itemLabelPadding = RectangleInsets(0.0, 10.0, 5.0, 10.0)
         }
 
         return pieChart
