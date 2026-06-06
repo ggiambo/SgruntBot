@@ -63,7 +63,7 @@ class WeeklyEvolutionChartGenerator {
         return TimeSeriesCollection().apply {
             this.addSeries(TimeSeries("Messaggi totali").apply {
                 stats.forEach { stat ->
-                    this.add(getPeriod(stat.statDay!!), stat.messages)
+                    this.add(getPeriod(stat.statDay), stat.messages)
                 }
             })
         }

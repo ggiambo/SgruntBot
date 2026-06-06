@@ -29,7 +29,7 @@ class StatsChartGenerator(
     }
 
     fun getWeeklyEvolutionChart(): InputFile {
-        val sevenDaysAgo = LocalDate.now().minusDays(6)
+        val sevenDaysAgo = LocalDate.now().minusDays(7)
         val stats = statsService.getStatsFromDate(sevenDaysAgo)
             .groupBy { it.statDay }
             .mapValues { (statDay, stat) ->
