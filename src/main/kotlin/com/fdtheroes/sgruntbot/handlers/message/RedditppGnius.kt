@@ -1,16 +1,15 @@
 package com.fdtheroes.sgruntbot.handlers.message
 
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.utils.BotUtils
+import com.fdtheroes.sgruntbot.utils.BotUtils.Companion.elseIfNull
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpHeaders
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.message.Message
 import tools.jackson.databind.json.JsonMapper
 import tools.jackson.module.kotlin.readValue
-import java.time.ZonedDateTime
 
 @Service
 class RedditppGnius(botUtils: BotUtils, botConfig: BotConfig, private val jsonMapper: JsonMapper) :
@@ -73,8 +72,11 @@ class RedditppGnius(botUtils: BotUtils, botConfig: BotConfig, private val jsonMa
             val score: Int,
             val title: String,
             permalink: String,
+            media: Media,
         ) {
-            val link = "https://reddit.com/$permalink"
+            val link = media.external_url.elseIfNull("https://reddit.com$permalink")
+
+            private class Media(val external_url: String?)
         }
     }
 

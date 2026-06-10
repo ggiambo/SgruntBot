@@ -1,0 +1,99 @@
+{
+  "after": "dDNfMXUwYWg5ZQ==",
+  "has_next": true,
+  "posts": [
+    {
+      "author": {
+        "icon_url": "https://styles.redditmedia.com/t5_ohe3b/styles/profileIcon_kayr6e0uz1kg1.jpeg?width=64&height=64&frame=1&auto=webp&crop=64:64,smart&s=e7080e8d59452c1afd0e1c73ef05ebca77f89793",
+        "name": "anh0516"
+      },
+      "comment_count": 18,
+      "created_at": "2026-06-10T14:26:25.372000+0000",
+      "flair": {
+        "background_color": "#FFD133",
+        "text": "Kernel",
+        "text_color": "DARK"
+      },
+      "fullname": "t3_1u23qrd",
+      "id": "1u23qrd",
+      "is_archived": false,
+      "is_locked": false,
+      "is_nsfw": false,
+      "is_self": false,
+      "is_spoiler": false,
+      "is_stickied": false,
+      "media": {
+        "domain": "phoronix.com",
+        "external_url": "https://www.phoronix.com/news/AMDGPU-DC-Preps-HDMI-Comp-Test",
+        "kind": "link",
+        "poster_url": "https://external-preview.redd.it/Gtpm4dqgMWlV-q5O-q5QQykbWoxbiKc_DrjdmBEUUHM.jpeg?width=140&auto=webp&s=816012848791e44f0fb18481c9b87ad85624bfda"
+      },
+      "permalink": "/r/linux/comments/1u23qrd/",
+      "score": 136,
+      "score_hidden": false,
+      "subreddit": "linux",
+      "title": "AMDGPU Linux Driver Preps For HDMI 2.1 Compliance Testing"
+    },
+    {
+      "author": {
+        "icon_url": "https://preview.redd.it/snoovatar/avatars/b091f224-2fe2-4ad0-bfc0-2d8450a1059c-headshot.png?width=64&height=64&auto=webp&s=ac834c47485683492a179167afdc4284e2e38c79",
+        "name": "HearMeOut-13"
+      },
+      "body_markdown": "Hey guys, i just got a kernel patch that speeds up USB dongles running the mt76 driver acked for the next PR period. The USB driver used to hand RX frames up without a NAPI, so it never got GRO and ran single-threaded which capped its speed ~380mbps while the PCIe path flew. I ended up moving the US",
+      "comment_count": 4,
+      "created_at": "2026-06-10T11:43:07.599000+0000",
+      "flair": {
+        "background_color": "#FFD133",
+        "text": "Kernel",
+        "text_color": "DARK"
+      },
+      "fullname": "t3_1u1zrws",
+      "id": "1u1zrws",
+      "is_archived": false,
+      "is_locked": false,
+      "is_nsfw": false,
+      "is_self": true,
+      "is_spoiler": false,
+      "is_stickied": false,
+      "media": {
+        "kind": "self"
+      },
+      "permalink": "/r/linux/comments/1u1zrws/",
+      "score": 76,
+      "score_hidden": false,
+      "subreddit": "linux",
+      "title": "I Sped up mt76 USB WIFI ~1.5x with a kernel patch that has been acked for mainline"
+    },
+    {
+      "author": {
+        "icon_url": "https://styles.redditmedia.com/t5_8hyom1/styles/profileIcon_1f1s2h79q3oc1.jpg?width=64&height=64&frame=1&auto=webp&crop=64:64,smart&s=12e9ec135b4c72da79cb48c2f81198a06fecf801",
+        "name": "christos_71"
+      },
+      "comment_count": 2,
+      "created_at": "2026-06-10T10:49:22.497000+0000",
+      "flair": {
+        "background_color": "#349E48",
+        "text": "Software Release",
+        "text_color": "LIGHT"
+      },
+      "fullname": "t3_1u1yp7z",
+      "id": "1u1yp7z",
+      "is_archived": false,
+      "is_locked": false,
+      "is_nsfw": false,
+      "is_self": false,
+      "is_spoiler": false,
+      "is_stickied": false,
+      "media": {
+        "image_url": "https://preview.redd.it/k1x6yu4cqf6h1.png?width=480&auto=webp&s=73e8ac96bf05e99b0a09f6c0eed1b41392dfad84",
+        "kind": "image",
+        "poster_url": "https://preview.redd.it/k1x6yu4cqf6h1.png?width=480&auto=webp&s=73e8ac96bf05e99b0a09f6c0eed1b41392dfad84"
+      },
+      "permalink": "/r/linux/comments/1u1yp7z/",
+      "score": 0,
+      "score_hidden": false,
+      "subreddit": "linux",
+      "title": "Terminal Tower of Hanoi, in Bash"
+    }
+  ]
+}
