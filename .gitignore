@@ -9,3 +9,4 @@ chatId.txt
 sgruntbot*.log
 .gradle
 docker/sgrunt_db
+logs/
