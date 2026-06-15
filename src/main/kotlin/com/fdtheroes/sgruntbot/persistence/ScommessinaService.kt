@@ -50,12 +50,12 @@ class ScommessinaService(private val scommessinaRepository: ScommessinaRepositor
     fun getNoParticipantsAndWillExpireInThreeDays(): List<Scommessina> {
         val dueSettimaneFa = LocalDate.now().minusDays(14)
         return scommessinaRepository
-            .findAllByCreatedBetweenAndParticipantsUserIdIsEmpty(dueSettimaneFa, dueSettimaneFa.plusDays(3))
+            .findAllByCreatedBetweenAndParticipantsUserIdEquals(dueSettimaneFa, dueSettimaneFa.plusDays(3))
     }
 
     fun getNoParticipantsAndExpired(): List<Scommessina> {
         val dueSettimaneFa = LocalDate.now().minusDays(14)
-        return scommessinaRepository.findAllByCreatedBeforeAndParticipantsUserIdIsEmpty(dueSettimaneFa)
+        return scommessinaRepository.findAllByCreatedBeforeAndParticipantsUserIdEquals(dueSettimaneFa)
     }
 
     fun deleteById(scommessinaId: Long) = scommessinaRepository.deleteById(scommessinaId)
