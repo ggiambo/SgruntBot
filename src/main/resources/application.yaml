@@ -31,3 +31,10 @@ springdoc:
 sgruntbot:
   config:
     baseRestUrl: https://giambo.ch
+
+logging:
+  level:
+    org:
+      springframework:
+        boot:
+          autoconfigure: ERROR
