@@ -11,13 +11,13 @@ import java.time.LocalDate
 class ScommessinaServiceTest {
 
     private val scommessinaRepository = mock<ScommessinaRepository> {
-        on { findAllByCreatedBeforeAndParticipantsUserIdIsEmpty(isA()) } doAnswer { args ->
+        on { findAllByCreatedBeforeAndParticipantsUserIdEquals(isA(), isA()) } doAnswer { args ->
             val date = args.component1<LocalDate>()
             getScommessine().filter {
                 it.participantsUserId.isEmpty() && it.created.isBefore(date)
             }
         }
-        on { findAllByCreatedBetweenAndParticipantsUserIdIsEmpty(isA(), isA()) } doAnswer { args ->
+        on { findAllByCreatedBetweenAndParticipantsUserIdEquals(isA(), isA(), isA()) } doAnswer { args ->
             val dateFrom = args.component1<LocalDate>()
             val dateTo = args.component2<LocalDate>()
             getScommessine().filter {
