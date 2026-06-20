@@ -5,6 +5,7 @@ import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.utils.BotUtils
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.message.Message
+import java.io.ByteArrayInputStream
 
 @Service
 class Meteo(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils, botConfig), HasHalp {
@@ -16,7 +17,13 @@ class Meteo(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils,
         if (citta.isEmpty()) {
             return
         }
-        val meteo = botUtils.textFromURL("https://wttr.in/$citta", listOf("format" to "4"))
+        val meteo = botUtils.textFromURL("https://wttr.in/$citta", listOf("format" to "4")) {
+            if (!it.isSuccessful) {
+                ByteArrayInputStream("La città <a href=\"https://wttr.in/$citta\">$citta</a> non esiste. ".toByteArray())
+            } else {
+                it.body.byteStream()
+            }
+        }
         botUtils.rispondi(ActionResponse.message(meteo), message)
     }
 

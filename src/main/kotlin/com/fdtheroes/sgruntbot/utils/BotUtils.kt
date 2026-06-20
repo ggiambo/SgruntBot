@@ -9,6 +9,7 @@ import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.Response
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.client.okhttp.OkHttpTelegramClient
@@ -73,6 +74,7 @@ class BotUtils(private val botConfig: BotConfig, private val jsonMapper: JsonMap
         body: Any? = null,
         headers: List<Pair<String, String>> = emptyList(),
         proxy: Proxy = botConfig.proxy,
+        responseHandler: (Response) -> InputStream = { it.body.byteStream() },
     ): InputStream {
         val client = OkHttpClient().newBuilder()
             .proxy(proxy)
@@ -97,7 +99,7 @@ class BotUtils(private val botConfig: BotConfig, private val jsonMapper: JsonMap
             )
             .build()
 
-        return client.newCall(request).execute().body.byteStream()
+        return responseHandler(client.newCall(request).execute())
     }
 
     fun textFromURL(
@@ -106,8 +108,9 @@ class BotUtils(private val botConfig: BotConfig, private val jsonMapper: JsonMap
         body: Any? = null,
         headers: List<Pair<String, String>> = emptyList(),
         proxy: Proxy = botConfig.proxy,
+        responseHandler: (Response) -> InputStream = { it.body.byteStream() },
     ): String {
-        return streamFromURL(url, params, body, headers, proxy)
+        return streamFromURL(url, params, body, headers, proxy, responseHandler)
             .readAllBytes()
             .decodeToString()
     }

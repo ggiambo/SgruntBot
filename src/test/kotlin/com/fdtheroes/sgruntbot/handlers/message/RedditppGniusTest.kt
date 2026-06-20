@@ -15,7 +15,7 @@ class RedditppGniusTest : BaseTest() {
     fun getGnius() {
         val output = this.javaClass.classLoader.getResourceAsStream("redditpp.json")
         doReturn(output.reader().readText())
-            .whenever(botUtils).textFromURL(any(), any(), any(), any(), any())
+            .whenever(botUtils).textFromURL(any(), any(), any(), any(), any(), any())
 
 
         val res = redditppGnius.getGnius("dummy")
