@@ -10,7 +10,7 @@ Housekeeping(private val jobs: List<Cleanup>) : Scheduled {
 
     override fun firstRun(): LocalDateTime = LocalDateTime.now()
 
-    override fun nextRun(): LocalDateTime = LocalDateTime.now().plusHours(6)
+    override fun nextRun(): LocalDateTime = LocalDateTime.now().plusHours(24)
 
     override fun execute() {
         jobs.forEach { it.doCleanup() }

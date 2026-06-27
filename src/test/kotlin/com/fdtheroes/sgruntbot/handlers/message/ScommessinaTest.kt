@@ -38,7 +38,7 @@ internal class ScommessinaTest : BaseTest() {
 
         assertThat(actionResponses).hasSize(1)
         assertThat(actionResponses.first().message).isEqualTo(
-            "\uD83D\uDE80 Scommessina creata!\nPer partecipare rispondi con <b>!scommessina</b> al messaggio originale."
+            "\uD83D\uDE80 Scommessina creata!\nPer partecipare rispondi con <b>!scommessina</b> al <a href=\"https://t.me/c/-9999/1111\">messaggio originale</a>."
         )
     }
 

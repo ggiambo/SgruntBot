@@ -5,12 +5,15 @@ import com.fdtheroes.sgruntbot.models.Scommessina
 import com.fdtheroes.sgruntbot.persistence.ScommessinaService
 import com.fdtheroes.sgruntbot.utils.BotUtils
 import org.springframework.stereotype.Service
+import java.time.format.DateTimeFormatter
 
 @Service
 class CleanupScommessina(
     private val scommessinaService: ScommessinaService,
     private val botUtils: BotUtils,
 ) : Cleanup {
+
+    private val dateFormat = DateTimeFormatter.ofPattern("dd.MM.YYYY")
 
     override fun doCleanup() {
         deleteExpiredScommessine()
@@ -30,7 +33,8 @@ class CleanupScommessina(
     private fun messageWillExpire(scommessine: List<Scommessina>) =
         scommessine.forEach {
             val user = getUser(it.userId)
-            val msgText = "Hei $user, la scommesssina <i>${it.content}</i> scade fra 3 giorni e verrà cancellata."
+            val scadenza = it.created.plusDays(14).format(dateFormat)
+            val msgText = "Hei $user, la scommesssina <i>${it.content}</i> non ha partecipanti e verrà cancellata il $scadenza"
             botUtils.messaggio(ActionResponse.message(msgText))
         }
 

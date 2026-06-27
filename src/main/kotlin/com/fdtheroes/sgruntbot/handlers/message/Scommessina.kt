@@ -35,8 +35,16 @@ class Scommessina(botUtils: BotUtils, botConfig: BotConfig, private val scommess
 
     private fun createScommessima(message: Message, termini: String) {
         scommessinaService.createScommessina(message, termini)
+        val chatId = with(message.chatId.toString()) {
+            if (this.startsWith("-100")) {
+                this.substring("-100".length)
+            } else {
+                this
+            }
+        }
+        val msgLink = "https://t.me/c/$chatId/${message.messageId}"
         botUtils.rispondi(
-            ActionResponse.message("🚀 Scommessina creata!\nPer partecipare rispondi con <b>!scommessina</b> al messaggio originale."),
+            ActionResponse.message("🚀 Scommessina creata!\nPer partecipare rispondi con <b>!scommessina</b> al <a href=\"https://t.me/c/-9999/1111\">messaggio originale</a>."),
             message
         )
     }
