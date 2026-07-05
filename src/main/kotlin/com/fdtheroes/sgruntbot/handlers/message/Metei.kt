@@ -15,7 +15,7 @@ class Metei(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils,
 
     override fun handle(message: Message) {
         if (regex.containsMatchIn(message.text)) {
-            val res = citta.joinToString(separator = "\n") {
+            val res = citta.joinToString(separator = "") {
                 botUtils.textFromURL("https://wttr.in/$it", listOf("format" to "4"))
             }
             botUtils.messaggio(ActionResponse.message(res))
