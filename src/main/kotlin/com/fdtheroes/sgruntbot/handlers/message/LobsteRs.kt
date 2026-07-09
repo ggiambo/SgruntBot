@@ -23,13 +23,22 @@ class LobsteRs(botUtils: BotUtils, botConfig: BotConfig, private val jsonMapper:
     }
 
     fun getMessageContent(): String {
-        return Jsoup.parse(botUtils.textFromURL("https://lobste.rs"))
-            .select(".details a.u-url")
+        val topTen = Jsoup.parse(botUtils.textFromURL("https://lobste.rs"))
+            .select(".details")
             .take(10)
-            .joinToString(
-                separator = "\n",
-                prefix = "Lobste.rs Top 10 Stories:\n"
-            ) { "\uD83E\uDD9E <a href=\"${it.attr("href")}\">${it.text()}</a>" }
+        val urls = topTen.map {
+            val elem = it.select("a.u-url")
+            "\uD83E\uDD9E <a href=\"${elem.attr("href")}\">${elem.text()}</a>"
+        }
+        val comments = topTen.map {
+            val elem = it.select("span.comments_label a")
+            "<a href=\"https://lobste.rs/${elem.attr("href")}\">${elem.text()}</a>"
+        }
+
+        return urls.zip(comments).joinToString(
+            separator = "\n",
+            prefix = "Lobste.rs Top 10 Stories:\n"
+        ) { "<b>${it.first}</b> | ${it.second}" }
     }
 
     override fun halp() = "<b>!lr</b> Top 10 Lobste.rs Stories"
