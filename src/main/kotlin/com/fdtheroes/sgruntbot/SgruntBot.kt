@@ -7,9 +7,7 @@ import com.fdtheroes.sgruntbot.persistence.NameValuePairRepository
 import com.fdtheroes.sgruntbot.utils.BotUtils
 import com.fdtheroes.sgruntbot.utils.IGitUtils
 import jakarta.annotation.PostConstruct
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.longpolling.TelegramBotsLongPollingApplication
@@ -53,7 +51,10 @@ class SgruntBot(
         }
 
         handlers.forEach {
-            CoroutineScope(Dispatchers.Default).launch { it.handle(update) }
+            CoroutineScope(Dispatchers.IO)
+                .plus(exceptionHandler)
+                .plus(CoroutineName(it::class.qualifiedName!!))
+                .launch { it.handle(update) }
         }
     }
 
@@ -104,6 +105,11 @@ class SgruntBot(
             val message = "Sono partito!\nEcco le novità:\n$deltaMessages"
             botUtils.messaggio(ActionResponse.message(message))
         }
+    }
+
+    private val exceptionHandler = CoroutineExceptionHandler { ctx, exception ->
+        val handlerName = ctx[CoroutineName]!!.name
+        log.error("Errore nell'handler $handlerName:", exception)
     }
 
 }
