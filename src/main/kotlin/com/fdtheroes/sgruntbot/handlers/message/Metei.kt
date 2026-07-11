@@ -22,5 +22,5 @@ class Metei(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils,
         }
     }
 
-    override fun halp() = "<b>!metei</b> - Mostra le previsioni meteo per le nostre città più amate <3."
+    override fun halp() = "<b>!metei</b> - Mostra le previsioni meteo per le nostre città più amate \uFE0F"
 }
