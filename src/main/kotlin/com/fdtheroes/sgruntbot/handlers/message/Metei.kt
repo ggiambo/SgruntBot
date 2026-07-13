@@ -10,16 +10,22 @@ import org.telegram.telegrambots.meta.api.objects.message.Message
 class Metei(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils, botConfig), HasHalp {
 
     private val regex = Regex("^!metei", RegexOption.IGNORE_CASE)
-
     private val citta = listOf("Genova", "Tradate", "Guidonia", "Kollbrunn", "Legnano", "Pisa").sorted()
+    private val temperatureRegex = Regex("(\\d{1,2})°C")
 
     override fun handle(message: Message) {
         if (regex.containsMatchIn(message.text)) {
-            val res = citta.joinToString(separator = "") {
-                botUtils.textFromURL("https://wttr.in/$it", listOf("format" to "4"))
-            }
+            val res = citta
+                .map { botUtils.textFromURL("https://wttr.in/$it", listOf("format" to "4")) }
+                .sortedByDescending { temperatureExtractor(it) }
+                .joinToString(separator = "")
+
             botUtils.messaggio(ActionResponse.message(res))
         }
+    }
+
+    private val temperatureExtractor = { meteoLine: String ->
+        temperatureRegex.find(meteoLine)!!.groupValues[1].toInt()
     }
 
     override fun halp() = "<b>!metei</b> - Mostra le previsioni meteo per le nostre città più amate \uFE0F"
