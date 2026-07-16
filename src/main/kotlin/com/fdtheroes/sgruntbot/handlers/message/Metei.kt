@@ -16,9 +16,9 @@ class Metei(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils,
     override fun handle(message: Message) {
         if (regex.containsMatchIn(message.text)) {
             val res = citta
-                .map { botUtils.textFromURL("https://wttr.in/$it", listOf("format" to "4")) }
+                .map { botUtils.textFromURL("https://wttr.in/$it", listOf("format" to "%l: %c \uD83C\uDF21\uFE0F%t \uD83C\uDF2C\uFE0F%w \uD83D\uDCA6%h")) }
                 .sortedByDescending { temperatureExtractor(it) }
-                .joinToString(separator = "")
+                .joinToString(separator = "\n")
 
             botUtils.messaggio(ActionResponse.message(res))
         }
