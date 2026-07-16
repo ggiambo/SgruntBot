@@ -16,7 +16,17 @@ internal class GoogleTest : BaseTest() {
 
         assertThat(actionResponses).hasSize(1)
         assertThat(actionResponses.first().type).isEqualTo(ActionResponseType.Message)
-        assertThat(actionResponses.first().message).isEqualTo("""Cercatelo con <a href="https://www.google.com/search?q=Sgrunt bot">google</a> ritardato!™""")
+        assertThat(actionResponses.first().message).isEqualTo("""Cercatelo con <a href="https://www.google.com/search?q=Sgrunt+bot">google</a> ritardato!""")
+    }
+
+    @Test
+    fun testConRobaccia() {
+        val message = message("!google cosa significa \"cacca\" ?")
+        google.handle(message)
+
+        assertThat(actionResponses).hasSize(1)
+        assertThat(actionResponses.first().type).isEqualTo(ActionResponseType.Message)
+        assertThat(actionResponses.first().message).isEqualTo("""Cercatelo con <a href="https://www.google.com/search?q=cosa+significa+%22cacca%22+%3F">google</a> ritardato!""")
     }
 
 }

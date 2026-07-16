@@ -5,6 +5,7 @@ import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.utils.BotUtils
 import org.springframework.stereotype.Service
 import org.telegram.telegrambots.meta.api.objects.message.Message
+import java.net.URLEncoder
 
 @Service
 class Google(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils, botConfig), HasHalp {
@@ -14,8 +15,9 @@ class Google(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils
     override fun handle(message: Message) {
         val query = regex.find(message.text)?.groupValues?.get(1)
         if (query != null) {
+            val sanitizedQuery = URLEncoder.encode(query, Charsets.UTF_8)
             botUtils.rispondi(
-                ActionResponse.message("""Cercatelo con <a href="https://www.google.com/search?q=$query">google</a> ritardato!™"""),
+                ActionResponse.message("""Cercatelo con <a href="https://www.google.com/search?q=$sanitizedQuery">google</a> ritardato!"""),
                 message
             )
         }
