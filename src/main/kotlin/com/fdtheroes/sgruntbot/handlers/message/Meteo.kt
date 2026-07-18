@@ -10,21 +10,57 @@ import java.io.ByteArrayInputStream
 @Service
 class Meteo(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils, botConfig), HasHalp {
 
-    private val regex = Regex("^!meteo(.*)", RegexOption.IGNORE_CASE)
+    private val regex = Regex("^!mete([oi])(.+)?", RegexOption.IGNORE_CASE)
+    private val temperatureRegex = Regex("(\\d{1,2})°C")
+    private val citta = listOf("Genova", "Tradate", "Guidonia", "Kollbrunn", "Legnano", "Pisa").sorted()
 
     override fun handle(message: Message) {
-        val citta = regex.find(message.text)?.groupValues?.get(1).orEmpty().trim()
-        if (citta.isEmpty()) {
+        val matchResult = regex.find(message.text)
+        if (matchResult == null) {
             return
         }
-        val meteo = botUtils.textFromURL("https://wttr.in/$citta", listOf("format" to "4")) {
+
+        val listaCitta = getListaCitta(matchResult)
+        if (listaCitta.isEmpty()) {
+            return
+        }
+
+        val res = listaCitta
+            .map { this.meteo(it) }
+            .sortedByDescending { temperatureExtractor(it) }
+            .joinToString(separator = "\n")
+
+        botUtils.messaggio(ActionResponse.message(res))
+    }
+
+    private fun getListaCitta(matchResult: MatchResult): List<String> {
+        val tipo = matchResult.groupValues[1]
+        if (tipo == "i") {
+            return citta
+        }
+
+        val citta = matchResult.groupValues[2].trim()
+        if (citta.isEmpty()) {
+            return emptyList()
+        }
+        return listOf(citta)
+    }
+
+    private fun meteo(citta: String): String {
+        return botUtils.textFromURL(
+            "https://wttr.in/$citta",
+            listOf("format" to "%l: %c \uD83C\uDF21\uFE0F%t \uD83C\uDF2C\uFE0F%w \uD83D\uDCA6%h")
+        ) {
             if (!it.isSuccessful) {
                 ByteArrayInputStream("La città <a href=\"https://wttr.in/$citta\">$citta</a> non esiste. ".toByteArray())
             } else {
                 it.body.byteStream()
             }
         }
-        botUtils.rispondi(ActionResponse.message(meteo), message)
+    }
+
+    private val temperatureExtractor = { meteoLine: String ->
+        temperatureRegex.find(meteoLine)!!.groupValues[1].toInt()
     }
 
     override fun halp() = "<b>!meteo</b> <i>città</i> - Mostra le previsioni meteo per la città specificata."
