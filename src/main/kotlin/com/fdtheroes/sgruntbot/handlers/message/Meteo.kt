@@ -30,7 +30,7 @@ class Meteo(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils,
             .sortedByDescending { temperatureExtractor(it) }
             .joinToString(separator = "\n")
 
-        botUtils.messaggio(ActionResponse.message(res))
+        botUtils.rispondi(ActionResponse.message(res), message)
     }
 
     private fun getListaCitta(matchResult: MatchResult): List<String> {
@@ -39,11 +39,11 @@ class Meteo(botUtils: BotUtils, botConfig: BotConfig) : MessageHandler(botUtils,
             return citta
         }
 
-        val citta = matchResult.groupValues[2].trim()
-        if (citta.isEmpty()) {
+        val singolaCitta = matchResult.groupValues[2].trim()
+        if (singolaCitta.isEmpty()) {
             return emptyList()
         }
-        return listOf(citta)
+        return listOf(singolaCitta)
     }
 
     private fun meteo(citta: String): String {
