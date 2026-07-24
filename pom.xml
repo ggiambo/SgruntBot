@@ -12,7 +12,7 @@
 
     <groupId>com.fdtheroes</groupId>
     <artifactId>sgruntbot</artifactId>
-    <version>2.0.166</version>
+    <version>2.0.167</version>
 
     <properties>
         <argLine/>
