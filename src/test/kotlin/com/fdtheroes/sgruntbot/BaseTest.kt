@@ -12,7 +12,7 @@ import org.telegram.telegrambots.meta.api.objects.chat.Chat
 import org.telegram.telegrambots.meta.api.objects.message.Message
 import tools.jackson.databind.json.JsonMapper
 
-open class BaseTest {
+open class BaseTest(chatId: Long = -9999) {
 
     private val _actionResponses = mutableListOf<ActionResponse>()
     val actionResponses: List<ActionResponse>
@@ -25,7 +25,7 @@ open class BaseTest {
     }
 
     val botConfig: BotConfig = BotConfig(
-        chatId = "-9999",
+        chatId = chatId.toString(),
         telegramToken = "dummyToken.txt",
         imgurClientId = "dummyToken.txt",
     )

@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 import org.mockito.kotlin.*
 import java.time.LocalDate
 
-internal class ScommessinaTest : BaseTest() {
+internal class ScommessinaTest : BaseTest(-1001103213994) {
 
     private val message = message("!scommessina domani sorge il sole").apply {
         messageId = 1111
@@ -38,7 +38,7 @@ internal class ScommessinaTest : BaseTest() {
 
         assertThat(actionResponses).hasSize(1)
         assertThat(actionResponses.first().message).isEqualTo(
-            "\uD83D\uDE80 Scommessina creata!\nPer partecipare rispondi con <b>!scommessina</b> al <a href=\"https://t.me/c/-9999/1111\">messaggio originale</a>."
+            "\uD83D\uDE80 Scommessina creata!\nPer partecipare rispondi con <b>!scommessina</b> al <a href=\"https://t.me/c/1103213994/1111\">messaggio originale</a>."
         )
     }
 
@@ -178,7 +178,7 @@ internal class ScommessinaTest : BaseTest() {
         assertThat(actionResponses.size).isEqualTo(1)
         assertThat(actionResponses.first().message).isEqualTo(
             "<b>Tue scommesse aperte</b>\n" +
-                    "- <a href='https://t.me/c/9999/1111'><i>domani sorge il sole</i></a>\n" +
+                    "- <a href='https://t.me/c/1103213994/1111'><i>domani sorge il sole</i></a>\n" +
                     "Partecipanti: Nessuno"
         )
     }

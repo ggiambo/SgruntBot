@@ -44,7 +44,7 @@ class Scommessina(botUtils: BotUtils, botConfig: BotConfig, private val scommess
         }
         val msgLink = "https://t.me/c/$chatId/${message.messageId}"
         botUtils.rispondi(
-            ActionResponse.message("🚀 Scommessina creata!\nPer partecipare rispondi con <b>!scommessina</b> al <a href=\"https://t.me/c/-9999/1111\">messaggio originale</a>."),
+            ActionResponse.message("🚀 Scommessina creata!\nPer partecipare rispondi con <b>!scommessina</b> al <a href=\"$msgLink\">messaggio originale</a>."),
             message
         )
     }
