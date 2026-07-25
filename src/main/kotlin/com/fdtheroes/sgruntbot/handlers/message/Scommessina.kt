@@ -11,7 +11,7 @@ import org.telegram.telegrambots.meta.api.objects.message.Message
 class Scommessina(botUtils: BotUtils, botConfig: BotConfig, private val scommessinaService: ScommessinaService) :
     MessageHandler(botUtils, botConfig), HasHalp {
 
-    private val regex = Regex("^!scommessina(.+)?$")
+    private val regex = Regex(pattern = "^!scommessina(.+)?$", option = RegexOption.DOT_MATCHES_ALL)
 
     override fun handle(message: Message) {
         val groupValues = regex.find(message.text)?.groupValues

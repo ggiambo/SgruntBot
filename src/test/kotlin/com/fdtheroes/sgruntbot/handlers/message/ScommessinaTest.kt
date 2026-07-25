@@ -12,7 +12,7 @@ import java.time.LocalDate
 
 internal class ScommessinaTest : BaseTest(-1001103213994) {
 
-    private val message = message("!scommessina domani sorge il sole").apply {
+    private val message = message("!scommessina domani sorge il sole\nE saremo tutti felici").apply {
         messageId = 1111
     }
 
@@ -30,7 +30,7 @@ internal class ScommessinaTest : BaseTest(-1001103213994) {
         argumentCaptor<Scommessina>().apply {
             verify(scommessinaRepository, times(1)).save(capture())
             assertThat(firstValue.userId).isEqualTo(42)
-            assertThat(firstValue.content).isEqualTo("domani sorge il sole")
+            assertThat(firstValue.content).isEqualTo("domani sorge il sole\nE saremo tutti felici")
             assertThat(firstValue.created).isEqualTo(LocalDate.now())
             assertThat(firstValue.messageId).isEqualTo(1111)
             assertThat(firstValue.participantsUserId).isEmpty()
