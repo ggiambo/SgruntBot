@@ -17,7 +17,7 @@
     <properties>
         <argLine/>
         <java.version>25</java.version>
-        <telegrambots.version>10.1.1</telegrambots.version>
+        <telegrambots.version>10.2.0</telegrambots.version>
         <jsoup.version>1.23.1</jsoup.version>
         <springdoc.version>3.0.3</springdoc.version>
         <xchart.version>3.9.0</xchart.version>
