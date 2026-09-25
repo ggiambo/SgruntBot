@@ -22,7 +22,7 @@
         <springdoc.version>3.1.1</springdoc.version>
         <xchart.version>3.9.0</xchart.version>
         <jfreechart.version>1.5.6</jfreechart.version>
-        <mockitokotlin.version>6.3.0</mockitokotlin.version>
+        <mockitokotlin.version>6.4.0</mockitokotlin.version>
         <gitHubApi.version>1.330</gitHubApi.version>
         <okhttp3.version>5.5.0</okhttp3.version>
     </properties>
