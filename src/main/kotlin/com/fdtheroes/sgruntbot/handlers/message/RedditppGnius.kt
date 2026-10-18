@@ -1,5 +1,6 @@
 package com.fdtheroes.sgruntbot.handlers.message
 
+import com.fasterxml.jackson.annotation.JsonProperty
 import com.fdtheroes.sgruntbot.BotConfig
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.utils.BotUtils
@@ -74,9 +75,9 @@ class RedditppGnius(botUtils: BotUtils, botConfig: BotConfig, private val jsonMa
             permalink: String,
             media: Media,
         ) {
-            val link = media.external_url.elseIfNull("https://reddit.com$permalink")
+            val link = media.externalUrl.elseIfNull("https://reddit.com$permalink")
 
-            private class Media(val external_url: String?)
+            private class Media(@JsonProperty("external_url") val externalUrl: String?)
         }
     }
 

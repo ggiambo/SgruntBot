@@ -36,6 +36,6 @@ class ScheduledRandomFortuneVocaleTest : BaseTest() {
         assertThat(actionResponse.message).isNotEmpty()
         assertThat(actionResponse.inputFile).isNotNull()
         assertThat(actionResponse.inputFile!!.mediaName).isEqualTo("LaVoce.mp3")
-        assertThat(actionResponse.inputFile!!.newMediaStream.readAllBytes().decodeToString()).isEqualTo("La Voce")
+        assertThat(actionResponse.inputFile.newMediaStream.readAllBytes().decodeToString()).isEqualTo("La Voce")
     }
 }

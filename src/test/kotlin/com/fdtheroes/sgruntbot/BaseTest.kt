@@ -10,6 +10,8 @@ import org.mockito.kotlin.whenever
 import org.telegram.telegrambots.meta.api.objects.User
 import org.telegram.telegrambots.meta.api.objects.chat.Chat
 import org.telegram.telegrambots.meta.api.objects.message.Message
+import tools.jackson.core.StreamReadFeature
+import tools.jackson.databind.SerializationFeature
 import tools.jackson.databind.json.JsonMapper
 
 open class BaseTest(chatId: Long = -9999) {
@@ -30,7 +32,10 @@ open class BaseTest(chatId: Long = -9999) {
         imgurClientId = "dummyToken.txt",
     )
 
-    val mapper = JsonMapper()
+    val mapper : JsonMapper = JsonMapper.builder()
+        .enable(SerializationFeature.INDENT_OUTPUT)
+        .enable(StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION)
+        .build()
     val botUtils = spy(BotUtils(botConfig, mapper))
 
     // per qualche oscura ragione, dev'essere qui e non in "spy" (Il metodo originale viene chiamato!)

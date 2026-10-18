@@ -6,7 +6,7 @@ import jakarta.persistence.Id
 import java.time.LocalDate
 
 @Entity(name = "utonti")
-data class Utonto(
+class Utonto(
     @Column(name = "first_name", nullable = false)
     var firstName: String,
     @Column(name = "last_name")

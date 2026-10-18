@@ -43,11 +43,11 @@ class VocaleTest : BaseTest() {
         assertThat(actionResponse.type).isEqualTo(ActionResponseType.Audio)
         assertThat(actionResponse.inputFile!!.mediaName).isEqualTo("NomeDelVocale.mp3")
         assertThat(
-            actionResponse.inputFile!!.newMediaStream.readAllBytes().decodeToString()
+            actionResponse.inputFile.newMediaStream.readAllBytes().decodeToString()
         ).isEqualTo("contenutoMedia")
-        assertThat(actionResponse.inputFile!!.newMediaFile).isNull()
-        assertThat(actionResponse.inputFile!!.attachName).isEqualTo("attach://NomeDelVocale.mp3")
-        assertThat(actionResponse.inputFile!!.isNew).isTrue()
+        assertThat(actionResponse.inputFile.newMediaFile).isNull()
+        assertThat(actionResponse.inputFile.attachName).isEqualTo("attach://NomeDelVocale.mp3")
+        assertThat(actionResponse.inputFile.isNew).isTrue()
         assertThat(actionResponse.message).isEqualTo("LaVoceDiSgrunty.mp3")
 
         val argumentCaptor = argumentCaptor<ActionResponse, Message, Boolean>()
@@ -72,11 +72,11 @@ class VocaleTest : BaseTest() {
         assertThat(actionResponse.type).isEqualTo(ActionResponseType.Audio)
         assertThat(actionResponse.inputFile!!.mediaName).isEqualTo("NomeDelVocale.mp3")
         assertThat(
-            actionResponse.inputFile!!.newMediaStream.readAllBytes().decodeToString()
+            actionResponse.inputFile.newMediaStream.readAllBytes().decodeToString()
         ).isEqualTo("contenutoMedia")
-        assertThat(actionResponse.inputFile!!.newMediaFile).isNull()
-        assertThat(actionResponse.inputFile!!.attachName).isEqualTo("attach://NomeDelVocale.mp3")
-        assertThat(actionResponse.inputFile!!.isNew).isTrue()
+        assertThat(actionResponse.inputFile.newMediaFile).isNull()
+        assertThat(actionResponse.inputFile.attachName).isEqualTo("attach://NomeDelVocale.mp3")
+        assertThat(actionResponse.inputFile.isNew).isTrue()
         assertThat(actionResponse.message).isEqualTo("LaVoceDiSgrunty.mp3")
 
         val argumentCaptor = argumentCaptor<ActionResponse, Boolean>()

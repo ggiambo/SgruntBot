@@ -4,7 +4,7 @@ import jakarta.persistence.*
 import java.time.LocalDate
 
 @Entity(name = "scommessina")
-data class Scommessina(
+class Scommessina(
     @Column(name = "user_id") var userId: Long,
     var content: String,
     var created: LocalDate = LocalDate.now(),

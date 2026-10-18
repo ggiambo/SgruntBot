@@ -4,7 +4,7 @@ import jakarta.persistence.*
 import java.time.LocalDate
 
 @Entity(name = "todos")
-data class Todos(
+class Todos(
     @Column(name = "user_id") var userId: Long,
     @Column(name = "updated") var updated: LocalDate = LocalDate.now(),
     @Column(name = "todo") var todo: String,

@@ -266,10 +266,6 @@ class BotUtils(private val botConfig: BotConfig, private val jsonMapper: JsonMap
             return Date.from(this.atZone(ZoneId.systemDefault()).toInstant())
         }
 
-        fun LocalDate.toDate(): Date {
-            return this.atStartOfDay().toDate()
-        }
-
         fun LocalDateTime.isToday(): Boolean {
             return this.toLocalDate() == LocalDateTime.now().toLocalDate()
         }
