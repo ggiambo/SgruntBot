@@ -1,6 +1,5 @@
 package com.fdtheroes.sgruntbot.scheduled.fix
 
-import com.fdtheroes.sgruntbot.handlers.message.HackerNews
 import com.fdtheroes.sgruntbot.handlers.message.LobsteRs
 import com.fdtheroes.sgruntbot.models.ActionResponse
 import com.fdtheroes.sgruntbot.scheduled.Scheduled

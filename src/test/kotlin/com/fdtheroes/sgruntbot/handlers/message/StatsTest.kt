@@ -18,7 +18,7 @@ import javax.imageio.ImageIO
 
 internal class StatsTest : BaseTest() {
 
-    val dummyDate = LocalDate.of(2022, 8, 10)
+    val dummyDate : LocalDate = LocalDate.of(2022, 8, 10)
 
     var id: Long = 1
     val monthStats = listOf(
