@@ -1,4 +1,6 @@
 name: Build SgruntBot
+permissions:
+  contents: read
 
 on:
   push:
