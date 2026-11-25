@@ -1,6 +1,6 @@
 name: Deploy SgruntBot
 permissions:
-  contents: read
+  contents: write
 
 on:
   workflow_dispatch
